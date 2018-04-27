@@ -32,7 +32,7 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()> _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.ALTTPRCropDashboard.OBSWebScocketCropper
+            Me.MainForm = Global.ALTTPRCropDashboard.OBSWebSocketCropper
         End Sub
     End Class
 End Namespace

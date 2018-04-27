@@ -4,9 +4,12 @@ Imports OBSWebsocketDotNet
 Imports System.IO
 Imports Newtonsoft.Json.Linq
 
-Public Class OBSWebScocketCropper
-    Dim _obs As New OBSWebsocket
-    Dim _obs2 As New OBSWebsocket
+Public Class OBSWebSocketCropper
+    'Dim _obs As New OBSWebsocket
+    'Dim _obs2 As New OBSWebsocket
+
+    Dim _obs As New OBSWebSocketPlus
+    Dim _obs2 As New OBSWebSocketPlus
     'Dim ConnectionString As String = "ws://127.0.0.1:4444"
     'Dim ConnectionString2 As String = "ws://127.0.0.1:4443"
 
@@ -463,27 +466,27 @@ Public Class OBSWebScocketCropper
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If cbLeftRunnerOBS.Text.Trim.Length > 0 Then
             If cbLeftRunnerName.Text.Trim.Length > 0 Then
-                OBSWebSocketPlus.SetTextGDI(cbLeftRunnerOBS.Text, cbLeftRunnerName.Text, _obs)
+                _obs.SetTextGDI(cbLeftRunnerOBS.Text, cbLeftRunnerName.Text)
             End If
         End If
         If cbRightRunnerOBS.Text.Trim.Length > 0 Then
             If cbRightRunnerName.Text.Trim.Length > 0 Then
-                OBSWebSocketPlus.SetTextGDI(cbRightRunnerOBS.Text, cbRightRunnerName.Text, _obs)
+                _obs.SetTextGDI(cbRightRunnerOBS.Text, cbRightRunnerName.Text)
             End If
         End If
         If cbCommentaryOBS.Text.Trim.Length > 0 Then
             If txtCommentaryNames.Text.Trim.Length > 0 Then
-                OBSWebSocketPlus.SetTextGDI(cbCommentaryOBS.Text, txtCommentaryNames.Text, _obs)
+                _obs.SetTextGDI(cbCommentaryOBS.Text, txtCommentaryNames.Text)
             End If
         End If
         If cbLeftTrackerOBS.Text.Trim.Length > 0 Then
             If txtLeftTrackerURL.Text.Trim.Length > 0 Then
-                OBSWebSocketPlus.SetBrowserSource(cbLeftTrackerOBS.Text, txtLeftTrackerURL.Text, _obs)
+                _obs.SetBrowserSource(cbLeftTrackerOBS.Text, txtLeftTrackerURL.Text)
             End If
         End If
         If cbRightTrackerOBS.Text.Trim.Length > 0 Then
             If txtRightTrackerURL.Text.Trim.Length > 0 Then
-                OBSWebSocketPlus.SetBrowserSource(cbRightTrackerOBS.Text, txtRightTrackerURL.Text, _obs)
+                _obs.SetBrowserSource(cbRightTrackerOBS.Text, txtRightTrackerURL.Text)
             End If
         End If
     End Sub
@@ -943,11 +946,11 @@ Public Class OBSWebScocketCropper
     End Sub
     Private Sub GetCurrentSceneInfo(ByVal isRightWindow As Boolean)
         If isRightWindow = False Then
-            LeftRunnerGameSceneInfo = OBSWebSocketPlus.GetSceneItemProperties("", cbLeftGameWindow.Text, _obs)
-            LeftRunnerTimerSceneInfo = OBSWebSocketPlus.GetSceneItemProperties("", cbLeftTimerWindow.Text, _obs)
+            LeftRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbLeftGameWindow.Text)
+            LeftRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbLeftTimerWindow.Text)
         Else
-            RightRunnerGameSceneInfo = OBSWebSocketPlus.GetSceneItemProperties("", cbRightGameWindow.Text, _obs)
-            RightRunnerTimerSceneInfo = OBSWebSocketPlus.GetSceneItemProperties("", cbRightTimerWindow.Text, _obs)
+            RightRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbRightGameWindow.Text)
+            RightRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbRightTimerWindow.Text)
         End If
     End Sub
     Private Sub SetNewNewMath(ByVal isRightWindow As Boolean)
@@ -975,7 +978,7 @@ Public Class OBSWebScocketCropper
         End If
 
         'OBSWebSocketPlus.SetSceneItemProperties(ItemName, CTop, CBottom, CLeft, CRight, True)
-        OBSWebSocketPlus.SetSceneItemProperties(ItemName, CTop, CBottom, CLeft, CRight, _obs)
+        _obs.SetSceneItemProperties(ItemName, CTop, CBottom, CLeft, CRight)
     End Sub
 #End Region
 #Region " Refresh / Set User Info "

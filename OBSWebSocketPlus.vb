@@ -2,9 +2,10 @@
 Imports OBSWebsocketDotNet
 
 Public Class OBSWebSocketPlus
-    Public Shared Function GetSceneItemProperties(
+    Inherits OBSWebsocket
+    Public Function GetSceneItemProperties(
            ByVal sceneName As String,
-           ByVal item As String, ByVal OBSConnection As OBSWebsocket) As SceneItemProperties
+           ByVal item As String) As SceneItemProperties
 
         Dim requestParameters As New JObject
 
@@ -14,28 +15,28 @@ Public Class OBSWebSocketPlus
 
         requestParameters.Add("item", item)
 
-        Return New SceneItemProperties(OBSConnection.SendRequest("GetSceneItemProperties", requestParameters))
+        Return New SceneItemProperties(SendRequest("GetSceneItemProperties", requestParameters))
 
     End Function
-    Public Shared Sub SetTextGDI(ByVal source As String, ByVal TextValue As String, ByVal OBSConnection As OBSWebsocket)
+    Public Sub SetTextGDI(ByVal source As String, ByVal TextValue As String)
         Dim requestParameters As New JObject
 
         requestParameters.Add("source", source)
         requestParameters.Add("text", TextValue)
 
-        OBSConnection.SendRequest("SetTextGDIPlusProperties", requestParameters)
+        SendRequest("SetTextGDIPlusProperties", requestParameters)
     End Sub
-    Public Shared Sub SetBrowserSource(ByVal source As String, ByVal urlValue As String, ByVal OBSConnection As OBSWebsocket)
+    Public Sub SetBrowserSource(ByVal source As String, ByVal urlValue As String)
         Dim requestParameters As New JObject
 
         requestParameters.Add("source", source)
         requestParameters.Add("url", urlValue)
 
-        OBSConnection.SendRequest("SetBrowserSourceProperties", requestParameters)
+        SendRequest("SetBrowserSourceProperties", requestParameters)
 
     End Sub
-    Public Shared Sub SetSceneItemProperties(ByVal item As String, ByVal CropT As Integer, ByVal CropB As Integer,
-                                    ByVal CropL As Integer, ByVal CropR As Integer, ByVal OBSConnection As OBSWebsocket)
+    Public Sub SetSceneItemProperties(ByVal item As String, ByVal CropT As Integer, ByVal CropB As Integer,
+                                    ByVal CropL As Integer, ByVal CropR As Integer)
 
         Dim requestParameters As New JObject
 
@@ -54,7 +55,7 @@ Public Class OBSWebSocketPlus
         '    OBSWebScocketCropper._obs2.SendRequest("SetSceneItemProperties", requestParameters)
         'End If
 
-        OBSConnection.SendRequest("SetSceneItemProperties", requestParameters)
+        SendRequest("SetSceneItemProperties", requestParameters)
     End Sub
 End Class
 

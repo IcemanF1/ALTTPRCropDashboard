@@ -98,10 +98,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="OBSWebScocketCropper.Designer.vb">
-      <DependentUpon>OBSWebScocketCropper.vb</DependentUpon>
+    <Compile Include="OBSWebSocketCropper.Designer.vb">
+      <DependentUpon>OBSWebSocketCropper.vb</DependentUpon>
     </Compile>
-    <Compile Include="OBSWebScocketCropper.vb">
+    <Compile Include="OBSWebSocketCropper.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OBSWebSocketPlus.vb" />
@@ -113,8 +113,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OBSWebScocketCropper.resx">
-      <DependentUpon>OBSWebScocketCropper.vb</DependentUpon>
+    <EmbeddedResource Include="OBSWebSocketCropper.resx">
+      <DependentUpon>OBSWebSocketCropper.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
