@@ -249,13 +249,13 @@ Public Class OBSWebSocketCropper
         Dim DefaultTopCrop, DefaultBottomCrop As Integer
 
         If txtDefaultCropTop.Text.Trim.Length > 0 Then
-            DefaultTopCrop = 0
+            DefaultTopCrop = txtDefaultCropTop.Text
         Else
             DefaultTopCrop = 0
         End If
 
         If txtDefaultCropBottom.Text.Trim.Length > 0 Then
-            DefaultBottomCrop = 0
+            DefaultBottomCrop = txtDefaultCropBottom.Text
         Else
             DefaultBottomCrop = 0
         End If
@@ -422,6 +422,8 @@ Public Class OBSWebSocketCropper
         Else
             DefaultCropBottom = 0
         End If
+
+        CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
 
         If UserSettings.Tables(0).Rows.Count = 0 Then
             Dim dr As DataRow
@@ -1087,6 +1089,11 @@ Public Class OBSWebSocketCropper
         cbRightRunnerName.Text = TempRightRunner
     End Sub
     Private Sub RefreshCropFromData(ByVal isRightWindow As Boolean)
+        Dim DefaultCropBottom, DefaultCropTop As Integer
+
+        DefaultCropTop = txtDefaultCropTop.Text
+        DefaultCropBottom = txtDefaultCropBottom.Text
+
         If UserCropList.Tables.Count > 0 Then
             If UserCropList.Tables("CropList").Rows.Count > 0 Then
                 Dim x As Integer
@@ -1095,44 +1102,44 @@ Public Class OBSWebSocketCropper
                         If cbRightRunnerName.Text.ToLower = UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower Then
 
                             If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                                txtCropRightTimer_Top.Text = UserCropList.Tables("CropList").Rows(x)("CropTop")
-                                txtCropRightTimer_Bottom.Text = UserCropList.Tables("CropList").Rows(x)("CropBottom")
+                                txtCropRightTimer_Top.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropTop")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropTop"))) + DefaultCropTop
+                                txtCropRightTimer_Bottom.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropBottom")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropBottom"))) + DefaultCropBottom
                                 txtCropRightTimer_Left.Text = UserCropList.Tables("CropList").Rows(x)("CropLeft")
                                 txtCropRightTimer_Right.Text = UserCropList.Tables("CropList").Rows(x)("CropRight")
                             End If
 
                             If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                                txtCropRightGame_Top.Text = UserCropList.Tables("CropList").Rows(x)("CropTop")
-                                txtCropRightGame_Bottom.Text = UserCropList.Tables("CropList").Rows(x)("CropBottom")
+                                txtCropRightGame_Top.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropTop")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropTop"))) + DefaultCropTop
+                                txtCropRightGame_Bottom.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropBottom")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropBottom"))) + DefaultCropBottom
                                 txtCropRightGame_Left.Text = UserCropList.Tables("CropList").Rows(x)("CropLeft")
                                 txtCropRightGame_Right.Text = UserCropList.Tables("CropList").Rows(x)("CropRight")
                             End If
 
 
                             MasterWidthRight = UserCropList.Tables("CropList").Rows(x)("MasterWidth")
-                            MasterHeightRight = UserCropList.Tables("CropList").Rows(x)("MasterHeight")
+                            MasterHeightRight = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("MasterHeight")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("MasterHeight"))) + (DefaultCropTop + DefaultCropBottom)
                         End If
                     Else
                         If cbLeftRunnerName.Text.ToLower = UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower Then
 
                             If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                                txtCropLeftTimer_Top.Text = UserCropList.Tables("CropList").Rows(x)("CropTop")
-                                txtCropLeftTimer_Bottom.Text = UserCropList.Tables("CropList").Rows(x)("CropBottom")
+                                txtCropLeftTimer_Top.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropTop")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropTop"))) + DefaultCropTop
+                                txtCropLeftTimer_Bottom.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropBottom")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropBottom"))) + DefaultCropBottom
                                 txtCropLeftTimer_Left.Text = UserCropList.Tables("CropList").Rows(x)("CropLeft")
                                 txtCropLeftTimer_Right.Text = UserCropList.Tables("CropList").Rows(x)("CropRight")
                             End If
 
 
                             If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                                txtCropLeftGame_Top.Text = UserCropList.Tables("CropList").Rows(x)("CropTop")
-                                txtCropLeftGame_Bottom.Text = UserCropList.Tables("CropList").Rows(x)("CropBottom")
+                                txtCropLeftGame_Top.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropTop")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropTop"))) + DefaultCropTop
+                                txtCropLeftGame_Bottom.Text = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("CropBottom")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("CropBottom"))) + DefaultCropBottom
                                 txtCropLeftGame_Left.Text = UserCropList.Tables("CropList").Rows(x)("CropLeft")
                                 txtCropLeftGame_Right.Text = UserCropList.Tables("CropList").Rows(x)("CropRight")
                             End If
 
 
                             MasterWidthLeft = UserCropList.Tables("CropList").Rows(x)("MasterWidth")
-                            MasterHeightLeft = UserCropList.Tables("CropList").Rows(x)("MasterHeight")
+                            MasterHeightLeft = IIf(IsDBNull(UserCropList.Tables("CropList").Rows(x)("MasterHeight")), 0, CInt(UserCropList.Tables("CropList").Rows(x)("MasterHeight"))) + (DefaultCropTop + DefaultCropBottom)
                         End If
                     End If
 
@@ -1209,6 +1216,8 @@ Public Class OBSWebSocketCropper
             Else
                 cbCommentaryOBS.Text = ""
             End If
+
+            CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
         End If
     End Sub
     Private Sub ClearTextBoxes(ByVal isRightWindow As Boolean)
@@ -1438,6 +1447,9 @@ Public Class OBSWebSocketCropper
         cbRightRunnerName.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
+        txtDefaultCropTop.Text = 0
+        txtDefaultCropBottom.Text = 0
+
         EnableButtons(False)
         ResetHeightWidthLabels()
 
