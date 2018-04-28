@@ -43,6 +43,8 @@ Public Class OBSWebSocketCropper
     Dim LeftRunnerTimerSceneInfo As SceneItemProperties
     Dim RightRunnerTimerSceneInfo As SceneItemProperties
 
+    Dim CropperMath As New CropperMath
+
     Dim ProgramName As String = "OBS WebSocket Cropper"
 
     Dim ApprovedChars As String = "0123456789"
@@ -895,32 +897,61 @@ Public Class OBSWebSocketCropper
             RightRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbRightTimerWindow.Text)
         End If
     End Sub
-    Private Sub SetNewNewMath(ByVal isRightWindow As Boolean)
-        Dim CTop, CBottom, CLeft, CRight As Integer
-        Dim ItemName As String
 
-        If isRightWindow = True Then
-            ItemName = cbRightGameWindow.Text
+    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String)
+        Dim resultingCrop = CropperMath.AdjustCrop(New CropInfo With {
+                                                      .MasterSizeWithoutDefault = CropperMath.RemoveDefaultCropSize(savedMasterSize),
+                                                      .CropWithoutDefault = CropperMath.RemoveDefaultCrop(cropWithDefault)
+                                                      }, CropperMath.RemoveDefaultCropSize(currentMasterSize))
 
-            If txtCropRightGame_Left.Text.Trim.Length > 0 Then
-                CTop = txtCropRightGame_Top.Text
-                CBottom = txtCropRightGame_Bottom.Text
-                CLeft = txtCropRightGame_Left.Text
-                CRight = txtCropRightGame_Right.Text
-            End If
+
+        Dim realCrop = CropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
+        _obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+    End Sub
+
+
+    Private Sub SetNewNewMath(isRightWindow As Boolean)
+
+        GetCurrentCropSettings(isRightWindow)
+
+        CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
+
+        If isRightWindow Then
+            ProcessCrop(Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
+                                           _txtCropRightGame_Top.Text,
+                                           _txtCropRightGame_Right.Text,
+                                           _txtCropRightGame_Bottom.Text),
+                        New Size(MasterWidthRight, MasterHeightRight),
+                        New Size(RSourceWidth, RSourceHeight),
+                        cbRightGameWindow.Text
+                )
+            ProcessCrop(Rectangle.FromLTRB(_txtCropRightTimer_Left.Text,
+                                           _txtCropRightTimer_Top.Text,
+                                           _txtCropRightTimer_Right.Text,
+                                           _txtCropRightTimer_Bottom.Text),
+                        New Size(MasterWidthRight, MasterHeightRight),
+                        New Size(RSourceWidth, RSourceHeight),
+                        cbRightTimerWindow.Text
+                        )
         Else
-            ItemName = cbLeftGameWindow.Text
-
-            If txtCropLeftGame_Left.Text.Trim.Length > 0 Then
-                CTop = txtCropLeftGame_Top.Text
-                CBottom = txtCropLeftGame_Bottom.Text
-                CLeft = txtCropLeftGame_Left.Text
-                CRight = txtCropLeftGame_Right.Text
-            End If
+            ProcessCrop(Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
+                                           _txtCropLeftGame_Top.Text,
+                                           _txtCropLeftGame_Right.Text,
+                                           _txtCropLeftGame_Bottom.Text),
+                        New Size(MasterWidthLeft, MasterHeightLeft),
+                        New Size(LSourceWidth, LSourceHeight),
+                        cbLeftGameWindow.Text
+                        )
+            ProcessCrop(Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
+                                           _txtCropLeftTimer_Top.Text,
+                                           _txtCropLeftTimer_Right.Text,
+                                           _txtCropLeftTimer_Bottom.Text),
+                        New Size(MasterWidthLeft, MasterHeightLeft),
+                        New Size(LSourceWidth, LSourceHeight),
+                        cbLeftTimerWindow.Text
+                        )
         End If
 
-        'OBSWebSocketPlus.SetSceneItemProperties(ItemName, CTop, CBottom, CLeft, CRight, True)
-        _obs.SetSceneItemProperties(ItemName, CTop, CBottom, CLeft, CRight)
     End Sub
 #End Region
 #Region " Refresh / Set User Info "

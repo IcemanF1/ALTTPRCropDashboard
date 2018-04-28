@@ -82,6 +82,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CropperMath.vb" />
     <Compile Include="IniParser.vb" />
     <Compile Include="MathCalcs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
