@@ -980,6 +980,9 @@ Public Class OBSWebSocketCropper
             End If
         Next
 
+        LeftRunnerName.Tables("CropList").DefaultView.Sort = "RacerName"
+        RightRunnerName.Tables("CropList").DefaultView.Sort = "RacerName"
+
         cbLeftRunnerName.DataSource = LeftRunnerName.Tables("CropList")
         cbLeftRunnerName.DisplayMember = "RacerName"
         cbLeftRunnerName.ValueMember = "RacerName"
@@ -990,6 +993,7 @@ Public Class OBSWebSocketCropper
 
         cbLeftRunnerName.Text = TempLeftRunner
         cbRightRunnerName.Text = TempRightRunner
+
     End Sub
     Private Sub RefreshCropFromData(ByVal isRightWindow As Boolean)
         Dim DefaultCropBottom, DefaultCropTop As Integer
