@@ -888,11 +888,19 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub GetCurrentSceneInfo(ByVal isRightWindow As Boolean)
         If isRightWindow = False Then
-            LeftRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbLeftGameWindow.Text)
-            LeftRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbLeftTimerWindow.Text)
+            If cbLeftGameWindow.Text.Trim.Length > 0 Then
+                LeftRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbLeftGameWindow.Text)
+            End If
+            If cbLeftTimerWindow.Text.Trim.Length > 0 Then
+                LeftRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbLeftTimerWindow.Text)
+            End If
         Else
-            RightRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbRightGameWindow.Text)
-            RightRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbRightTimerWindow.Text)
+            If cbRightGameWindow.Text.Trim.Length > 0 Then
+                RightRunnerGameSceneInfo = _obs.GetSceneItemProperties("", cbRightGameWindow.Text)
+            End If
+            If cbRightTimerWindow.Text.Trim.Length > 0 Then
+                RightRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", cbRightTimerWindow.Text)
+            End If
         End If
     End Sub
     Private Sub SetNewNewMath(ByVal isRightWindow As Boolean)
