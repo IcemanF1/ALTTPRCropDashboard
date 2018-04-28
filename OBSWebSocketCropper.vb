@@ -507,7 +507,9 @@ Public Class OBSWebSocketCropper
 
         GetCurrentCropSettings(isRightWindow)
 
-        Dim DefaultTopCrop, DefaultBottomCrop As Integer
+        Dim DefaultTopCrop, DefaultBottomCrop,
+            MasterSourceHeight, MasterSourceWidth,
+            SourceHeight, SourceWidth As Integer
 
         DefaultTopCrop = txtDefaultCropTop.Text
         DefaultBottomCrop = txtDefaultCropBottom.Text
@@ -522,6 +524,11 @@ Public Class OBSWebSocketCropper
             NCropBottomGame = txtCropRightGame_Bottom.Text - DefaultBottomCrop
             NCropLeftGame = txtCropRightGame_Left.Text
             NCropRightGame = txtCropRightGame_Right.Text
+
+            MasterSourceHeight = MasterHeightRight
+            MasterSourceWidth = MasterWidthRight
+            SourceHeight = RSourceHeight
+            SourceWidth = RSourceWidth
         Else
             NCropTopTimer = txtCropLeftTimer_Top.Text - DefaultTopCrop
             NCropBottomTimer = txtCropLeftTimer_Bottom.Text - DefaultBottomCrop
@@ -532,91 +539,26 @@ Public Class OBSWebSocketCropper
             NCropBottomGame = txtCropLeftGame_Bottom.Text - DefaultBottomCrop
             NCropLeftGame = txtCropLeftGame_Left.Text
             NCropRightGame = txtCropLeftGame_Right.Text
+
+            MasterSourceHeight = MasterHeightLeft
+            MasterSourceWidth = MasterWidthLeft
+            SourceHeight = LSourceHeight
+            SourceWidth = LSourceWidth
         End If
-
-        Dim NHeight, NWidth, NMasterHeight, NMasterWidth As Integer
-
-        If isRightWindow = True Then
-            NHeight = RSourceHeight '- (DefaultTopCrop + DefaultBottomCrop)
-            NWidth = RSourceWidth
-            NMasterHeight = MasterHeightRight
-            NMasterWidth = MasterWidthRight
-        Else
-            NHeight = LSourceHeight '- (DefaultTopCrop + DefaultBottomCrop)
-            NWidth = LSourceWidth
-            NMasterHeight = MasterHeightLeft
-            NMasterWidth = MasterWidthLeft
-        End If
-
-        Dim AspectRatioHeight, AspectRatioWidth As Decimal
-        Dim AbsAspectRatioHeight, AbsAspectRatioWidth As Decimal
-
-
-        AspectRatioHeight = NHeight / NMasterHeight
-        AbsAspectRatioHeight = Math.Max(NHeight, NMasterHeight) / Math.Min(NHeight, NMasterHeight)
-
-        AspectRatioWidth = NWidth / NMasterWidth
-        AbsAspectRatioWidth = Math.Max(NWidth, NMasterWidth) / Math.Min(NWidth, NMasterWidth)
-
-        Dim SavedScaleChange As Decimal = 1
-
-        If (AspectRatioHeight > AbsAspectRatioWidth) Then
-            SavedScaleChange = AspectRatioHeight
-        ElseIf (AspectRatioHeight < AbsAspectRatioWidth) Then
-            SavedScaleChange = AbsAspectRatioWidth
-        End If
-
-        Dim scale As Decimal
-
-        scale = SavedScaleChange
-
-        Dim USHeight, USWidth As Decimal
-        USHeight = NMasterHeight * SavedScaleChange
-        USWidth = NMasterWidth * SavedScaleChange
-
-        Dim BBHeight, BBWidth As Decimal
-
-        'BBHeight = Math.Abs(USHeight - NHeight)
-        'BBWidth = Math.Abs(USWidth - NWidth)
-
-        BBWidth = Math.Abs(USHeight - NHeight)
-        BBHeight = Math.Abs(USWidth - NWidth)
-
-        Dim ACTGame, ACBGame, ACLGame, ACRGame,
-            ACTTimer, ACBTimer, ACLTimer, ACRTimer,
-            BBTop, BBBottom, BBLeft, BBRight As Integer
-
-        ACTGame = NCropTopGame * scale
-        ACBGame = NCropBottomGame * scale
-        ACLGame = NCropLeftGame * scale
-        ACRGame = NCropRightGame * scale
-
-        ACTTimer = NCropTopTimer * scale
-        ACBTimer = NCropBottomTimer * scale
-        ACLTimer = NCropLeftTimer * scale
-        ACRTimer = NCropRightTimer * scale
-
-        BBTop = BBHeight / 2
-        BBBottom = BBHeight / 2
-        BBLeft = BBWidth / 2
-        BBRight = BBWidth / 2
 
         Dim CropGame As New SceneItemCropInfo
         Dim CropTimer As New SceneItemCropInfo
 
-        CropGame.Top = ACTGame + BBTop + DefaultTopCrop
-        CropGame.Bottom = ACBGame + BBBottom + DefaultBottomCrop
-        CropGame.Left = ACLGame + BBLeft
-        CropGame.Right = ACRGame + BBRight
-
-        CropTimer.Top = ACTTimer + BBTop + DefaultTopCrop
-        CropTimer.Bottom = ACBTimer + BBBottom + DefaultBottomCrop
-        CropTimer.Left = ACLTimer + BBLeft
-        CropTimer.Right = ACRTimer + BBRight
+        CropGame = MathCalcs.SetCropNewMath(NCropTopGame, NCropLeftGame, NCropBottomGame, NCropRightGame,
+                                            DefaultTopCrop, DefaultBottomCrop, MasterSourceHeight, MasterSourceWidth,
+                                            SourceHeight, SourceWidth)
+        CropTimer = MathCalcs.SetCropNewMath(NCropTopTimer, NCropLeftTimer, NCropBottomTimer, NCropRightTimer,
+                                            DefaultTopCrop, DefaultBottomCrop, MasterSourceHeight, MasterSourceWidth,
+                                            SourceHeight, SourceWidth)
 
         If isRightWindow = True Then
-            _obs.SetSceneItemCrop(cbRightGameWindow.Text, CropGame)
-            _obs.SetSceneItemCrop(cbRightTimerWindow.Text, CropTimer)
+            _obs.SetSceneItemProperties(cbRightGameWindow.Text, CropGame.Top, CropGame.Bottom, CropGame.Left, CropGame.Right)
+            _obs.SetSceneItemProperties(cbRightTimerWindow.Text, CropTimer.Top, CropTimer.Bottom, CropTimer.Left, CropTimer.Right)
         Else
             _obs.SetSceneItemCrop(cbLeftGameWindow.Text, CropGame)
             _obs.SetSceneItemCrop(cbLeftTimerWindow.Text, CropTimer)
@@ -1488,5 +1430,35 @@ Public Class OBSWebSocketCropper
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
     End Sub
+    Private Sub ReadOBSINIToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadOBSINIToolStripMenuItem.Click
+        GetINIFile()
+    End Sub
+    Private Sub GetINIFile()
+
+        Dim appDataPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+        Dim IniContents As Dictionary(Of String, Dictionary(Of String, String)) = IniParser.ParseFile(appDataPath & "\obs-studio\global.ini")
+
+        For Each SectionName As String In IniContents.Keys
+            For Each ValueName As String In IniContents(SectionName).Keys
+                Dim Value As String = IniContents(SectionName)(ValueName)
+
+                '[SectionName]
+                'ValueName=Value
+                'ValueName=Value
+                '
+                'SectionName: The name of the current section (ex: Jones).
+                'ValueName  : The name of the current value   (ex: Email).
+                'Value      : The value of [ValueName]        (ex: josh.jones@gmail.com).
+
+                If SectionName.ToLower = "python" Then
+                    If ValueName.ToLower = "path64bit" Then
+                        MsgBox(Value, MsgBoxStyle.OkOnly)
+                    End If
+                End If
+                'Console.WriteLine(SectionName & ": " & ValueName & " = " & Value)
+            Next
+        Next
+    End Sub
+
 #End Region
 End Class

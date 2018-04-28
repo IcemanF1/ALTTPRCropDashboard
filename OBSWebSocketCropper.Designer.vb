@@ -130,6 +130,7 @@ Partial Class OBSWebSocketCropper
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ttMainToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ReadOBSINIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -1070,7 +1071,7 @@ Partial Class OBSWebSocketCropper
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReadOBSINIToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -1091,10 +1092,16 @@ Partial Class OBSWebSocketCropper
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
-        'OBSWebScocketCropper
+        'ReadOBSINIToolStripMenuItem
+        '
+        Me.ReadOBSINIToolStripMenuItem.Name = "ReadOBSINIToolStripMenuItem"
+        Me.ReadOBSINIToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ReadOBSINIToolStripMenuItem.Text = "Read OBS INI"
+        '
+        'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1149,7 +1156,7 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.btnSetRightCrop)
         Me.Controls.Add(Me.btnGetCrop)
         Me.Controls.Add(Me.mnuMainMenu)
-        Me.Name = "OBSWebScocketCropper"
+        Me.Name = "OBSWebSocketCropper"
         Me.Text = "OBS Websocket Cropper"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
@@ -1277,4 +1284,5 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ttMainToolTip As ToolTip
+    Friend WithEvents ReadOBSINIToolStripMenuItem As ToolStripMenuItem
 End Class
