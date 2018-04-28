@@ -69,4 +69,96 @@ Public Class MathCalcs
         Return Crop
 
     End Function
+    Public Shared Function SetCropOriginalMath(ByVal CropTop As Integer, ByVal CropLeft As Integer,
+                               ByVal CropBottom As Integer, ByVal CropRight As Integer,
+                               ByVal DefaultTopCrop As Integer, ByVal DefaultBottomCrop As Integer,
+                               ByVal MasterHeight As Integer, ByVal MasterWidth As Integer,
+                               ByVal SourceHeight As Integer, ByVal SourceWidth As Integer) As SceneItemCropInfo
+
+
+        Dim PercWidth, PercHeight, PercTotal As Decimal
+
+        PercWidth = SourceWidth / MasterWidth
+        PercHeight = SourceHeight / MasterHeight
+
+        PercTotal = Math.Max(PercWidth, PercHeight)
+
+        Dim tempHeight, tempWidth As Integer
+
+        tempHeight = SourceHeight / PercTotal
+        tempWidth = SourceWidth / PercTotal
+
+        Dim NHeight As Integer
+        NHeight = (MasterHeight / MasterWidth) * SourceWidth
+
+        If NHeight < SourceHeight Then
+
+        ElseIf NHeight = SourceHeight Then
+
+        Else
+
+        End If
+
+        Dim Crop As New SceneItemCropInfo
+
+        If SourceWidth <> MasterWidth Then
+
+            Dim LPercent, RPercent, TPercent, BPercent As Decimal
+
+            LPercent = CropLeft / MasterWidth
+            RPercent = CropRight / MasterWidth
+            TPercent = (CropTop - DefaultTopCrop) / MasterHeight
+            BPercent = (CropBottom - DefaultBottomCrop) / MasterHeight
+
+
+
+            If (SourceHeight * TPercent) > 0 Then
+                Crop.Top = (SourceHeight * TPercent) + 22
+            Else
+                Crop.Top = 0
+            End If
+
+            Dim AddPix As Integer
+
+            If tempWidth > SourceWidth Then
+                AddPix = (tempWidth - SourceWidth) / 2
+            Else
+                AddPix = (SourceWidth - tempWidth) / 2
+            End If
+
+            If (SourceHeight * BPercent) > 0 Then
+                'If ((SourceHeight * BPercentGame) - 110) < CBottomGame Then
+                'CropGame.Bottom = CBottomGame
+                'Else
+                Crop.Bottom = (SourceHeight * BPercent) + 109
+                'End If
+
+            Else
+                Crop.Bottom = 0
+            End If
+
+            If (SourceWidth * LPercent) > 0 Then
+                Crop.Left = (SourceWidth * LPercent) + AddPix
+            Else
+                Crop.Left = 0
+            End If
+
+            If (SourceWidth * RPercent) > 0 Then
+                Crop.Right = (SourceWidth * RPercent) + AddPix
+            Else
+                Crop.Right = 0 + AddPix
+            End If
+
+        Else
+
+            Crop.Top = CropTop
+            Crop.Bottom = CropBottom
+            Crop.Left = CropLeft
+            Crop.Right = CropRight
+
+        End If
+
+        Return Crop
+
+    End Function
 End Class

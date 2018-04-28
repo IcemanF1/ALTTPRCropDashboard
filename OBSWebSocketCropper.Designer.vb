@@ -126,12 +126,13 @@ Partial Class OBSWebSocketCropper
         Me.chkNewNewMath = New System.Windows.Forms.CheckBox()
         Me.mnuMainMenu = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReadOBSINIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ttMainToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.ReadOBSINIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
+        Me.chkDifferentMath = New System.Windows.Forms.CheckBox()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -899,14 +900,14 @@ Partial Class OBSWebSocketCropper
         'chkOldMath
         '
         Me.chkOldMath.AutoSize = True
-        Me.chkOldMath.Location = New System.Drawing.Point(7, 278)
+        Me.chkOldMath.Location = New System.Drawing.Point(7, 319)
         Me.chkOldMath.Name = "chkOldMath"
-        Me.chkOldMath.Size = New System.Drawing.Size(69, 17)
+        Me.chkOldMath.Size = New System.Drawing.Size(88, 17)
         Me.chkOldMath.TabIndex = 31
-        Me.chkOldMath.Text = "Old Math"
-        Me.ttMainToolTip.SetToolTip(Me.chkOldMath, "Check this to check the original cropping math." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Leaving this unchecked will us" &
-        "e the new math.")
+        Me.chkOldMath.Text = "Original Math"
+        Me.ttMainToolTip.SetToolTip(Me.chkOldMath, "Check this to check the original cropping math.")
         Me.chkOldMath.UseVisualStyleBackColor = True
+        Me.chkOldMath.Visible = False
         '
         'Label28
         '
@@ -1054,13 +1055,15 @@ Partial Class OBSWebSocketCropper
         'chkNewNewMath
         '
         Me.chkNewNewMath.AutoSize = True
-        Me.chkNewNewMath.Location = New System.Drawing.Point(7, 301)
+        Me.chkNewNewMath.Location = New System.Drawing.Point(7, 296)
         Me.chkNewNewMath.Name = "chkNewNewMath"
         Me.chkNewNewMath.Size = New System.Drawing.Size(75, 17)
         Me.chkNewNewMath.TabIndex = 56
         Me.chkNewNewMath.Text = "New Math"
-        Me.ttMainToolTip.SetToolTip(Me.chkNewNewMath, "Checking this overrides the other math checks to test" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "something new.")
+        Me.ttMainToolTip.SetToolTip(Me.chkNewNewMath, "This checks the 2nd version of the math trying" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "to account for the black bars in " &
+        "VLC")
         Me.chkNewNewMath.UseVisualStyleBackColor = True
+        Me.chkNewNewMath.Visible = False
         '
         'mnuMainMenu
         '
@@ -1078,10 +1081,16 @@ Partial Class OBSWebSocketCropper
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'ReadOBSINIToolStripMenuItem
+        '
+        Me.ReadOBSINIToolStripMenuItem.Name = "ReadOBSINIToolStripMenuItem"
+        Me.ReadOBSINIToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+        Me.ReadOBSINIToolStripMenuItem.Text = "Read OBS INI"
+        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -1096,12 +1105,6 @@ Partial Class OBSWebSocketCropper
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
-        '
-        'ReadOBSINIToolStripMenuItem
-        '
-        Me.ReadOBSINIToolStripMenuItem.Name = "ReadOBSINIToolStripMenuItem"
-        Me.ReadOBSINIToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ReadOBSINIToolStripMenuItem.Text = "Read OBS INI"
         '
         'gbTrackerComms
         '
@@ -1124,11 +1127,24 @@ Partial Class OBSWebSocketCropper
         Me.gbTrackerComms.TabStop = False
         Me.gbTrackerComms.Text = "Tracker / Comms info"
         '
+        'chkDifferentMath
+        '
+        Me.chkDifferentMath.AutoSize = True
+        Me.chkDifferentMath.Location = New System.Drawing.Point(7, 272)
+        Me.chkDifferentMath.Name = "chkDifferentMath"
+        Me.chkDifferentMath.Size = New System.Drawing.Size(95, 17)
+        Me.chkDifferentMath.TabIndex = 59
+        Me.chkDifferentMath.Text = "View Old Math"
+        Me.ttMainToolTip.SetToolTip(Me.chkDifferentMath, "Check this to enable looking at the obsolete math" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "that was left in for informati" &
+        "onal purposes.")
+        Me.chkDifferentMath.UseVisualStyleBackColor = True
+        '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 665)
+        Me.Controls.Add(Me.chkDifferentMath)
         Me.Controls.Add(Me.gbTrackerComms)
         Me.Controls.Add(Me.chkNewNewMath)
         Me.Controls.Add(Me.btnSetTrackCommNames)
@@ -1300,4 +1316,5 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents ttMainToolTip As ToolTip
     Friend WithEvents ReadOBSINIToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents gbTrackerComms As GroupBox
+    Friend WithEvents chkDifferentMath As CheckBox
 End Class

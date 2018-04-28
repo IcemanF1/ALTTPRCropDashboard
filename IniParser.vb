@@ -1,10 +1,14 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
+Imports System.Runtime.InteropServices
 
 Public NotInheritable Class IniParser
     Private Shared SectionRegex As New Regex("\[(?<section>[^\n\[\]]+)\]\n*(?<valuelist>(.(?!\[[^\n\[\]]+\]))*)", RegexOptions.Singleline Or RegexOptions.CultureInvariant Or RegexOptions.Compiled)
     Private Shared ValueRegex As New Regex("(?<valuename>[^=\n]+)=(?<value>[^\n]*)", RegexOptions.CultureInvariant Or RegexOptions.Compiled)
 
+    <DllImportAttribute("kernel32.dll", EntryPoint:="WritePrivateProfileStringW")>
+    Public Shared Function WritePrivateProfileStringW(<InAttribute(), MarshalAs(UnmanagedType.LPWStr)> ByVal lpSecName As String, <InAttribute(), MarshalAs(UnmanagedType.LPWStr)> ByVal lpKeyName As String, <InAttribute(), MarshalAs(UnmanagedType.LPWStr)> ByVal lpString As String, <InAttribute(), MarshalAs(UnmanagedType.LPWStr)> ByVal lpFileName As String) As <MarshalAs(UnmanagedType.Bool)> Boolean
+    End Function
     ''' <summary>
     ''' Parses an .ini-file.
     ''' </summary>
