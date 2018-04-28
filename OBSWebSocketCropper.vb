@@ -1393,6 +1393,18 @@ Public Class OBSWebSocketCropper
         btnSetMaster.Enabled = isConnected
         btnSetRightCrop.Enabled = isConnected
         btnSetTrackCommNames.Enabled = isConnected
+
+        gbConnection2.Enabled = isConnected
+        gbTrackerComms.Enabled = isConnected
+        gbLeftGameWindow.Enabled = isConnected
+        gbRightGameWindow.Enabled = isConnected
+        gbLeftTimerWindow.Enabled = isConnected
+        gbRightTimerWindow.Enabled = isConnected
+
+        cbLeftRunnerName.Enabled = isConnected
+        cbLeftRunnerOBS.Enabled = isConnected
+        cbRightRunnerOBS.Enabled = isConnected
+        cbRightRunnerName.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
         EnableButtons(False)

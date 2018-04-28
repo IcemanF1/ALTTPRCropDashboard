@@ -38,8 +38,8 @@ Partial Class OBSWebSocketCropper
         Me.Label5 = New System.Windows.Forms.Label()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.btnSetMaster = New System.Windows.Forms.Button()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.gbRightGameWindow = New System.Windows.Forms.GroupBox()
+        Me.gbRightTimerWindow = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.cbRightTimerWindow = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -50,7 +50,7 @@ Partial Class OBSWebSocketCropper
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txtCropRightTimer_Right = New System.Windows.Forms.TextBox()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.gbLeftTimerWindow = New System.Windows.Forms.GroupBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.cbLeftTimerWindow = New System.Windows.Forms.ComboBox()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -61,7 +61,7 @@ Partial Class OBSWebSocketCropper
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtCropLeftTimer_Right = New System.Windows.Forms.TextBox()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.gbLeftGameWindow = New System.Windows.Forms.GroupBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -88,8 +88,8 @@ Partial Class OBSWebSocketCropper
         Me.txtConnectionString1 = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.txtPassword1 = New System.Windows.Forms.TextBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.gbConnection1 = New System.Windows.Forms.GroupBox()
+        Me.gbConnection2 = New System.Windows.Forms.GroupBox()
         Me.btnConnectOBS2 = New System.Windows.Forms.Button()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
@@ -131,13 +131,15 @@ Partial Class OBSWebSocketCropper
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ttMainToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.ReadOBSINIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox5.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
+        Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
+        Me.gbRightGameWindow.SuspendLayout()
+        Me.gbRightTimerWindow.SuspendLayout()
+        Me.gbLeftTimerWindow.SuspendLayout()
+        Me.gbLeftGameWindow.SuspendLayout()
+        Me.gbConnection1.SuspendLayout()
+        Me.gbConnection2.SuspendLayout()
         Me.mnuMainMenu.SuspendLayout()
+        Me.gbTrackerComms.SuspendLayout()
         Me.SuspendLayout()
         '
         'cbRightGameWindow
@@ -274,43 +276,43 @@ Partial Class OBSWebSocketCropper
         " height/width.")
         Me.btnSetMaster.UseVisualStyleBackColor = True
         '
-        'GroupBox2
+        'gbRightGameWindow
         '
-        Me.GroupBox2.Controls.Add(Me.Label5)
-        Me.GroupBox2.Controls.Add(Me.cbRightGameWindow)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Controls.Add(Me.txtCropRightGame_Top)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.txtCropRightGame_Left)
-        Me.GroupBox2.Controls.Add(Me.txtCropRightGame_Bottom)
-        Me.GroupBox2.Controls.Add(Me.Label3)
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.txtCropRightGame_Right)
-        Me.GroupBox2.Location = New System.Drawing.Point(511, 467)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(307, 118)
-        Me.GroupBox2.TabIndex = 16
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Right Game Window"
+        Me.gbRightGameWindow.Controls.Add(Me.Label5)
+        Me.gbRightGameWindow.Controls.Add(Me.cbRightGameWindow)
+        Me.gbRightGameWindow.Controls.Add(Me.Label1)
+        Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Top)
+        Me.gbRightGameWindow.Controls.Add(Me.Label2)
+        Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Left)
+        Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Bottom)
+        Me.gbRightGameWindow.Controls.Add(Me.Label3)
+        Me.gbRightGameWindow.Controls.Add(Me.Label4)
+        Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Right)
+        Me.gbRightGameWindow.Location = New System.Drawing.Point(511, 467)
+        Me.gbRightGameWindow.Name = "gbRightGameWindow"
+        Me.gbRightGameWindow.Size = New System.Drawing.Size(307, 118)
+        Me.gbRightGameWindow.TabIndex = 16
+        Me.gbRightGameWindow.TabStop = False
+        Me.gbRightGameWindow.Text = "Right Game Window"
         '
-        'GroupBox3
+        'gbRightTimerWindow
         '
-        Me.GroupBox3.Controls.Add(Me.Label6)
-        Me.GroupBox3.Controls.Add(Me.cbRightTimerWindow)
-        Me.GroupBox3.Controls.Add(Me.Label7)
-        Me.GroupBox3.Controls.Add(Me.txtCropRightTimer_Top)
-        Me.GroupBox3.Controls.Add(Me.Label8)
-        Me.GroupBox3.Controls.Add(Me.txtCropRightTimer_Left)
-        Me.GroupBox3.Controls.Add(Me.txtCropRightTimer_Bottom)
-        Me.GroupBox3.Controls.Add(Me.Label9)
-        Me.GroupBox3.Controls.Add(Me.Label10)
-        Me.GroupBox3.Controls.Add(Me.txtCropRightTimer_Right)
-        Me.GroupBox3.Location = New System.Drawing.Point(512, 345)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(307, 118)
-        Me.GroupBox3.TabIndex = 17
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Right Timer Window"
+        Me.gbRightTimerWindow.Controls.Add(Me.Label6)
+        Me.gbRightTimerWindow.Controls.Add(Me.cbRightTimerWindow)
+        Me.gbRightTimerWindow.Controls.Add(Me.Label7)
+        Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Top)
+        Me.gbRightTimerWindow.Controls.Add(Me.Label8)
+        Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Left)
+        Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Bottom)
+        Me.gbRightTimerWindow.Controls.Add(Me.Label9)
+        Me.gbRightTimerWindow.Controls.Add(Me.Label10)
+        Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Right)
+        Me.gbRightTimerWindow.Location = New System.Drawing.Point(512, 345)
+        Me.gbRightTimerWindow.Name = "gbRightTimerWindow"
+        Me.gbRightTimerWindow.Size = New System.Drawing.Size(307, 118)
+        Me.gbRightTimerWindow.TabIndex = 17
+        Me.gbRightTimerWindow.TabStop = False
+        Me.gbRightTimerWindow.Text = "Right Timer Window"
         '
         'Label6
         '
@@ -393,24 +395,24 @@ Partial Class OBSWebSocketCropper
         Me.txtCropRightTimer_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightTimer_Right.TabIndex = 7
         '
-        'GroupBox4
+        'gbLeftTimerWindow
         '
-        Me.GroupBox4.Controls.Add(Me.Label11)
-        Me.GroupBox4.Controls.Add(Me.cbLeftTimerWindow)
-        Me.GroupBox4.Controls.Add(Me.Label12)
-        Me.GroupBox4.Controls.Add(Me.txtCropLeftTimer_Top)
-        Me.GroupBox4.Controls.Add(Me.Label13)
-        Me.GroupBox4.Controls.Add(Me.txtCropLeftTimer_Left)
-        Me.GroupBox4.Controls.Add(Me.txtCropLeftTimer_Bottom)
-        Me.GroupBox4.Controls.Add(Me.Label14)
-        Me.GroupBox4.Controls.Add(Me.Label15)
-        Me.GroupBox4.Controls.Add(Me.txtCropLeftTimer_Right)
-        Me.GroupBox4.Location = New System.Drawing.Point(169, 344)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(307, 118)
-        Me.GroupBox4.TabIndex = 19
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Left Timer Window"
+        Me.gbLeftTimerWindow.Controls.Add(Me.Label11)
+        Me.gbLeftTimerWindow.Controls.Add(Me.cbLeftTimerWindow)
+        Me.gbLeftTimerWindow.Controls.Add(Me.Label12)
+        Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Top)
+        Me.gbLeftTimerWindow.Controls.Add(Me.Label13)
+        Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Left)
+        Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Bottom)
+        Me.gbLeftTimerWindow.Controls.Add(Me.Label14)
+        Me.gbLeftTimerWindow.Controls.Add(Me.Label15)
+        Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Right)
+        Me.gbLeftTimerWindow.Location = New System.Drawing.Point(169, 344)
+        Me.gbLeftTimerWindow.Name = "gbLeftTimerWindow"
+        Me.gbLeftTimerWindow.Size = New System.Drawing.Size(307, 118)
+        Me.gbLeftTimerWindow.TabIndex = 19
+        Me.gbLeftTimerWindow.TabStop = False
+        Me.gbLeftTimerWindow.Text = "Left Timer Window"
         '
         'Label11
         '
@@ -493,24 +495,24 @@ Partial Class OBSWebSocketCropper
         Me.txtCropLeftTimer_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftTimer_Right.TabIndex = 7
         '
-        'GroupBox5
+        'gbLeftGameWindow
         '
-        Me.GroupBox5.Controls.Add(Me.Label16)
-        Me.GroupBox5.Controls.Add(Me.cbLeftGameWindow)
-        Me.GroupBox5.Controls.Add(Me.Label17)
-        Me.GroupBox5.Controls.Add(Me.txtCropLeftGame_Top)
-        Me.GroupBox5.Controls.Add(Me.Label18)
-        Me.GroupBox5.Controls.Add(Me.txtCropLeftGame_Left)
-        Me.GroupBox5.Controls.Add(Me.txtCropLeftGame_Bottom)
-        Me.GroupBox5.Controls.Add(Me.Label19)
-        Me.GroupBox5.Controls.Add(Me.Label20)
-        Me.GroupBox5.Controls.Add(Me.txtCropLeftGame_Right)
-        Me.GroupBox5.Location = New System.Drawing.Point(168, 466)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(307, 118)
-        Me.GroupBox5.TabIndex = 18
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Left Game Window"
+        Me.gbLeftGameWindow.Controls.Add(Me.Label16)
+        Me.gbLeftGameWindow.Controls.Add(Me.cbLeftGameWindow)
+        Me.gbLeftGameWindow.Controls.Add(Me.Label17)
+        Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Top)
+        Me.gbLeftGameWindow.Controls.Add(Me.Label18)
+        Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Left)
+        Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Bottom)
+        Me.gbLeftGameWindow.Controls.Add(Me.Label19)
+        Me.gbLeftGameWindow.Controls.Add(Me.Label20)
+        Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Right)
+        Me.gbLeftGameWindow.Location = New System.Drawing.Point(168, 466)
+        Me.gbLeftGameWindow.Name = "gbLeftGameWindow"
+        Me.gbLeftGameWindow.Size = New System.Drawing.Size(307, 118)
+        Me.gbLeftGameWindow.TabIndex = 18
+        Me.gbLeftGameWindow.TabStop = False
+        Me.gbLeftGameWindow.Text = "Left Game Window"
         '
         'Label16
         '
@@ -731,35 +733,35 @@ Partial Class OBSWebSocketCropper
         Me.txtPassword1.Size = New System.Drawing.Size(160, 20)
         Me.txtPassword1.TabIndex = 30
         '
-        'GroupBox1
+        'gbConnection1
         '
-        Me.GroupBox1.Controls.Add(Me.btnConnectOBS1)
-        Me.GroupBox1.Controls.Add(Me.Label26)
-        Me.GroupBox1.Controls.Add(Me.lblOBS1ConnectedStatus)
-        Me.GroupBox1.Controls.Add(Me.txtPassword1)
-        Me.GroupBox1.Controls.Add(Me.txtConnectionString1)
-        Me.GroupBox1.Controls.Add(Me.Label25)
-        Me.GroupBox1.Location = New System.Drawing.Point(173, 27)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(620, 71)
-        Me.GroupBox1.TabIndex = 31
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Connection 1"
+        Me.gbConnection1.Controls.Add(Me.btnConnectOBS1)
+        Me.gbConnection1.Controls.Add(Me.Label26)
+        Me.gbConnection1.Controls.Add(Me.lblOBS1ConnectedStatus)
+        Me.gbConnection1.Controls.Add(Me.txtPassword1)
+        Me.gbConnection1.Controls.Add(Me.txtConnectionString1)
+        Me.gbConnection1.Controls.Add(Me.Label25)
+        Me.gbConnection1.Location = New System.Drawing.Point(173, 27)
+        Me.gbConnection1.Name = "gbConnection1"
+        Me.gbConnection1.Size = New System.Drawing.Size(620, 71)
+        Me.gbConnection1.TabIndex = 31
+        Me.gbConnection1.TabStop = False
+        Me.gbConnection1.Text = "Connection 1"
         '
-        'GroupBox6
+        'gbConnection2
         '
-        Me.GroupBox6.Controls.Add(Me.btnConnectOBS2)
-        Me.GroupBox6.Controls.Add(Me.Label27)
-        Me.GroupBox6.Controls.Add(Me.lblOBS2ConnectedStatus)
-        Me.GroupBox6.Controls.Add(Me.txtPassword2)
-        Me.GroupBox6.Controls.Add(Me.txtConnectionString2)
-        Me.GroupBox6.Controls.Add(Me.Label29)
-        Me.GroupBox6.Location = New System.Drawing.Point(173, 108)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(620, 71)
-        Me.GroupBox6.TabIndex = 32
-        Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "Connection 2"
+        Me.gbConnection2.Controls.Add(Me.btnConnectOBS2)
+        Me.gbConnection2.Controls.Add(Me.Label27)
+        Me.gbConnection2.Controls.Add(Me.lblOBS2ConnectedStatus)
+        Me.gbConnection2.Controls.Add(Me.txtPassword2)
+        Me.gbConnection2.Controls.Add(Me.txtConnectionString2)
+        Me.gbConnection2.Controls.Add(Me.Label29)
+        Me.gbConnection2.Location = New System.Drawing.Point(173, 108)
+        Me.gbConnection2.Name = "gbConnection2"
+        Me.gbConnection2.Size = New System.Drawing.Size(620, 71)
+        Me.gbConnection2.TabIndex = 32
+        Me.gbConnection2.TabStop = False
+        Me.gbConnection2.Text = "Connection 2"
         '
         'btnConnectOBS2
         '
@@ -909,7 +911,7 @@ Partial Class OBSWebSocketCropper
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(523, 292)
+        Me.Label28.Location = New System.Drawing.Point(518, 300)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(101, 13)
         Me.Label28.TabIndex = 15
@@ -918,7 +920,7 @@ Partial Class OBSWebSocketCropper
         'cbRightRunnerOBS
         '
         Me.cbRightRunnerOBS.FormattingEnabled = True
-        Me.cbRightRunnerOBS.Location = New System.Drawing.Point(634, 289)
+        Me.cbRightRunnerOBS.Location = New System.Drawing.Point(629, 297)
         Me.cbRightRunnerOBS.Name = "cbRightRunnerOBS"
         Me.cbRightRunnerOBS.Size = New System.Drawing.Size(121, 21)
         Me.cbRightRunnerOBS.TabIndex = 14
@@ -926,7 +928,7 @@ Partial Class OBSWebSocketCropper
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(519, 219)
+        Me.Label30.Location = New System.Drawing.Point(350, 50)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(165, 13)
         Me.Label30.TabIndex = 43
@@ -935,7 +937,7 @@ Partial Class OBSWebSocketCropper
         'cbRightTrackerOBS
         '
         Me.cbRightTrackerOBS.FormattingEnabled = True
-        Me.cbRightTrackerOBS.Location = New System.Drawing.Point(686, 214)
+        Me.cbRightTrackerOBS.Location = New System.Drawing.Point(517, 45)
         Me.cbRightTrackerOBS.Name = "cbRightTrackerOBS"
         Me.cbRightTrackerOBS.Size = New System.Drawing.Size(132, 21)
         Me.cbRightTrackerOBS.TabIndex = 42
@@ -943,7 +945,7 @@ Partial Class OBSWebSocketCropper
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(175, 214)
+        Me.Label31.Location = New System.Drawing.Point(6, 45)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(158, 13)
         Me.Label31.TabIndex = 45
@@ -952,7 +954,7 @@ Partial Class OBSWebSocketCropper
         'cbLeftTrackerOBS
         '
         Me.cbLeftTrackerOBS.FormattingEnabled = True
-        Me.cbLeftTrackerOBS.Location = New System.Drawing.Point(339, 211)
+        Me.cbLeftTrackerOBS.Location = New System.Drawing.Point(170, 42)
         Me.cbLeftTrackerOBS.Name = "cbLeftTrackerOBS"
         Me.cbLeftTrackerOBS.Size = New System.Drawing.Size(137, 21)
         Me.cbLeftTrackerOBS.TabIndex = 44
@@ -960,7 +962,7 @@ Partial Class OBSWebSocketCropper
         'Label32
         '
         Me.Label32.AutoSize = True
-        Me.Label32.Location = New System.Drawing.Point(179, 287)
+        Me.Label32.Location = New System.Drawing.Point(174, 295)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(94, 13)
         Me.Label32.TabIndex = 47
@@ -969,21 +971,21 @@ Partial Class OBSWebSocketCropper
         'cbLeftRunnerOBS
         '
         Me.cbLeftRunnerOBS.FormattingEnabled = True
-        Me.cbLeftRunnerOBS.Location = New System.Drawing.Point(290, 284)
+        Me.cbLeftRunnerOBS.Location = New System.Drawing.Point(285, 292)
         Me.cbLeftRunnerOBS.Name = "cbLeftRunnerOBS"
         Me.cbLeftRunnerOBS.Size = New System.Drawing.Size(121, 21)
         Me.cbLeftRunnerOBS.TabIndex = 46
         '
         'txtLeftTrackerURL
         '
-        Me.txtLeftTrackerURL.Location = New System.Drawing.Point(286, 238)
+        Me.txtLeftTrackerURL.Location = New System.Drawing.Point(117, 69)
         Me.txtLeftTrackerURL.Name = "txtLeftTrackerURL"
         Me.txtLeftTrackerURL.Size = New System.Drawing.Size(190, 20)
         Me.txtLeftTrackerURL.TabIndex = 31
         '
         'txtRightTrackerURL
         '
-        Me.txtRightTrackerURL.Location = New System.Drawing.Point(630, 242)
+        Me.txtRightTrackerURL.Location = New System.Drawing.Point(461, 73)
         Me.txtRightTrackerURL.Name = "txtRightTrackerURL"
         Me.txtRightTrackerURL.Size = New System.Drawing.Size(189, 20)
         Me.txtRightTrackerURL.TabIndex = 48
@@ -991,7 +993,7 @@ Partial Class OBSWebSocketCropper
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(177, 245)
+        Me.Label33.Location = New System.Drawing.Point(8, 76)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(90, 13)
         Me.Label33.TabIndex = 49
@@ -1000,7 +1002,7 @@ Partial Class OBSWebSocketCropper
         'Label34
         '
         Me.Label34.AutoSize = True
-        Me.Label34.Location = New System.Drawing.Point(519, 245)
+        Me.Label34.Location = New System.Drawing.Point(350, 76)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(97, 13)
         Me.Label34.TabIndex = 50
@@ -1009,7 +1011,7 @@ Partial Class OBSWebSocketCropper
         'Label35
         '
         Me.Label35.AutoSize = True
-        Me.Label35.Location = New System.Drawing.Point(175, 188)
+        Me.Label35.Location = New System.Drawing.Point(6, 19)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(124, 13)
         Me.Label35.TabIndex = 52
@@ -1018,7 +1020,7 @@ Partial Class OBSWebSocketCropper
         'cbCommentaryOBS
         '
         Me.cbCommentaryOBS.FormattingEnabled = True
-        Me.cbCommentaryOBS.Location = New System.Drawing.Point(305, 185)
+        Me.cbCommentaryOBS.Location = New System.Drawing.Point(136, 16)
         Me.cbCommentaryOBS.Name = "cbCommentaryOBS"
         Me.cbCommentaryOBS.Size = New System.Drawing.Size(121, 21)
         Me.cbCommentaryOBS.TabIndex = 51
@@ -1026,7 +1028,7 @@ Partial Class OBSWebSocketCropper
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(432, 188)
+        Me.Label36.Location = New System.Drawing.Point(263, 19)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(101, 13)
         Me.Label36.TabIndex = 54
@@ -1034,7 +1036,7 @@ Partial Class OBSWebSocketCropper
         '
         'txtCommentaryNames
         '
-        Me.txtCommentaryNames.Location = New System.Drawing.Point(539, 185)
+        Me.txtCommentaryNames.Location = New System.Drawing.Point(370, 16)
         Me.txtCommentaryNames.Name = "txtCommentaryNames"
         Me.txtCommentaryNames.Size = New System.Drawing.Size(280, 20)
         Me.txtCommentaryNames.TabIndex = 53
@@ -1101,27 +1103,37 @@ Partial Class OBSWebSocketCropper
         Me.ReadOBSINIToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ReadOBSINIToolStripMenuItem.Text = "Read OBS INI"
         '
+        'gbTrackerComms
+        '
+        Me.gbTrackerComms.Controls.Add(Me.Label35)
+        Me.gbTrackerComms.Controls.Add(Me.cbRightTrackerOBS)
+        Me.gbTrackerComms.Controls.Add(Me.Label30)
+        Me.gbTrackerComms.Controls.Add(Me.Label36)
+        Me.gbTrackerComms.Controls.Add(Me.cbLeftTrackerOBS)
+        Me.gbTrackerComms.Controls.Add(Me.txtCommentaryNames)
+        Me.gbTrackerComms.Controls.Add(Me.Label31)
+        Me.gbTrackerComms.Controls.Add(Me.txtLeftTrackerURL)
+        Me.gbTrackerComms.Controls.Add(Me.cbCommentaryOBS)
+        Me.gbTrackerComms.Controls.Add(Me.txtRightTrackerURL)
+        Me.gbTrackerComms.Controls.Add(Me.Label34)
+        Me.gbTrackerComms.Controls.Add(Me.Label33)
+        Me.gbTrackerComms.Location = New System.Drawing.Point(168, 184)
+        Me.gbTrackerComms.Name = "gbTrackerComms"
+        Me.gbTrackerComms.Size = New System.Drawing.Size(658, 100)
+        Me.gbTrackerComms.TabIndex = 58
+        Me.gbTrackerComms.TabStop = False
+        Me.gbTrackerComms.Text = "Tracker / Comms info"
+        '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 665)
+        Me.Controls.Add(Me.gbTrackerComms)
         Me.Controls.Add(Me.chkNewNewMath)
         Me.Controls.Add(Me.btnSetTrackCommNames)
-        Me.Controls.Add(Me.Label36)
-        Me.Controls.Add(Me.txtCommentaryNames)
-        Me.Controls.Add(Me.Label35)
-        Me.Controls.Add(Me.cbCommentaryOBS)
-        Me.Controls.Add(Me.Label34)
-        Me.Controls.Add(Me.Label33)
-        Me.Controls.Add(Me.txtRightTrackerURL)
-        Me.Controls.Add(Me.txtLeftTrackerURL)
         Me.Controls.Add(Me.Label32)
         Me.Controls.Add(Me.cbLeftRunnerOBS)
-        Me.Controls.Add(Me.Label31)
-        Me.Controls.Add(Me.cbLeftTrackerOBS)
-        Me.Controls.Add(Me.Label30)
-        Me.Controls.Add(Me.cbRightTrackerOBS)
         Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.chkOldMath)
         Me.Controls.Add(Me.cbRightRunnerOBS)
@@ -1134,8 +1146,8 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.lblLMasterWidth)
         Me.Controls.Add(Me.lblLMasterHeight)
         Me.Controls.Add(Me.btnGetCropFromOBS)
-        Me.Controls.Add(Me.GroupBox6)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.gbConnection2)
+        Me.Controls.Add(Me.gbConnection1)
         Me.Controls.Add(Me.cbRightRunnerName)
         Me.Controls.Add(Me.cbLeftRunnerName)
         Me.Controls.Add(Me.btnSaveSettings)
@@ -1147,10 +1159,10 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.Label21)
         Me.Controls.Add(Me.btnSaveRunnerCrop)
         Me.Controls.Add(Me.btnSetLeftCrop)
-        Me.Controls.Add(Me.GroupBox4)
-        Me.Controls.Add(Me.GroupBox5)
-        Me.Controls.Add(Me.GroupBox3)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.gbLeftTimerWindow)
+        Me.Controls.Add(Me.gbLeftGameWindow)
+        Me.Controls.Add(Me.gbRightTimerWindow)
+        Me.Controls.Add(Me.gbRightGameWindow)
         Me.Controls.Add(Me.btnSetMaster)
         Me.Controls.Add(Me.btnRefreshScenes)
         Me.Controls.Add(Me.btnSetRightCrop)
@@ -1158,20 +1170,22 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.mnuMainMenu)
         Me.Name = "OBSWebSocketCropper"
         Me.Text = "OBS Websocket Cropper"
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
+        Me.gbRightGameWindow.ResumeLayout(False)
+        Me.gbRightGameWindow.PerformLayout()
+        Me.gbRightTimerWindow.ResumeLayout(False)
+        Me.gbRightTimerWindow.PerformLayout()
+        Me.gbLeftTimerWindow.ResumeLayout(False)
+        Me.gbLeftTimerWindow.PerformLayout()
+        Me.gbLeftGameWindow.ResumeLayout(False)
+        Me.gbLeftGameWindow.PerformLayout()
+        Me.gbConnection1.ResumeLayout(False)
+        Me.gbConnection1.PerformLayout()
+        Me.gbConnection2.ResumeLayout(False)
+        Me.gbConnection2.PerformLayout()
         Me.mnuMainMenu.ResumeLayout(False)
         Me.mnuMainMenu.PerformLayout()
+        Me.gbTrackerComms.ResumeLayout(False)
+        Me.gbTrackerComms.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1192,8 +1206,8 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents Label5 As Label
     Friend WithEvents btnRefreshScenes As Button
     Friend WithEvents btnSetMaster As Button
-    Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents gbRightGameWindow As GroupBox
+    Friend WithEvents gbRightTimerWindow As GroupBox
     Friend WithEvents Label6 As Label
     Friend WithEvents cbRightTimerWindow As ComboBox
     Friend WithEvents Label7 As Label
@@ -1204,7 +1218,7 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents txtCropRightTimer_Right As TextBox
-    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents gbLeftTimerWindow As GroupBox
     Friend WithEvents Label11 As Label
     Friend WithEvents cbLeftTimerWindow As ComboBox
     Friend WithEvents Label12 As Label
@@ -1215,7 +1229,7 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents txtCropLeftTimer_Right As TextBox
-    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents gbLeftGameWindow As GroupBox
     Friend WithEvents Label16 As Label
     Friend WithEvents cbLeftGameWindow As ComboBox
     Friend WithEvents Label17 As Label
@@ -1242,8 +1256,8 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents txtConnectionString1 As TextBox
     Friend WithEvents Label26 As Label
     Friend WithEvents txtPassword1 As TextBox
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents gbConnection1 As GroupBox
+    Friend WithEvents gbConnection2 As GroupBox
     Friend WithEvents btnConnectOBS2 As Button
     Friend WithEvents Label27 As Label
     Friend WithEvents lblOBS2ConnectedStatus As Label
@@ -1285,4 +1299,5 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ttMainToolTip As ToolTip
     Friend WithEvents ReadOBSINIToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents gbTrackerComms As GroupBox
 End Class
