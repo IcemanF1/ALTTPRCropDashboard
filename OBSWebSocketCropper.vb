@@ -2,6 +2,7 @@
 Imports System.Windows.Forms
 Imports OBSWebsocketDotNet
 Imports System.IO
+Imports ALTTPRCropDashboard.Data
 Imports Newtonsoft.Json.Linq
 
 
@@ -26,6 +27,8 @@ Public Class OBSWebSocketCropper
 
     Dim LSourceHeight As Integer
     Dim LSourceWidth As Integer
+
+    Dim CropApi As CropApi
 
     Dim MasterWidthRight As Integer
     Dim MasterHeightRight As Integer
@@ -570,16 +573,20 @@ Public Class OBSWebSocketCropper
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
         Me.Cursor = Cursors.WaitCursor
 
-        If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) Then
+        If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) Or String.IsNullOrWhiteSpace(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) Then
             Dim ServerURL As String = InputBox("Please enter the server URL.", ProgramName, "")
 
             If ServerURL.Trim.Length > 0 Then
                 UserSettings.Tables("UserSettings").Rows(0)("ServerURL") = ServerURL
                 WebCalls.WebURL = ServerURL
+
+                CropApi = New CropApi(ServerURL)
             Else
                 MsgBox("No server URL was entered.  No sync will happen.", MsgBoxStyle.OkOnly, ProgramName)
                 Exit Sub
             End If
+        Else
+            CropApi = New CropApi(UserSettings.Tables("UserSettings").Rows(0)("ServerURL"))
         End If
 
         GetSyncFromServer()
@@ -1074,10 +1081,10 @@ Public Class OBSWebSocketCropper
 
                             realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
-                                txtCropRightTimer_Top.Text = realCrop.Top
-                                txtCropRightTimer_Bottom.Text = realCrop.Bottom
-                                txtCropRightTimer_Left.Text = realCrop.Left
-                                txtCropRightTimer_Right.Text = realCrop.Right
+                            txtCropRightTimer_Top.Text = realCrop.Top
+                            txtCropRightTimer_Bottom.Text = realCrop.Bottom
+                            txtCropRightTimer_Left.Text = realCrop.Left
+                            txtCropRightTimer_Right.Text = realCrop.Right
 
 
                             savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Game"),
@@ -1088,10 +1095,10 @@ Public Class OBSWebSocketCropper
 
                             realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
-                                txtCropRightGame_Top.Text = realCrop.Top
-                                txtCropRightGame_Bottom.Text = realCrop.Bottom
-                                txtCropRightGame_Left.Text = realCrop.Left
-                                txtCropRightGame_Right.Text = realCrop.Right
+                            txtCropRightGame_Top.Text = realCrop.Top
+                            txtCropRightGame_Bottom.Text = realCrop.Bottom
+                            txtCropRightGame_Left.Text = realCrop.Left
+                            txtCropRightGame_Right.Text = realCrop.Right
 
 
                             savedMasterSize = New Size(UserCropList.Tables("CropList").Rows(x)("MasterWidth"), UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
@@ -1111,10 +1118,10 @@ Public Class OBSWebSocketCropper
 
                             realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
-                                txtCropLeftTimer_Top.Text = realCrop.Top
-                                txtCropLeftTimer_Bottom.Text = realCrop.Bottom
-                                txtCropLeftTimer_Left.Text = realCrop.Left
-                                txtCropLeftTimer_Right.Text = realCrop.Right
+                            txtCropLeftTimer_Top.Text = realCrop.Top
+                            txtCropLeftTimer_Bottom.Text = realCrop.Bottom
+                            txtCropLeftTimer_Left.Text = realCrop.Left
+                            txtCropLeftTimer_Right.Text = realCrop.Right
 
                             savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Game"),
                                            UserCropList.Tables("CropList").Rows(x)("CropTop_Game"),
@@ -1123,10 +1130,10 @@ Public Class OBSWebSocketCropper
 
                             realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
-                                txtCropLeftGame_Top.Text = realCrop.Top
-                                txtCropLeftGame_Bottom.Text = realCrop.Bottom
-                                txtCropLeftGame_Left.Text = realCrop.Left
-                                txtCropLeftGame_Right.Text = realCrop.Right
+                            txtCropLeftGame_Top.Text = realCrop.Top
+                            txtCropLeftGame_Bottom.Text = realCrop.Bottom
+                            txtCropLeftGame_Left.Text = realCrop.Left
+                            txtCropLeftGame_Right.Text = realCrop.Right
 
                             savedMasterSize = New Size(UserCropList.Tables("CropList").Rows(x)("MasterWidth"), UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
 
@@ -1535,53 +1542,41 @@ Public Class OBSWebSocketCropper
         GetINIFile()
     End Sub
     Private Sub GetSyncFromServer()
-        Dim TResponse As String
-        TResponse = WebCalls.GetCallFromServer()
 
-        Dim jar As JArray
-        jar = JArray.Parse(TResponse)
+        Dim cropList As IEnumerable(Of RunnerInfo)
+        Try
+            cropList = CropApi.GetCrops()
+
+        Catch ex As Exception
+            MessageBox.Show(Me, "Error While retrieving data from server: " & ex.ToString())
+            Return
+        End Try
 
         UserCropList_Temp.Clear()
 
-        If jar IsNot Nothing Then
-            Dim job As JObject
-
-            Dim x As Integer
-            For x = 0 To jar.Count - 1
-                job = JObject.Parse(jar(x).ToString)
-
-                If job IsNot Nothing Then
-                    Dim y As Integer
-                    Dim RacerName As String = job("runner").ToString
-
-                    For y = 0 To job("crops").Count - 1
-
-                        Dim dr As DataRow
-                        dr = UserCropList_Temp.Tables("CropList").NewRow
-                        dr.Item("RacerName") = RacerName
-                        dr.Item("StreamerName") = job("crops")(y)("submitter").ToString
-                        dr.Item("CropTop_Game") = job("crops")(y)("timerCrop")("top")
-                        dr.Item("CropBottom_Game") = job("crops")(y)("gameCrop")("bottom")
-                        dr.Item("CropRight_Game") = job("crops")(y)("gameCrop")("right")
-                        dr.Item("CropLeft_Game") = job("crops")(y)("gameCrop")("left")
-                        dr.Item("CropTop_Timer") = job("crops")(y)("gameCrop")("top")
-                        dr.Item("CropBottom_Timer") = job("crops")(y)("timerCrop")("bottom")
-                        dr.Item("CropRight_Timer") = job("crops")(y)("timerCrop")("right")
-                        dr.Item("CropLeft_Timer") = job("crops")(y)("timerCrop")("left")
-                        dr.Item("MasterHeight") = job("crops")(y)("size")("height")
-                        dr.Item("MasterWidth") = job("crops")(y)("size")("width")
-                        dr.Item("SavedOn") = job("crops")(y)("submittedOn")
-                        UserCropList_Temp.Tables("CropList").Rows.Add(dr)
-                        'job("crops")(0)("size")("width")
-
-                    Next
-
-                End If
+        For Each runnerInfo In cropList
+            For Each crop In runnerInfo.Crops
+                Dim dr As DataRow
+                dr = UserCropList_Temp.Tables("CropList").NewRow
+                dr.Item("RacerName") = runnerInfo.Runner
+                dr.Item("StreamerName") = crop.Submitter
+                dr.Item("CropTop_Game") = crop.GameCrop.Top
+                dr.Item("CropBottom_Game") = crop.GameCrop.Bottom
+                dr.Item("CropRight_Game") = crop.GameCrop.Right
+                dr.Item("CropLeft_Game") = crop.GameCrop.Left
+                dr.Item("CropTop_Timer") = crop.TimerCrop.Top
+                dr.Item("CropBottom_Timer") = crop.TimerCrop.Bottom
+                dr.Item("CropRight_Timer") = crop.TimerCrop.Right
+                dr.Item("CropLeft_Timer") = crop.TimerCrop.Left
+                dr.Item("MasterHeight") = crop.Size.Height
+                dr.Item("MasterWidth") = crop.Size.Width
+                dr.Item("SavedOn") = crop.SubmittedOn
+                UserCropList_Temp.Tables("CropList").Rows.Add(dr)
             Next
-
-        End If
+        Next
 
         SyncDataFromTempToLocal()
+        RefreshRunnerNames()
     End Sub
     Private Sub SyncDataFromTempToLocal()
         Dim x, y As Integer
