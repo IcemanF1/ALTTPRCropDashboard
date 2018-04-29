@@ -1,4 +1,5 @@
 ﻿Imports System
+Imports System.Configuration
 Imports System.Windows.Forms
 Imports OBSWebsocketDotNet
 Imports System.IO
@@ -48,7 +49,6 @@ Public Class OBSWebSocketCropper
 
     Dim UserCropList As New DataSet
     Dim UserCropList_Temp As New DataSet
-    Dim UserSettings As New DataSet
 
     Dim LeftRunnerGameSceneInfo As SceneItemProperties
     Dim RightRunnerGameSceneInfo As SceneItemProperties
@@ -63,37 +63,7 @@ Public Class OBSWebSocketCropper
 
     Dim ProgramLoaded As Boolean
 #Region " Create New Tables "
-    Private Sub CreateUserSettingsTable()
-        If UserSettings.Tables.Count = 0 Then
-            UserSettings.Tables.Add("UserSettings")
-            UserSettings.Tables("UserSettings").Columns.Add("DefaultCropTop", System.Type.GetType("System.Int32"))
-            UserSettings.Tables("UserSettings").Columns.Add("DefaultCropBottom", System.Type.GetType("System.Int32"))
-            UserSettings.Tables("UserSettings").Columns.Add("LeftTimerName")
-            UserSettings.Tables("UserSettings").Columns.Add("LeftGameName")
-            UserSettings.Tables("UserSettings").Columns.Add("RightTimerName")
-            UserSettings.Tables("UserSettings").Columns.Add("RightGameName")
-            UserSettings.Tables("UserSettings").Columns.Add("ConnectionString1")
-            UserSettings.Tables("UserSettings").Columns.Add("ConnectionString2")
-            UserSettings.Tables("UserSettings").Columns.Add("Password1")
-            UserSettings.Tables("UserSettings").Columns.Add("Password2")
-            UserSettings.Tables("UserSettings").Columns.Add("LeftRunnerOBS")
-            UserSettings.Tables("UserSettings").Columns.Add("RightRunnerOBS")
-            UserSettings.Tables("UserSettings").Columns.Add("LeftTrackerOBS")
-            UserSettings.Tables("UserSettings").Columns.Add("RightTrackerOBS")
-            UserSettings.Tables("UserSettings").Columns.Add("CommentaryOBS")
-            UserSettings.Tables("UserSettings").Columns.Add("MeunuBar", System.Type.GetType("System.Boolean"))
-            UserSettings.Tables("UserSettings").Columns.Add("PlayPauseControls", System.Type.GetType("System.Boolean"))
-            UserSettings.Tables("UserSettings").Columns.Add("StatusBar", System.Type.GetType("System.Boolean"))
-            UserSettings.Tables("UserSettings").Columns.Add("OverrideDefault", System.Type.GetType("System.Boolean"))
-            UserSettings.Tables("UserSettings").Columns.Add("ServerURL")
-        Else
-            UserCropList.Tables("UserSettings").Clear()
-        End If
 
-        If File.Exists(Application.StartupPath & "\UserSettings.xml") = True Then
-            UserSettings.ReadXml(Application.StartupPath & "\UserSettings.xml", XmlReadMode.ReadSchema)
-        End If
-    End Sub
     Private Sub CreateNewSourceTable()
         If OBSSourceListLeftGame.Tables.Count = 0 Then
             OBSSourceListLeftGame.Tables.Add("Sources")
@@ -483,57 +453,28 @@ Public Class OBSWebSocketCropper
 
         CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
 
-        If UserSettings.Tables(0).Rows.Count = 0 Then
-            Dim dr As DataRow
-            dr = UserSettings.Tables("UserSettings").NewRow
+        My.Settings.DefaultCropBottom = DefaultCropBottom
+        My.Settings.DefaultCropTop = DefaultCropTop
+        My.Settings.LeftTimerName = cbLeftTimerWindow.Text
+        My.Settings.LeftGameName = cbLeftGameWindow.Text
+        My.Settings.RightTimerName = cbRightTimerWindow.Text
+        My.Settings.RightGameName = cbRightGameWindow.Text
+        My.Settings.ConnectionString1 = txtConnectionString1.Text
+        My.Settings.ConnectionString2 = txtConnectionString2.Text
+        My.Settings.Password1 = txtPassword1.Text
+        My.Settings.Password2 = txtPassword2.Text
+        My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
+        My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
+        My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
+        My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
+        My.Settings.CommentaryOBS = cbCommentaryOBS.Text
+        My.Settings.VLCMenuBar = chkMenuBar.Checked
+        My.Settings.VLCPlayPauseControls = chkPlayPauseControls.Checked
+        My.Settings.VLCOverrideDefault = chkOverrideDefault.Checked
+        My.Settings.VLCStatusBar = chkStatusBar.Checked
 
+        My.Settings.Save()
 
-            dr.Item("DefaultCropBottom") = DefaultCropBottom
-            dr.Item("DefaultCropTop") = DefaultCropTop
-            dr.Item("LeftTimerName") = cbLeftTimerWindow.Text
-            dr.Item("LeftGameName") = cbLeftGameWindow.Text
-            dr.Item("RightTimerName") = cbRightTimerWindow.Text
-            dr.Item("RightGameName") = cbRightGameWindow.Text
-            dr.Item("ConnectionString1") = txtConnectionString1.Text
-            dr.Item("ConnectionString2") = txtConnectionString2.Text
-            dr.Item("Password1") = txtPassword1.Text
-            dr.Item("Password2") = txtPassword2.Text
-            dr.Item("LeftRunnerOBS") = cbLeftRunnerOBS.Text
-            dr.Item("RightRunnerOBS") = cbRightRunnerOBS.Text
-            dr.Item("LeftTrackerOBS") = cbLeftTrackerOBS.Text
-            dr.Item("RightTrackerOBS") = cbRightTrackerOBS.Text
-            dr.Item("CommentaryOBS") = cbCommentaryOBS.Text
-            dr.Item("MeunuBar") = chkMenuBar.Checked
-            dr.Item("PlayPauseControls") = chkPlayPauseControls.Checked
-            dr.Item("StatusBar") = chkStatusBar.Checked
-            dr.Item("OverrideDefault") = chkOverrideDefault.Checked
-            dr.Item("ServerURL") = WebCalls.WebURL
-            UserSettings.Tables("UserSettings").Rows.Add(dr)
-
-        Else
-            UserSettings.Tables("UserSettings").Rows(0)("DefaultCropBottom") = DefaultCropBottom
-            UserSettings.Tables("UserSettings").Rows(0)("DefaultCropTop") = DefaultCropTop
-            UserSettings.Tables("UserSettings").Rows(0)("LeftTimerName") = cbLeftTimerWindow.Text
-            UserSettings.Tables("UserSettings").Rows(0)("LeftGameName") = cbLeftGameWindow.Text
-            UserSettings.Tables("UserSettings").Rows(0)("RightTimerName") = cbRightTimerWindow.Text
-            UserSettings.Tables("UserSettings").Rows(0)("RightGameName") = cbRightGameWindow.Text
-            UserSettings.Tables("UserSettings").Rows(0)("ConnectionString1") = txtConnectionString1.Text
-            UserSettings.Tables("UserSettings").Rows(0)("ConnectionString2") = txtConnectionString2.Text
-            UserSettings.Tables("UserSettings").Rows(0)("Password1") = txtPassword1.Text
-            UserSettings.Tables("UserSettings").Rows(0)("Password2") = txtPassword2.Text
-            UserSettings.Tables("UserSettings").Rows(0)("LeftRunnerOBS") = cbLeftRunnerOBS.Text
-            UserSettings.Tables("UserSettings").Rows(0)("RightRunnerOBS") = cbRightRunnerOBS.Text
-            UserSettings.Tables("UserSettings").Rows(0)("LeftTrackerOBS") = cbLeftTrackerOBS.Text
-            UserSettings.Tables("UserSettings").Rows(0)("RightTrackerOBS") = cbRightTrackerOBS.Text
-            UserSettings.Tables("UserSettings").Rows(0)("CommentaryOBS") = cbCommentaryOBS.Text
-            UserSettings.Tables("UserSettings").Rows(0)("MeunuBar") = chkMenuBar.Checked
-            UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls") = chkPlayPauseControls.Checked
-            UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault") = chkOverrideDefault.Checked
-            UserSettings.Tables("UserSettings").Rows(0)("StatusBar") = chkStatusBar.Checked
-            UserSettings.Tables("UserSettings").Rows(0)("ServerURL") = WebCalls.WebURL
-        End If
-
-        UserSettings.WriteXml(Application.StartupPath & "\UserSettings.xml", XmlWriteMode.WriteSchema)
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If cbLeftRunnerOBS.Text.Trim.Length > 0 Then
@@ -573,21 +514,9 @@ Public Class OBSWebSocketCropper
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
         Me.Cursor = Cursors.WaitCursor
 
-        If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) OrElse String.IsNullOrWhiteSpace(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) Then
-            Dim ServerURL As String = InputBox("Please enter the server URL.", ProgramName, "")
 
-            If ServerURL.Trim.Length > 0 Then
-                UserSettings.Tables("UserSettings").Rows(0)("ServerURL") = ServerURL
-                WebCalls.WebURL = ServerURL
-
-                CropApi = New CropApi(ServerURL)
-            Else
-                MsgBox("No server URL was entered.  No sync will happen.", MsgBoxStyle.OkOnly, ProgramName)
-                Exit Sub
-            End If
-        Else
-            CropApi = New CropApi(UserSettings.Tables("UserSettings").Rows(0)("ServerURL"))
-        End If
+        WebCalls.WebURL = ConfigurationManager.AppSettings("ServerURL")
+        CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
 
         GetSyncFromServer()
         SendToServer()
@@ -1151,111 +1080,26 @@ Public Class OBSWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub SetUserSettings()
-        If UserSettings.Tables("UserSettings").Rows.Count > 0 Then
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) = False Then
-                WebCalls.WebURL = UserSettings.Tables("UserSettings").Rows(0)("ServerURL")
-            Else
-                WebCalls.WebURL = ""
-            End If
 
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("DefaultCropTop")) = False Then
-                txtDefaultCropTop.Text = UserSettings.Tables("UserSettings").Rows(0)("DefaultCropTop")
-            Else
-                txtDefaultCropTop.Text = 0
-            End If
+        WebCalls.WebURL = ConfigurationManager.AppSettings("ServerURL")
+        CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
+        txtDefaultCropTop.Text = My.Settings.DefaultCropTop
+        txtDefaultCropBottom.Text = My.Settings.DefaultCropBottom
+        cbLeftTimerWindow.Text = My.Settings.LeftTimerName
+        cbLeftGameWindow.Text = My.Settings.LeftGameName
+        cbRightTimerWindow.Text = My.Settings.RightTimerName
+        cbRightGameWindow.Text = My.Settings.RightGameName
+        cbLeftRunnerOBS.Text = My.Settings.LeftRunnerOBS
+        cbRightRunnerOBS.Text = My.Settings.RightRunnerOBS
+        cbLeftTrackerOBS.Text = My.Settings.LeftTrackerOBS
+        cbRightTrackerOBS.Text = My.Settings.RightTrackerOBS
+        cbCommentaryOBS.Text = My.Settings.CommentaryOBS
+        chkOverrideDefault.Checked = My.Settings.VLCOverrideDefault
+        chkPlayPauseControls.Checked = My.Settings.VLCPlayPauseControls
+        chkMenuBar.Checked = My.Settings.VLCMenuBar
+        chkStatusBar.Checked = My.Settings.VLCStatusBar
+        CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
 
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("DefaultCropBottom")) = False Then
-                txtDefaultCropBottom.Text = UserSettings.Tables("UserSettings").Rows(0)("DefaultCropBottom")
-            Else
-                txtDefaultCropBottom.Text = 0
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("LeftTimerName")) = False Then
-                cbLeftTimerWindow.Text = UserSettings.Tables("UserSettings").Rows(0)("LeftTimerName")
-            Else
-                cbLeftTimerWindow.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("LeftGameName")) = False Then
-                cbLeftGameWindow.Text = UserSettings.Tables("UserSettings").Rows(0)("LeftGameName")
-            Else
-                cbLeftGameWindow.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("RightTimerName")) = False Then
-                cbRightTimerWindow.Text = UserSettings.Tables("UserSettings").Rows(0)("RightTimerName")
-            Else
-                cbRightTimerWindow.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("RightGameName")) = False Then
-                cbRightGameWindow.Text = UserSettings.Tables("UserSettings").Rows(0)("RightGameName")
-            Else
-                cbRightGameWindow.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("LeftRunnerOBS")) = False Then
-                cbLeftRunnerOBS.Text = UserSettings.Tables("UserSettings").Rows(0)("LeftRunnerOBS")
-            Else
-                cbLeftRunnerOBS.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("RightRunnerOBS")) = False Then
-                cbRightRunnerOBS.Text = UserSettings.Tables("UserSettings").Rows(0)("RightRunnerOBS")
-            Else
-                cbRightRunnerOBS.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("LeftTrackerOBS")) = False Then
-                cbLeftTrackerOBS.Text = UserSettings.Tables("UserSettings").Rows(0)("LeftTrackerOBS")
-            Else
-                cbLeftTrackerOBS.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("RightTrackerOBS")) = False Then
-                cbRightTrackerOBS.Text = UserSettings.Tables("UserSettings").Rows(0)("RightTrackerOBS")
-            Else
-                cbRightTrackerOBS.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("CommentaryOBS")) = False Then
-                cbCommentaryOBS.Text = UserSettings.Tables("UserSettings").Rows(0)("CommentaryOBS")
-            Else
-                cbCommentaryOBS.Text = ""
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault")) = False Then
-                chkOverrideDefault.Checked = UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault")
-            Else
-                chkOverrideDefault.Checked = False
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls")) = False Then
-                chkPlayPauseControls.Checked = UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls")
-            Else
-                chkPlayPauseControls.Checked = True
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("MeunuBar")) = False Then
-                chkMenuBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("MeunuBar")
-            Else
-                chkMenuBar.Checked = True
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("StatusBar")) = False Then
-                chkStatusBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("StatusBar")
-            Else
-                chkStatusBar.Checked = False
-            End If
-
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("StatusBar")) = False Then
-                chkStatusBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("StatusBar")
-            Else
-                chkStatusBar.Checked = False
-            End If
-
-            CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
-        End If
     End Sub
     Private Sub ClearTextBoxes(ByVal isRightWindow As Boolean)
         If isRightWindow = True Then
@@ -1497,36 +1341,12 @@ Public Class OBSWebSocketCropper
         ResetHeightWidthLabels()
 
         CreateUserCropTable()
-        CreateUserSettingsTable()
         CreateTempUserCropTable()
 
-        If UserSettings.Tables(0).Rows.Count > 0 Then
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ConnectionString1")) = False Then
-                txtConnectionString1.Text = UserSettings.Tables("UserSettings").Rows(0)("ConnectionString1")
-            Else
-                txtConnectionString1.Text = "ws://127.0.0.1:4444"
-            End If
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ConnectionString2")) = False Then
-                txtConnectionString2.Text = UserSettings.Tables("UserSettings").Rows(0)("ConnectionString2")
-            Else
-                txtConnectionString2.Text = "ws://127.0.0.1:4443"
-            End If
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("Password1")) = False Then
-                txtPassword1.Text = UserSettings.Tables("UserSettings").Rows(0)("Password1")
-            Else
-                txtPassword1.Text = ""
-            End If
-            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("Password2")) = False Then
-                txtPassword2.Text = UserSettings.Tables("UserSettings").Rows(0)("Password2")
-            Else
-                txtPassword2.Text = ""
-            End If
-        Else
-            txtConnectionString1.Text = "ws://127.0.0.1:4444"
-            txtConnectionString2.Text = "ws://127.0.0.1:4443"
-            txtPassword1.Text = ""
-            txtPassword2.Text = ""
-        End If
+        txtConnectionString1.Text = My.Settings.ConnectionString1
+        txtConnectionString2.Text = My.Settings.ConnectionString2
+        txtPassword1.Text = My.Settings.Password1
+        txtPassword2.Text = My.Settings.Password2
 
         ProgramLoaded = True
     End Sub
