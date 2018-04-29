@@ -583,7 +583,7 @@ Public Class OBSWebSocketCropper
         End If
 
         GetSyncFromServer()
-
+        SendToServer()
         Me.Cursor = Cursors.Default
     End Sub
 #End Region
@@ -1590,37 +1590,42 @@ Public Class OBSWebSocketCropper
             Dim UpdateValue As Boolean = False
 
             For y = 0 To UserCropList.Tables("CropList").Rows.Count - 1
-                If UserCropList_Temp.Tables("CropList").Rows(x)("RacerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("RacerName").ToString.ToLower.Trim Then
-                    If UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("StreamerName").ToString.ToLower.Trim Then
-                        MatchedValue = True
+                If UserCropList_Temp.Tables("CropList").Rows(x)("RacerName").ToString.ToLower.Trim <> "<runner>" Then
+                    If UserCropList_Temp.Tables("CropList").Rows(x)("RacerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("RacerName").ToString.ToLower.Trim Then
+                        If UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("StreamerName").ToString.ToLower.Trim Then
+                            MatchedValue = True
 
-                        Dim ServerSavedOn, LocalSavedOn As DateTime
-                        ServerSavedOn = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
-                        LocalSavedOn = UserCropList.Tables("CropList").Rows(y)("SavedOn")
+                            Dim ServerSavedOn, LocalSavedOn As DateTime
+                            ServerSavedOn = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
+                            LocalSavedOn = UserCropList.Tables("CropList").Rows(y)("SavedOn")
 
-                        If ServerSavedOn > LocalSavedOn Then
-                            UpdateValue = True
+                            If ServerSavedOn > LocalSavedOn Then
+                                UpdateValue = True
+                            End If
+
+                            Exit For
                         End If
-
-                        Exit For
                     End If
+
+                    If UpdateValue = True Then
+                        UserCropList.Tables("CropList").Rows(y)("RacerName") = UserCropList_Temp.Tables("CropList").Rows(x)("RacerName")
+                        UserCropList.Tables("CropList").Rows(y)("StreamerName") = UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName")
+                        UserCropList.Tables("CropList").Rows(y)("CropTop_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Game")
+                        UserCropList.Tables("CropList").Rows(y)("CropBottom_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Game")
+                        UserCropList.Tables("CropList").Rows(y)("CropRight_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Game")
+                        UserCropList.Tables("CropList").Rows(y)("CropLeft_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Game")
+                        UserCropList.Tables("CropList").Rows(y)("CropTop_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Timer")
+                        UserCropList.Tables("CropList").Rows(y)("CropBottom_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Timer")
+                        UserCropList.Tables("CropList").Rows(y)("CropRight_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Timer")
+                        UserCropList.Tables("CropList").Rows(y)("CropLeft_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Timer")
+                        UserCropList.Tables("CropList").Rows(y)("MasterHeight") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterHeight")
+                        UserCropList.Tables("CropList").Rows(y)("MasterWidth") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterWidth")
+                        UserCropList.Tables("CropList").Rows(y)("SavedOn") = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
+                    End If
+                Else
+                    MatchedValue = True
                 End If
 
-                If UpdateValue = True Then
-                    UserCropList.Tables("CropList").Rows(y)("RacerName") = UserCropList_Temp.Tables("CropList").Rows(x)("RacerName")
-                    UserCropList.Tables("CropList").Rows(y)("StreamerName") = UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName")
-                    UserCropList.Tables("CropList").Rows(y)("CropTop_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Game")
-                    UserCropList.Tables("CropList").Rows(y)("CropBottom_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Game")
-                    UserCropList.Tables("CropList").Rows(y)("CropRight_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Game")
-                    UserCropList.Tables("CropList").Rows(y)("CropLeft_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Game")
-                    UserCropList.Tables("CropList").Rows(y)("CropTop_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Timer")
-                    UserCropList.Tables("CropList").Rows(y)("CropBottom_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Timer")
-                    UserCropList.Tables("CropList").Rows(y)("CropRight_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Timer")
-                    UserCropList.Tables("CropList").Rows(y)("CropLeft_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Timer")
-                    UserCropList.Tables("CropList").Rows(y)("MasterHeight") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterHeight")
-                    UserCropList.Tables("CropList").Rows(y)("MasterWidth") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterWidth")
-                    UserCropList.Tables("CropList").Rows(y)("SavedOn") = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
-                End If
             Next
 
             If MatchedValue = False Then
@@ -1769,8 +1774,10 @@ Public Class OBSWebSocketCropper
         Dim x As Integer
         For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
             Dim job As JObject
+
             job.Add("runner", UserCropList.Tables("CropList").Rows(x)("RacerName"))
 
+            Dim Crops As New JObject
 
             Dim cropInfo_game As New JObject
             Dim cropInfo_timer As New JObject
@@ -1789,6 +1796,16 @@ Public Class OBSWebSocketCropper
             sourceSize.Add("height", UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
             sourceSize.Add("width", UserCropList.Tables("CropList").Rows(x)("MasterWidth"))
 
+            Crops.Add("size", sourceSize)
+            Crops.Add("submitter", UserCropList.Tables("CropList").Rows(x)("StreamerName"))
+            Crops.Add("timerCrop", cropInfo_timer)
+            Crops.Add("gameCrop", cropInfo_game)
+            Crops.Add("submittedOn", UserCropList.Tables("CropList").Rows(x)("SavedOn"))
+
+            job.Add("crops", Crops)
+
+
+            WebCalls.SendToServer(job.ToString())
         Next
     End Sub
 #End Region
