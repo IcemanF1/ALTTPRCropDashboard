@@ -131,8 +131,13 @@ Partial Class OBSWebSocketCropper
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ttMainToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
         Me.chkDifferentMath = New System.Windows.Forms.CheckBox()
+        Me.btnSyncWithServer = New System.Windows.Forms.Button()
+        Me.chkMenuBar = New System.Windows.Forms.CheckBox()
+        Me.chkPlayPauseControls = New System.Windows.Forms.CheckBox()
+        Me.chkStatusBar = New System.Windows.Forms.CheckBox()
+        Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
+        Me.chkOverrideDefault = New System.Windows.Forms.CheckBox()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -900,7 +905,7 @@ Partial Class OBSWebSocketCropper
         'chkOldMath
         '
         Me.chkOldMath.AutoSize = True
-        Me.chkOldMath.Location = New System.Drawing.Point(7, 319)
+        Me.chkOldMath.Location = New System.Drawing.Point(7, 513)
         Me.chkOldMath.Name = "chkOldMath"
         Me.chkOldMath.Size = New System.Drawing.Size(88, 17)
         Me.chkOldMath.TabIndex = 31
@@ -1055,7 +1060,7 @@ Partial Class OBSWebSocketCropper
         'chkNewNewMath
         '
         Me.chkNewNewMath.AutoSize = True
-        Me.chkNewNewMath.Location = New System.Drawing.Point(7, 296)
+        Me.chkNewNewMath.Location = New System.Drawing.Point(7, 490)
         Me.chkNewNewMath.Name = "chkNewNewMath"
         Me.chkNewNewMath.Size = New System.Drawing.Size(75, 17)
         Me.chkNewNewMath.TabIndex = 56
@@ -1106,6 +1111,61 @@ Partial Class OBSWebSocketCropper
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
+        'chkDifferentMath
+        '
+        Me.chkDifferentMath.AutoSize = True
+        Me.chkDifferentMath.Location = New System.Drawing.Point(7, 466)
+        Me.chkDifferentMath.Name = "chkDifferentMath"
+        Me.chkDifferentMath.Size = New System.Drawing.Size(95, 17)
+        Me.chkDifferentMath.TabIndex = 59
+        Me.chkDifferentMath.Text = "View Old Math"
+        Me.ttMainToolTip.SetToolTip(Me.chkDifferentMath, "Check this to enable looking at the obsolete math" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "that was left in for informati" &
+        "onal purposes.")
+        Me.chkDifferentMath.UseVisualStyleBackColor = True
+        '
+        'btnSyncWithServer
+        '
+        Me.btnSyncWithServer.Location = New System.Drawing.Point(7, 631)
+        Me.btnSyncWithServer.Name = "btnSyncWithServer"
+        Me.btnSyncWithServer.Size = New System.Drawing.Size(142, 23)
+        Me.btnSyncWithServer.TabIndex = 60
+        Me.btnSyncWithServer.Text = "Sync With Server"
+        Me.ttMainToolTip.SetToolTip(Me.btnSyncWithServer, "Saves the runner timer/game crop settings to a local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "file (for now).")
+        Me.btnSyncWithServer.UseVisualStyleBackColor = True
+        '
+        'chkMenuBar
+        '
+        Me.chkMenuBar.AutoSize = True
+        Me.chkMenuBar.Location = New System.Drawing.Point(12, 272)
+        Me.chkMenuBar.Name = "chkMenuBar"
+        Me.chkMenuBar.Size = New System.Drawing.Size(72, 17)
+        Me.chkMenuBar.TabIndex = 61
+        Me.chkMenuBar.Text = "Menu Bar"
+        Me.ttMainToolTip.SetToolTip(Me.chkMenuBar, "Check this to apply a standard value for the top menu")
+        Me.chkMenuBar.UseVisualStyleBackColor = True
+        '
+        'chkPlayPauseControls
+        '
+        Me.chkPlayPauseControls.AutoSize = True
+        Me.chkPlayPauseControls.Location = New System.Drawing.Point(12, 294)
+        Me.chkPlayPauseControls.Name = "chkPlayPauseControls"
+        Me.chkPlayPauseControls.Size = New System.Drawing.Size(122, 17)
+        Me.chkPlayPauseControls.TabIndex = 62
+        Me.chkPlayPauseControls.Text = "Play/Pause Controls"
+        Me.ttMainToolTip.SetToolTip(Me.chkPlayPauseControls, "Check this to apply a standard value for the play/pause controls")
+        Me.chkPlayPauseControls.UseVisualStyleBackColor = True
+        '
+        'chkStatusBar
+        '
+        Me.chkStatusBar.AutoSize = True
+        Me.chkStatusBar.Location = New System.Drawing.Point(12, 317)
+        Me.chkStatusBar.Name = "chkStatusBar"
+        Me.chkStatusBar.Size = New System.Drawing.Size(75, 17)
+        Me.chkStatusBar.TabIndex = 63
+        Me.chkStatusBar.Text = "Status Bar"
+        Me.ttMainToolTip.SetToolTip(Me.chkStatusBar, "Check this to apply a standard value for the status bar")
+        Me.chkStatusBar.UseVisualStyleBackColor = True
+        '
         'gbTrackerComms
         '
         Me.gbTrackerComms.Controls.Add(Me.Label35)
@@ -1127,23 +1187,27 @@ Partial Class OBSWebSocketCropper
         Me.gbTrackerComms.TabStop = False
         Me.gbTrackerComms.Text = "Tracker / Comms info"
         '
-        'chkDifferentMath
+        'chkOverrideDefault
         '
-        Me.chkDifferentMath.AutoSize = True
-        Me.chkDifferentMath.Location = New System.Drawing.Point(7, 272)
-        Me.chkDifferentMath.Name = "chkDifferentMath"
-        Me.chkDifferentMath.Size = New System.Drawing.Size(95, 17)
-        Me.chkDifferentMath.TabIndex = 59
-        Me.chkDifferentMath.Text = "View Old Math"
-        Me.ttMainToolTip.SetToolTip(Me.chkDifferentMath, "Check this to enable looking at the obsolete math" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "that was left in for informati" &
-        "onal purposes.")
-        Me.chkDifferentMath.UseVisualStyleBackColor = True
+        Me.chkOverrideDefault.AutoSize = True
+        Me.chkOverrideDefault.Location = New System.Drawing.Point(12, 340)
+        Me.chkOverrideDefault.Name = "chkOverrideDefault"
+        Me.chkOverrideDefault.Size = New System.Drawing.Size(148, 17)
+        Me.chkOverrideDefault.TabIndex = 64
+        Me.chkOverrideDefault.Text = "Override Default Numbers"
+        Me.ttMainToolTip.SetToolTip(Me.chkOverrideDefault, "Check this to override the default numbers to use" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "your own custom ones.")
+        Me.chkOverrideDefault.UseVisualStyleBackColor = True
         '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 665)
+        Me.Controls.Add(Me.chkOverrideDefault)
+        Me.Controls.Add(Me.chkStatusBar)
+        Me.Controls.Add(Me.chkPlayPauseControls)
+        Me.Controls.Add(Me.chkMenuBar)
+        Me.Controls.Add(Me.btnSyncWithServer)
         Me.Controls.Add(Me.chkDifferentMath)
         Me.Controls.Add(Me.gbTrackerComms)
         Me.Controls.Add(Me.chkNewNewMath)
@@ -1317,4 +1381,9 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents ReadOBSINIToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents gbTrackerComms As GroupBox
     Friend WithEvents chkDifferentMath As CheckBox
+    Friend WithEvents btnSyncWithServer As Button
+    Friend WithEvents chkMenuBar As CheckBox
+    Friend WithEvents chkPlayPauseControls As CheckBox
+    Friend WithEvents chkStatusBar As CheckBox
+    Friend WithEvents chkOverrideDefault As CheckBox
 End Class

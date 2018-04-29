@@ -14,6 +14,12 @@ Public Class OBSWebSocketCropper
     Dim _obs2 As New OBSWebSocketPlus
     'Dim ConnectionString As String = "ws://127.0.0.1:4444"
     'Dim ConnectionString2 As String = "ws://127.0.0.1:4443"
+    Dim DefaultTopValue As Integer
+    Dim DefaultBottomValue As Integer
+
+    Dim DefaultStatusBar As Integer = 22
+    Dim DefaultMenuBar As Integer = 21
+    Dim DefaultPlayPause As Integer = 52
 
     Dim RSourceHeight As Integer
     Dim RSourceWidth As Integer
@@ -38,6 +44,7 @@ Public Class OBSWebSocketCropper
     Dim OBSCommentary As New DataSet
 
     Dim UserCropList As New DataSet
+    Dim UserCropList_Temp As New DataSet
     Dim UserSettings As New DataSet
 
     Dim LeftRunnerGameSceneInfo As SceneItemProperties
@@ -50,6 +57,8 @@ Public Class OBSWebSocketCropper
     Dim ProgramName As String = "OBS WebSocket Cropper"
 
     Dim ApprovedChars As String = "0123456789"
+
+    Dim ProgramLoaded As Boolean
 #Region " Create New Tables "
     Private Sub CreateUserSettingsTable()
         If UserSettings.Tables.Count = 0 Then
@@ -69,6 +78,11 @@ Public Class OBSWebSocketCropper
             UserSettings.Tables("UserSettings").Columns.Add("LeftTrackerOBS")
             UserSettings.Tables("UserSettings").Columns.Add("RightTrackerOBS")
             UserSettings.Tables("UserSettings").Columns.Add("CommentaryOBS")
+            UserSettings.Tables("UserSettings").Columns.Add("MeunuBar", System.Type.GetType("System.Boolean"))
+            UserSettings.Tables("UserSettings").Columns.Add("PlayPauseControls", System.Type.GetType("System.Boolean"))
+            UserSettings.Tables("UserSettings").Columns.Add("StatusBar", System.Type.GetType("System.Boolean"))
+            UserSettings.Tables("UserSettings").Columns.Add("OverrideDefault", System.Type.GetType("System.Boolean"))
+            UserSettings.Tables("UserSettings").Columns.Add("ServerURL")
         Else
             UserCropList.Tables("UserSettings").Clear()
         End If
@@ -134,7 +148,7 @@ Public Class OBSWebSocketCropper
             OBSSourceListRightTracker.Tables("Sources").Clear()
         End If
     End Sub
-    Private Sub CreateUserCropTable()
+    Private Sub CreateUserCropTable_Old()
         If UserCropList.Tables.Count = 0 Then
             UserCropList.Tables.Add("CropList")
             UserCropList.Tables("CropList").Columns.Add("RacerName")
@@ -151,13 +165,58 @@ Public Class OBSWebSocketCropper
             UserCropList.Tables("CropList").Clear()
         End If
 
+        If File.Exists(Application.StartupPath & "\CropList_Old.xml") = True Then
+            UserCropList.ReadXml(Application.StartupPath & "\CropList_Old.xml", XmlReadMode.ReadSchema)
+
+            RefreshRunnerNames()
+        End If
+    End Sub
+    Private Sub CreateUserCropTable()
+        If UserCropList.Tables.Count = 0 Then
+            UserCropList.Tables.Add("CropList")
+            UserCropList.Tables("CropList").Columns.Add("RacerName")
+            UserCropList.Tables("CropList").Columns.Add("StreamerName")
+            UserCropList.Tables("CropList").Columns.Add("CropTop_Game", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropBottom_Game", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropRight_Game", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropLeft_Game", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropTop_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropBottom_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropRight_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("CropLeft_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList.Tables("CropList").Columns.Add("MasterHeight", System.Type.GetType("System.Int32"))
+            UserCropList.Tables("CropList").Columns.Add("MasterWidth", System.Type.GetType("System.Int32"))
+            UserCropList.Tables("CropList").Columns.Add("SavedOn")
+        Else
+            UserCropList.Tables("CropList").Clear()
+        End If
+
         If File.Exists(Application.StartupPath & "\CropList.xml") = True Then
             UserCropList.ReadXml(Application.StartupPath & "\CropList.xml", XmlReadMode.ReadSchema)
 
             RefreshRunnerNames()
         End If
     End Sub
-
+    Private Sub CreateTempUserCropTable()
+        If UserCropList_Temp.Tables.Count = 0 Then
+            UserCropList_Temp.Tables.Add("CropList")
+            UserCropList_Temp.Tables("CropList").Columns.Add("RacerName")
+            UserCropList_Temp.Tables("CropList").Columns.Add("StreamerName")
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropTop_Game", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropBottom_Game", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropRight_Game", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropLeft_Game", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropTop_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropBottom_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropRight_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("CropLeft_Timer", System.Type.GetType("System.Decimal"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("MasterHeight", System.Type.GetType("System.Int32"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("MasterWidth", System.Type.GetType("System.Int32"))
+            UserCropList_Temp.Tables("CropList").Columns.Add("SavedOn")
+        Else
+            UserCropList_Temp.Tables("CropList").Clear()
+        End If
+    End Sub
 #End Region
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
@@ -187,6 +246,7 @@ Public Class OBSWebSocketCropper
                 lblOBS1ConnectedStatus.Text = "Not Connected"
             End If
         End If
+
 
         If _obs.IsConnected = True Then
             lblOBS1ConnectedStatus.Text = "Connected"
@@ -225,6 +285,7 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub btnRefreshScenes_Click(sender As Object, e As EventArgs) Handles btnRefreshScenes.Click
         RefreshScenes()
+        SetUserSettings()
     End Sub
     Private Sub btnSetMaster_Click(sender As Object, e As EventArgs) Handles btnSetMaster.Click
         SetMasterSourceDimensions()
@@ -314,13 +375,18 @@ Public Class OBSWebSocketCropper
 
         For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
             If UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower = cbRightRunnerName.Text.ToLower Then
-                If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                    UserCropList.Tables("CropList").Rows(x)("CropTop") = CropWithoutDefault_RightGame.Top
-                    UserCropList.Tables("CropList").Rows(x)("CropBottom") = CropWithoutDefault_RightGame.Bottom
-                    UserCropList.Tables("CropList").Rows(x)("CropRight") = CropWithoutDefault_RightGame.Right
-                    UserCropList.Tables("CropList").Rows(x)("CropLeft") = CropWithoutDefault_RightGame.Left
+                If UserCropList.Tables("CropList").Rows(x)("StreamerName").ToString.ToLower = "Iceman_F1" Then
+                    UserCropList.Tables("CropList").Rows(x)("CropTop_Game") = CropWithoutDefault_RightGame.Top
+                    UserCropList.Tables("CropList").Rows(x)("CropBottom_Game") = CropWithoutDefault_RightGame.Bottom
+                    UserCropList.Tables("CropList").Rows(x)("CropRight_Game") = CropWithoutDefault_RightGame.Right
+                    UserCropList.Tables("CropList").Rows(x)("CropLeft_Game") = CropWithoutDefault_RightGame.Left
+                    UserCropList.Tables("CropList").Rows(x)("CropTop_Timer") = CropWithoutDefault_RightTimer.Top
+                    UserCropList.Tables("CropList").Rows(x)("CropBottom_Timer") = CropWithoutDefault_RightTimer.Bottom
+                    UserCropList.Tables("CropList").Rows(x)("CropRight_Timer") = CropWithoutDefault_RightTimer.Right
+                    UserCropList.Tables("CropList").Rows(x)("CropLeft_Timer") = CropWithoutDefault_RightTimer.Left
                     UserCropList.Tables("CropList").Rows(x)("MasterHeight") = MasterSizeWithoutDefault_Right.Height
                     UserCropList.Tables("CropList").Rows(x)("MasterWidth") = MasterSizeWithoutDefault_Right.Width
+                    UserCropList.Tables("CropList").Rows(x)("SavedOn") = Now
                     MatchedRow = True
                     Exit For
                 End If
@@ -333,66 +399,38 @@ Public Class OBSWebSocketCropper
                     dr = UserCropList.Tables("CropList").NewRow
                     dr.Item("RacerName") = cbRightRunnerName.Text
                     dr.Item("StreamerName") = "Iceman_F1"
-                    dr.Item("isRightWindow") = True
-                    dr.Item("isGameWindow") = True
-                    dr.Item("CropTop") = CropWithoutDefault_RightGame.Top
-                    dr.Item("CropBottom") = CropWithoutDefault_RightGame.Bottom
-                    dr.Item("CropRight") = CropWithoutDefault_RightGame.Right
-                    dr.Item("CropLeft") = CropWithoutDefault_RightGame.Left
+                    dr.Item("CropTop_Game") = CropWithoutDefault_RightGame.Top
+                    dr.Item("CropBottom_Game") = CropWithoutDefault_RightGame.Bottom
+                    dr.Item("CropRight_Game") = CropWithoutDefault_RightGame.Right
+                    dr.Item("CropLeft_Game") = CropWithoutDefault_RightGame.Left
+                    dr.Item("CropTop_Timer") = CropWithoutDefault_RightTimer.Top
+                    dr.Item("CropBottom_Timer") = CropWithoutDefault_RightTimer.Bottom
+                    dr.Item("CropRight_Timer") = CropWithoutDefault_RightTimer.Right
+                    dr.Item("CropLeft_Timer") = CropWithoutDefault_RightTimer.Left
                     dr.Item("MasterHeight") = MasterSizeWithoutDefault_Right.Height
                     dr.Item("MasterWidth") = MasterSizeWithoutDefault_Right.Width
+                    dr.Item("SavedOn") = Now
                     UserCropList.Tables("CropList").Rows.Add(dr)
                 End If
             End If
-
         End If
 
         MatchedRow = False
-        For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
-            If UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower = cbRightRunnerName.Text.ToLower Then
-                If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                    UserCropList.Tables("CropList").Rows(x)("CropTop") = CropWithoutDefault_RightTimer.Top
-                    UserCropList.Tables("CropList").Rows(x)("CropBottom") = CropWithoutDefault_RightTimer.Bottom
-                    UserCropList.Tables("CropList").Rows(x)("CropRight") = CropWithoutDefault_RightTimer.Right
-                    UserCropList.Tables("CropList").Rows(x)("CropLeft") = CropWithoutDefault_RightTimer.Left
-                    UserCropList.Tables("CropList").Rows(x)("MasterHeight") = MasterSizeWithoutDefault_Right.Height
-                    UserCropList.Tables("CropList").Rows(x)("MasterWidth") = MasterSizeWithoutDefault_Right.Width
-                    MatchedRow = True
-                    Exit For
-                End If
-            End If
-        Next
 
-        If MatchedRow = False Then
-            If cbRightRunnerName.Text.Trim.Length > 0 Then
-                If txtCropRightTimer_Left.Text.Trim.Length > 0 Then
-                    dr = UserCropList.Tables("CropList").NewRow
-                    dr.Item("RacerName") = cbRightRunnerName.Text
-                    dr.Item("StreamerName") = "Iceman_F1"
-                    dr.Item("isRightWindow") = True
-                    dr.Item("isGameWindow") = False
-                    dr.Item("CropTop") = CropWithoutDefault_RightTimer.Top
-                    dr.Item("CropBottom") = CropWithoutDefault_RightTimer.Bottom
-                    dr.Item("CropRight") = CropWithoutDefault_RightTimer.Right
-                    dr.Item("CropLeft") = CropWithoutDefault_RightTimer.Left
-                    dr.Item("MasterHeight") = MasterSizeWithoutDefault_Right.Height
-                    dr.Item("MasterWidth") = MasterSizeWithoutDefault_Right.Width
-                    UserCropList.Tables("CropList").Rows.Add(dr)
-                End If
-            End If
-
-        End If
-
-        MatchedRow = False
         For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
             If UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower = cbLeftRunnerName.Text.ToLower Then
-                If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                    UserCropList.Tables("CropList").Rows(x)("CropTop") = CropWithoutDefault_LeftGame.Top
-                    UserCropList.Tables("CropList").Rows(x)("CropBottom") = CropWithoutDefault_LeftGame.Bottom
-                    UserCropList.Tables("CropList").Rows(x)("CropRight") = CropWithoutDefault_LeftGame.Right
-                    UserCropList.Tables("CropList").Rows(x)("CropLeft") = CropWithoutDefault_LeftGame.Left
+                If UserCropList.Tables("CropList").Rows(x)("StreamerName").ToString.ToLower = "Iceman_F1" Then
+                    UserCropList.Tables("CropList").Rows(x)("CropTop_Game") = CropWithoutDefault_LeftGame.Top
+                    UserCropList.Tables("CropList").Rows(x)("CropBottom_Game") = CropWithoutDefault_LeftGame.Bottom
+                    UserCropList.Tables("CropList").Rows(x)("CropRight_Game") = CropWithoutDefault_LeftGame.Right
+                    UserCropList.Tables("CropList").Rows(x)("CropLeft_Game") = CropWithoutDefault_LeftGame.Left
+                    UserCropList.Tables("CropList").Rows(x)("CropTop_Timer") = CropWithoutDefault_LeftTimer.Top
+                    UserCropList.Tables("CropList").Rows(x)("CropBottom_Timer") = CropWithoutDefault_LeftTimer.Bottom
+                    UserCropList.Tables("CropList").Rows(x)("CropRight_Timer") = CropWithoutDefault_LeftTimer.Right
+                    UserCropList.Tables("CropList").Rows(x)("CropLeft_Timer") = CropWithoutDefault_LeftTimer.Left
                     UserCropList.Tables("CropList").Rows(x)("MasterHeight") = MasterSizeWithoutDefault_Left.Height
                     UserCropList.Tables("CropList").Rows(x)("MasterWidth") = MasterSizeWithoutDefault_Left.Width
+                    UserCropList.Tables("CropList").Rows(x)("SavedOn") = Now
                     MatchedRow = True
                     Exit For
                 End If
@@ -405,54 +443,20 @@ Public Class OBSWebSocketCropper
                     dr = UserCropList.Tables("CropList").NewRow
                     dr.Item("RacerName") = cbLeftRunnerName.Text
                     dr.Item("StreamerName") = "Iceman_F1"
-                    dr.Item("isRightWindow") = False
-                    dr.Item("isGameWindow") = True
-                    dr.Item("CropTop") = CropWithoutDefault_LeftGame.Top
-                    dr.Item("CropBottom") = CropWithoutDefault_LeftGame.Bottom
-                    dr.Item("CropRight") = CropWithoutDefault_LeftGame.Right
-                    dr.Item("CropLeft") = CropWithoutDefault_LeftGame.Left
+                    dr.Item("CropTop_Game") = CropWithoutDefault_LeftGame.Top
+                    dr.Item("CropBottom_Game") = CropWithoutDefault_LeftGame.Bottom
+                    dr.Item("CropRight_Game") = CropWithoutDefault_LeftGame.Right
+                    dr.Item("CropLeft_Game") = CropWithoutDefault_LeftGame.Left
+                    dr.Item("CropTop_Timer") = CropWithoutDefault_LeftTimer.Top
+                    dr.Item("CropBottom_Timer") = CropWithoutDefault_LeftTimer.Bottom
+                    dr.Item("CropRight_Timer") = CropWithoutDefault_LeftTimer.Right
+                    dr.Item("CropLeft_Timer") = CropWithoutDefault_LeftTimer.Left
                     dr.Item("MasterHeight") = MasterSizeWithoutDefault_Left.Height
                     dr.Item("MasterWidth") = MasterSizeWithoutDefault_Left.Width
+                    dr.Item("SavedOn") = Now
                     UserCropList.Tables("CropList").Rows.Add(dr)
                 End If
             End If
-
-        End If
-
-        MatchedRow = False
-        For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
-            If UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower = cbLeftRunnerName.Text.ToLower Then
-                If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                    UserCropList.Tables("CropList").Rows(x)("CropTop") = CropWithoutDefault_LeftTimer.Top
-                    UserCropList.Tables("CropList").Rows(x)("CropBottom") = CropWithoutDefault_LeftTimer.Bottom
-                    UserCropList.Tables("CropList").Rows(x)("CropRight") = CropWithoutDefault_LeftTimer.Right
-                    UserCropList.Tables("CropList").Rows(x)("CropLeft") = CropWithoutDefault_LeftTimer.Left
-                    UserCropList.Tables("CropList").Rows(x)("MasterHeight") = MasterSizeWithoutDefault_Left.Height
-                    UserCropList.Tables("CropList").Rows(x)("MasterWidth") = MasterSizeWithoutDefault_Left.Width
-                    MatchedRow = True
-                    Exit For
-                End If
-            End If
-        Next
-
-        If MatchedRow = False Then
-            If cbLeftRunnerName.Text.Trim.Length > 0 Then
-                If txtCropLeftTimer_Left.Text.Trim.Length > 0 Then
-                    dr = UserCropList.Tables("CropList").NewRow
-                    dr.Item("RacerName") = cbLeftRunnerName.Text
-                    dr.Item("StreamerName") = "Iceman_F1"
-                    dr.Item("isRightWindow") = False
-                    dr.Item("isGameWindow") = False
-                    dr.Item("CropTop") = CropWithoutDefault_LeftTimer.Top
-                    dr.Item("CropBottom") = CropWithoutDefault_LeftTimer.Bottom
-                    dr.Item("CropRight") = CropWithoutDefault_LeftTimer.Right
-                    dr.Item("CropLeft") = CropWithoutDefault_LeftTimer.Left
-                    dr.Item("MasterHeight") = MasterSizeWithoutDefault_Left.Height
-                    dr.Item("MasterWidth") = MasterSizeWithoutDefault_Left.Width
-                    UserCropList.Tables("CropList").Rows.Add(dr)
-                End If
-            End If
-
         End If
 
         UserCropList.WriteXml(Application.StartupPath & "\CropList.xml", XmlWriteMode.WriteSchema)
@@ -496,6 +500,11 @@ Public Class OBSWebSocketCropper
             dr.Item("LeftTrackerOBS") = cbLeftTrackerOBS.Text
             dr.Item("RightTrackerOBS") = cbRightTrackerOBS.Text
             dr.Item("CommentaryOBS") = cbCommentaryOBS.Text
+            dr.Item("MeunuBar") = chkMenuBar.Checked
+            dr.Item("PlayPauseControls") = chkPlayPauseControls.Checked
+            dr.Item("StatusBar") = chkStatusBar.Checked
+            dr.Item("OverrideDefault") = chkOverrideDefault.Checked
+            dr.Item("ServerURL") = WebCalls.WebURL
             UserSettings.Tables("UserSettings").Rows.Add(dr)
 
         Else
@@ -514,6 +523,11 @@ Public Class OBSWebSocketCropper
             UserSettings.Tables("UserSettings").Rows(0)("LeftTrackerOBS") = cbLeftTrackerOBS.Text
             UserSettings.Tables("UserSettings").Rows(0)("RightTrackerOBS") = cbRightTrackerOBS.Text
             UserSettings.Tables("UserSettings").Rows(0)("CommentaryOBS") = cbCommentaryOBS.Text
+            UserSettings.Tables("UserSettings").Rows(0)("MeunuBar") = chkMenuBar.Checked
+            UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls") = chkPlayPauseControls.Checked
+            UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault") = chkOverrideDefault.Checked
+            UserSettings.Tables("UserSettings").Rows(0)("StatusBar") = chkStatusBar.Checked
+            UserSettings.Tables("UserSettings").Rows(0)("ServerURL") = WebCalls.WebURL
         End If
 
         UserSettings.WriteXml(Application.StartupPath & "\UserSettings.xml", XmlWriteMode.WriteSchema)
@@ -553,7 +567,25 @@ Public Class OBSWebSocketCropper
             FillCurrentCropInfoFromOBS()
         End If
     End Sub
+    Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
+        Me.Cursor = Cursors.WaitCursor
 
+        If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) Then
+            Dim ServerURL As String = InputBox("Please enter the server URL.", ProgramName, "")
+
+            If ServerURL.Trim.Length > 0 Then
+                UserSettings.Tables("UserSettings").Rows(0)("ServerURL") = ServerURL
+                WebCalls.WebURL = ServerURL
+            Else
+                MsgBox("No server URL was entered.  No sync will happen.", MsgBoxStyle.OkOnly, ProgramName)
+                Exit Sub
+            End If
+        End If
+
+        GetSyncFromServer()
+
+        Me.Cursor = Cursors.Default
+    End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
     Private Sub SetCropNewMath(ByVal isRightWindow As Boolean)
@@ -810,7 +842,6 @@ Public Class OBSWebSocketCropper
             End If
         End If
     End Sub
-
     Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String)
         Dim resultingCrop = CropperMath.AdjustCrop(New CropInfo With {
                                                       .MasterSizeWithoutDefault = CropperMath.RemoveDefaultCropSize(savedMasterSize),
@@ -821,8 +852,6 @@ Public Class OBSWebSocketCropper
         Dim realCrop = CropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
         _obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
     End Sub
-
-
     Private Sub SetNewNewMath(isRightWindow As Boolean)
 
         GetCurrentCropSettings(isRightWindow)
@@ -830,39 +859,50 @@ Public Class OBSWebSocketCropper
         CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
 
         If isRightWindow Then
-            ProcessCrop(Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
-                                           _txtCropRightGame_Top.Text,
-                                           _txtCropRightGame_Right.Text,
-                                           _txtCropRightGame_Bottom.Text),
-                        New Size(MasterWidthRight, MasterHeightRight),
-                        New Size(RSourceWidth, RSourceHeight),
-                        cbRightGameWindow.Text
-                )
-            ProcessCrop(Rectangle.FromLTRB(_txtCropRightTimer_Left.Text,
-                                           _txtCropRightTimer_Top.Text,
-                                           _txtCropRightTimer_Right.Text,
-                                           _txtCropRightTimer_Bottom.Text),
-                        New Size(MasterWidthRight, MasterHeightRight),
-                        New Size(RSourceWidth, RSourceHeight),
-                        cbRightTimerWindow.Text
-                        )
+            If MasterHeightRight > 0 And MasterWidthRight > 0 Then
+                ProcessCrop(Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
+                                               _txtCropRightGame_Top.Text,
+                                               _txtCropRightGame_Right.Text,
+                                               _txtCropRightGame_Bottom.Text),
+                            New Size(MasterWidthRight, MasterHeightRight),
+                            New Size(RSourceWidth, RSourceHeight),
+                            cbRightGameWindow.Text
+                    )
+                ProcessCrop(Rectangle.FromLTRB(_txtCropRightTimer_Left.Text,
+                                               _txtCropRightTimer_Top.Text,
+                                               _txtCropRightTimer_Right.Text,
+                                               _txtCropRightTimer_Bottom.Text),
+                            New Size(MasterWidthRight, MasterHeightRight),
+                            New Size(RSourceWidth, RSourceHeight),
+                            cbRightTimerWindow.Text
+                            )
+            Else
+                MsgBox("Master Height/Width is 0.  Can't crop yet.", MsgBoxStyle.OkOnly, ProgramName)
+            End If
+
         Else
-            ProcessCrop(Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
-                                           _txtCropLeftGame_Top.Text,
-                                           _txtCropLeftGame_Right.Text,
-                                           _txtCropLeftGame_Bottom.Text),
-                        New Size(MasterWidthLeft, MasterHeightLeft),
-                        New Size(LSourceWidth, LSourceHeight),
-                        cbLeftGameWindow.Text
-                        )
-            ProcessCrop(Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
-                                           _txtCropLeftTimer_Top.Text,
-                                           _txtCropLeftTimer_Right.Text,
-                                           _txtCropLeftTimer_Bottom.Text),
-                        New Size(MasterWidthLeft, MasterHeightLeft),
-                        New Size(LSourceWidth, LSourceHeight),
-                        cbLeftTimerWindow.Text
-                        )
+            If MasterHeightLeft > 0 And MasterWidthLeft > 0 Then
+                ProcessCrop(Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
+                                               _txtCropLeftGame_Top.Text,
+                                               _txtCropLeftGame_Right.Text,
+                                               _txtCropLeftGame_Bottom.Text),
+                            New Size(MasterWidthLeft, MasterHeightLeft),
+                            New Size(LSourceWidth, LSourceHeight),
+                            cbLeftGameWindow.Text
+                            )
+                ProcessCrop(Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
+                                               _txtCropLeftTimer_Top.Text,
+                                               _txtCropLeftTimer_Right.Text,
+                                               _txtCropLeftTimer_Bottom.Text),
+                            New Size(MasterWidthLeft, MasterHeightLeft),
+                            New Size(LSourceWidth, LSourceHeight),
+                            cbLeftTimerWindow.Text
+                            )
+            Else
+                MsgBox("Master Height/Width is 0.  Can't crop yet.", MsgBoxStyle.OkOnly, ProgramName)
+            End If
+
+
         End If
 
     End Sub
@@ -937,6 +977,19 @@ Public Class OBSWebSocketCropper
         cbCommentaryOBS.DataSource = OBSCommentary.Tables("Sources")
         cbCommentaryOBS.DisplayMember = "SourceName"
         cbCommentaryOBS.ValueMember = "SourceName"
+
+        SetBlankDropdowns()
+    End Sub
+    Private Sub SetBlankDropdowns()
+        cbLeftTimerWindow.Text = ""
+        cbLeftGameWindow.Text = ""
+        cbRightTimerWindow.Text = ""
+        cbRightGameWindow.Text = ""
+        cbLeftRunnerOBS.Text = ""
+        cbRightRunnerOBS.Text = ""
+        cbLeftTrackerOBS.Text = ""
+        cbRightTrackerOBS.Text = ""
+        cbCommentaryOBS.Text = ""
     End Sub
     Private Sub RefreshRunnerNames()
         Dim TempLeftRunner As String = cbLeftRunnerName.Text
@@ -1013,33 +1066,33 @@ Public Class OBSWebSocketCropper
                     If isRightWindow = True Then
                         If cbRightRunnerName.Text.ToLower = UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower Then
 
-                            If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                                savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropTop"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropRight"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropBottom"))
+                            savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropTop_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropRight_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropBottom_Timer"))
 
-                                realCrop = CropperMath.AddDefaultCrop(savedCrop)
+
+                            realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
                                 txtCropRightTimer_Top.Text = realCrop.Top
                                 txtCropRightTimer_Bottom.Text = realCrop.Bottom
                                 txtCropRightTimer_Left.Text = realCrop.Left
                                 txtCropRightTimer_Right.Text = realCrop.Right
-                            End If
 
-                            If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                                savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropTop"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropRight"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropBottom"))
 
-                                realCrop = CropperMath.AddDefaultCrop(savedCrop)
+                            savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropTop_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropRight_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropBottom_Game"))
+
+
+                            realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
                                 txtCropRightGame_Top.Text = realCrop.Top
                                 txtCropRightGame_Bottom.Text = realCrop.Bottom
                                 txtCropRightGame_Left.Text = realCrop.Left
                                 txtCropRightGame_Right.Text = realCrop.Right
-                            End If
+
 
                             savedMasterSize = New Size(UserCropList.Tables("CropList").Rows(x)("MasterWidth"), UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
 
@@ -1051,34 +1104,29 @@ Public Class OBSWebSocketCropper
                     Else
                         If cbLeftRunnerName.Text.ToLower = UserCropList.Tables("CropList").Rows(x)("RacerName").ToString.ToLower Then
 
-                            If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = False Then
-                                savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropTop"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropRight"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropBottom"))
+                            savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropTop_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropRight_Timer"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropBottom_Timer"))
 
-                                realCrop = CropperMath.AddDefaultCrop(savedCrop)
+                            realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
                                 txtCropLeftTimer_Top.Text = realCrop.Top
                                 txtCropLeftTimer_Bottom.Text = realCrop.Bottom
                                 txtCropLeftTimer_Left.Text = realCrop.Left
                                 txtCropLeftTimer_Right.Text = realCrop.Right
-                            End If
 
+                            savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropTop_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropRight_Game"),
+                                           UserCropList.Tables("CropList").Rows(x)("CropBottom_Game"))
 
-                            If UserCropList.Tables("CropList").Rows(x)("isGameWindow") = True Then
-                                savedCrop = Rectangle.FromLTRB(UserCropList.Tables("CropList").Rows(x)("CropLeft"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropTop"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropRight"),
-                                           UserCropList.Tables("CropList").Rows(x)("CropBottom"))
-
-                                realCrop = CropperMath.AddDefaultCrop(savedCrop)
+                            realCrop = CropperMath.AddDefaultCrop(savedCrop)
 
                                 txtCropLeftGame_Top.Text = realCrop.Top
                                 txtCropLeftGame_Bottom.Text = realCrop.Bottom
                                 txtCropLeftGame_Left.Text = realCrop.Left
                                 txtCropLeftGame_Right.Text = realCrop.Right
-                            End If
 
                             savedMasterSize = New Size(UserCropList.Tables("CropList").Rows(x)("MasterWidth"), UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
 
@@ -1097,6 +1145,12 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub SetUserSettings()
         If UserSettings.Tables("UserSettings").Rows.Count > 0 Then
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ServerURL")) = False Then
+                WebCalls.WebURL = UserSettings.Tables("UserSettings").Rows(0)("ServerURL")
+            Else
+                WebCalls.WebURL = ""
+            End If
+
             If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("DefaultCropTop")) = False Then
                 txtDefaultCropTop.Text = UserSettings.Tables("UserSettings").Rows(0)("DefaultCropTop")
             Else
@@ -1163,6 +1217,36 @@ Public Class OBSWebSocketCropper
                 cbCommentaryOBS.Text = ""
             End If
 
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault")) = False Then
+                chkOverrideDefault.Checked = UserSettings.Tables("UserSettings").Rows(0)("OverrideDefault")
+            Else
+                chkOverrideDefault.Checked = False
+            End If
+
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls")) = False Then
+                chkPlayPauseControls.Checked = UserSettings.Tables("UserSettings").Rows(0)("PlayPauseControls")
+            Else
+                chkPlayPauseControls.Checked = True
+            End If
+
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("MeunuBar")) = False Then
+                chkMenuBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("MeunuBar")
+            Else
+                chkMenuBar.Checked = True
+            End If
+
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("StatusBar")) = False Then
+                chkStatusBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("StatusBar")
+            Else
+                chkStatusBar.Checked = False
+            End If
+
+            If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("StatusBar")) = False Then
+                chkStatusBar.Checked = UserSettings.Tables("UserSettings").Rows(0)("StatusBar")
+            Else
+                chkStatusBar.Checked = False
+            End If
+
             CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
         End If
     End Sub
@@ -1217,7 +1301,7 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
 #End Region
-#Region " Block crop text boxes "
+#Region " Block crop text boxes / key presses "
     Private Sub txtDefaultCropTop_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtDefaultCropTop.KeyPress
         e.Handled = CheckIfKeyAllowed(e.KeyChar)
     End Sub
@@ -1379,6 +1463,7 @@ Public Class OBSWebSocketCropper
         btnSetMaster.Enabled = isConnected
         btnSetRightCrop.Enabled = isConnected
         btnSetTrackCommNames.Enabled = isConnected
+        btnSyncWithServer.Enabled = isConnected
 
         gbConnection2.Enabled = isConnected
         gbTrackerComms.Enabled = isConnected
@@ -1391,8 +1476,13 @@ Public Class OBSWebSocketCropper
         cbLeftRunnerOBS.Enabled = isConnected
         cbRightRunnerOBS.Enabled = isConnected
         cbRightRunnerName.Enabled = isConnected
+
+        txtDefaultCropBottom.Enabled = isConnected
+        txtDefaultCropTop.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ProgramLoaded = False
+
         txtDefaultCropTop.Text = 0
         txtDefaultCropBottom.Text = 0
 
@@ -1401,6 +1491,7 @@ Public Class OBSWebSocketCropper
 
         CreateUserCropTable()
         CreateUserSettingsTable()
+        CreateTempUserCropTable()
 
         If UserSettings.Tables(0).Rows.Count > 0 Then
             If IsDBNull(UserSettings.Tables("UserSettings").Rows(0)("ConnectionString1")) = False Then
@@ -1430,6 +1521,7 @@ Public Class OBSWebSocketCropper
             txtPassword2.Text = ""
         End If
 
+        ProgramLoaded = True
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         MsgBox("This program was created by Iceman_F1 with the help and ideas from Hancin and various other members of the ALTTPR community." & vbCrLf & vbCrLf &
@@ -1442,7 +1534,119 @@ Public Class OBSWebSocketCropper
     Private Sub ReadOBSINIToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadOBSINIToolStripMenuItem.Click
         GetINIFile()
     End Sub
+    Private Sub GetSyncFromServer()
+        Dim TResponse As String
+        TResponse = WebCalls.GetCallFromServer()
+
+        Dim jar As JArray
+        jar = JArray.Parse(TResponse)
+
+        UserCropList_Temp.Clear()
+
+        If jar IsNot Nothing Then
+            Dim job As JObject
+
+            Dim x As Integer
+            For x = 0 To jar.Count - 1
+                job = JObject.Parse(jar(x).ToString)
+
+                If job IsNot Nothing Then
+                    Dim y As Integer
+                    Dim RacerName As String = job("runner").ToString
+
+                    For y = 0 To job("crops").Count - 1
+
+                        Dim dr As DataRow
+                        dr = UserCropList_Temp.Tables("CropList").NewRow
+                        dr.Item("RacerName") = RacerName
+                        dr.Item("StreamerName") = job("crops")(y)("submitter").ToString
+                        dr.Item("CropTop_Game") = job("crops")(y)("timerCrop")("top")
+                        dr.Item("CropBottom_Game") = job("crops")(y)("gameCrop")("bottom")
+                        dr.Item("CropRight_Game") = job("crops")(y)("gameCrop")("right")
+                        dr.Item("CropLeft_Game") = job("crops")(y)("gameCrop")("left")
+                        dr.Item("CropTop_Timer") = job("crops")(y)("gameCrop")("top")
+                        dr.Item("CropBottom_Timer") = job("crops")(y)("timerCrop")("bottom")
+                        dr.Item("CropRight_Timer") = job("crops")(y)("timerCrop")("right")
+                        dr.Item("CropLeft_Timer") = job("crops")(y)("timerCrop")("left")
+                        dr.Item("MasterHeight") = job("crops")(y)("size")("height")
+                        dr.Item("MasterWidth") = job("crops")(y)("size")("width")
+                        dr.Item("SavedOn") = job("crops")(y)("submittedOn")
+                        UserCropList_Temp.Tables("CropList").Rows.Add(dr)
+                        'job("crops")(0)("size")("width")
+
+                    Next
+
+                End If
+            Next
+
+        End If
+
+        SyncDataFromTempToLocal()
+    End Sub
+    Private Sub SyncDataFromTempToLocal()
+        Dim x, y As Integer
+        For x = 0 To UserCropList_Temp.Tables("CropList").Rows.Count - 1
+            Dim MatchedValue As Boolean = False
+            Dim UpdateValue As Boolean = False
+
+            For y = 0 To UserCropList.Tables("CropList").Rows.Count - 1
+                If UserCropList_Temp.Tables("CropList").Rows(x)("RacerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("RacerName").ToString.ToLower.Trim Then
+                    If UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName").ToString.ToLower.Trim = UserCropList.Tables("CropList").Rows(y)("StreamerName").ToString.ToLower.Trim Then
+                        MatchedValue = True
+
+                        Dim ServerSavedOn, LocalSavedOn As DateTime
+                        ServerSavedOn = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
+                        LocalSavedOn = UserCropList.Tables("CropList").Rows(y)("SavedOn")
+
+                        If ServerSavedOn > LocalSavedOn Then
+                            UpdateValue = True
+                        End If
+
+                        Exit For
+                    End If
+                End If
+
+                If UpdateValue = True Then
+                    UserCropList.Tables("CropList").Rows(y)("RacerName") = UserCropList_Temp.Tables("CropList").Rows(x)("RacerName")
+                    UserCropList.Tables("CropList").Rows(y)("StreamerName") = UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName")
+                    UserCropList.Tables("CropList").Rows(y)("CropTop_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Game")
+                    UserCropList.Tables("CropList").Rows(y)("CropBottom_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Game")
+                    UserCropList.Tables("CropList").Rows(y)("CropRight_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Game")
+                    UserCropList.Tables("CropList").Rows(y)("CropLeft_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Game")
+                    UserCropList.Tables("CropList").Rows(y)("CropTop_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Timer")
+                    UserCropList.Tables("CropList").Rows(y)("CropBottom_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Timer")
+                    UserCropList.Tables("CropList").Rows(y)("CropRight_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Timer")
+                    UserCropList.Tables("CropList").Rows(y)("CropLeft_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Timer")
+                    UserCropList.Tables("CropList").Rows(y)("MasterHeight") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterHeight")
+                    UserCropList.Tables("CropList").Rows(y)("MasterWidth") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterWidth")
+                    UserCropList.Tables("CropList").Rows(y)("SavedOn") = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
+                End If
+            Next
+
+            If MatchedValue = False Then
+                Dim dr As DataRow
+                dr = UserCropList.Tables("CropList").NewRow
+                dr.Item("RacerName") = UserCropList_Temp.Tables("CropList").Rows(x)("RacerName")
+                dr.Item("StreamerName") = UserCropList_Temp.Tables("CropList").Rows(x)("StreamerName")
+                dr.Item("CropTop_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Game")
+                dr.Item("CropBottom_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Game")
+                dr.Item("CropRight_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Game")
+                dr.Item("CropLeft_Game") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Game")
+                dr.Item("CropTop_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropTop_Timer")
+                dr.Item("CropBottom_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropBottom_Timer")
+                dr.Item("CropRight_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropRight_Timer")
+                dr.Item("CropLeft_Timer") = UserCropList_Temp.Tables("CropList").Rows(x)("CropLeft_Timer")
+                dr.Item("MasterHeight") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterHeight")
+                dr.Item("MasterWidth") = UserCropList_Temp.Tables("CropList").Rows(x)("MasterWidth")
+                dr.Item("SavedOn") = UserCropList_Temp.Tables("CropList").Rows(x)("SavedOn")
+                UserCropList.Tables("CropList").Rows.Add(dr)
+            End If
+        Next
+
+        UserCropList.WriteXml(Application.StartupPath & "\CropList.xml", XmlWriteMode.WriteSchema)
+    End Sub
     Private Sub GetINIFile()
+
         Dim appDataPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 
         Dim FileName As String = appDataPath & "\obs-studio\global.ini"
@@ -1497,6 +1701,95 @@ Public Class OBSWebSocketCropper
         Else
             chkOldMath.Checked = True
         End If
+    End Sub
+    Private Sub txtDefaultCropTop_Leave(sender As Object, e As EventArgs) Handles txtDefaultCropTop.Leave
+        If txtDefaultCropTop.Text.Trim.Length = 0 Then
+            txtDefaultCropTop.Text = 0
+        End If
+
+        If ProgramLoaded = True Then
+            CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
+
+            RefreshCropFromData(False)
+            RefreshCropFromData(True)
+        End If
+    End Sub
+    Private Sub txtDefaultCropBottom_Leave(sender As Object, e As EventArgs) Handles txtDefaultCropBottom.Leave
+        If txtDefaultCropBottom.Text.Trim.Length = 0 Then
+            txtDefaultCropBottom.Text = 0
+        End If
+
+        If ProgramLoaded = True Then
+            CropperMath.DefaultCrop = Rectangle.FromLTRB(0, txtDefaultCropTop.Text, 0, txtDefaultCropBottom.Text)
+
+            RefreshCropFromData(False)
+            RefreshCropFromData(True)
+        End If
+    End Sub
+    Private Sub chkMenuBar_CheckedChanged(sender As Object, e As EventArgs) Handles chkMenuBar.CheckedChanged
+        If chkMenuBar.Checked = True Then
+            DefaultTopValue = DefaultMenuBar
+        Else
+            DefaultTopValue = 0
+        End If
+
+        CheckPersonalValuesAgainstStandard()
+    End Sub
+    Private Sub chkStatusBar_CheckedChanged(sender As Object, e As EventArgs) Handles chkStatusBar.CheckedChanged
+        If chkStatusBar.Checked = True Then
+            DefaultBottomValue = DefaultBottomValue + DefaultStatusBar
+        Else
+            DefaultBottomValue = DefaultBottomValue - DefaultStatusBar
+        End If
+
+        CheckPersonalValuesAgainstStandard()
+    End Sub
+    Private Sub chkPlayPauseControls_CheckedChanged(sender As Object, e As EventArgs) Handles chkPlayPauseControls.CheckedChanged
+        If chkPlayPauseControls.Checked = True Then
+            DefaultBottomValue = DefaultBottomValue + DefaultPlayPause
+        Else
+            DefaultBottomValue = DefaultBottomValue - DefaultPlayPause
+        End If
+
+        CheckPersonalValuesAgainstStandard()
+    End Sub
+    Private Sub CheckPersonalValuesAgainstStandard()
+        If chkOverrideDefault.Checked = False Then
+            txtDefaultCropTop.Text = DefaultTopValue
+
+            If DefaultBottomValue < 0 Then
+                txtDefaultCropBottom.Text = 0
+            Else
+                txtDefaultCropBottom.Text = DefaultBottomValue
+            End If
+        End If
+
+    End Sub
+    Private Sub SendToServer()
+        Dim x As Integer
+        For x = 0 To UserCropList.Tables("CropList").Rows.Count - 1
+            Dim job As JObject
+            job.Add("runner", UserCropList.Tables("CropList").Rows(x)("RacerName"))
+
+
+            Dim cropInfo_game As New JObject
+            Dim cropInfo_timer As New JObject
+            Dim sourceSize As New JObject
+
+            cropInfo_game.Add("top", UserCropList.Tables("CropList").Rows(x)("CropTop_Game"))
+            cropInfo_game.Add("bottom", UserCropList.Tables("CropList").Rows(x)("CropBottom_Game"))
+            cropInfo_game.Add("left", UserCropList.Tables("CropList").Rows(x)("CropLeft_Game"))
+            cropInfo_game.Add("right", UserCropList.Tables("CropList").Rows(x)("CropRight_Game"))
+
+            cropInfo_timer.Add("top", UserCropList.Tables("CropList").Rows(x)("CropTop_Timer"))
+            cropInfo_timer.Add("bottom", UserCropList.Tables("CropList").Rows(x)("CropBottom_Timer"))
+            cropInfo_timer.Add("left", UserCropList.Tables("CropList").Rows(x)("CropLeft_Timer"))
+            cropInfo_timer.Add("right", UserCropList.Tables("CropList").Rows(x)("CropRight_Timer"))
+
+            sourceSize.Add("height", UserCropList.Tables("CropList").Rows(x)("MasterHeight"))
+            sourceSize.Add("width", UserCropList.Tables("CropList").Rows(x)("MasterWidth"))
+
+        Next
     End Sub
 #End Region
 End Class

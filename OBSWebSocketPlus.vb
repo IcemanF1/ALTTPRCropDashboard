@@ -49,12 +49,6 @@ Public Class OBSWebSocketPlus
         requestParameters.Add("item", item)
         requestParameters.Add("crop", cropInfo)
 
-        'If isConnection1 = True Then
-        '    OBSWebScocketCropper._obs.SendRequest("SetSceneItemProperties", requestParameters)
-        'Else
-        '    OBSWebScocketCropper._obs2.SendRequest("SetSceneItemProperties", requestParameters)
-        'End If
-
         SendRequest("SetSceneItemProperties", requestParameters)
     End Sub
 End Class
