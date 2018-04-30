@@ -299,6 +299,7 @@ Public Class OBSWebSocketCropper
                 leftRunner.TimerCropLeft = CropWithoutDefault_LeftTimer.Left
                 leftRunner.SizeHeight = MasterSizeWithoutDefault_Left.Height
                 leftRunner.SizeWidth = MasterSizeWithoutDefault_Left.Width
+                leftRunner.SubmittedOn = Nothing
             End If
 
             If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
@@ -323,6 +324,7 @@ Public Class OBSWebSocketCropper
                 rightRunner.TimerCropLeft = CropWithoutDefault_RightTimer.Left
                 rightRunner.SizeHeight = MasterSizeWithoutDefault_Right.Height
                 rightRunner.SizeWidth = MasterSizeWithoutDefault_Right.Width
+                rightRunner.SubmittedOn = Nothing
             End If
 
             context.SaveChanges()
@@ -413,8 +415,8 @@ Public Class OBSWebSocketCropper
         WebCalls.WebURL = ConfigurationManager.AppSettings("ServerURL")
         CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
 
-        GetSyncFromServer()
         SendToServer()
+        GetSyncFromServer()
         Me.Cursor = Cursors.Default
     End Sub
 #End Region
