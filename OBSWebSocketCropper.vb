@@ -800,8 +800,8 @@ Public Class OBSWebSocketCropper
         btnSetRightCrop.Enabled = isConnected
         btnSetTrackCommNames.Enabled = isConnected
         btnSyncWithServer.Enabled = isConnected
-        btnSetLeftCrop.Enabled = isConnected
-        btnSetRightCrop.Enabled = isConnected
+        btnGetLeftCrop.Enabled = isConnected
+        btnGetRightCrop.Enabled = isConnected
         btnSaveLeftCrop.Enabled = isConnected
         btnSaveRightCrop.Enabled = isConnected
 
