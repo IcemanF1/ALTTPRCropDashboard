@@ -56,8 +56,8 @@
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="obs-websocket-dotnet, Version=4.2.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\obs-websocket-dotnet.4.2.0-beta3\lib\net40\obs-websocket-dotnet.dll</HintPath>
@@ -112,7 +112,6 @@
     <Compile Include="DB\Crop.vb" />
     <Compile Include="DB\CropDbContext.vb" />
     <Compile Include="IniParser.vb" />
-    <Compile Include="MathCalcs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -137,7 +136,18 @@
     <Compile Include="OBSWebSocketPlus.vb" />
     <Compile Include="Data\RunnerInfo.vb" />
     <Compile Include="Data\RunnerCrop.vb" />
-    <Compile Include="WebCalls.vb" />
+    <Compile Include="UserSettings.Designer.vb">
+      <DependentUpon>UserSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VLCSettings.Designer.vb">
+      <DependentUpon>VLCSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VLCSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -148,6 +158,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OBSWebSocketCropper.resx">
       <DependentUpon>OBSWebSocketCropper.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserSettings.resx">
+      <DependentUpon>UserSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VLCSettings.resx">
+      <DependentUpon>VLCSettings.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +189,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DB\crops.sql" />
+    <None Include="Resources\VLC_Settings.png" />
+    <None Include="Resources\Settings_Background_Resized.png" />
+    <None Include="Resources\Settings_Background_Original.png" />
+    <None Include="Resources\Settings Background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />

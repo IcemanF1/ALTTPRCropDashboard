@@ -1,4 +1,5 @@
-﻿Imports Newtonsoft.Json.Linq
+﻿Imports System.Net.Sockets
+Imports Newtonsoft.Json.Linq
 Imports OBSWebsocketDotNet
 
 Public Class OBSWebSocketPlus
@@ -51,6 +52,24 @@ Public Class OBSWebSocketPlus
 
         SendRequest("SetSceneItemProperties", requestParameters)
     End Sub
+    Public Function IsPortOpen(ByVal ConnectionAddress As String) As Boolean
+        Dim Client As TcpClient = Nothing
+
+
+        Dim Host As String = ConnectionAddress.Split(":")(1).Remove(0, 2)
+        Dim PortNumber As Integer = ConnectionAddress.Split(":")(2)
+
+        Try
+            Client = New TcpClient(Host, PortNumber)
+            Return True
+        Catch ex As SocketException
+            Return False
+        Finally
+            If Not Client Is Nothing Then
+                Client.Close()
+            End If
+        End Try
+    End Function
 End Class
 
 Public Class SceneItemProperties
