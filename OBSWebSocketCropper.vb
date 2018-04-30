@@ -125,6 +125,8 @@ Public Class OBSWebSocketCropper
     Private Sub btnSaveRunnerCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRunnerCrop.Click
         SaveRunnerCrop(True)
         SaveRunnerCrop(False)
+
+        RefreshRunnerNames()
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
@@ -164,9 +166,13 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
         SaveRunnerCrop(False)
+
+        RefreshRunnerNames()
     End Sub
     Private Sub btnSaveRightCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRightCrop.Click
         SaveRunnerCrop(True)
+
+        RefreshRunnerNames()
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
         Me.Cursor = Cursors.WaitCursor
@@ -329,7 +335,7 @@ Public Class OBSWebSocketCropper
             End Using
         End If
 
-        RefreshRunnerNames()
+
     End Sub
     Private Sub SetMasterSourceDimensions()
         Dim scenes = _obs.ListScenes()
