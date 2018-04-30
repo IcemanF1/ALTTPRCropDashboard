@@ -24,7 +24,19 @@ Public Class CropApi
     Public Sub CreateCrop(crop As RunnerCropAdd)
         Dim response = Client.PostAsync("v1/crops", crop, Formatter).Result
         response.EnsureSuccessStatusCode()
+        Dim returnData = response.Content.ReadAsAsync(Of RunnerCropAdd)({Formatter}).Result
 
+        crop.SubmittedOn = returnData.SubmittedOn
+        crop.Id = returnData.Id
+
+    End Sub
+    Public Sub UpdateCrop(crop As RunnerCropAdd)
+        Dim response = Client.PutAsync($"v1/crops/{crop.Id}", crop, Formatter).Result
+        response.EnsureSuccessStatusCode()
+
+
+        Dim returnData = response.Content.ReadAsAsync(Of RunnerCropAdd)({Formatter}).Result
+        crop.SubmittedOn = returnData.SubmittedOn
     End Sub
 
     Public Sub New(apiPath As String)
