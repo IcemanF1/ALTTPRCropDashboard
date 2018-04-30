@@ -512,13 +512,18 @@ Public Class OBSWebSocketCropper
             Dim runnerInfo As Crop
 
             If (isRightWindow) Then
-                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Runner = cbRightRunnerName.Text)
+                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.Runner = cbRightRunnerName.Text)
+                If runnerInfo Is Nothing Then
+                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.Runner = cbRightRunnerName.Text)
+                End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
                 End If
-
             Else
-                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Runner = cbLeftRunnerName.Text)
+                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.Runner = cbLeftRunnerName.Text)
+                If runnerInfo Is Nothing Then
+                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.Runner = cbLeftRunnerName.Text)
+                End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
                 End If
