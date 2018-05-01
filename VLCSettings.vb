@@ -104,4 +104,11 @@
         SaveVLCSettings()
     End Sub
 
+    Private Sub txtDefaultCropTop_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtDefaultCropTop.KeyPress
+        e.Handled = OBSWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
+    End Sub
+    Private Sub txtDefaultCropBottom_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtDefaultCropBottom.KeyPress
+        e.Handled = OBSWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
+    End Sub
+
 End Class

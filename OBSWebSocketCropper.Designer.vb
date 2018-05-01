@@ -101,12 +101,16 @@ Partial Class OBSWebSocketCropper
         Me.btnSaveRightCrop = New System.Windows.Forms.Button()
         Me.btnGetProcesses = New System.Windows.Forms.Button()
         Me.btnSetLeftVLC = New System.Windows.Forms.Button()
+        Me.btn2ndOBS = New System.Windows.Forms.Button()
+        Me.btnConnectOBS2 = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
         Me.cbRightVLCSource = New System.Windows.Forms.ComboBox()
         Me.cbLeftVLCSource = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -126,13 +130,14 @@ Partial Class OBSWebSocketCropper
         '
         'btnSetRightCrop
         '
+        Me.btnSetRightCrop.BackColor = System.Drawing.Color.MistyRose
         Me.btnSetRightCrop.Location = New System.Drawing.Point(680, 423)
         Me.btnSetRightCrop.Name = "btnSetRightCrop"
         Me.btnSetRightCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSetRightCrop.TabIndex = 6
         Me.btnSetRightCrop.Text = "Set Right Crop"
         Me.ttMainToolTip.SetToolTip(Me.btnSetRightCrop, "Set the crop for the right side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
-        Me.btnSetRightCrop.UseVisualStyleBackColor = True
+        Me.btnSetRightCrop.UseVisualStyleBackColor = False
         '
         'txtCropRightGame_Top
         '
@@ -226,6 +231,7 @@ Partial Class OBSWebSocketCropper
         '
         'gbRightGameWindow
         '
+        Me.gbRightGameWindow.BackColor = System.Drawing.Color.MistyRose
         Me.gbRightGameWindow.Controls.Add(Me.Label1)
         Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Top)
         Me.gbRightGameWindow.Controls.Add(Me.Label2)
@@ -243,6 +249,7 @@ Partial Class OBSWebSocketCropper
         '
         'gbRightTimerWindow
         '
+        Me.gbRightTimerWindow.BackColor = System.Drawing.Color.MistyRose
         Me.gbRightTimerWindow.Controls.Add(Me.Label7)
         Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Top)
         Me.gbRightTimerWindow.Controls.Add(Me.Label8)
@@ -324,6 +331,7 @@ Partial Class OBSWebSocketCropper
         '
         'gbLeftTimerWindow
         '
+        Me.gbLeftTimerWindow.BackColor = System.Drawing.Color.PaleGreen
         Me.gbLeftTimerWindow.Controls.Add(Me.Label12)
         Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Top)
         Me.gbLeftTimerWindow.Controls.Add(Me.Label13)
@@ -405,6 +413,7 @@ Partial Class OBSWebSocketCropper
         '
         'gbLeftGameWindow
         '
+        Me.gbLeftGameWindow.BackColor = System.Drawing.Color.PaleGreen
         Me.gbLeftGameWindow.Controls.Add(Me.Label17)
         Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Top)
         Me.gbLeftGameWindow.Controls.Add(Me.Label18)
@@ -486,13 +495,14 @@ Partial Class OBSWebSocketCropper
         '
         'btnSetLeftCrop
         '
+        Me.btnSetLeftCrop.BackColor = System.Drawing.Color.PaleGreen
         Me.btnSetLeftCrop.Location = New System.Drawing.Point(365, 423)
         Me.btnSetLeftCrop.Name = "btnSetLeftCrop"
         Me.btnSetLeftCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftCrop.TabIndex = 3
         Me.btnSetLeftCrop.Text = "Set Left Crop"
         Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
-        Me.btnSetLeftCrop.UseVisualStyleBackColor = True
+        Me.btnSetLeftCrop.UseVisualStyleBackColor = False
         '
         'btnSaveRunnerCrop
         '
@@ -507,6 +517,7 @@ Partial Class OBSWebSocketCropper
         'Label21
         '
         Me.Label21.AutoSize = True
+        Me.Label21.BackColor = System.Drawing.Color.PaleTurquoise
         Me.Label21.Location = New System.Drawing.Point(184, 149)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(63, 13)
@@ -516,6 +527,7 @@ Partial Class OBSWebSocketCropper
         'Label22
         '
         Me.Label22.AutoSize = True
+        Me.Label22.BackColor = System.Drawing.Color.PaleTurquoise
         Me.Label22.Location = New System.Drawing.Point(506, 146)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(70, 13)
@@ -540,7 +552,7 @@ Partial Class OBSWebSocketCropper
         '
         'btnGetCropFromOBS
         '
-        Me.btnGetCropFromOBS.Location = New System.Drawing.Point(28, 129)
+        Me.btnGetCropFromOBS.Location = New System.Drawing.Point(28, 153)
         Me.btnGetCropFromOBS.Name = "btnGetCropFromOBS"
         Me.btnGetCropFromOBS.Size = New System.Drawing.Size(121, 23)
         Me.btnGetCropFromOBS.TabIndex = 33
@@ -638,6 +650,7 @@ Partial Class OBSWebSocketCropper
         'Label33
         '
         Me.Label33.AutoSize = True
+        Me.Label33.BackColor = System.Drawing.Color.PaleTurquoise
         Me.Label33.Location = New System.Drawing.Point(7, 50)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(90, 13)
@@ -647,6 +660,7 @@ Partial Class OBSWebSocketCropper
         'Label34
         '
         Me.Label34.AutoSize = True
+        Me.Label34.BackColor = System.Drawing.Color.PaleTurquoise
         Me.Label34.Location = New System.Drawing.Point(337, 50)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(97, 13)
@@ -656,6 +670,7 @@ Partial Class OBSWebSocketCropper
         'Label36
         '
         Me.Label36.AutoSize = True
+        Me.Label36.BackColor = System.Drawing.Color.PaleTurquoise
         Me.Label36.Location = New System.Drawing.Point(8, 19)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(101, 13)
@@ -671,13 +686,14 @@ Partial Class OBSWebSocketCropper
         '
         'btnSetTrackCommNames
         '
-        Me.btnSetTrackCommNames.Location = New System.Drawing.Point(7, 103)
+        Me.btnSetTrackCommNames.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.btnSetTrackCommNames.Location = New System.Drawing.Point(7, 127)
         Me.btnSetTrackCommNames.Name = "btnSetTrackCommNames"
         Me.btnSetTrackCommNames.Size = New System.Drawing.Size(142, 23)
         Me.btnSetTrackCommNames.TabIndex = 55
         Me.btnSetTrackCommNames.Text = "Set Track/Comms/Names"
         Me.ttMainToolTip.SetToolTip(Me.btnSetTrackCommNames, "Sends the current text settings to OBS if there is text entered into the form." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Tracker URL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Runner Names" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Commentary Names")
-        Me.btnSetTrackCommNames.UseVisualStyleBackColor = True
+        Me.btnSetTrackCommNames.UseVisualStyleBackColor = False
         '
         'mnuMainMenu
         '
@@ -805,8 +821,33 @@ Partial Class OBSWebSocketCropper
         Me.btnSetLeftVLC.UseVisualStyleBackColor = True
         Me.btnSetLeftVLC.Visible = False
         '
+        'btn2ndOBS
+        '
+        Me.btn2ndOBS.Location = New System.Drawing.Point(35, 270)
+        Me.btn2ndOBS.Name = "btn2ndOBS"
+        Me.btn2ndOBS.Size = New System.Drawing.Size(114, 23)
+        Me.btn2ndOBS.TabIndex = 71
+        Me.btn2ndOBS.Text = "2nd OBS"
+        Me.ttMainToolTip.SetToolTip(Me.btn2ndOBS, "Grabs the current height/width from the game windows" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and sets that as the master" &
+        " height/width.")
+        Me.btn2ndOBS.UseVisualStyleBackColor = True
+        Me.btn2ndOBS.Visible = False
+        '
+        'btnConnectOBS2
+        '
+        Me.btnConnectOBS2.Location = New System.Drawing.Point(7, 98)
+        Me.btnConnectOBS2.Name = "btnConnectOBS2"
+        Me.btnConnectOBS2.Size = New System.Drawing.Size(117, 23)
+        Me.btnConnectOBS2.TabIndex = 73
+        Me.btnConnectOBS2.Text = "Connect OBS 2"
+        Me.ttMainToolTip.SetToolTip(Me.btnConnectOBS2, "Attempt to connect to the OBS Websocket based off" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the connection string and pass" &
+        "word")
+        Me.btnConnectOBS2.UseVisualStyleBackColor = True
+        Me.btnConnectOBS2.Visible = False
+        '
         'gbTrackerComms
         '
+        Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
         Me.gbTrackerComms.Controls.Add(Me.Label36)
         Me.gbTrackerComms.Controls.Add(Me.txtCommentaryNames)
         Me.gbTrackerComms.Controls.Add(Me.txtLeftTrackerURL)
@@ -867,11 +908,28 @@ Partial Class OBSWebSocketCropper
         Me.Label6.Text = "Left VLC Source"
         Me.Label6.Visible = False
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
+        '
+        'lblOBS2ConnectedStatus
+        '
+        Me.lblOBS2ConnectedStatus.AutoSize = True
+        Me.lblOBS2ConnectedStatus.Location = New System.Drawing.Point(32, 79)
+        Me.lblOBS2ConnectedStatus.Name = "lblOBS2ConnectedStatus"
+        Me.lblOBS2ConnectedStatus.Size = New System.Drawing.Size(92, 13)
+        Me.lblOBS2ConnectedStatus.TabIndex = 72
+        Me.lblOBS2ConnectedStatus.Text = "Connected Status"
+        Me.lblOBS2ConnectedStatus.Visible = False
+        '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 506)
+        Me.Controls.Add(Me.btnConnectOBS2)
+        Me.Controls.Add(Me.lblOBS2ConnectedStatus)
+        Me.Controls.Add(Me.btn2ndOBS)
         Me.Controls.Add(Me.btnSetLeftVLC)
         Me.Controls.Add(Me.cbRightVLCSource)
         Me.Controls.Add(Me.cbLeftVLCSource)
@@ -1012,4 +1070,8 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents btnSetLeftVLC As Button
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents btn2ndOBS As Button
+    Friend WithEvents lblOBS2ConnectedStatus As Label
+    Friend WithEvents btnConnectOBS2 As Button
 End Class

@@ -80,6 +80,7 @@ Public Class UserSettings
             My.Settings.TwitchChannel = txtTwitchChannel.Text
             My.Settings.DefaultConnection = roDefault.Checked
             My.Settings.HasFinishedWelcome = True
+            My.Settings.ConnectionPort1 = txtConnectionPort.Text
 
             My.Settings.Save()
 
@@ -176,6 +177,7 @@ Public Class UserSettings
 
     Private Sub UserSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         txtConnectionString1.Text = My.Settings.ConnectionString1
+        txtConnectionPort.Text = My.Settings.ConnectionPort1
         txtPassword1.Text = My.Settings.Password1
 
         panOBS.Visible = False
@@ -278,7 +280,8 @@ Public Class UserSettings
         cbCommentaryOBS.Text = ""
     End Sub
     Private Sub CheckOBSPort()
-        Dim PortOpen As Boolean = OBSWebSocketCropper._obs.IsPortOpen(My.Settings.ConnectionString1)
+
+        Dim PortOpen As Boolean = OBSWebSocketCropper._obs.IsPortOpen(OBSWebSocketCropper.ConnectionString)
 
         If PortOpen = False Then
             MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
@@ -340,7 +343,9 @@ Public Class UserSettings
             roCustom.Checked = True
         End If
     End Sub
-
+    Private Sub txtConnectionPort_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtConnectionPort.KeyPress
+        e.Handled = OBSWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
+    End Sub
     Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
         SaveSettings(True)
     End Sub

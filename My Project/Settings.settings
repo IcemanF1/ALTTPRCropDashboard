@@ -21,10 +21,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ConnectionString1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ws://127.0.0.1:4444</Value>
+      <Value Profile="(Default)">ws://127.0.0.1</Value>
     </Setting>
     <Setting Name="ConnectionString2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ws://127.0.0.1:4443</Value>
+      <Value Profile="(Default)">ws://127.0.0.1</Value>
     </Setting>
     <Setting Name="Password1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -67,6 +67,12 @@
     </Setting>
     <Setting Name="DefaultConnection" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ConnectionPort1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4444</Value>
+    </Setting>
+    <Setting Name="ConnectionPort2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4443</Value>
     </Setting>
   </Settings>
 </SettingsFile>

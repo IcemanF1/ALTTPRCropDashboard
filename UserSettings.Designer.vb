@@ -48,6 +48,8 @@ Partial Class UserSettings
         Me.roDefault = New System.Windows.Forms.RadioButton()
         Me.roCustom = New System.Windows.Forms.RadioButton()
         Me.btnSaveThenVLC = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtConnectionPort = New System.Windows.Forms.TextBox()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.SuspendLayout()
@@ -63,13 +65,15 @@ Partial Class UserSettings
         '
         'gbConnection1
         '
+        Me.gbConnection1.Controls.Add(Me.Label3)
+        Me.gbConnection1.Controls.Add(Me.txtConnectionPort)
         Me.gbConnection1.Controls.Add(Me.Label26)
         Me.gbConnection1.Controls.Add(Me.txtPassword1)
         Me.gbConnection1.Controls.Add(Me.txtConnectionString1)
         Me.gbConnection1.Controls.Add(Me.Label25)
         Me.gbConnection1.Location = New System.Drawing.Point(511, 12)
         Me.gbConnection1.Name = "gbConnection1"
-        Me.gbConnection1.Size = New System.Drawing.Size(286, 71)
+        Me.gbConnection1.Size = New System.Drawing.Size(390, 71)
         Me.gbConnection1.TabIndex = 92
         Me.gbConnection1.TabStop = False
         Me.gbConnection1.Text = "Connection Settings"
@@ -77,7 +81,7 @@ Partial Class UserSettings
         'Label26
         '
         Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(51, 50)
+        Me.Label26.Location = New System.Drawing.Point(51, 48)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(53, 13)
         Me.Label26.TabIndex = 29
@@ -85,7 +89,7 @@ Partial Class UserSettings
         '
         'txtPassword1
         '
-        Me.txtPassword1.Location = New System.Drawing.Point(110, 45)
+        Me.txtPassword1.Location = New System.Drawing.Point(110, 43)
         Me.txtPassword1.Name = "txtPassword1"
         Me.txtPassword1.Size = New System.Drawing.Size(160, 20)
         Me.txtPassword1.TabIndex = 30
@@ -300,6 +304,22 @@ Partial Class UserSettings
         Me.btnSaveThenVLC.Text = "Save OBS Settings and " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Continue to VLC Settings"
         Me.btnSaveThenVLC.UseVisualStyleBackColor = True
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(272, 24)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(26, 13)
+        Me.Label3.TabIndex = 31
+        Me.Label3.Text = "Port"
+        '
+        'txtConnectionPort
+        '
+        Me.txtConnectionPort.Location = New System.Drawing.Point(304, 21)
+        Me.txtConnectionPort.Name = "txtConnectionPort"
+        Me.txtConnectionPort.Size = New System.Drawing.Size(68, 20)
+        Me.txtConnectionPort.TabIndex = 32
+        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -352,4 +372,6 @@ Partial Class UserSettings
     Friend WithEvents roDefault As RadioButton
     Friend WithEvents roCustom As RadioButton
     Friend WithEvents btnSaveThenVLC As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtConnectionPort As TextBox
 End Class

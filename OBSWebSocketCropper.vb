@@ -15,10 +15,11 @@ Public Class OBSWebSocketCropper
 
     Public _obs As New OBSWebSocketPlus
     Public OBSConnectionStatus As String
+    Public OBSConnectionStatus2 As String
 
     Dim _obs2 As New OBSWebSocketPlus
-    'Dim ConnectionString As String = "ws://127.0.0.1:4444"
-    'Dim ConnectionString2 As String = "ws://127.0.0.1:4443"
+    Public ConnectionString As String
+    Public ConnectionString2 As String
 
     Dim RSourceHeight As Integer
     Dim RSourceWidth As Integer
@@ -51,6 +52,8 @@ Public Class OBSWebSocketCropper
     Dim ApprovedChars As String = "0123456789"
 
     Dim ProgramLoaded As Boolean
+    Dim Check2ndOBS As Boolean = False
+    Dim LastUpdate As Integer
 
     Public Shared OBSSettingsResult As String
 #Region " Create New Tables "
@@ -82,15 +85,55 @@ Public Class OBSWebSocketCropper
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToOBS()
     End Sub
+    Public Sub ConnectToOBS2()
+        Me.Cursor = Cursors.WaitCursor
+
+        ConnectionString2 = My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
+
+        Dim PortOpen As Boolean = _obs2.IsPortOpen(ConnectionString2)
+
+        If PortOpen = False Then
+            MsgBox("OBS2 WebSocket is not running.  Please make sure the OBS2 WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
+        Else
+            If _obs2.IsConnected = False Then
+                _obs2.Connect(ConnectionString2, My.Settings.Password2)
+            Else
+                If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                    _obs2.Disconnect()
+                    OBSConnectionStatus2 = "Not Connected"
+                    lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+                End If
+            End If
+
+
+            If _obs2.IsConnected = True Then
+                OBSConnectionStatus2 = "Connected"
+                lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+
+                'CreateNewSourceTable()
+                'RefreshScenes()
+                'SetUserSettings()
+
+                'EnableButtons(True)
+            Else
+                lblOBS2ConnectedStatus.Text = "Not Connected"
+            End If
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
     Public Sub ConnectToOBS()
         Me.Cursor = Cursors.WaitCursor
-        Dim PortOpen As Boolean = _obs.IsPortOpen(My.Settings.ConnectionString1)
+
+        ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
+
+        Dim PortOpen As Boolean = _obs.IsPortOpen(ConnectionString)
 
         If PortOpen = False Then
             MsgBox("OBS WebSocket is not running.  Please make sure the OBS WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
         Else
             If _obs.IsConnected = False Then
-                _obs.Connect(My.Settings.ConnectionString1, My.Settings.Password1)
+                _obs.Connect(ConnectionString, My.Settings.Password1)
             Else
                 If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
                     _obs.Disconnect()
@@ -153,26 +196,41 @@ Public Class OBSWebSocketCropper
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
             If cbLeftRunnerName.Text.Trim.Length > 0 Then
                 _obs.SetTextGDI(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                If OBSConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGDI(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) Then
             If cbRightRunnerName.Text.Trim.Length > 0 Then
                 _obs.SetTextGDI(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                If OBSConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGDI(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) Then
             If txtCommentaryNames.Text.Trim.Length > 0 Then
                 _obs.SetTextGDI(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                If OBSConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGDI(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) Then
             If txtLeftTrackerURL.Text.Trim.Length > 0 Then
                 _obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                If OBSConnectionStatus2 = "Connected" Then
+                    _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
             If txtRightTrackerURL.Text.Trim.Length > 0 Then
                 _obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                If OBSConnectionStatus2 = "Connected" Then
+                    _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                End If
             End If
         End If
     End Sub
@@ -205,6 +263,34 @@ Public Class OBSWebSocketCropper
         GetSyncFromServer()
         Me.Cursor = Cursors.Default
     End Sub
+    Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
+        RefreshVLC()
+        RefreshOBS()
+        'RightGameSourceInfo = _obs.GetSourceSettings(My.Settings.RightGameName)
+
+        'If RightGameSourceInfo Is Nothing Then
+
+        'End If
+    End Sub
+    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+            If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
+                Dim VLCString As String = cbLeftVLCSource.Text '& ":QWidget:vlc.exe"
+                _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 2)
+                _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 3)
+            End If
+        End If
+    End Sub
+    Private Sub btn2ndOBS_Click(sender As Object, e As EventArgs) Handles btn2ndOBS.Click
+        GetINIFile(False, False)
+
+        Check2ndOBS = True
+        Timer1.Start()
+    End Sub
+    Private Sub btnConnectOBS2_Click(sender As Object, e As EventArgs) Handles btnConnectOBS2.Click
+        ConnectToOBS2()
+    End Sub
+
 #End Region
 #Region " Crop Math / Crop Settings "
     Private Sub GetCurrentCropSettings(ByVal IsRightWindow As Boolean)
@@ -435,6 +521,9 @@ Public Class OBSWebSocketCropper
 
         Dim realCrop = CropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
         _obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+        If OBSConnectionStatus2 = "Connected" Then
+            _obs2.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+        End If
     End Sub
     Private Sub SetNewNewMath(isRightWindow As Boolean)
 
@@ -601,8 +690,30 @@ Public Class OBSWebSocketCropper
 
         SetHeightLabels()
     End Sub
+    Private Sub RefreshOBS()
+        Dim lOBS As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "obs*".ToLower).ToList
+
+        If lOBS.Count > 1 Then
+            Timer1.Stop()
+            GetINIFile(False, True)
+            Check2ndOBS = False
+        End If
+        'Dim x As Integer
+        'For x = 0 To lOBS.Count - 1
+        '    Dim dr As DataRow
+
+        '    'Dim y As Integer
+        '    'For y = 0 To scenes(x).Items.Count - 1
+        '    'dr = VLCListLeft.Tables("Processes").NewRow
+        '    'dr.Item("VLCName") = lVLC.Item(x).MainWindowTitle
+        '    'VLCListLeft.Tables("Processes").Rows.Add(dr)
+        '    'Next
+
+        'Next
+    End Sub
     Private Sub RefreshVLC()
         Dim lVLC As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "vlc*".ToLower).ToList
+
 
         VLCListLeft.Clear()
         VLCListRight.Clear()
@@ -690,12 +801,6 @@ Public Class OBSWebSocketCropper
     End Sub
 #End Region
 #Region " Block crop text boxes / key presses "
-    Private Sub txtDefaultCropTop_KeyPress(sender As Object, e As KeyPressEventArgs)
-        e.Handled = CheckIfKeyAllowed(e.KeyChar)
-    End Sub
-    Private Sub txtDefaultCropBottom_KeyPress(sender As Object, e As KeyPressEventArgs)
-        e.Handled = CheckIfKeyAllowed(e.KeyChar)
-    End Sub
     Private Sub txtCropRightTimer_Top_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtCropRightTimer_Top.KeyPress
         e.Handled = CheckIfKeyAllowed(e.KeyChar)
     End Sub
@@ -744,7 +849,7 @@ Public Class OBSWebSocketCropper
     Private Sub txtCropLeftGame_Bottom_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtCropLeftGame_Bottom.KeyPress
         e.Handled = CheckIfKeyAllowed(e.KeyChar)
     End Sub
-    Function CheckIfKeyAllowed(ByVal KeyChar As String) As Boolean
+    Public Function CheckIfKeyAllowed(ByVal KeyChar As String) As Boolean
         If Not ApprovedChars.Contains(KeyChar) And KeyChar <> vbBack Then
             Return True
         Else
@@ -913,7 +1018,7 @@ Public Class OBSWebSocketCropper
         Me.Close()
     End Sub
     Private Sub ReadOBSINIToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadOBSINIToolStripMenuItem.Click
-        GetINIFile()
+        GetINIFile(True, False)
     End Sub
     Private Sub GetSyncFromServer()
 
@@ -973,8 +1078,7 @@ Public Class OBSWebSocketCropper
 
         RefreshRunnerNames()
     End Sub
-
-    Private Sub GetINIFile()
+    Private Sub GetINIFile(ByVal Python As Boolean, ByVal ResetWebSocketPort As Boolean)
 
         Dim appDataPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 
@@ -994,12 +1098,29 @@ Public Class OBSWebSocketCropper
                 'ValueName  : The name of the current value   (ex: Email).
                 'Value      : The value of [ValueName]        (ex: josh.jones@gmail.com).
 
-                If SectionName.ToLower = "python" Then
-                    If ValueName.ToLower = "path64bit" Then
-                        MsgBox(Value, MsgBoxStyle.OkOnly)
-                        ''IniParser.WritePrivateProfileStringW(SectionName, ValueName, Value & "_Test", FileName)
+                If Python = True Then
+                    If SectionName.ToLower = "python" Then
+                        If ValueName.ToLower = "path64bit" Then
+                            MsgBox(Value, MsgBoxStyle.OkOnly)
+                            ''IniParser.WritePrivateProfileStringW(SectionName, ValueName, Value & "_Test", FileName)
+                        End If
+                    End If
+                Else
+                    If SectionName.ToLower = "websocketapi" Then
+                        If ValueName.ToLower = "serverport" Then
+                            'MsgBox(Value, MsgBoxStyle.OkOnly)
+                            If ResetWebSocketPort = True Then
+                                IniParser.WritePrivateProfileStringW(SectionName, ValueName, My.Settings.ConnectionPort1, FileName)
+                            Else
+                                IniParser.WritePrivateProfileStringW(SectionName, ValueName, My.Settings.ConnectionPort2, FileName)
+                                MsgBox("Try opening a 2nd instance of OBS", MsgBoxStyle.OkOnly, ProgramName)
+                            End If
+
+
+                        End If
                     End If
                 End If
+
                 'Console.WriteLine(SectionName & ": " & ValueName & " = " & Value)
             Next
         Next
@@ -1056,31 +1177,16 @@ Public Class OBSWebSocketCropper
 
         RefreshCropperDefaultCrop()
     End Sub
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        LastUpdate = LastUpdate + 1
 
-    Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
-        RefreshVLC()
-
-        RightGameSourceInfo = _obs.GetSourceSettings(My.Settings.RightGameName)
-
-        If RightGameSourceInfo Is Nothing Then
-
-        End If
-    End Sub
-
-    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-            If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
-                Dim VLCString As String = cbLeftVLCSource.Text '& ":QWidget:vlc.exe"
-                _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 2)
-                _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 3)
+        If LastUpdate > 30 Then
+            LastUpdate = 0
+            If Check2ndOBS = True Then
+                RefreshOBS()
             End If
         End If
-
-
     End Sub
-
-
-
 
 
 #End Region

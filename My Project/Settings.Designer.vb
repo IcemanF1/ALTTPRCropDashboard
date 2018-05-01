@@ -128,7 +128,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("ws://127.0.0.1:4444")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ws://127.0.0.1")>  _
         Public Property ConnectionString1() As String
             Get
                 Return CType(Me("ConnectionString1"),String)
@@ -140,7 +140,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("ws://127.0.0.1:4443")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ws://127.0.0.1")>  _
         Public Property ConnectionString2() As String
             Get
                 Return CType(Me("ConnectionString2"),String)
@@ -315,6 +315,30 @@ Namespace My
             End Get
             Set
                 Me("DefaultConnection") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("4444")>  _
+        Public Property ConnectionPort1() As Integer
+            Get
+                Return CType(Me("ConnectionPort1"),Integer)
+            End Get
+            Set
+                Me("ConnectionPort1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("4443")>  _
+        Public Property ConnectionPort2() As Integer
+            Get
+                Return CType(Me("ConnectionPort2"),Integer)
+            End Get
+            Set
+                Me("ConnectionPort2") = value
             End Set
         End Property
     End Class
