@@ -85,80 +85,6 @@ Public Class OBSWebSocketCropper
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToOBS()
     End Sub
-    Public Sub ConnectToOBS2()
-        Me.Cursor = Cursors.WaitCursor
-
-        ConnectionString2 = My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
-
-        Dim PortOpen As Boolean = _obs2.IsPortOpen(ConnectionString2)
-
-        If PortOpen = False Then
-            MsgBox("OBS2 WebSocket is not running.  Please make sure the OBS2 WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
-        Else
-            If _obs2.IsConnected = False Then
-                _obs2.Connect(ConnectionString2, My.Settings.Password2)
-            Else
-                If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                    _obs2.Disconnect()
-                    OBSConnectionStatus2 = "Not Connected"
-                    lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
-                End If
-            End If
-
-
-            If _obs2.IsConnected = True Then
-                OBSConnectionStatus2 = "Connected"
-                lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
-
-                'CreateNewSourceTable()
-                'RefreshScenes()
-                'SetUserSettings()
-
-                'EnableButtons(True)
-            Else
-                lblOBS2ConnectedStatus.Text = "Not Connected"
-            End If
-        End If
-
-        Me.Cursor = Cursors.Default
-    End Sub
-    Public Sub ConnectToOBS()
-        Me.Cursor = Cursors.WaitCursor
-
-        ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
-
-        Dim PortOpen As Boolean = _obs.IsPortOpen(ConnectionString)
-
-        If PortOpen = False Then
-            MsgBox("OBS WebSocket is not running.  Please make sure the OBS WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
-        Else
-            If _obs.IsConnected = False Then
-                _obs.Connect(ConnectionString, My.Settings.Password1)
-            Else
-                If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                    _obs.Disconnect()
-                    OBSConnectionStatus = "Not Connected"
-                    lblOBS1ConnectedStatus.Text = OBSConnectionStatus
-                End If
-            End If
-
-
-            If _obs.IsConnected = True Then
-                OBSConnectionStatus = "Connected"
-                lblOBS1ConnectedStatus.Text = OBSConnectionStatus
-
-                'CreateNewSourceTable()
-                'RefreshScenes()
-                'SetUserSettings()
-
-                EnableButtons(True)
-            Else
-                lblOBS1ConnectedStatus.Text = "Not Connected"
-            End If
-        End If
-
-        Me.Cursor = Cursors.Default
-    End Sub
     Private Sub btnGetCrop_Click(sender As Object, e As EventArgs) Handles btnGetCrop.Click
         GetCurrentCropSettings(True)
         GetCurrentCropSettings(False)
@@ -265,7 +191,7 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
         RefreshVLC()
-        RefreshOBS()
+        'RefreshOBS()
         'RightGameSourceInfo = _obs.GetSourceSettings(My.Settings.RightGameName)
 
         'If RightGameSourceInfo Is Nothing Then
@@ -273,11 +199,44 @@ Public Class OBSWebSocketCropper
         'End If
     End Sub
     Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+        SetVLCWindows(False)
+    End Sub
+    Private Sub SetVLCWindows(ByVal isRightWindow As Boolean)
+        Dim VLCString As String
+
+        If isRightWindow = False Then
             If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
-                Dim VLCString As String = cbLeftVLCSource.Text '& ":QWidget:vlc.exe"
-                _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 2)
-                _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 3)
+                VLCString = cbLeftVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
+
+                If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+                    _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 1)
+                    If OBSConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 1)
+                    End If
+                End If
+                If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
+                    _obs.SetSourceSettings(My.Settings.LeftTimerName, False, VLCString, 1)
+                    If OBSConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.LeftTimerName, False, VLCString, 1)
+                    End If
+                End If
+            End If
+        Else
+            If Not String.IsNullOrWhiteSpace(cbRightVLCSource.Text) Then
+                VLCString = cbRightVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
+
+                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+                    _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 1)
+                    If OBSConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 1)
+                    End If
+                End If
+                If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
+                    _obs.SetSourceSettings(My.Settings.RightTimerName, False, VLCString, 1)
+                    If OBSConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.RightTimerName, False, VLCString, 1)
+                    End If
+                End If
             End If
         End If
     End Sub
@@ -290,7 +249,9 @@ Public Class OBSWebSocketCropper
     Private Sub btnConnectOBS2_Click(sender As Object, e As EventArgs) Handles btnConnectOBS2.Click
         ConnectToOBS2()
     End Sub
-
+    Private Sub btnSetRightVLC_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC.Click
+        SetVLCWindows(True)
+    End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
     Private Sub GetCurrentCropSettings(ByVal IsRightWindow As Boolean)
@@ -743,7 +704,6 @@ Public Class OBSWebSocketCropper
         cbRightVLCSource.Text = ""
         cbLeftVLCSource.Text = ""
     End Sub
-
     Private Sub ClearTextBoxes(ByVal isRightWindow As Boolean)
         If isRightWindow = True Then
             txtCropRightGame_Bottom.Text = ""
@@ -961,6 +921,11 @@ Public Class OBSWebSocketCropper
         btnGetRightCrop.Enabled = isConnected
         btnSaveLeftCrop.Enabled = isConnected
         btnSaveRightCrop.Enabled = isConnected
+        btnSetLeftVLC.Enabled = isConnected
+        btnSetRightVLC.Enabled = isConnected
+        btnGetProcesses.Enabled = isConnected
+        btn2ndOBS.Enabled = isConnected
+        btnConnectOBS2.Enabled = isConnected
 
         'gbConnection2.Enabled = isConnected
         gbTrackerComms.Enabled = isConnected
@@ -973,6 +938,8 @@ Public Class OBSWebSocketCropper
         'cbLeftRunnerOBS.Enabled = isConnected
         'cbRightRunnerOBS.Enabled = isConnected
         cbRightRunnerName.Enabled = isConnected
+        cbRightVLCSource.Enabled = isConnected
+        cbLeftVLCSource.Enabled = isConnected
 
         'txtDefaultCropBottom.Enabled = isConnected
         'txtDefaultCropTop.Enabled = isConnected
@@ -1187,6 +1154,83 @@ Public Class OBSWebSocketCropper
             End If
         End If
     End Sub
+    Public Sub ConnectToOBS2()
+        Me.Cursor = Cursors.WaitCursor
+
+        ConnectionString2 = My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
+
+        Dim PortOpen As Boolean = _obs2.IsPortOpen(ConnectionString2)
+
+        If PortOpen = False Then
+            MsgBox("OBS2 WebSocket is not running.  Please make sure the OBS2 WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
+        Else
+            If _obs2.IsConnected = False Then
+                _obs2.Connect(ConnectionString2, My.Settings.Password2)
+            Else
+                If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                    _obs2.Disconnect()
+                    OBSConnectionStatus2 = "Not Connected"
+                    lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+                End If
+            End If
+
+
+            If _obs2.IsConnected = True Then
+                OBSConnectionStatus2 = "Connected"
+                lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+
+                'CreateNewSourceTable()
+                'RefreshScenes()
+                'SetUserSettings()
+
+                'EnableButtons(True)
+            Else
+                lblOBS2ConnectedStatus.Text = "Not Connected"
+            End If
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+    Public Sub ConnectToOBS()
+        Me.Cursor = Cursors.WaitCursor
+
+        ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
+
+        Dim PortOpen As Boolean = _obs.IsPortOpen(ConnectionString)
+
+        If PortOpen = False Then
+            MsgBox("OBS WebSocket is not running.  Please make sure the OBS WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
+        Else
+            If _obs.IsConnected = False Then
+                _obs.Connect(ConnectionString, My.Settings.Password1)
+            Else
+                If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                    _obs.Disconnect()
+                    OBSConnectionStatus = "Not Connected"
+                    lblOBS1ConnectedStatus.Text = OBSConnectionStatus
+                End If
+            End If
+
+
+            If _obs.IsConnected = True Then
+                OBSConnectionStatus = "Connected"
+                lblOBS1ConnectedStatus.Text = OBSConnectionStatus
+
+                'CreateNewSourceTable()
+                'RefreshScenes()
+                'SetUserSettings()
+
+                EnableButtons(True)
+
+                RefreshVLC()
+            Else
+                lblOBS1ConnectedStatus.Text = "Not Connected"
+            End If
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
 
 
 #End Region

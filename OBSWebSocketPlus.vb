@@ -46,6 +46,7 @@ Public Class OBSWebSocketPlus
         'SourceSettings.Add("priority", priority)
 
         requestParameters.Add("sourceName", source)
+        requestParameters.Add("sourceType", "window_capture")
         requestParameters.Add("sourceSettings", SourceSettings)
 
         SendRequest("SetSourceSettings", requestParameters)
@@ -95,13 +96,13 @@ Public Class OBSWebSocketPlus
     End Function
 End Class
 Public Class SourceSettings
-    Public Property SourceName As String
+    'Public Property SourceName As String
     Public Property window As String
     Public Property priority As Integer
     Public Property cursor As Boolean
 
     Public Sub New(ByRef data As JObject)
-        SourceName = CType(data("sourceName"), String)
+        'SourceName = CType(data("sourceName"), String)
         window = CType(data("sourceSettings").Item("window"), String)
         priority = CType(data("sourceSettings").Item("priority"), Integer)
 
