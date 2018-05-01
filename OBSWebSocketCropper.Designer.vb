@@ -764,7 +764,7 @@ Partial Class OBSWebSocketCropper
         Me.btnSyncWithServer.Size = New System.Drawing.Size(142, 23)
         Me.btnSyncWithServer.TabIndex = 60
         Me.btnSyncWithServer.Text = "Sync With Server"
-        Me.ttMainToolTip.SetToolTip(Me.btnSyncWithServer, "Saves the runner timer/game crop settings to a local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "file (for now).")
+        Me.ttMainToolTip.SetToolTip(Me.btnSyncWithServer, "Syncs the online database with the local database")
         Me.btnSyncWithServer.UseVisualStyleBackColor = True
         '
         'btnGetLeftCrop
@@ -774,7 +774,7 @@ Partial Class OBSWebSocketCropper
         Me.btnGetLeftCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnGetLeftCrop.TabIndex = 61
         Me.btnGetLeftCrop.Text = "Get Left Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop, "Get the current OBS crop settings for the right side")
         Me.btnGetLeftCrop.UseVisualStyleBackColor = True
         '
         'btnGetRightCrop
@@ -784,7 +784,7 @@ Partial Class OBSWebSocketCropper
         Me.btnGetRightCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnGetRightCrop.TabIndex = 62
         Me.btnGetRightCrop.Text = "Get Right Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetRightCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetRightCrop, "Get the current OBS crop settings for the right side")
         Me.btnGetRightCrop.UseVisualStyleBackColor = True
         '
         'btnSaveLeftCrop
@@ -794,7 +794,7 @@ Partial Class OBSWebSocketCropper
         Me.btnSaveLeftCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSaveLeftCrop.TabIndex = 63
         Me.btnSaveLeftCrop.Text = "Save Left Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the left side")
         Me.btnSaveLeftCrop.UseVisualStyleBackColor = True
         '
         'btnSaveRightCrop
@@ -804,7 +804,7 @@ Partial Class OBSWebSocketCropper
         Me.btnSaveRightCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSaveRightCrop.TabIndex = 64
         Me.btnSaveRightCrop.Text = "Save Right Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSaveRightCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveRightCrop, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the right side")
         Me.btnSaveRightCrop.UseVisualStyleBackColor = True
         '
         'btnGetProcesses
@@ -814,8 +814,7 @@ Partial Class OBSWebSocketCropper
         Me.btnGetProcesses.Size = New System.Drawing.Size(114, 23)
         Me.btnGetProcesses.TabIndex = 65
         Me.btnGetProcesses.Text = "Get Processes"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetProcesses, "Grabs the current height/width from the game windows" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and sets that as the master" &
-        " height/width.")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetProcesses, "Gets the currently running VLC processes and fills the dropdowns")
         Me.btnGetProcesses.UseVisualStyleBackColor = True
         '
         'btnSetLeftVLC
@@ -826,7 +825,7 @@ Partial Class OBSWebSocketCropper
         Me.btnSetLeftVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftVLC.TabIndex = 70
         Me.btnSetLeftVLC.Text = "Set Left VLC"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC, "Sets the left game/timer window VLC to the above dropdown")
         Me.btnSetLeftVLC.UseVisualStyleBackColor = False
         '
         'btn2ndOBS
@@ -836,8 +835,7 @@ Partial Class OBSWebSocketCropper
         Me.btn2ndOBS.Size = New System.Drawing.Size(114, 23)
         Me.btn2ndOBS.TabIndex = 71
         Me.btn2ndOBS.Text = "2nd OBS"
-        Me.ttMainToolTip.SetToolTip(Me.btn2ndOBS, "Grabs the current height/width from the game windows" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and sets that as the master" &
-        " height/width.")
+        Me.ttMainToolTip.SetToolTip(Me.btn2ndOBS, "To help bypass the connection port error when loading a 2nd OBS")
         Me.btn2ndOBS.UseVisualStyleBackColor = True
         Me.btn2ndOBS.Visible = False
         '
@@ -936,7 +934,7 @@ Partial Class OBSWebSocketCropper
         Me.btnSetRightVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetRightVLC.TabIndex = 74
         Me.btnSetRightVLC.Text = "Set Right VLC"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC, "Sets the left game/timer window VLC to the above dropdown")
         Me.btnSetRightVLC.UseVisualStyleBackColor = False
         '
         'OBSWebSocketCropper
