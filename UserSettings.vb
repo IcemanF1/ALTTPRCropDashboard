@@ -307,8 +307,8 @@ Public Class UserSettings
             panOBS.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True
-            SetUserSettings()
             RefreshScenes()
+            SetUserSettings()
         End If
     End Sub
     Private Sub btnResetSettings_Click(sender As Object, e As EventArgs) Handles btnResetSettings.Click

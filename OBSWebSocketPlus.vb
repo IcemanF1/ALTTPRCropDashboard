@@ -19,6 +19,16 @@ Public Class OBSWebSocketPlus
         Return New SceneItemProperties(SendRequest("GetSceneItemProperties", requestParameters))
 
     End Function
+    Public Function GetSourceSettings(
+           ByVal sourcename As String) As SourceSettings
+
+        Dim requestParameters As New JObject
+
+        requestParameters.Add("sourceName", sourcename)
+
+        Return New SourceSettings(SendRequest("GetSourceSettings", requestParameters))
+
+    End Function
     Public Sub SetTextGDI(ByVal source As String, ByVal TextValue As String)
         Dim requestParameters As New JObject
 
@@ -26,6 +36,19 @@ Public Class OBSWebSocketPlus
         requestParameters.Add("text", TextValue)
 
         SendRequest("SetTextGDIPlusProperties", requestParameters)
+    End Sub
+    Public Sub SetSourceSettings(ByVal source As String, ByVal cursor As Boolean, ByVal window As String, ByVal priority As Integer)
+        Dim requestParameters As New JObject
+
+        Dim SourceSettings As New JObject
+        SourceSettings.Add("window", window)
+        'SourceSettings.Add("cursor", cursor)
+        'SourceSettings.Add("priority", priority)
+
+        requestParameters.Add("sourceName", source)
+        requestParameters.Add("sourceSettings", SourceSettings)
+
+        SendRequest("SetSourceSettings", requestParameters)
     End Sub
     Public Sub SetBrowserSource(ByVal source As String, ByVal urlValue As String)
         Dim requestParameters As New JObject
@@ -71,7 +94,24 @@ Public Class OBSWebSocketPlus
         End Try
     End Function
 End Class
+Public Class SourceSettings
+    Public Property SourceName As String
+    Public Property window As String
+    Public Property priority As Integer
+    Public Property cursor As Boolean
 
+    Public Sub New(ByRef data As JObject)
+        SourceName = CType(data("sourceName"), String)
+        window = CType(data("sourceSettings").Item("window"), String)
+        priority = CType(data("sourceSettings").Item("priority"), Integer)
+
+        If data("sourceSettings").Item("cursor") Is Nothing Then
+            cursor = False
+        Else
+            cursor = CType(data("sourceSettings").Item("cursor"), Boolean)
+        End If
+    End Sub
+End Class
 Public Class SceneItemProperties
     Public Property Crop As SceneItemCropInfo
     Public Property Name As String

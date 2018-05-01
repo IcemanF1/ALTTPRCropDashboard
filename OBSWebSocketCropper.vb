@@ -34,10 +34,15 @@ Public Class OBSWebSocketCropper
     Dim MasterWidthLeft As Integer
     Dim MasterHeightLeft As Integer
 
+    Dim VLCListLeft As New DataSet
+    Dim VLCListRight As New DataSet
+
     Dim LeftRunnerGameSceneInfo As SceneItemProperties
     Dim RightRunnerGameSceneInfo As SceneItemProperties
     Dim LeftRunnerTimerSceneInfo As SceneItemProperties
     Dim RightRunnerTimerSceneInfo As SceneItemProperties
+
+    Dim RightGameSourceInfo As SourceSettings
 
     Dim CropperMath As New CropperMath
 
@@ -49,6 +54,22 @@ Public Class OBSWebSocketCropper
 
     Public Shared OBSSettingsResult As String
 #Region " Create New Tables "
+    Private Sub CreateNewSourceTable()
+        If VLCListLeft.Tables.Count = 0 Then
+            VLCListLeft.Tables.Add("Processes")
+            VLCListLeft.Tables("Processes").Columns.Add("VLCName")
+        Else
+            VLCListLeft.Tables("Processes").Clear()
+        End If
+
+        If VLCListRight.Tables.Count = 0 Then
+            VLCListRight.Tables.Add("Processes")
+            VLCListRight.Tables("Processes").Columns.Add("VLCName")
+        Else
+            VLCListRight.Tables("Processes").Clear()
+        End If
+
+    End Sub
 
 #End Region
 #Region " Button Clicks "
@@ -580,6 +601,37 @@ Public Class OBSWebSocketCropper
 
         SetHeightLabels()
     End Sub
+    Private Sub RefreshVLC()
+        Dim lVLC As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "vlc*".ToLower).ToList
+
+        VLCListLeft.Clear()
+        VLCListRight.Clear()
+
+        Dim x As Integer
+        For x = 0 To lVLC.Count - 1
+            Dim dr As DataRow
+
+            'Dim y As Integer
+            'For y = 0 To scenes(x).Items.Count - 1
+            dr = VLCListLeft.Tables("Processes").NewRow
+            dr.Item("VLCName") = lVLC.Item(x).MainWindowTitle
+            VLCListLeft.Tables("Processes").Rows.Add(dr)
+            'Next
+
+        Next
+        VLCListRight = VLCListLeft.Copy
+
+        cbLeftVLCSource.DataSource = VLCListLeft.Tables("Processes")
+        cbLeftVLCSource.DisplayMember = "VLCName"
+        cbLeftVLCSource.ValueMember = "VLCName"
+
+        cbRightVLCSource.DataSource = VLCListRight.Tables("Processes")
+        cbRightVLCSource.DisplayMember = "VLCName"
+        cbRightVLCSource.ValueMember = "VLCName"
+
+        cbRightVLCSource.Text = ""
+        cbLeftVLCSource.Text = ""
+    End Sub
 
     Private Sub ClearTextBoxes(ByVal isRightWindow As Boolean)
         If isRightWindow = True Then
@@ -823,6 +875,8 @@ Public Class OBSWebSocketCropper
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
         ProgramLoaded = False
 
+        CreateNewSourceTable()
+
         If My.Settings.HasFinishedWelcome = False Then
             Dim USettings As New UserSettings
 
@@ -837,6 +891,7 @@ Public Class OBSWebSocketCropper
             If OBSSettingsResult = "VLC" Then
                 VLCSettings.ShowDialog()
             End If
+
         Else
             EnableButtons(False)
             ResetHeightWidthLabels()
@@ -844,6 +899,7 @@ Public Class OBSWebSocketCropper
             RefreshRunnerNames()
 
             RefreshCropperDefaultCrop()
+
         End If
 
         ProgramLoaded = True
@@ -1000,6 +1056,29 @@ Public Class OBSWebSocketCropper
 
         RefreshCropperDefaultCrop()
     End Sub
+
+    Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
+        RefreshVLC()
+
+        RightGameSourceInfo = _obs.GetSourceSettings(My.Settings.RightGameName)
+
+        If RightGameSourceInfo Is Nothing Then
+
+        End If
+    End Sub
+
+    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+            If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
+                Dim VLCString As String = cbLeftVLCSource.Text '& ":QWidget:vlc.exe"
+                _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 2)
+                _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 3)
+            End If
+        End If
+
+
+    End Sub
+
 
 
 
