@@ -182,11 +182,15 @@ Public Class OBSWebSocketCropper
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
         Me.Cursor = Cursors.WaitCursor
 
+        If Not String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings("ServerURL")) Then
+            CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
 
-        CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
+            SendToServer()
+            GetSyncFromServer()
+        Else
+            MsgBox("You are missing the API config file.  Please ask someone in the restream channel in discord if you believe you should need this file.", MsgBoxStyle.OkOnly, ProgramName)
+        End If
 
-        SendToServer()
-        GetSyncFromServer()
         Me.Cursor = Cursors.Default
     End Sub
     Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
@@ -945,7 +949,16 @@ Public Class OBSWebSocketCropper
         'txtDefaultCropTop.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If My.Settings.UpgradeRequired = True Then
+            My.Settings.Upgrade()
+            My.Settings.UpgradeRequired = False
+            My.Settings.Save()
+        End If
+
+
         ProgramLoaded = False
+
+        ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
         CreateNewSourceTable()
 

@@ -24,14 +24,21 @@ Partial Class UserSettings
     Private Sub InitializeComponent()
         Me.btnSaveSettings = New System.Windows.Forms.Button()
         Me.gbConnection1 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtConnectionPort = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.txtPassword1 = New System.Windows.Forms.TextBox()
         Me.txtConnectionString1 = New System.Windows.Forms.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
         Me.btnConnectOBS1 = New System.Windows.Forms.Button()
-        Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.btnResetSettings = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtTwitchChannel = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.roDefault = New System.Windows.Forms.RadioButton()
+        Me.roCustom = New System.Windows.Forms.RadioButton()
+        Me.btnSaveThenVLC = New System.Windows.Forms.Button()
         Me.panOBS = New System.Windows.Forms.Panel()
         Me.cbCommentaryOBS = New System.Windows.Forms.ComboBox()
         Me.cbRightTrackerOBS = New System.Windows.Forms.ComboBox()
@@ -42,14 +49,7 @@ Partial Class UserSettings
         Me.cbLeftTimerWindow = New System.Windows.Forms.ComboBox()
         Me.cbRightTimerWindow = New System.Windows.Forms.ComboBox()
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtTwitchChannel = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.roDefault = New System.Windows.Forms.RadioButton()
-        Me.roCustom = New System.Windows.Forms.RadioButton()
-        Me.btnSaveThenVLC = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.txtConnectionPort = New System.Windows.Forms.TextBox()
+        Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.SuspendLayout()
@@ -77,6 +77,22 @@ Partial Class UserSettings
         Me.gbConnection1.TabIndex = 92
         Me.gbConnection1.TabStop = False
         Me.gbConnection1.Text = "Connection Settings"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(272, 24)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(26, 13)
+        Me.Label3.TabIndex = 31
+        Me.Label3.Text = "Port"
+        '
+        'txtConnectionPort
+        '
+        Me.txtConnectionPort.Location = New System.Drawing.Point(304, 21)
+        Me.txtConnectionPort.Name = "txtConnectionPort"
+        Me.txtConnectionPort.Size = New System.Drawing.Size(68, 20)
+        Me.txtConnectionPort.TabIndex = 32
         '
         'Label26
         '
@@ -128,16 +144,6 @@ Partial Class UserSettings
         Me.btnConnectOBS1.Text = "Verify / Connect"
         Me.btnConnectOBS1.UseVisualStyleBackColor = True
         '
-        'btnRefreshScenes
-        '
-        Me.btnRefreshScenes.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRefreshScenes.Location = New System.Drawing.Point(401, 375)
-        Me.btnRefreshScenes.Name = "btnRefreshScenes"
-        Me.btnRefreshScenes.Size = New System.Drawing.Size(187, 56)
-        Me.btnRefreshScenes.TabIndex = 31
-        Me.btnRefreshScenes.Text = "Refresh OBS Scenes"
-        Me.btnRefreshScenes.UseVisualStyleBackColor = True
-        '
         'btnResetSettings
         '
         Me.btnResetSettings.Location = New System.Drawing.Point(26, 746)
@@ -146,6 +152,63 @@ Partial Class UserSettings
         Me.btnResetSettings.TabIndex = 93
         Me.btnResetSettings.Text = "Reset Settings"
         Me.btnResetSettings.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(81, 13)
+        Me.Label1.TabIndex = 95
+        Me.Label1.Text = "Twitch Channel"
+        '
+        'txtTwitchChannel
+        '
+        Me.txtTwitchChannel.Location = New System.Drawing.Point(99, 6)
+        Me.txtTwitchChannel.Name = "txtTwitchChannel"
+        Me.txtTwitchChannel.Size = New System.Drawing.Size(160, 20)
+        Me.txtTwitchChannel.TabIndex = 96
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(265, 9)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(232, 13)
+        Me.Label2.TabIndex = 97
+        Me.Label2.Text = "We need this to allow you to save your settings."
+        '
+        'roDefault
+        '
+        Me.roDefault.AutoSize = True
+        Me.roDefault.Location = New System.Drawing.Point(33, 38)
+        Me.roDefault.Name = "roDefault"
+        Me.roDefault.Size = New System.Drawing.Size(59, 17)
+        Me.roDefault.TabIndex = 98
+        Me.roDefault.TabStop = True
+        Me.roDefault.Text = "Default"
+        Me.roDefault.UseVisualStyleBackColor = True
+        '
+        'roCustom
+        '
+        Me.roCustom.AutoSize = True
+        Me.roCustom.Location = New System.Drawing.Point(103, 37)
+        Me.roCustom.Name = "roCustom"
+        Me.roCustom.Size = New System.Drawing.Size(60, 17)
+        Me.roCustom.TabIndex = 99
+        Me.roCustom.TabStop = True
+        Me.roCustom.Text = "Custom"
+        Me.roCustom.UseVisualStyleBackColor = True
+        '
+        'btnSaveThenVLC
+        '
+        Me.btnSaveThenVLC.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 724)
+        Me.btnSaveThenVLC.Name = "btnSaveThenVLC"
+        Me.btnSaveThenVLC.Size = New System.Drawing.Size(252, 54)
+        Me.btnSaveThenVLC.TabIndex = 100
+        Me.btnSaveThenVLC.Text = "Save OBS Settings and " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Continue to VLC Settings"
+        Me.btnSaveThenVLC.UseVisualStyleBackColor = True
         '
         'panOBS
         '
@@ -224,18 +287,18 @@ Partial Class UserSettings
         '
         Me.cbLeftTimerWindow.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbLeftTimerWindow.FormattingEnabled = True
-        Me.cbLeftTimerWindow.Location = New System.Drawing.Point(15, 43)
+        Me.cbLeftTimerWindow.Location = New System.Drawing.Point(15, 29)
         Me.cbLeftTimerWindow.Name = "cbLeftTimerWindow"
-        Me.cbLeftTimerWindow.Size = New System.Drawing.Size(121, 25)
+        Me.cbLeftTimerWindow.Size = New System.Drawing.Size(148, 25)
         Me.cbLeftTimerWindow.TabIndex = 84
         '
         'cbRightTimerWindow
         '
         Me.cbRightTimerWindow.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbRightTimerWindow.FormattingEnabled = True
-        Me.cbRightTimerWindow.Location = New System.Drawing.Point(879, 43)
+        Me.cbRightTimerWindow.Location = New System.Drawing.Point(856, 29)
         Me.cbRightTimerWindow.Name = "cbRightTimerWindow"
-        Me.cbRightTimerWindow.Size = New System.Drawing.Size(121, 25)
+        Me.cbRightTimerWindow.Size = New System.Drawing.Size(146, 25)
         Me.cbRightTimerWindow.TabIndex = 80
         '
         'cbLeftGameWindow
@@ -247,78 +310,15 @@ Partial Class UserSettings
         Me.cbLeftGameWindow.Size = New System.Drawing.Size(360, 25)
         Me.cbLeftGameWindow.TabIndex = 82
         '
-        'Label1
+        'btnRefreshScenes
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(81, 13)
-        Me.Label1.TabIndex = 95
-        Me.Label1.Text = "Twitch Channel"
-        '
-        'txtTwitchChannel
-        '
-        Me.txtTwitchChannel.Location = New System.Drawing.Point(99, 6)
-        Me.txtTwitchChannel.Name = "txtTwitchChannel"
-        Me.txtTwitchChannel.Size = New System.Drawing.Size(160, 20)
-        Me.txtTwitchChannel.TabIndex = 96
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(265, 9)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(232, 13)
-        Me.Label2.TabIndex = 97
-        Me.Label2.Text = "We need this to allow you to save your settings."
-        '
-        'roDefault
-        '
-        Me.roDefault.AutoSize = True
-        Me.roDefault.Location = New System.Drawing.Point(33, 38)
-        Me.roDefault.Name = "roDefault"
-        Me.roDefault.Size = New System.Drawing.Size(59, 17)
-        Me.roDefault.TabIndex = 98
-        Me.roDefault.TabStop = True
-        Me.roDefault.Text = "Default"
-        Me.roDefault.UseVisualStyleBackColor = True
-        '
-        'roCustom
-        '
-        Me.roCustom.AutoSize = True
-        Me.roCustom.Location = New System.Drawing.Point(103, 37)
-        Me.roCustom.Name = "roCustom"
-        Me.roCustom.Size = New System.Drawing.Size(60, 17)
-        Me.roCustom.TabIndex = 99
-        Me.roCustom.TabStop = True
-        Me.roCustom.Text = "Custom"
-        Me.roCustom.UseVisualStyleBackColor = True
-        '
-        'btnSaveThenVLC
-        '
-        Me.btnSaveThenVLC.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 724)
-        Me.btnSaveThenVLC.Name = "btnSaveThenVLC"
-        Me.btnSaveThenVLC.Size = New System.Drawing.Size(252, 54)
-        Me.btnSaveThenVLC.TabIndex = 100
-        Me.btnSaveThenVLC.Text = "Save OBS Settings and " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Continue to VLC Settings"
-        Me.btnSaveThenVLC.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(272, 24)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(26, 13)
-        Me.Label3.TabIndex = 31
-        Me.Label3.Text = "Port"
-        '
-        'txtConnectionPort
-        '
-        Me.txtConnectionPort.Location = New System.Drawing.Point(304, 21)
-        Me.txtConnectionPort.Name = "txtConnectionPort"
-        Me.txtConnectionPort.Size = New System.Drawing.Size(68, 20)
-        Me.txtConnectionPort.TabIndex = 32
+        Me.btnRefreshScenes.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRefreshScenes.Location = New System.Drawing.Point(401, 375)
+        Me.btnRefreshScenes.Name = "btnRefreshScenes"
+        Me.btnRefreshScenes.Size = New System.Drawing.Size(187, 56)
+        Me.btnRefreshScenes.TabIndex = 31
+        Me.btnRefreshScenes.Text = "Refresh OBS Scenes"
+        Me.btnRefreshScenes.UseVisualStyleBackColor = True
         '
         'UserSettings
         '

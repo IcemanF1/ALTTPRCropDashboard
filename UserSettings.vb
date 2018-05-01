@@ -72,6 +72,7 @@ Public Class UserSettings
             My.Settings.RightGameName = cbRightGameWindow.Text
             My.Settings.ConnectionString1 = txtConnectionString1.Text
             My.Settings.Password1 = txtPassword1.Text
+            My.Settings.ConnectionPort1 = txtConnectionPort.Text
             My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
             My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
             My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
@@ -80,7 +81,7 @@ Public Class UserSettings
             My.Settings.TwitchChannel = txtTwitchChannel.Text
             My.Settings.DefaultConnection = roDefault.Checked
             My.Settings.HasFinishedWelcome = True
-            My.Settings.ConnectionPort1 = txtConnectionPort.Text
+
 
             My.Settings.Save()
 
@@ -174,7 +175,13 @@ Public Class UserSettings
         RefreshScenes()
         SetUserSettings()
     End Sub
+    Private Sub SaveConnectionForTest()
+        My.Settings.ConnectionString1 = txtConnectionString1.Text
+        My.Settings.Password1 = txtPassword1.Text
+        My.Settings.ConnectionPort1 = txtConnectionPort.Text
 
+        My.Settings.Save()
+    End Sub
     Private Sub UserSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         txtConnectionString1.Text = My.Settings.ConnectionString1
         txtConnectionPort.Text = My.Settings.ConnectionPort1
@@ -302,6 +309,8 @@ Public Class UserSettings
         End If
     End Sub
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
+        SaveConnectionForTest()
+
         OBSWebSocketCropper.ConnectToOBS()
 
         lblOBS1ConnectedStatus.Text = OBSWebSocketCropper.OBSConnectionStatus

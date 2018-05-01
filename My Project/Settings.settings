@@ -74,5 +74,8 @@
     <Setting Name="ConnectionPort2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4443</Value>
     </Setting>
+    <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
