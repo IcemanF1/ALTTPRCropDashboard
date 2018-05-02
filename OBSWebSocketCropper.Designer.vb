@@ -64,12 +64,10 @@ Partial Class OBSWebSocketCropper
         Me.Label20 = New System.Windows.Forms.Label()
         Me.txtCropLeftGame_Right = New System.Windows.Forms.TextBox()
         Me.btnSetLeftCrop = New System.Windows.Forms.Button()
-        Me.btnSaveRunnerCrop = New System.Windows.Forms.Button()
         Me.lblLeftRunner = New System.Windows.Forms.Label()
         Me.lblRightRunner = New System.Windows.Forms.Label()
         Me.cbLeftRunnerName = New System.Windows.Forms.ComboBox()
         Me.cbRightRunnerName = New System.Windows.Forms.ComboBox()
-        Me.btnGetCropFromOBS = New System.Windows.Forms.Button()
         Me.lblLMasterHeight = New System.Windows.Forms.Label()
         Me.lblLMasterWidth = New System.Windows.Forms.Label()
         Me.lblLSourceHeight = New System.Windows.Forms.Label()
@@ -111,6 +109,7 @@ Partial Class OBSWebSocketCropper
         Me.lblLeftVLC = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
+        Me.chkAlwaysOnTop = New System.Windows.Forms.CheckBox()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -504,16 +503,6 @@ Partial Class OBSWebSocketCropper
         Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
         Me.btnSetLeftCrop.UseVisualStyleBackColor = False
         '
-        'btnSaveRunnerCrop
-        '
-        Me.btnSaveRunnerCrop.Location = New System.Drawing.Point(7, 155)
-        Me.btnSaveRunnerCrop.Name = "btnSaveRunnerCrop"
-        Me.btnSaveRunnerCrop.Size = New System.Drawing.Size(142, 23)
-        Me.btnSaveRunnerCrop.TabIndex = 21
-        Me.btnSaveRunnerCrop.Text = "Save Runner Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSaveRunnerCrop, "Saves the runner timer/game crop settings to a local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "file (for now).")
-        Me.btnSaveRunnerCrop.UseVisualStyleBackColor = True
-        '
         'lblLeftRunner
         '
         Me.lblLeftRunner.AutoSize = True
@@ -549,17 +538,6 @@ Partial Class OBSWebSocketCropper
         Me.cbRightRunnerName.Name = "cbRightRunnerName"
         Me.cbRightRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbRightRunnerName.TabIndex = 26
-        '
-        'btnGetCropFromOBS
-        '
-        Me.btnGetCropFromOBS.Location = New System.Drawing.Point(28, 130)
-        Me.btnGetCropFromOBS.Name = "btnGetCropFromOBS"
-        Me.btnGetCropFromOBS.Size = New System.Drawing.Size(121, 23)
-        Me.btnGetCropFromOBS.TabIndex = 33
-        Me.btnGetCropFromOBS.Text = "Get Crop From OBS"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetCropFromOBS, "Gets the current Timer/Game crops from OBS" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WARNING!  Clicking YES to the messa" &
-        "ge will overwrite" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the current crop numbers in there!")
-        Me.btnGetCropFromOBS.UseVisualStyleBackColor = True
         '
         'lblLMasterHeight
         '
@@ -929,11 +907,22 @@ Partial Class OBSWebSocketCropper
         Me.lblOBS2ConnectedStatus.Text = "Connected Status"
         Me.lblOBS2ConnectedStatus.Visible = False
         '
+        'chkAlwaysOnTop
+        '
+        Me.chkAlwaysOnTop.AutoSize = True
+        Me.chkAlwaysOnTop.Location = New System.Drawing.Point(7, 130)
+        Me.chkAlwaysOnTop.Name = "chkAlwaysOnTop"
+        Me.chkAlwaysOnTop.Size = New System.Drawing.Size(98, 17)
+        Me.chkAlwaysOnTop.TabIndex = 75
+        Me.chkAlwaysOnTop.Text = "Always On Top"
+        Me.chkAlwaysOnTop.UseVisualStyleBackColor = True
+        '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 506)
+        Me.Controls.Add(Me.chkAlwaysOnTop)
         Me.Controls.Add(Me.btnSetRightVLC)
         Me.Controls.Add(Me.btnConnectOBS2)
         Me.Controls.Add(Me.lblOBS2ConnectedStatus)
@@ -942,7 +931,6 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.cbRightVLCSource)
         Me.Controls.Add(Me.cbLeftVLCSource)
         Me.Controls.Add(Me.lblRightVLC)
-        Me.Controls.Add(Me.btnSaveRunnerCrop)
         Me.Controls.Add(Me.lblLeftVLC)
         Me.Controls.Add(Me.btnGetProcesses)
         Me.Controls.Add(Me.btnSaveRightCrop)
@@ -962,7 +950,6 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.lblLSourceHeight)
         Me.Controls.Add(Me.lblLMasterWidth)
         Me.Controls.Add(Me.lblLMasterHeight)
-        Me.Controls.Add(Me.btnGetCropFromOBS)
         Me.Controls.Add(Me.cbRightRunnerName)
         Me.Controls.Add(Me.cbLeftRunnerName)
         Me.Controls.Add(Me.lblRightRunner)
@@ -976,6 +963,7 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.btnSetRightCrop)
         Me.Controls.Add(Me.btnGetCrop)
         Me.Controls.Add(Me.mnuMainMenu)
+        Me.KeyPreview = True
         Me.Name = "OBSWebSocketCropper"
         Me.Text = "OBS Websocket Cropper"
         Me.gbRightGameWindow.ResumeLayout(False)
@@ -1035,12 +1023,10 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents Label20 As Label
     Friend WithEvents txtCropLeftGame_Right As TextBox
     Friend WithEvents btnSetLeftCrop As Button
-    Friend WithEvents btnSaveRunnerCrop As Button
     Friend WithEvents lblLeftRunner As Label
     Friend WithEvents lblRightRunner As Label
     Friend WithEvents cbLeftRunnerName As ComboBox
     Friend WithEvents cbRightRunnerName As ComboBox
-    Friend WithEvents btnGetCropFromOBS As Button
     Friend WithEvents lblLMasterHeight As Label
     Friend WithEvents lblLMasterWidth As Label
     Friend WithEvents lblLSourceHeight As Label
@@ -1082,4 +1068,5 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents lblOBS2ConnectedStatus As Label
     Friend WithEvents btnConnectOBS2 As Button
     Friend WithEvents btnSetRightVLC As Button
+    Friend WithEvents chkAlwaysOnTop As CheckBox
 End Class

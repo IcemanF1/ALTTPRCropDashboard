@@ -124,6 +124,8 @@ Public Class UserSettings
             My.Settings.TwitchChannel = txtTwitchChannel.Text
             My.Settings.DefaultConnection = roDefault.Checked
             My.Settings.HasFinishedWelcome = True
+            My.Settings.ExpertMode = My.Settings.ExpertMode
+            My.Settings.AlwaysOnTop = My.Settings.AlwaysOnTop
 
             My.Settings.Save()
 

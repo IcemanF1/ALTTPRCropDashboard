@@ -108,12 +108,6 @@ Public Class OBSWebSocketCropper
 
         SetNewNewMath(False)
     End Sub
-    Private Sub btnSaveRunnerCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRunnerCrop.Click
-        SaveRunnerCrop(True)
-        SaveRunnerCrop(False)
-
-        RefreshRunnerNames()
-    End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
             If cbLeftRunnerName.Text.Trim.Length > 0 Then
@@ -156,15 +150,6 @@ Public Class OBSWebSocketCropper
             End If
         End If
     End Sub
-    Private Sub btnGetCropFromOBS_Click(sender As Object, e As EventArgs) Handles btnGetCropFromOBS.Click
-        GetCurrentSceneInfo(True)
-        GetCurrentSceneInfo(False)
-
-        If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-            FillCurrentCropInfoFromOBS(True)
-            FillCurrentCropInfoFromOBS(False)
-        End If
-    End Sub
     Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
         SaveRunnerCrop(False)
 
@@ -176,8 +161,10 @@ Public Class OBSWebSocketCropper
         RefreshRunnerNames()
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
+        SyncWithServer()
+    End Sub
+    Private Sub SyncWithServer()
         Me.Cursor = Cursors.WaitCursor
-
         Try
             If Not String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings("ServerURL")) Then
                 CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
@@ -190,8 +177,6 @@ Public Class OBSWebSocketCropper
         Finally
             Me.Cursor = Cursors.Default
         End Try
-
-
     End Sub
     Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
         RefreshVLC()
@@ -557,9 +542,9 @@ Public Class OBSWebSocketCropper
         Dim TempRightRunner As String = cbRightRunnerName.Text
 
         Using context As New CropDbContext
-            Dim validNames = context.Crops.Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList()
+            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList()
 
-            cbLeftRunnerName.DataSource = validNames
+            cbLeftRunnerName.DataSource = validNames.ToList()
             cbRightRunnerName.DataSource = validNames.ToList()
             cbLeftRunnerName.DisplayMember = "RacerName"
             cbLeftRunnerName.ValueMember = "RacerName"
@@ -903,8 +888,6 @@ Public Class OBSWebSocketCropper
 #Region " Misc Functions "
     Private Sub EnableButtons(ByVal isConnected As Boolean)
         btnGetCrop.Enabled = isConnected
-        btnGetCropFromOBS.Enabled = isConnected
-        btnSaveRunnerCrop.Enabled = isConnected
         btnSetLeftCrop.Enabled = isConnected
         btnSetMaster.Enabled = isConnected
         btnSetRightCrop.Enabled = isConnected
@@ -974,6 +957,9 @@ Public Class OBSWebSocketCropper
 
             CheckUnusedFields()
         End If
+
+        chkAlwaysOnTop.Visible = My.Settings.ExpertMode
+        chkAlwaysOnTop.Checked = My.Settings.AlwaysOnTop
 
         ProgramLoaded = True
     End Sub
@@ -1291,6 +1277,33 @@ Public Class OBSWebSocketCropper
             lblLeftVLC.Visible = True
             cbLeftVLCSource.Visible = True
         End If
+    End Sub
+    Private Sub OBSWebSocketCropper_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
+            SyncWithServer()
+        ElseIf (e.KeyCode = Keys.Q AndAlso e.Modifiers = Keys.Control) Then
+            GetCurrentSceneInfo(False)
+            SetNewNewMath(False)
+        ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
+            GetCurrentSceneInfo(False)
+            FillCurrentCropInfoFromOBS(False)
+        ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
+            SaveRunnerCrop(False)
+            RefreshRunnerNames()
+        ElseIf (e.KeyCode = Keys.T AndAlso e.Modifiers = Keys.Control) Then
+            GetCurrentSceneInfo(True)
+            SetNewNewMath(True)
+        ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
+            GetCurrentSceneInfo(True)
+            FillCurrentCropInfoFromOBS(True)
+        ElseIf (e.KeyCode = Keys.Y AndAlso e.Modifiers = Keys.Control) Then
+            SaveRunnerCrop(True)
+            RefreshRunnerNames()
+        End If
+    End Sub
+
+    Private Sub chkAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkAlwaysOnTop.CheckedChanged
+        Me.TopMost = chkAlwaysOnTop.Checked
     End Sub
 
 

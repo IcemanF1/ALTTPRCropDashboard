@@ -353,6 +353,30 @@ Namespace My
                 Me("UpgradeRequired") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ExpertMode() As Boolean
+            Get
+                Return CType(Me("ExpertMode"),Boolean)
+            End Get
+            Set
+                Me("ExpertMode") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AlwaysOnTop() As Boolean
+            Get
+                Return CType(Me("AlwaysOnTop"),Boolean)
+            End Get
+            Set
+                Me("AlwaysOnTop") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
