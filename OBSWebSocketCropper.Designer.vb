@@ -65,8 +65,8 @@ Partial Class OBSWebSocketCropper
         Me.txtCropLeftGame_Right = New System.Windows.Forms.TextBox()
         Me.btnSetLeftCrop = New System.Windows.Forms.Button()
         Me.btnSaveRunnerCrop = New System.Windows.Forms.Button()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
+        Me.lblLeftRunner = New System.Windows.Forms.Label()
+        Me.lblRightRunner = New System.Windows.Forms.Label()
         Me.cbLeftRunnerName = New System.Windows.Forms.ComboBox()
         Me.cbRightRunnerName = New System.Windows.Forms.ComboBox()
         Me.btnGetCropFromOBS = New System.Windows.Forms.Button()
@@ -80,16 +80,15 @@ Partial Class OBSWebSocketCropper
         Me.lblRMasterHeight = New System.Windows.Forms.Label()
         Me.txtLeftTrackerURL = New System.Windows.Forms.TextBox()
         Me.txtRightTrackerURL = New System.Windows.Forms.TextBox()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.Label34 = New System.Windows.Forms.Label()
-        Me.Label36 = New System.Windows.Forms.Label()
+        Me.lblLeftTracker = New System.Windows.Forms.Label()
+        Me.lblRightTracker = New System.Windows.Forms.Label()
+        Me.lblCommentary = New System.Windows.Forms.Label()
         Me.txtCommentaryNames = New System.Windows.Forms.TextBox()
         Me.btnSetTrackCommNames = New System.Windows.Forms.Button()
         Me.mnuMainMenu = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeUserSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeVLCSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ReadOBSINIToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -108,8 +107,8 @@ Partial Class OBSWebSocketCropper
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
         Me.cbRightVLCSource = New System.Windows.Forms.ComboBox()
         Me.cbLeftVLCSource = New System.Windows.Forms.ComboBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblRightVLC = New System.Windows.Forms.Label()
+        Me.lblLeftVLC = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
         Me.gbRightGameWindow.SuspendLayout()
@@ -515,25 +514,25 @@ Partial Class OBSWebSocketCropper
         Me.ttMainToolTip.SetToolTip(Me.btnSaveRunnerCrop, "Saves the runner timer/game crop settings to a local" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "file (for now).")
         Me.btnSaveRunnerCrop.UseVisualStyleBackColor = True
         '
-        'Label21
+        'lblLeftRunner
         '
-        Me.Label21.AutoSize = True
-        Me.Label21.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.Label21.Location = New System.Drawing.Point(179, 106)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(63, 13)
-        Me.Label21.TabIndex = 14
-        Me.Label21.Text = "Left Runner"
+        Me.lblLeftRunner.AutoSize = True
+        Me.lblLeftRunner.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblLeftRunner.Location = New System.Drawing.Point(179, 106)
+        Me.lblLeftRunner.Name = "lblLeftRunner"
+        Me.lblLeftRunner.Size = New System.Drawing.Size(63, 13)
+        Me.lblLeftRunner.TabIndex = 14
+        Me.lblLeftRunner.Text = "Left Runner"
         '
-        'Label22
+        'lblRightRunner
         '
-        Me.Label22.AutoSize = True
-        Me.Label22.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.Label22.Location = New System.Drawing.Point(506, 106)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(70, 13)
-        Me.Label22.TabIndex = 22
-        Me.Label22.Text = "Right Runner"
+        Me.lblRightRunner.AutoSize = True
+        Me.lblRightRunner.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblRightRunner.Location = New System.Drawing.Point(506, 106)
+        Me.lblRightRunner.Name = "lblRightRunner"
+        Me.lblRightRunner.Size = New System.Drawing.Size(70, 13)
+        Me.lblRightRunner.TabIndex = 22
+        Me.lblRightRunner.Text = "Right Runner"
         '
         'cbLeftRunnerName
         '
@@ -656,35 +655,35 @@ Partial Class OBSWebSocketCropper
         Me.txtRightTrackerURL.Size = New System.Drawing.Size(189, 20)
         Me.txtRightTrackerURL.TabIndex = 48
         '
-        'Label33
+        'lblLeftTracker
         '
-        Me.Label33.AutoSize = True
-        Me.Label33.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.Label33.Location = New System.Drawing.Point(7, 50)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(90, 13)
-        Me.Label33.TabIndex = 49
-        Me.Label33.Text = "Left Tracker URL"
+        Me.lblLeftTracker.AutoSize = True
+        Me.lblLeftTracker.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblLeftTracker.Location = New System.Drawing.Point(7, 50)
+        Me.lblLeftTracker.Name = "lblLeftTracker"
+        Me.lblLeftTracker.Size = New System.Drawing.Size(90, 13)
+        Me.lblLeftTracker.TabIndex = 49
+        Me.lblLeftTracker.Text = "Left Tracker URL"
         '
-        'Label34
+        'lblRightTracker
         '
-        Me.Label34.AutoSize = True
-        Me.Label34.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.Label34.Location = New System.Drawing.Point(337, 50)
-        Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(97, 13)
-        Me.Label34.TabIndex = 50
-        Me.Label34.Text = "Right Tracker URL"
+        Me.lblRightTracker.AutoSize = True
+        Me.lblRightTracker.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblRightTracker.Location = New System.Drawing.Point(337, 50)
+        Me.lblRightTracker.Name = "lblRightTracker"
+        Me.lblRightTracker.Size = New System.Drawing.Size(97, 13)
+        Me.lblRightTracker.TabIndex = 50
+        Me.lblRightTracker.Text = "Right Tracker URL"
         '
-        'Label36
+        'lblCommentary
         '
-        Me.Label36.AutoSize = True
-        Me.Label36.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.Label36.Location = New System.Drawing.Point(8, 19)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(101, 13)
-        Me.Label36.TabIndex = 54
-        Me.Label36.Text = "Commentary Names"
+        Me.lblCommentary.AutoSize = True
+        Me.lblCommentary.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblCommentary.Location = New System.Drawing.Point(8, 19)
+        Me.lblCommentary.Name = "lblCommentary"
+        Me.lblCommentary.Size = New System.Drawing.Size(101, 13)
+        Me.lblCommentary.TabIndex = 54
+        Me.lblCommentary.Text = "Commentary Names"
         '
         'txtCommentaryNames
         '
@@ -715,7 +714,7 @@ Partial Class OBSWebSocketCropper
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ReadOBSINIToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -731,12 +730,6 @@ Partial Class OBSWebSocketCropper
         Me.ChangeVLCSettingsToolStripMenuItem.Name = "ChangeVLCSettingsToolStripMenuItem"
         Me.ChangeVLCSettingsToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ChangeVLCSettingsToolStripMenuItem.Text = "Change VLC Settings"
-        '
-        'ReadOBSINIToolStripMenuItem
-        '
-        Me.ReadOBSINIToolStripMenuItem.Name = "ReadOBSINIToolStripMenuItem"
-        Me.ReadOBSINIToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-        Me.ReadOBSINIToolStripMenuItem.Text = "Read OBS INI"
         '
         'ExitToolStripMenuItem
         '
@@ -864,12 +857,12 @@ Partial Class OBSWebSocketCropper
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.gbTrackerComms.Controls.Add(Me.Label36)
+        Me.gbTrackerComms.Controls.Add(Me.lblCommentary)
         Me.gbTrackerComms.Controls.Add(Me.txtCommentaryNames)
         Me.gbTrackerComms.Controls.Add(Me.txtLeftTrackerURL)
         Me.gbTrackerComms.Controls.Add(Me.txtRightTrackerURL)
-        Me.gbTrackerComms.Controls.Add(Me.Label34)
-        Me.gbTrackerComms.Controls.Add(Me.Label33)
+        Me.gbTrackerComms.Controls.Add(Me.lblRightTracker)
+        Me.gbTrackerComms.Controls.Add(Me.lblLeftTracker)
         Me.gbTrackerComms.Location = New System.Drawing.Point(169, 12)
         Me.gbTrackerComms.Name = "gbTrackerComms"
         Me.gbTrackerComms.Size = New System.Drawing.Size(658, 80)
@@ -902,25 +895,25 @@ Partial Class OBSWebSocketCropper
         Me.cbLeftVLCSource.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftVLCSource.TabIndex = 66
         '
-        'Label5
+        'lblRightVLC
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.BackColor = System.Drawing.Color.PeachPuff
-        Me.Label5.Location = New System.Drawing.Point(489, 158)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(95, 13)
-        Me.Label5.TabIndex = 68
-        Me.Label5.Text = "Right VLC  Source"
+        Me.lblRightVLC.AutoSize = True
+        Me.lblRightVLC.BackColor = System.Drawing.Color.PeachPuff
+        Me.lblRightVLC.Location = New System.Drawing.Point(489, 158)
+        Me.lblRightVLC.Name = "lblRightVLC"
+        Me.lblRightVLC.Size = New System.Drawing.Size(95, 13)
+        Me.lblRightVLC.TabIndex = 68
+        Me.lblRightVLC.Text = "Right VLC  Source"
         '
-        'Label6
+        'lblLeftVLC
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.GreenYellow
-        Me.Label6.Location = New System.Drawing.Point(157, 159)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(85, 13)
-        Me.Label6.TabIndex = 67
-        Me.Label6.Text = "Left VLC Source"
+        Me.lblLeftVLC.AutoSize = True
+        Me.lblLeftVLC.BackColor = System.Drawing.Color.GreenYellow
+        Me.lblLeftVLC.Location = New System.Drawing.Point(157, 159)
+        Me.lblLeftVLC.Name = "lblLeftVLC"
+        Me.lblLeftVLC.Size = New System.Drawing.Size(85, 13)
+        Me.lblLeftVLC.TabIndex = 67
+        Me.lblLeftVLC.Text = "Left VLC Source"
         '
         'Timer1
         '
@@ -948,9 +941,9 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.btnSetLeftVLC)
         Me.Controls.Add(Me.cbRightVLCSource)
         Me.Controls.Add(Me.cbLeftVLCSource)
-        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.lblRightVLC)
         Me.Controls.Add(Me.btnSaveRunnerCrop)
-        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.lblLeftVLC)
         Me.Controls.Add(Me.btnGetProcesses)
         Me.Controls.Add(Me.btnSaveRightCrop)
         Me.Controls.Add(Me.btnSaveLeftCrop)
@@ -972,8 +965,8 @@ Partial Class OBSWebSocketCropper
         Me.Controls.Add(Me.btnGetCropFromOBS)
         Me.Controls.Add(Me.cbRightRunnerName)
         Me.Controls.Add(Me.cbLeftRunnerName)
-        Me.Controls.Add(Me.Label22)
-        Me.Controls.Add(Me.Label21)
+        Me.Controls.Add(Me.lblRightRunner)
+        Me.Controls.Add(Me.lblLeftRunner)
         Me.Controls.Add(Me.btnSetLeftCrop)
         Me.Controls.Add(Me.gbLeftTimerWindow)
         Me.Controls.Add(Me.gbLeftGameWindow)
@@ -1043,8 +1036,8 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents txtCropLeftGame_Right As TextBox
     Friend WithEvents btnSetLeftCrop As Button
     Friend WithEvents btnSaveRunnerCrop As Button
-    Friend WithEvents Label21 As Label
-    Friend WithEvents Label22 As Label
+    Friend WithEvents lblLeftRunner As Label
+    Friend WithEvents lblRightRunner As Label
     Friend WithEvents cbLeftRunnerName As ComboBox
     Friend WithEvents cbRightRunnerName As ComboBox
     Friend WithEvents btnGetCropFromOBS As Button
@@ -1058,9 +1051,9 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents lblRMasterHeight As Label
     Friend WithEvents txtLeftTrackerURL As TextBox
     Friend WithEvents txtRightTrackerURL As TextBox
-    Friend WithEvents Label33 As Label
-    Friend WithEvents Label34 As Label
-    Friend WithEvents Label36 As Label
+    Friend WithEvents lblLeftTracker As Label
+    Friend WithEvents lblRightTracker As Label
+    Friend WithEvents lblCommentary As Label
     Friend WithEvents txtCommentaryNames As TextBox
     Friend WithEvents btnSetTrackCommNames As Button
     Friend WithEvents mnuMainMenu As MenuStrip
@@ -1069,7 +1062,6 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ttMainToolTip As ToolTip
-    Friend WithEvents ReadOBSINIToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents gbTrackerComms As GroupBox
     Friend WithEvents btnSyncWithServer As Button
     Friend WithEvents ChangeUserSettingsToolStripMenuItem As ToolStripMenuItem
@@ -1082,8 +1074,8 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents btnGetProcesses As Button
     Friend WithEvents cbRightVLCSource As ComboBox
     Friend WithEvents cbLeftVLCSource As ComboBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lblRightVLC As Label
+    Friend WithEvents lblLeftVLC As Label
     Friend WithEvents btnSetLeftVLC As Button
     Friend WithEvents Timer1 As Timer
     Friend WithEvents btn2ndOBS As Button

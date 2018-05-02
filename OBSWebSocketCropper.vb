@@ -53,6 +53,7 @@ Public Class OBSWebSocketCropper
     Dim LastUpdate As Integer
 
     Public Shared OBSSettingsResult As String
+
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
         If VLCListLeft.Tables.Count = 0 Then
@@ -651,16 +652,17 @@ Public Class OBSWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub RefreshOBS()
-        Dim lObs As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "obs*".ToLower).ToList
+        Dim lObs = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
-        If lOBS.Count > 1 Then
+        If lObs.Count > 1 Then
             Timer1.Stop()
             GetINIFile(False, True)
             Check2ndOBS = False
         End If
     End Sub
     Private Sub RefreshVLC()
-        Dim lVLC As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "vlc*".ToLower).ToList
+
+        Dim lVLC = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
         Dim TLeftVLC, TRightVLC As String
 
@@ -957,10 +959,13 @@ Public Class OBSWebSocketCropper
                 Me.Close()
             End If
 
+            CheckUnusedFields()
+
             If OBSSettingsResult = "VLC" Then
                 VLCSettings.ShowDialog()
             End If
 
+            RefreshRunnerNames()
         Else
             EnableButtons(False)
             ResetHeightWidthLabels()
@@ -969,20 +974,16 @@ Public Class OBSWebSocketCropper
 
             RefreshCropperDefaultCrop()
 
+            CheckUnusedFields()
         End If
 
         ProgramLoaded = True
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("This program was created by Iceman_F1 with the help and ideas from Hancin and various other members of the ALTTPR community." & vbCrLf & vbCrLf &
-            "The initial goal of this program was to make restream setup faster.  While it is still in the beginning phases, and is very much a work in progress, it is slowly evolving into the tool it is meant to be.",
-             MsgBoxStyle.OkOnly, ProgramName)
+        About.ShowDialog()
     End Sub
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
-    End Sub
-    Private Sub ReadOBSINIToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadOBSINIToolStripMenuItem.Click
-        GetINIFile(True, False)
     End Sub
     Private Sub GetSyncFromServer()
 
@@ -1129,6 +1130,7 @@ Public Class OBSWebSocketCropper
         Else
             RefreshRunnerNames()
             RefreshCropperDefaultCrop()
+            CheckUnusedFields()
         End If
     End Sub
     Private Sub ChangeVLCSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeVLCSettingsToolStripMenuItem.Click
@@ -1223,7 +1225,75 @@ Public Class OBSWebSocketCropper
         End Try
 
     End Sub
+    Private Sub CheckUnusedFields()
+        Dim visComms, visLeftRunner, visRightRunner,
+        visLeftTracker, visRightTracker, visLeftTimer, visLeftGame,
+        visRightTimer, visRightGame As Boolean
 
+        visComms = Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS)
+        txtCommentaryNames.Visible = visComms
+        lblCommentary.Visible = visComms
+
+        visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS)
+        cbLeftRunnerName.Visible = visLeftRunner
+        lblLeftRunner.Visible = visLeftRunner
+
+        visRightRunner = Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS)
+        cbRightRunnerName.Visible = visRightRunner
+        lblRightRunner.Visible = visRightRunner
+
+        visLeftTracker = Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS)
+        txtLeftTrackerURL.Visible = visLeftTracker
+        lblLeftTracker.Visible = visLeftTracker
+
+        visRightTracker = Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS)
+        txtRightTrackerURL.Visible = visRightTracker
+        lblRightTracker.Visible = visRightTracker
+
+        visLeftTimer = Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
+        gbLeftTimerWindow.Visible = visLeftTimer
+
+        visLeftGame = Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName)
+        gbLeftGameWindow.Visible = visLeftGame
+
+        visRightTimer = Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
+        gbRightTimerWindow.Visible = visRightTimer
+
+        visRightGame = Not String.IsNullOrWhiteSpace(My.Settings.RightGameName)
+        gbRightGameWindow.Visible = visRightGame
+
+        If visRightGame = False And visRightTimer = False Then
+            btnSaveRightCrop.Visible = False
+            btnGetRightCrop.Visible = False
+            btnSetRightCrop.Visible = False
+            btnSetRightVLC.Visible = False
+            lblRightVLC.Visible = False
+            cbRightVLCSource.Visible = False
+        Else
+            btnSaveRightCrop.Visible = True
+            btnGetRightCrop.Visible = True
+            btnSetRightCrop.Visible = True
+            btnSetRightVLC.Visible = True
+            lblRightVLC.Visible = True
+            cbRightVLCSource.Visible = True
+        End If
+
+        If visLeftGame = False And visLeftTimer = False Then
+            btnSaveLeftCrop.Visible = False
+            btnGetLeftCrop.Visible = False
+            btnSetLeftCrop.Visible = False
+            btnSetLeftVLC.Visible = False
+            lblLeftVLC.Visible = False
+            cbLeftVLCSource.Visible = False
+        Else
+            btnSaveLeftCrop.Visible = True
+            btnGetLeftCrop.Visible = True
+            btnSetLeftCrop.Visible = True
+            btnSetLeftVLC.Visible = True
+            lblLeftVLC.Visible = True
+            cbLeftVLCSource.Visible = True
+        End If
+    End Sub
 
 
 #End Region

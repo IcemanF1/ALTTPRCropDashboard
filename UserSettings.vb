@@ -326,6 +326,7 @@ Public Class UserSettings
     Private Sub btnResetSettings_Click(sender As Object, e As EventArgs) Handles btnResetSettings.Click
         If MsgBox("Are you sure you wish to reset your settings back to default?", MsgBoxStyle.YesNo, OBSWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
             My.Settings.Reset()
+            My.Settings.UpgradeRequired = False
             My.Settings.Save()
             My.Settings.Reload()
 
