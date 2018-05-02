@@ -651,7 +651,7 @@ Public Class OBSWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub RefreshOBS()
-        Dim lOBS = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True)).ToList()
+        Dim lObs As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "obs*".ToLower).ToList
 
         If lOBS.Count > 1 Then
             Timer1.Stop()
@@ -660,7 +660,8 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
     Private Sub RefreshVLC()
-        Dim lVLC = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True)).ToList()
+        Dim lVLC As List(Of Process) = (From p As Process In Process.GetProcesses Where p.ProcessName.ToLower Like "vlc*".ToLower).ToList
+
         Dim TLeftVLC, TRightVLC As String
 
         If Not String.IsNullOrWhiteSpace(cbRightVLCSource.Text) Then

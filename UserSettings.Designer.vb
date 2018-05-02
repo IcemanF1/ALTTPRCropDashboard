@@ -50,13 +50,15 @@ Partial Class UserSettings
         Me.cbRightTimerWindow = New System.Windows.Forms.ComboBox()
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnSaveSettings
         '
-        Me.btnSaveSettings.Location = New System.Drawing.Point(591, 733)
+        Me.btnSaveSettings.Location = New System.Drawing.Point(591, 736)
         Me.btnSaveSettings.Name = "btnSaveSettings"
         Me.btnSaveSettings.Size = New System.Drawing.Size(137, 39)
         Me.btnSaveSettings.TabIndex = 73
@@ -71,7 +73,7 @@ Partial Class UserSettings
         Me.gbConnection1.Controls.Add(Me.txtPassword1)
         Me.gbConnection1.Controls.Add(Me.txtConnectionString1)
         Me.gbConnection1.Controls.Add(Me.Label25)
-        Me.gbConnection1.Location = New System.Drawing.Point(511, 12)
+        Me.gbConnection1.Location = New System.Drawing.Point(604, 12)
         Me.gbConnection1.Name = "gbConnection1"
         Me.gbConnection1.Size = New System.Drawing.Size(390, 71)
         Me.gbConnection1.TabIndex = 92
@@ -129,7 +131,7 @@ Partial Class UserSettings
         'lblOBS1ConnectedStatus
         '
         Me.lblOBS1ConnectedStatus.AutoSize = True
-        Me.lblOBS1ConnectedStatus.Location = New System.Drawing.Point(159, 62)
+        Me.lblOBS1ConnectedStatus.Location = New System.Drawing.Point(150, 62)
         Me.lblOBS1ConnectedStatus.Name = "lblOBS1ConnectedStatus"
         Me.lblOBS1ConnectedStatus.Size = New System.Drawing.Size(92, 13)
         Me.lblOBS1ConnectedStatus.TabIndex = 94
@@ -137,7 +139,7 @@ Partial Class UserSettings
         '
         'btnConnectOBS1
         '
-        Me.btnConnectOBS1.Location = New System.Drawing.Point(169, 34)
+        Me.btnConnectOBS1.Location = New System.Drawing.Point(160, 34)
         Me.btnConnectOBS1.Name = "btnConnectOBS1"
         Me.btnConnectOBS1.Size = New System.Drawing.Size(117, 23)
         Me.btnConnectOBS1.TabIndex = 93
@@ -146,7 +148,7 @@ Partial Class UserSettings
         '
         'btnResetSettings
         '
-        Me.btnResetSettings.Location = New System.Drawing.Point(26, 746)
+        Me.btnResetSettings.Location = New System.Drawing.Point(26, 749)
         Me.btnResetSettings.Name = "btnResetSettings"
         Me.btnResetSettings.Size = New System.Drawing.Size(121, 23)
         Me.btnResetSettings.TabIndex = 93
@@ -156,15 +158,15 @@ Partial Class UserSettings
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(3, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(81, 13)
+        Me.Label1.Size = New System.Drawing.Size(145, 13)
         Me.Label1.TabIndex = 95
-        Me.Label1.Text = "Twitch Channel"
+        Me.Label1.Text = "Twitch Channel / User Name"
         '
         'txtTwitchChannel
         '
-        Me.txtTwitchChannel.Location = New System.Drawing.Point(99, 6)
+        Me.txtTwitchChannel.Location = New System.Drawing.Point(153, 6)
         Me.txtTwitchChannel.Name = "txtTwitchChannel"
         Me.txtTwitchChannel.Size = New System.Drawing.Size(160, 20)
         Me.txtTwitchChannel.TabIndex = 96
@@ -172,7 +174,7 @@ Partial Class UserSettings
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(265, 9)
+        Me.Label2.Location = New System.Drawing.Point(328, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(232, 13)
         Me.Label2.TabIndex = 97
@@ -181,7 +183,7 @@ Partial Class UserSettings
         'roDefault
         '
         Me.roDefault.AutoSize = True
-        Me.roDefault.Location = New System.Drawing.Point(33, 38)
+        Me.roDefault.Location = New System.Drawing.Point(24, 38)
         Me.roDefault.Name = "roDefault"
         Me.roDefault.Size = New System.Drawing.Size(59, 17)
         Me.roDefault.TabIndex = 98
@@ -192,7 +194,7 @@ Partial Class UserSettings
         'roCustom
         '
         Me.roCustom.AutoSize = True
-        Me.roCustom.Location = New System.Drawing.Point(103, 37)
+        Me.roCustom.Location = New System.Drawing.Point(94, 37)
         Me.roCustom.Name = "roCustom"
         Me.roCustom.Size = New System.Drawing.Size(60, 17)
         Me.roCustom.TabIndex = 99
@@ -203,7 +205,7 @@ Partial Class UserSettings
         'btnSaveThenVLC
         '
         Me.btnSaveThenVLC.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 724)
+        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 727)
         Me.btnSaveThenVLC.Name = "btnSaveThenVLC"
         Me.btnSaveThenVLC.Size = New System.Drawing.Size(252, 54)
         Me.btnSaveThenVLC.TabIndex = 100
@@ -224,7 +226,7 @@ Partial Class UserSettings
         Me.panOBS.Controls.Add(Me.cbRightTimerWindow)
         Me.panOBS.Controls.Add(Me.cbLeftGameWindow)
         Me.panOBS.Controls.Add(Me.btnRefreshScenes)
-        Me.panOBS.Location = New System.Drawing.Point(0, 89)
+        Me.panOBS.Location = New System.Drawing.Point(6, 89)
         Me.panOBS.Name = "panOBS"
         Me.panOBS.Size = New System.Drawing.Size(1008, 635)
         Me.panOBS.TabIndex = 94
@@ -320,30 +322,42 @@ Partial Class UserSettings
         Me.btnRefreshScenes.Text = "Refresh OBS Scenes"
         Me.btnRefreshScenes.UseVisualStyleBackColor = True
         '
+        'Panel1
+        '
+        Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.btnSaveThenVLC)
+        Me.Panel1.Controls.Add(Me.lblOBS1ConnectedStatus)
+        Me.Panel1.Controls.Add(Me.btnResetSettings)
+        Me.Panel1.Controls.Add(Me.panOBS)
+        Me.Panel1.Controls.Add(Me.btnSaveSettings)
+        Me.Panel1.Controls.Add(Me.gbConnection1)
+        Me.Panel1.Controls.Add(Me.roCustom)
+        Me.Panel1.Controls.Add(Me.txtTwitchChannel)
+        Me.Panel1.Controls.Add(Me.btnConnectOBS1)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.roDefault)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1014, 781)
+        Me.Panel1.TabIndex = 101
+        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1014, 781)
-        Me.Controls.Add(Me.btnSaveThenVLC)
-        Me.Controls.Add(Me.lblOBS1ConnectedStatus)
-        Me.Controls.Add(Me.roCustom)
-        Me.Controls.Add(Me.btnConnectOBS1)
-        Me.Controls.Add(Me.roDefault)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.panOBS)
-        Me.Controls.Add(Me.txtTwitchChannel)
-        Me.Controls.Add(Me.btnResetSettings)
-        Me.Controls.Add(Me.gbConnection1)
-        Me.Controls.Add(Me.btnSaveSettings)
+        Me.Controls.Add(Me.Panel1)
         Me.Name = "UserSettings"
         Me.Text = "User Settings"
         Me.gbConnection1.ResumeLayout(False)
         Me.gbConnection1.PerformLayout()
         Me.panOBS.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents btnSaveSettings As Button
@@ -374,4 +388,5 @@ Partial Class UserSettings
     Friend WithEvents btnSaveThenVLC As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents txtConnectionPort As TextBox
+    Friend WithEvents Panel1 As Panel
 End Class

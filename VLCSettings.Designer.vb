@@ -83,6 +83,7 @@ Partial Class VLCSettings
         Me.chkStatusBar.AutoSize = True
         Me.chkStatusBar.BackColor = System.Drawing.Color.Transparent
         Me.chkStatusBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkStatusBar.ForeColor = System.Drawing.Color.Red
         Me.chkStatusBar.Location = New System.Drawing.Point(549, 256)
         Me.chkStatusBar.Name = "chkStatusBar"
         Me.chkStatusBar.Size = New System.Drawing.Size(144, 21)
@@ -95,6 +96,7 @@ Partial Class VLCSettings
         Me.chkPlayPauseControls.AutoSize = True
         Me.chkPlayPauseControls.BackColor = System.Drawing.Color.Transparent
         Me.chkPlayPauseControls.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkPlayPauseControls.ForeColor = System.Drawing.Color.Red
         Me.chkPlayPauseControls.Location = New System.Drawing.Point(698, 221)
         Me.chkPlayPauseControls.Name = "chkPlayPauseControls"
         Me.chkPlayPauseControls.Size = New System.Drawing.Size(119, 21)
@@ -107,6 +109,7 @@ Partial Class VLCSettings
         Me.chkMenuBar.AutoSize = True
         Me.chkMenuBar.BackColor = System.Drawing.Color.Transparent
         Me.chkMenuBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMenuBar.ForeColor = System.Drawing.Color.Red
         Me.chkMenuBar.Location = New System.Drawing.Point(609, 51)
         Me.chkMenuBar.Name = "chkMenuBar"
         Me.chkMenuBar.Size = New System.Drawing.Size(141, 21)
