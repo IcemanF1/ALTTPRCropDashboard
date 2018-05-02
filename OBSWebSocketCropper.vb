@@ -73,10 +73,14 @@ Public Class OBSWebSocketCropper
 #End Region
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
+        If MasterHeightLeft = 0 Then
+            SetMasterSourceDimensions(True)
+        End If
+
         GetCurrentSceneInfo(True)
 
-        SetNewNewMath(True)
 
+        SetNewNewMath(True)
     End Sub
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToOBS()
@@ -101,9 +105,14 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
     Private Sub btnSetMaster_Click(sender As Object, e As EventArgs) Handles btnSetMaster.Click
-        SetMasterSourceDimensions()
+        SetMasterSourceDimensions(True)
+        SetMasterSourceDimensions(False)
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
+        If MasterHeightLeft = 0 Then
+            SetMasterSourceDimensions(False)
+        End If
+
         GetCurrentSceneInfo(False)
 
         SetNewNewMath(False)
@@ -273,7 +282,7 @@ Public Class OBSWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub SaveRunnerCrop(ByVal isRightWindow As Boolean)
-        SetMasterSourceDimensions()
+        SetMasterSourceDimensions(isRightWindow)
 
         Dim DefaultTopCrop, DefaultBottomCrop As Integer
 
@@ -388,7 +397,7 @@ Public Class OBSWebSocketCropper
 
 
     End Sub
-    Private Sub SetMasterSourceDimensions()
+    Private Sub SetMasterSourceDimensions(ByVal isRightWindow As Boolean)
         Dim scenes = _obs.ListScenes()
 
         Dim x As Integer
@@ -398,17 +407,19 @@ Public Class OBSWebSocketCropper
             For y = 0 To scenes(x).Items.Count - 1
                 Dim ItemName As String
                 ItemName = scenes(x).Items(y).SourceName
-                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                    If ItemName.ToLower = My.Settings.RightGameName.ToLower Then
-                        MasterHeightRight = scenes(x).Items(y).SourceHeight
-                        MasterWidthRight = scenes(x).Items(y).SourceWidth
+                If isRightWindow = True Then
+                    If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+                        If ItemName.ToLower = My.Settings.RightGameName.ToLower Then
+                            MasterHeightRight = scenes(x).Items(y).SourceHeight
+                            MasterWidthRight = scenes(x).Items(y).SourceWidth
+                        End If
                     End If
-                End If
-
-                If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                    If ItemName.ToLower = My.Settings.LeftGameName.ToLower Then
-                        MasterHeightLeft = scenes(x).Items(y).SourceHeight
-                        MasterWidthLeft = scenes(x).Items(y).SourceWidth
+                Else
+                    If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+                        If ItemName.ToLower = My.Settings.LeftGameName.ToLower Then
+                            MasterHeightLeft = scenes(x).Items(y).SourceHeight
+                            MasterWidthLeft = scenes(x).Items(y).SourceWidth
+                        End If
                     End If
                 End If
             Next
@@ -1218,11 +1229,15 @@ Public Class OBSWebSocketCropper
         txtCommentaryNames.Visible = visComms
         lblCommentary.Visible = visComms
 
-        visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS)
+        visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) OrElse
+            Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) OrElse
+            Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
         cbLeftRunnerName.Visible = visLeftRunner
         lblLeftRunner.Visible = visLeftRunner
 
-        visRightRunner = Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS)
+        visRightRunner = Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) OrElse
+            Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) OrElse
+            Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
         cbRightRunnerName.Visible = visRightRunner
         lblRightRunner.Visible = visRightRunner
 
