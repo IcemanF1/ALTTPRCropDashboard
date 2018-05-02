@@ -518,21 +518,21 @@ Partial Class OBSWebSocketCropper
         '
         Me.lblLeftRunner.AutoSize = True
         Me.lblLeftRunner.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblLeftRunner.Location = New System.Drawing.Point(179, 106)
+        Me.lblLeftRunner.Location = New System.Drawing.Point(155, 106)
         Me.lblLeftRunner.Name = "lblLeftRunner"
-        Me.lblLeftRunner.Size = New System.Drawing.Size(63, 13)
+        Me.lblLeftRunner.Size = New System.Drawing.Size(94, 13)
         Me.lblLeftRunner.TabIndex = 14
-        Me.lblLeftRunner.Text = "Left Runner"
+        Me.lblLeftRunner.Text = "Left Runner Name"
         '
         'lblRightRunner
         '
         Me.lblRightRunner.AutoSize = True
         Me.lblRightRunner.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblRightRunner.Location = New System.Drawing.Point(506, 106)
+        Me.lblRightRunner.Location = New System.Drawing.Point(489, 106)
         Me.lblRightRunner.Name = "lblRightRunner"
-        Me.lblRightRunner.Size = New System.Drawing.Size(70, 13)
+        Me.lblRightRunner.Size = New System.Drawing.Size(101, 13)
         Me.lblRightRunner.TabIndex = 22
-        Me.lblRightRunner.Text = "Right Runner"
+        Me.lblRightRunner.Text = "Right Runner Name"
         '
         'cbLeftRunnerName
         '
@@ -767,7 +767,7 @@ Partial Class OBSWebSocketCropper
         Me.btnGetLeftCrop.Size = New System.Drawing.Size(79, 23)
         Me.btnGetLeftCrop.TabIndex = 61
         Me.btnGetLeftCrop.Text = "Get Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop, "Get the current OBS crop settings for the right side")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop, "Get the current OBS crop settings for the left side")
         Me.btnGetLeftCrop.UseVisualStyleBackColor = True
         '
         'btnGetRightCrop

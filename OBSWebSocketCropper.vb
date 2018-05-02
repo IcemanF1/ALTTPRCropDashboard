@@ -40,8 +40,6 @@ Public Class OBSWebSocketCropper
     Dim LeftRunnerTimerSceneInfo As SceneItemProperties
     Dim RightRunnerTimerSceneInfo As SceneItemProperties
 
-    Dim RightGameSourceInfo As SourceSettings
-
     Dim CropperMath As New CropperMath
 
     Public ProgramName As String = "OBS WebSocket Cropper"

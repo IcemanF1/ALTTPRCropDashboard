@@ -94,23 +94,39 @@ Public Class OBSWebSocketPlus
             End If
         End Try
     End Function
+    Public Function ConfirmSourceType(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
+        Dim SourceInfo As SourceSettings
+        SourceInfo = GetSourceSettings(SourceName)
+
+        Return SourceInfo.sourcetype = ExpectedSourceType
+
+    End Function
 End Class
 Public Class SourceSettings
     'Public Property SourceName As String
     Public Property window As String
     Public Property priority As Integer
     Public Property cursor As Boolean
+    Public Property sourcetype As String
 
     Public Sub New(ByRef data As JObject)
-        'SourceName = CType(data("sourceName"), String)
-        window = CType(data("sourceSettings").Item("window"), String)
-        priority = CType(data("sourceSettings").Item("priority"), Integer)
+        sourcetype = CType(data("sourceType"), String)
 
-        If data("sourceSettings").Item("cursor") Is Nothing Then
-            cursor = False
+        If sourcetype = "window_capture" Then
+            window = CType(data("sourceSettings").Item("window"), String)
+            priority = CType(data("sourceSettings").Item("priority"), Integer)
+
+            If data("sourceSettings").Item("cursor") Is Nothing Then
+                cursor = False
+            Else
+                cursor = CType(data("sourceSettings").Item("cursor"), Boolean)
+            End If
         Else
-            cursor = CType(data("sourceSettings").Item("cursor"), Boolean)
+            window = ""
+            priority = 0
+            cursor = False
         End If
+
     End Sub
 End Class
 Public Class SceneItemProperties
