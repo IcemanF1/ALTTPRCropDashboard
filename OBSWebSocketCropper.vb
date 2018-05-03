@@ -52,6 +52,10 @@ Public Class OBSWebSocketCropper
 
     Public Shared OBSSettingsResult As String
 
+    Public Shared NewRunnerName As String
+    Public Shared NewRunnerTwitch As String
+    Public Shared GetOBSInfo As Boolean
+
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
         If VLCListLeft.Tables.Count = 0 Then
@@ -243,6 +247,12 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub btnSetRightVLC_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC.Click
         SetVLCWindows(True)
+    End Sub
+    Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner.Click
+        AddNewRunner(False)
+    End Sub
+    Private Sub btnNewRightRunner_Click(sender As Object, e As EventArgs) Handles btnNewRightRunner.Click
+        AddNewRunner(True)
     End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
@@ -553,7 +563,7 @@ Public Class OBSWebSocketCropper
         Dim TempRightRunner As String = cbRightRunnerName.Text
 
         Using context As New CropDbContext
-            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList()
+            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList().OrderBy(Function(r) r.RacerName, System.StringComparer.CurrentCultureIgnoreCase)
 
             cbLeftRunnerName.DataSource = validNames.ToList()
             cbRightRunnerName.DataSource = validNames.ToList()
@@ -887,12 +897,16 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
     Private Sub cbRightRunner_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName.TextChanged
-        ClearTextBoxes(True)
-        RefreshCropFromData(True)
+        If GetOBSInfo = False Then
+            ClearTextBoxes(True)
+            RefreshCropFromData(True)
+        End If
     End Sub
     Private Sub cbLeftRunner_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName.TextChanged
-        ClearTextBoxes(False)
-        RefreshCropFromData(False)
+        If GetOBSInfo = False Then
+            ClearTextBoxes(False)
+            RefreshCropFromData(False)
+        End If
     End Sub
 #End Region
 
@@ -913,6 +927,8 @@ Public Class OBSWebSocketCropper
         btnGetProcesses.Enabled = isConnected
         btn2ndOBS.Enabled = isConnected
         btnConnectOBS2.Enabled = isConnected
+        btnNewLeftRunner.Enabled = isConnected
+        btnNewRightRunner.Enabled = isConnected
 
         gbTrackerComms.Enabled = isConnected
         gbLeftGameWindow.Enabled = isConnected
@@ -925,6 +941,11 @@ Public Class OBSWebSocketCropper
         cbRightVLCSource.Enabled = isConnected
         cbLeftVLCSource.Enabled = isConnected
 
+
+        lblLeftVOD.Enabled = isConnected
+        lblRightVOD.Enabled = isConnected
+        lblViewRightOnTwitch.Enabled = isConnected
+        lblViewLeftOnTwitch.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.UpgradeRequired = True Then
@@ -969,8 +990,10 @@ Public Class OBSWebSocketCropper
             CheckUnusedFields()
         End If
 
-        chkAlwaysOnTop.Visible = My.Settings.ExpertMode
+        ExpertModeToolStripMenuItem.Checked = My.Settings.ExpertMode
         chkAlwaysOnTop.Checked = My.Settings.AlwaysOnTop
+
+        RefreshExpertSettings()
 
         ProgramLoaded = True
     End Sub
@@ -1316,11 +1339,78 @@ Public Class OBSWebSocketCropper
             RefreshRunnerNames()
         End If
     End Sub
-
     Private Sub chkAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkAlwaysOnTop.CheckedChanged
         Me.TopMost = chkAlwaysOnTop.Checked
     End Sub
+    Private Sub AddNewRunner(ByVal isRightWindow As Boolean)
+        NewRunnerName = ""
+        NewRunnerTwitch = ""
+        GetOBSInfo = False
+
+        Dim dResult As New DialogResult
+        dResult = NewRunner.ShowDialog()
+
+        If dResult = DialogResult.OK Then
+            If isRightWindow = True Then
+                If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
+                    cbRightRunnerName.Text = NewRunnerName
+                End If
+                If GetOBSInfo = True Then
+                    GetCurrentSceneInfo(True)
+
+                    If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                        FillCurrentCropInfoFromOBS(True)
+                    End If
+                End If
+            Else
+                If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
+                    cbLeftRunnerName.Text = NewRunnerName
+                End If
+                If GetOBSInfo = True Then
+                    GetCurrentSceneInfo(False)
+
+                    If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                        FillCurrentCropInfoFromOBS(False)
+                    End If
+                End If
+            End If
+        End If
 
 
+        GetOBSInfo = False
+    End Sub
+    Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
+        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
+            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text & "%22")
+        End If
+    End Sub
+    Private Sub lblViewRightOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewRightOnTwitch.Click
+        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
+            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text & "%22")
+        End If
+    End Sub
+    Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs) Handles lblLeftVOD.Click
+        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
+            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text & "/videos/all")
+        End If
+    End Sub
+    Private Sub lblRightVOD_Click(sender As Object, e As EventArgs) Handles lblRightVOD.Click
+        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
+            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text & "/videos/all")
+        End If
+    End Sub
+    Private Sub ExpertModeToolStripMenuItem_CheckedChanged(sender As Object, e As EventArgs) Handles ExpertModeToolStripMenuItem.CheckedChanged
+        My.Settings.ExpertMode = ExpertModeToolStripMenuItem.Checked
+        My.Settings.Save()
+
+        RefreshExpertSettings()
+    End Sub
+    Private Sub RefreshExpertSettings()
+        chkAlwaysOnTop.Visible = My.Settings.ExpertMode
+        lblLeftVOD.Visible = My.Settings.ExpertMode
+        lblRightVOD.Visible = My.Settings.ExpertMode
+        lblViewLeftOnTwitch.Visible = My.Settings.ExpertMode
+        lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
+    End Sub
 #End Region
 End Class

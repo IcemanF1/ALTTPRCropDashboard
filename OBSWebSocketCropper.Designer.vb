@@ -101,6 +101,8 @@ Partial Class OBSWebSocketCropper
         Me.btn2ndOBS = New System.Windows.Forms.Button()
         Me.btnConnectOBS2 = New System.Windows.Forms.Button()
         Me.btnSetRightVLC = New System.Windows.Forms.Button()
+        Me.btnNewLeftRunner = New System.Windows.Forms.Button()
+        Me.btnNewRightRunner = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
         Me.cbRightVLCSource = New System.Windows.Forms.ComboBox()
@@ -110,6 +112,11 @@ Partial Class OBSWebSocketCropper
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
         Me.chkAlwaysOnTop = New System.Windows.Forms.CheckBox()
+        Me.lblViewLeftOnTwitch = New System.Windows.Forms.Label()
+        Me.lblLeftVOD = New System.Windows.Forms.Label()
+        Me.lblViewRightOnTwitch = New System.Windows.Forms.Label()
+        Me.lblRightVOD = New System.Windows.Forms.Label()
+        Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -692,7 +699,7 @@ Partial Class OBSWebSocketCropper
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -832,6 +839,26 @@ Partial Class OBSWebSocketCropper
         Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC, "Sets the left game/timer window VLC to the above dropdown")
         Me.btnSetRightVLC.UseVisualStyleBackColor = False
         '
+        'btnNewLeftRunner
+        '
+        Me.btnNewLeftRunner.Location = New System.Drawing.Point(362, 126)
+        Me.btnNewLeftRunner.Name = "btnNewLeftRunner"
+        Me.btnNewLeftRunner.Size = New System.Drawing.Size(114, 23)
+        Me.btnNewLeftRunner.TabIndex = 76
+        Me.btnNewLeftRunner.Text = "New Runner"
+        Me.ttMainToolTip.SetToolTip(Me.btnNewLeftRunner, "Pop-up form to easily add the runner information")
+        Me.btnNewLeftRunner.UseVisualStyleBackColor = True
+        '
+        'btnNewRightRunner
+        '
+        Me.btnNewRightRunner.Location = New System.Drawing.Point(704, 126)
+        Me.btnNewRightRunner.Name = "btnNewRightRunner"
+        Me.btnNewRightRunner.Size = New System.Drawing.Size(114, 23)
+        Me.btnNewRightRunner.TabIndex = 77
+        Me.btnNewRightRunner.Text = "New Runner"
+        Me.ttMainToolTip.SetToolTip(Me.btnNewRightRunner, "Pop-up form to easily add the runner information")
+        Me.btnNewRightRunner.UseVisualStyleBackColor = True
+        '
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
@@ -917,11 +944,72 @@ Partial Class OBSWebSocketCropper
         Me.chkAlwaysOnTop.Text = "Always On Top"
         Me.chkAlwaysOnTop.UseVisualStyleBackColor = True
         '
+        'lblViewLeftOnTwitch
+        '
+        Me.lblViewLeftOnTwitch.AutoSize = True
+        Me.lblViewLeftOnTwitch.BackColor = System.Drawing.Color.Transparent
+        Me.lblViewLeftOnTwitch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblViewLeftOnTwitch.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblViewLeftOnTwitch.Location = New System.Drawing.Point(155, 127)
+        Me.lblViewLeftOnTwitch.Name = "lblViewLeftOnTwitch"
+        Me.lblViewLeftOnTwitch.Size = New System.Drawing.Size(76, 13)
+        Me.lblViewLeftOnTwitch.TabIndex = 78
+        Me.lblViewLeftOnTwitch.Text = "View on twitch"
+        '
+        'lblLeftVOD
+        '
+        Me.lblLeftVOD.AutoSize = True
+        Me.lblLeftVOD.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLeftVOD.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblLeftVOD.Location = New System.Drawing.Point(243, 127)
+        Me.lblLeftVOD.Name = "lblLeftVOD"
+        Me.lblLeftVOD.Size = New System.Drawing.Size(61, 13)
+        Me.lblLeftVOD.TabIndex = 79
+        Me.lblLeftVOD.Text = "View VODs"
+        '
+        'lblViewRightOnTwitch
+        '
+        Me.lblViewRightOnTwitch.AutoSize = True
+        Me.lblViewRightOnTwitch.BackColor = System.Drawing.Color.Transparent
+        Me.lblViewRightOnTwitch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblViewRightOnTwitch.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblViewRightOnTwitch.Location = New System.Drawing.Point(490, 131)
+        Me.lblViewRightOnTwitch.Name = "lblViewRightOnTwitch"
+        Me.lblViewRightOnTwitch.Size = New System.Drawing.Size(76, 13)
+        Me.lblViewRightOnTwitch.TabIndex = 80
+        Me.lblViewRightOnTwitch.Text = "View on twitch"
+        '
+        'lblRightVOD
+        '
+        Me.lblRightVOD.AutoSize = True
+        Me.lblRightVOD.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRightVOD.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblRightVOD.Location = New System.Drawing.Point(574, 131)
+        Me.lblRightVOD.Name = "lblRightVOD"
+        Me.lblRightVOD.Size = New System.Drawing.Size(61, 13)
+        Me.lblRightVOD.TabIndex = 81
+        Me.lblRightVOD.Text = "View VODs"
+        '
+        'ExpertModeToolStripMenuItem
+        '
+        Me.ExpertModeToolStripMenuItem.CheckOnClick = True
+        Me.ExpertModeToolStripMenuItem.Name = "ExpertModeToolStripMenuItem"
+        Me.ExpertModeToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ExpertModeToolStripMenuItem.Text = "Expert Mode"
+        '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 506)
+        Me.Controls.Add(Me.lblRightVOD)
+        Me.Controls.Add(Me.lblViewRightOnTwitch)
+        Me.Controls.Add(Me.lblLeftVOD)
+        Me.Controls.Add(Me.lblViewLeftOnTwitch)
+        Me.Controls.Add(Me.btnNewRightRunner)
+        Me.Controls.Add(Me.btnNewLeftRunner)
         Me.Controls.Add(Me.chkAlwaysOnTop)
         Me.Controls.Add(Me.btnSetRightVLC)
         Me.Controls.Add(Me.btnConnectOBS2)
@@ -1069,4 +1157,11 @@ Partial Class OBSWebSocketCropper
     Friend WithEvents btnConnectOBS2 As Button
     Friend WithEvents btnSetRightVLC As Button
     Friend WithEvents chkAlwaysOnTop As CheckBox
+    Friend WithEvents btnNewLeftRunner As Button
+    Friend WithEvents btnNewRightRunner As Button
+    Friend WithEvents lblViewLeftOnTwitch As Label
+    Friend WithEvents lblLeftVOD As Label
+    Friend WithEvents lblViewRightOnTwitch As Label
+    Friend WithEvents lblRightVOD As Label
+    Friend WithEvents ExpertModeToolStripMenuItem As ToolStripMenuItem
 End Class
