@@ -1381,12 +1381,12 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
         If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text & "%22")
+            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text)
         End If
     End Sub
     Private Sub lblViewRightOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewRightOnTwitch.Click
         If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text & "%22")
+            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text)
         End If
     End Sub
     Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs) Handles lblLeftVOD.Click
