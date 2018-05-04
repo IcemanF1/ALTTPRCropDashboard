@@ -55,6 +55,7 @@ Public Class OBSWebSocketCropper
     Public Shared NewRunnerName As String
     Public Shared NewRunnerTwitch As String
     Public Shared GetOBSInfo As Boolean
+    Public Shared ReuseInfo As Boolean
 
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
@@ -897,13 +898,13 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
     Private Sub cbRightRunner_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName.TextChanged
-        If GetOBSInfo = False Then
+        If ReuseInfo = False Then
             ClearTextBoxes(True)
             RefreshCropFromData(True)
         End If
     End Sub
     Private Sub cbLeftRunner_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName.TextChanged
-        If GetOBSInfo = False Then
+        If ReuseInfo = True Then
             ClearTextBoxes(False)
             RefreshCropFromData(False)
         End If
@@ -1223,6 +1224,7 @@ Public Class OBSWebSocketCropper
                         _obs.Disconnect()
                         OBSConnectionStatus = "Not Connected"
                         lblOBS1ConnectedStatus.Text = OBSConnectionStatus
+                        EnableButtons(False)
                     End If
                 End If
 
@@ -1346,6 +1348,7 @@ Public Class OBSWebSocketCropper
         NewRunnerName = ""
         NewRunnerTwitch = ""
         GetOBSInfo = False
+        ReuseInfo = True
 
         Dim dResult As New DialogResult
         dResult = NewRunner.ShowDialog()
@@ -1356,28 +1359,33 @@ Public Class OBSWebSocketCropper
                     cbRightRunnerName.Text = NewRunnerName
                 End If
                 If GetOBSInfo = True Then
-                    GetCurrentSceneInfo(True)
-
-                    If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                        FillCurrentCropInfoFromOBS(True)
+                    If MasterHeightLeft = 0 Then
+                        SetMasterSourceDimensions(False)
                     End If
+
+                    GetCurrentSceneInfo(False)
+
+                    SetNewNewMath(False)
                 End If
             Else
                 If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
                     cbLeftRunnerName.Text = NewRunnerName
                 End If
                 If GetOBSInfo = True Then
-                    GetCurrentSceneInfo(False)
-
-                    If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                        FillCurrentCropInfoFromOBS(False)
+                    If MasterHeightLeft = 0 Then
+                        SetMasterSourceDimensions(True)
                     End If
+
+                    GetCurrentSceneInfo(True)
+
+
+                    SetNewNewMath(True)
                 End If
             End If
         End If
 
-
         GetOBSInfo = False
+        ReuseInfo = True
     End Sub
     Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
         If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then

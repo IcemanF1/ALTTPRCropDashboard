@@ -114,7 +114,7 @@ Public Class SourceSettings
 
         If sourcetype = "window_capture" Then
             window = CType(data("sourceSettings").Item("window"), String)
-            priority = CType(data("sourceSettings").Item("priority"), Integer)
+            priority = If(CType(data("sourceSettings").Item("priority"), Integer?), 1)
 
             If data("sourceSettings").Item("cursor") Is Nothing Then
                 cursor = False
