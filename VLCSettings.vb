@@ -1,13 +1,13 @@
-﻿Public Class VLCSettings
-    Dim DefaultTopValue As Integer
-    Dim DefaultBottomValue As Integer
+﻿Public Class VlcSettings
+    Dim _defaultTopValue As Integer
+    Dim _defaultBottomValue As Integer
 
-    Dim DefaultStatusBar As Integer = 22
-    Dim DefaultMenuBar As Integer = 22
-    Dim DefaultPlayPause As Integer = 53
+    Dim _defaultStatusBar As Integer = 22
+    Dim _defaultMenuBar As Integer = 22
+    Dim _defaultPlayPause As Integer = 53
 
-    Private Sub SaveVLCSettings()
-        Dim DefaultCropTop, DefaultCropBottom As Integer
+    Private Sub SaveVlcSettings()
+        Dim defaultCropTop, defaultCropBottom As Integer
 
         If txtDefaultCropTop.Text.Trim.Length > 0 Then
             DefaultCropTop = txtDefaultCropTop.Text
@@ -31,7 +31,7 @@
 
         My.Settings.Save()
 
-        Me.Close()
+        Close()
     End Sub
     Private Sub RefreshSettings()
         txtDefaultCropTop.Text = My.Settings.DefaultCropTop
@@ -48,27 +48,27 @@
     End Sub
     Private Sub chkMenuBar_CheckedChanged(sender As Object, e As EventArgs) Handles chkMenuBar.CheckedChanged
         If chkMenuBar.Checked = True Then
-            DefaultTopValue = DefaultMenuBar
+            _defaultTopValue = _defaultMenuBar
         Else
-            DefaultTopValue = 0
+            _defaultTopValue = 0
         End If
 
         CheckPersonalValuesAgainstStandard()
     End Sub
     Private Sub chkStatusBar_CheckedChanged(sender As Object, e As EventArgs) Handles chkStatusBar.CheckedChanged
         If chkStatusBar.Checked = True Then
-            DefaultBottomValue = DefaultBottomValue + DefaultStatusBar
+            _defaultBottomValue = _defaultBottomValue + _defaultStatusBar
         Else
-            DefaultBottomValue = DefaultBottomValue - DefaultStatusBar
+            _defaultBottomValue = _defaultBottomValue - _defaultStatusBar
         End If
 
         CheckPersonalValuesAgainstStandard()
     End Sub
     Private Sub chkPlayPauseControls_CheckedChanged(sender As Object, e As EventArgs) Handles chkPlayPauseControls.CheckedChanged
         If chkPlayPauseControls.Checked = True Then
-            DefaultBottomValue = DefaultBottomValue + DefaultPlayPause
+            _defaultBottomValue = _defaultBottomValue + _defaultPlayPause
         Else
-            DefaultBottomValue = DefaultBottomValue - DefaultPlayPause
+            _defaultBottomValue = _defaultBottomValue - _defaultPlayPause
         End If
 
         CheckPersonalValuesAgainstStandard()
@@ -79,24 +79,24 @@
 
     Private Sub CheckPersonalValuesAgainstStandard()
         If chkOverrideDefault.Checked = False Then
-            txtDefaultCropTop.Text = DefaultTopValue
+            txtDefaultCropTop.Text = _defaultTopValue
 
-            If DefaultBottomValue < 0 Then
+            If _defaultBottomValue < 0 Then
                 txtDefaultCropBottom.Text = 0
             Else
-                txtDefaultCropBottom.Text = DefaultBottomValue
+                txtDefaultCropBottom.Text = _defaultBottomValue
             End If
         End If
 
     End Sub
-    Private Sub ShowOverrideSettings(ByVal ShowSetting As Boolean)
-        lblWarning.Visible = ShowSetting
-        lblTop.Visible = ShowSetting
-        lblBottom.Visible = ShowSetting
-        txtDefaultCropBottom.Visible = ShowSetting
-        txtDefaultCropTop.Visible = ShowSetting
+    Private Sub ShowOverrideSettings(showSetting As Boolean)
+        lblWarning.Visible = showSetting
+        lblTop.Visible = showSetting
+        lblBottom.Visible = showSetting
+        txtDefaultCropBottom.Visible = showSetting
+        txtDefaultCropTop.Visible = showSetting
 
-        If ShowSetting = False Then
+        If showSetting = False Then
             CheckPersonalValuesAgainstStandard()
         End If
     End Sub

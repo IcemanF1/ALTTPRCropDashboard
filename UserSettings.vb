@@ -1,15 +1,16 @@
+
 ﻿Imports System.Configuration
 
 Public Class UserSettings
-    Dim OBSSourceListLeftGame As New DataSet
-    Dim OBSSourceListRightGame As New DataSet
-    Dim OBSSourceListLeftTimer As New DataSet
-    Dim OBSSourceListRightTimer As New DataSet
-    Dim OBSSourceListLeftRunner As New DataSet
-    Dim OBSSourceListRightRunner As New DataSet
-    Dim OBSSourceListLeftTracker As New DataSet
-    Dim OBSSourceListRightTracker As New DataSet
-    Dim OBSCommentary As New DataSet
+    ReadOnly _obsSourceListLeftGame As New DataSet
+    Dim _obsSourceListRightGame As New DataSet
+    Dim _obsSourceListLeftTimer As New DataSet
+    Dim _obsSourceListRightTimer As New DataSet
+    Dim _obsSourceListLeftRunner As New DataSet
+    Dim _obsSourceListRightRunner As New DataSet
+    Dim _obsSourceListLeftTracker As New DataSet
+    Dim _obsSourceListRightTracker As New DataSet
+    Dim _obsCommentary As New DataSet
     Dim CorrectMessage As String = "Correct Source Type"
     Dim IncorrectMessage As String = "Incorrect Source Type"
 
@@ -66,10 +67,10 @@ Public Class UserSettings
 
         Return True
     End Function
-    Private Sub SaveSettings(ByVal ContinueToVLC As Boolean)
-        Dim SettingsVerified As Boolean = VerifySettings()
+    Private Sub SaveSettings(continueToVlc As Boolean)
+        Dim settingsVerified As Boolean = VerifySettings()
 
-        If SettingsVerified = True Then
+        If settingsVerified = True Then
 
             Dim FullyValid As Boolean
 
@@ -129,73 +130,73 @@ Public Class UserSettings
 
             My.Settings.Save()
 
-            If ContinueToVLC = True Then
-                OBSWebSocketCropper.OBSSettingsResult = "VLC"
+            If continueToVlc = True Then
+                ObsWebSocketCropper.ObsSettingsResult = "VLC"
             Else
-                OBSWebSocketCropper.OBSSettingsResult = "Closed"
+                ObsWebSocketCropper.ObsSettingsResult = "Closed"
             End If
 
-            Me.Close()
+            Close()
         End If
     End Sub
     Private Sub btnSaveSettings_Click(sender As Object, e As EventArgs) Handles btnSaveSettings.Click
         SaveSettings(False)
     End Sub
     Private Sub CreateNewSourceTable()
-        If OBSSourceListLeftGame.Tables.Count = 0 Then
-            OBSSourceListLeftGame.Tables.Add("Sources")
-            OBSSourceListLeftGame.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListLeftGame.Tables.Count = 0 Then
+            _obsSourceListLeftGame.Tables.Add("Sources")
+            _obsSourceListLeftGame.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListLeftGame.Tables("Sources").Clear()
+            _obsSourceListLeftGame.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListRightGame.Tables.Count = 0 Then
-            OBSSourceListRightGame.Tables.Add("Sources")
-            OBSSourceListRightGame.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListRightGame.Tables.Count = 0 Then
+            _obsSourceListRightGame.Tables.Add("Sources")
+            _obsSourceListRightGame.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListRightGame.Tables("Sources").Clear()
+            _obsSourceListRightGame.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListLeftTimer.Tables.Count = 0 Then
-            OBSSourceListLeftTimer.Tables.Add("Sources")
-            OBSSourceListLeftTimer.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListLeftTimer.Tables.Count = 0 Then
+            _obsSourceListLeftTimer.Tables.Add("Sources")
+            _obsSourceListLeftTimer.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListLeftTimer.Tables("Sources").Clear()
+            _obsSourceListLeftTimer.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListRightTimer.Tables.Count = 0 Then
-            OBSSourceListRightTimer.Tables.Add("Sources")
-            OBSSourceListRightTimer.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListRightTimer.Tables.Count = 0 Then
+            _obsSourceListRightTimer.Tables.Add("Sources")
+            _obsSourceListRightTimer.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListRightTimer.Tables("Sources").Clear()
+            _obsSourceListRightTimer.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListLeftRunner.Tables.Count = 0 Then
-            OBSSourceListLeftRunner.Tables.Add("Sources")
-            OBSSourceListLeftRunner.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListLeftRunner.Tables.Count = 0 Then
+            _obsSourceListLeftRunner.Tables.Add("Sources")
+            _obsSourceListLeftRunner.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListLeftRunner.Tables("Sources").Clear()
+            _obsSourceListLeftRunner.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListRightRunner.Tables.Count = 0 Then
-            OBSSourceListRightRunner.Tables.Add("Sources")
-            OBSSourceListRightRunner.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListRightRunner.Tables.Count = 0 Then
+            _obsSourceListRightRunner.Tables.Add("Sources")
+            _obsSourceListRightRunner.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListRightRunner.Tables("Sources").Clear()
+            _obsSourceListRightRunner.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListLeftTracker.Tables.Count = 0 Then
-            OBSSourceListLeftTracker.Tables.Add("Sources")
-            OBSSourceListLeftTracker.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListLeftTracker.Tables.Count = 0 Then
+            _obsSourceListLeftTracker.Tables.Add("Sources")
+            _obsSourceListLeftTracker.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListLeftTracker.Tables("Sources").Clear()
+            _obsSourceListLeftTracker.Tables("Sources").Clear()
         End If
 
-        If OBSSourceListRightTracker.Tables.Count = 0 Then
-            OBSSourceListRightTracker.Tables.Add("Sources")
-            OBSSourceListRightTracker.Tables("Sources").Columns.Add("SourceName")
+        If _obsSourceListRightTracker.Tables.Count = 0 Then
+            _obsSourceListRightTracker.Tables.Add("Sources")
+            _obsSourceListRightTracker.Tables("Sources").Columns.Add("SourceName")
         Else
-            OBSSourceListRightTracker.Tables("Sources").Clear()
+            _obsSourceListRightTracker.Tables("Sources").Clear()
         End If
     End Sub
 
@@ -248,17 +249,17 @@ Public Class UserSettings
 
     End Sub
     Private Sub RefreshScenes()
-        Dim scenes = OBSWebSocketCropper._obs.ListScenes()
+        Dim scenes = OBSWebSocketCropper.Obs.ListScenes()
 
-        OBSSourceListLeftGame.Clear()
-        OBSSourceListLeftTimer.Clear()
-        OBSSourceListRightGame.Clear()
-        OBSSourceListRightTimer.Clear()
-        OBSSourceListLeftRunner.Clear()
-        OBSSourceListRightRunner.Clear()
-        OBSSourceListLeftTracker.Clear()
-        OBSSourceListRightTracker.Clear()
-        OBSCommentary.Clear()
+        _obsSourceListLeftGame.Clear()
+        _obsSourceListLeftTimer.Clear()
+        _obsSourceListRightGame.Clear()
+        _obsSourceListRightTimer.Clear()
+        _obsSourceListLeftRunner.Clear()
+        _obsSourceListRightRunner.Clear()
+        _obsSourceListLeftTracker.Clear()
+        _obsSourceListRightTracker.Clear()
+        _obsCommentary.Clear()
 
         Dim x As Integer
         For x = 0 To scenes.Count - 1
@@ -266,54 +267,54 @@ Public Class UserSettings
 
             Dim y As Integer
             For y = 0 To scenes(x).Items.Count - 1
-                dr = OBSSourceListLeftGame.Tables("Sources").NewRow
+                dr = _obsSourceListLeftGame.Tables("Sources").NewRow
                 dr.Item("SourceName") = scenes(x).Items(y).SourceName
-                OBSSourceListLeftGame.Tables("Sources").Rows.Add(dr)
+                _obsSourceListLeftGame.Tables("Sources").Rows.Add(dr)
             Next
 
         Next
-        OBSSourceListRightGame = OBSSourceListLeftGame.Copy
-        OBSSourceListRightTimer = OBSSourceListLeftGame.Copy
-        OBSSourceListLeftTimer = OBSSourceListLeftGame.Copy
-        OBSSourceListLeftRunner = OBSSourceListLeftGame.Copy
-        OBSSourceListRightRunner = OBSSourceListLeftGame.Copy
-        OBSSourceListLeftTracker = OBSSourceListLeftGame.Copy
-        OBSSourceListRightTracker = OBSSourceListLeftGame.Copy
-        OBSCommentary = OBSSourceListLeftGame.Copy
+        _obsSourceListRightGame = _obsSourceListLeftGame.Copy
+        _obsSourceListRightTimer = _obsSourceListLeftGame.Copy
+        _obsSourceListLeftTimer = _obsSourceListLeftGame.Copy
+        _obsSourceListLeftRunner = _obsSourceListLeftGame.Copy
+        _obsSourceListRightRunner = _obsSourceListLeftGame.Copy
+        _obsSourceListLeftTracker = _obsSourceListLeftGame.Copy
+        _obsSourceListRightTracker = _obsSourceListLeftGame.Copy
+        _obsCommentary = _obsSourceListLeftGame.Copy
 
-        cbRightGameWindow.DataSource = OBSSourceListRightGame.Tables("Sources")
+        cbRightGameWindow.DataSource = _obsSourceListRightGame.Tables("Sources")
         cbRightGameWindow.DisplayMember = "SourceName"
         cbRightGameWindow.ValueMember = "SourceName"
 
-        cbRightTimerWindow.DataSource = OBSSourceListRightTimer.Tables("Sources")
+        cbRightTimerWindow.DataSource = _obsSourceListRightTimer.Tables("Sources")
         cbRightTimerWindow.DisplayMember = "SourceName"
         cbRightTimerWindow.ValueMember = "SourceName"
 
-        cbLeftGameWindow.DataSource = OBSSourceListLeftGame.Tables("Sources")
+        cbLeftGameWindow.DataSource = _obsSourceListLeftGame.Tables("Sources")
         cbLeftGameWindow.DisplayMember = "SourceName"
         cbLeftGameWindow.ValueMember = "SourceName"
 
-        cbLeftTimerWindow.DataSource = OBSSourceListLeftTimer.Tables("Sources")
+        cbLeftTimerWindow.DataSource = _obsSourceListLeftTimer.Tables("Sources")
         cbLeftTimerWindow.DisplayMember = "SourceName"
         cbLeftTimerWindow.ValueMember = "SourceName"
 
-        cbLeftRunnerOBS.DataSource = OBSSourceListLeftRunner.Tables("Sources")
+        cbLeftRunnerOBS.DataSource = _obsSourceListLeftRunner.Tables("Sources")
         cbLeftRunnerOBS.DisplayMember = "SourceName"
         cbLeftRunnerOBS.ValueMember = "SourceName"
 
-        cbRightRunnerOBS.DataSource = OBSSourceListRightRunner.Tables("Sources")
+        cbRightRunnerOBS.DataSource = _obsSourceListRightRunner.Tables("Sources")
         cbRightRunnerOBS.DisplayMember = "SourceName"
         cbRightRunnerOBS.ValueMember = "SourceName"
 
-        cbLeftTrackerOBS.DataSource = OBSSourceListLeftTracker.Tables("Sources")
+        cbLeftTrackerOBS.DataSource = _obsSourceListLeftTracker.Tables("Sources")
         cbLeftTrackerOBS.DisplayMember = "SourceName"
         cbLeftTrackerOBS.ValueMember = "SourceName"
 
-        cbRightTrackerOBS.DataSource = OBSSourceListRightTracker.Tables("Sources")
+        cbRightTrackerOBS.DataSource = _obsSourceListRightTracker.Tables("Sources")
         cbRightTrackerOBS.DisplayMember = "SourceName"
         cbRightTrackerOBS.ValueMember = "SourceName"
 
-        cbCommentaryOBS.DataSource = OBSCommentary.Tables("Sources")
+        cbCommentaryOBS.DataSource = _obsCommentary.Tables("Sources")
         cbCommentaryOBS.DisplayMember = "SourceName"
         cbCommentaryOBS.ValueMember = "SourceName"
 
@@ -330,9 +331,9 @@ Public Class UserSettings
         cbRightTrackerOBS.Text = ""
         cbCommentaryOBS.Text = ""
     End Sub
-    Private Sub CheckOBSPort()
+    Private Sub CheckObsPort()
 
-        Dim PortOpen As Boolean = OBSWebSocketCropper._obs.IsPortOpen(OBSWebSocketCropper.ConnectionString)
+        Dim portOpen As Boolean = OBSWebSocketCropper.Obs.IsPortOpen(OBSWebSocketCropper.ConnectionString)
 
         If PortOpen = False Then
             MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)

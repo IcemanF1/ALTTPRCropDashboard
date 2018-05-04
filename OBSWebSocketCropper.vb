@@ -1,54 +1,50 @@
-﻿Imports System
-Imports System.Configuration
-Imports System.Windows.Forms
+﻿Imports System.Configuration
 Imports OBSWebsocketDotNet
-Imports System.IO
 Imports ALTTPRCropDashboard.Data
 Imports ALTTPRCropDashboard.DB
-Imports Newtonsoft.Json.Linq
 
 
-Public Class OBSWebSocketCropper
+Public Class ObsWebSocketCropper
 
-    Public _obs As New OBSWebSocketPlus
-    Public OBSConnectionStatus As String
-    Public OBSConnectionStatus2 As String
+    Public ReadOnly Obs As New ObsWebSocketPlus
+    Public ObsConnectionStatus As String
+    Public ObsConnectionStatus2 As String
 
-    Dim _obs2 As New OBSWebSocketPlus
+    Dim ReadOnly _obs2 As New ObsWebSocketPlus
     Public ConnectionString As String
     Public ConnectionString2 As String
 
-    Dim RSourceHeight As Integer
-    Dim RSourceWidth As Integer
+    Dim _rSourceHeight As Integer
+    Dim _rSourceWidth As Integer
 
-    Dim LSourceHeight As Integer
-    Dim LSourceWidth As Integer
+    Dim _lSourceHeight As Integer
+    Dim _lSourceWidth As Integer
 
-    Dim CropApi As CropApi
+    Dim _cropApi As CropApi
 
-    Dim MasterWidthRight As Integer
-    Dim MasterHeightRight As Integer
+    Dim _masterWidthRight As Integer
+    Dim _masterHeightRight As Integer
 
-    Dim MasterWidthLeft As Integer
-    Dim MasterHeightLeft As Integer
+    Dim _masterWidthLeft As Integer
+    Dim _masterHeightLeft As Integer
 
-    Dim VLCListLeft As New DataSet
-    Dim VLCListRight As New DataSet
+    Dim _vlcListLeft As New DataSet
+    Dim _vlcListRight As New DataSet
 
-    Dim LeftRunnerGameSceneInfo As SceneItemProperties
-    Dim RightRunnerGameSceneInfo As SceneItemProperties
-    Dim LeftRunnerTimerSceneInfo As SceneItemProperties
-    Dim RightRunnerTimerSceneInfo As SceneItemProperties
+    Dim _leftRunnerGameSceneInfo As SceneItemProperties
+    Dim _rightRunnerGameSceneInfo As SceneItemProperties
+    Dim _leftRunnerTimerSceneInfo As SceneItemProperties
+    Dim _rightRunnerTimerSceneInfo As SceneItemProperties
 
-    Dim CropperMath As New CropperMath
+    ReadOnly _cropperMath As New CropperMath
 
     Public ProgramName As String = "OBS WebSocket Cropper"
 
-    Dim ApprovedChars As String = "0123456789"
+    Dim _approvedChars As String = "0123456789"
 
-    Dim ProgramLoaded As Boolean
-    Dim Check2ndOBS As Boolean = False
-    Dim LastUpdate As Integer
+    Dim _check2NdObs As Boolean = False
+    Dim _lastUpdate As Integer
+
 
     Public Shared OBSSettingsResult As String
 
@@ -58,18 +54,18 @@ Public Class OBSWebSocketCropper
 
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
-        If VLCListLeft.Tables.Count = 0 Then
-            VLCListLeft.Tables.Add("Processes")
-            VLCListLeft.Tables("Processes").Columns.Add("VLCName")
+        If _vlcListLeft.Tables.Count = 0 Then
+            _vlcListLeft.Tables.Add("Processes")
+            _vlcListLeft.Tables("Processes").Columns.Add("VLCName")
         Else
-            VLCListLeft.Tables("Processes").Clear()
+            _vlcListLeft.Tables("Processes").Clear()
         End If
 
-        If VLCListRight.Tables.Count = 0 Then
-            VLCListRight.Tables.Add("Processes")
-            VLCListRight.Tables("Processes").Columns.Add("VLCName")
+        If _vlcListRight.Tables.Count = 0 Then
+            _vlcListRight.Tables.Add("Processes")
+            _vlcListRight.Tables("Processes").Columns.Add("VLCName")
         Else
-            VLCListRight.Tables("Processes").Clear()
+            _vlcListRight.Tables("Processes").Clear()
         End If
 
     End Sub
@@ -87,7 +83,7 @@ Public Class OBSWebSocketCropper
         SetNewNewMath(True)
     End Sub
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
-        ConnectToOBS()
+        ConnectToObs()
     End Sub
     Private Sub btnGetCrop_Click(sender As Object, e As EventArgs) Handles btnGetCrop.Click
         GetCurrentCropSettings(True)
@@ -97,7 +93,7 @@ Public Class OBSWebSocketCropper
         GetCurrentSceneInfo(False)
 
         If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-            FillCurrentCropInfoFromOBS(False)
+            FillCurrentCropInfoFromObs(False)
         End If
 
     End Sub
@@ -105,7 +101,7 @@ Public Class OBSWebSocketCropper
         GetCurrentSceneInfo(True)
 
         If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-            FillCurrentCropInfoFromOBS(True)
+            FillCurrentCropInfoFromObs(True)
         End If
     End Sub
     Private Sub btnSetMaster_Click(sender As Object, e As EventArgs) Handles btnSetMaster.Click
@@ -124,45 +120,46 @@ Public Class OBSWebSocketCropper
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
             If cbLeftRunnerName.Text.Trim.Length > 0 Then
-                _obs.SetTextGDI(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
-                If OBSConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGDI(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                Obs.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                If ObsConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
                 End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) Then
             If cbRightRunnerName.Text.Trim.Length > 0 Then
-                _obs.SetTextGDI(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
-                If OBSConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGDI(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                Obs.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                If ObsConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
                 End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) Then
             If txtCommentaryNames.Text.Trim.Length > 0 Then
-                _obs.SetTextGDI(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
-                If OBSConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGDI(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                Obs.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                If ObsConnectionStatus2 = "Connected" Then
+                    _obs2.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
                 End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) Then
             If txtLeftTrackerURL.Text.Trim.Length > 0 Then
-                _obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
-                If OBSConnectionStatus2 = "Connected" Then
+                Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                If ObsConnectionStatus2 = "Connected" Then
                     _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
                 End If
             End If
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
             If txtRightTrackerURL.Text.Trim.Length > 0 Then
-                _obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
-                If OBSConnectionStatus2 = "Connected" Then
+                Obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                If ObsConnectionStatus2 = "Connected" Then
                     _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
                 End If
             End If
         End If
     End Sub
+
     Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
         SaveRunnerCrop(False)
 
@@ -174,13 +171,14 @@ Public Class OBSWebSocketCropper
         RefreshRunnerNames()
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
+
         SyncWithServer()
     End Sub
     Private Sub SyncWithServer()
         Me.Cursor = Cursors.WaitCursor
         Try
             If Not String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings("ServerURL")) Then
-                CropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
+                _cropApi = New CropApi(ConfigurationManager.AppSettings("ServerURL"))
 
                 SendToServer()
                 GetSyncFromServer()
@@ -193,60 +191,61 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub btnGetProcesses_Click(sender As Object, e As EventArgs) Handles btnGetProcesses.Click
         RefreshVLC()
+
     End Sub
     Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
-        SetVLCWindows(False)
+        SetVlcWindows(False)
     End Sub
-    Private Sub SetVLCWindows(ByVal isRightWindow As Boolean)
-        Dim VLCString As String
+    Private Sub SetVlcWindows(isRightWindow As Boolean)
+        Dim vlcString As String
 
         If isRightWindow = False Then
             If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
-                VLCString = cbLeftVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
+                vlcString = cbLeftVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
 
                 If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                    _obs.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 1)
-                    If OBSConnectionStatus2 = "Connected" Then
-                        _obs2.SetSourceSettings(My.Settings.LeftGameName, False, VLCString, 1)
+                    Obs.SetSourceSettings(My.Settings.LeftGameName, False, vlcString, 1)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.LeftGameName, False, vlcString, 1)
                     End If
                 End If
                 If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
-                    _obs.SetSourceSettings(My.Settings.LeftTimerName, False, VLCString, 1)
-                    If OBSConnectionStatus2 = "Connected" Then
-                        _obs2.SetSourceSettings(My.Settings.LeftTimerName, False, VLCString, 1)
+                    Obs.SetSourceSettings(My.Settings.LeftTimerName, False, vlcString, 1)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.LeftTimerName, False, vlcString, 1)
                     End If
                 End If
             End If
         Else
             If Not String.IsNullOrWhiteSpace(cbRightVLCSource.Text) Then
-                VLCString = cbRightVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
+                vlcString = cbRightVLCSource.Text.Replace(":", "#3A") & ":QWidget:vlc.exe"
 
                 If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                    _obs.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 1)
-                    If OBSConnectionStatus2 = "Connected" Then
-                        _obs2.SetSourceSettings(My.Settings.RightGameName, False, VLCString, 1)
+                    Obs.SetSourceSettings(My.Settings.RightGameName, False, vlcString, 1)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.RightGameName, False, vlcString, 1)
                     End If
                 End If
                 If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
-                    _obs.SetSourceSettings(My.Settings.RightTimerName, False, VLCString, 1)
-                    If OBSConnectionStatus2 = "Connected" Then
-                        _obs2.SetSourceSettings(My.Settings.RightTimerName, False, VLCString, 1)
+                    Obs.SetSourceSettings(My.Settings.RightTimerName, False, vlcString, 1)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetSourceSettings(My.Settings.RightTimerName, False, vlcString, 1)
                     End If
                 End If
             End If
         End If
     End Sub
     Private Sub btn2ndOBS_Click(sender As Object, e As EventArgs) Handles btn2ndOBS.Click
-        GetINIFile(False, False)
+        GetIniFile(False, False)
 
-        Check2ndOBS = True
+        _check2NdObs = True
         Timer1.Start()
     End Sub
     Private Sub btnConnectOBS2_Click(sender As Object, e As EventArgs) Handles btnConnectOBS2.Click
-        ConnectToOBS2()
+        ConnectToObs2()
     End Sub
     Private Sub btnSetRightVLC_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC.Click
-        SetVLCWindows(True)
+        SetVlcWindows(True)
     End Sub
     Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner.Click
         AddNewRunner(False)
@@ -256,29 +255,28 @@ Public Class OBSWebSocketCropper
     End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
-    Private Sub GetCurrentCropSettings(ByVal IsRightWindow As Boolean)
-        Dim scenes = _obs.ListScenes()
+    Private Sub GetCurrentCropSettings(isRightWindow As Boolean)
+        Dim scenes = Obs.ListScenes()
 
         Dim x As Integer
         For x = 0 To scenes.Count - 1
-            Dim Node As New TreeNode(scenes(x).Name)
             Dim y As Integer
             For y = 0 To scenes(x).Items.Count - 1
-                Dim ItemName As String
-                ItemName = scenes(x).Items(y).SourceName
-                If IsRightWindow = True Then
+                Dim itemName As String
+                itemName = scenes(x).Items(y).SourceName
+                If isRightWindow = True Then
                     If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                        If ItemName.ToLower = My.Settings.RightGameName.ToLower Then
-                            RSourceHeight = scenes(x).Items(y).SourceHeight
-                            RSourceWidth = scenes(x).Items(y).SourceWidth
+                        If itemName.ToLower = My.Settings.RightGameName.ToLower Then
+                            _rSourceHeight = scenes(x).Items(y).SourceHeight
+                            _rSourceWidth = scenes(x).Items(y).SourceWidth
                         End If
                     End If
 
                 Else
                     If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                        If ItemName.ToLower = My.Settings.LeftGameName.ToLower Then
-                            LSourceHeight = scenes(x).Items(y).SourceHeight
-                            LSourceWidth = scenes(x).Items(y).SourceWidth
+                        If itemName.ToLower = My.Settings.LeftGameName.ToLower Then
+                            _lSourceHeight = scenes(x).Items(y).SourceHeight
+                            _lSourceWidth = scenes(x).Items(y).SourceWidth
                         End If
                     End If
 
@@ -291,39 +289,34 @@ Public Class OBSWebSocketCropper
 
         SetHeightLabels()
     End Sub
-    Private Sub SaveRunnerCrop(ByVal isRightWindow As Boolean)
-        SetMasterSourceDimensions(isRightWindow)
 
-        Dim DefaultTopCrop, DefaultBottomCrop As Integer
+    Private Sub SaveRunnerCrop(isRightWindow As Boolean)
+        SetMasterSourceDimensions()
 
-
-        DefaultTopCrop = My.Settings.DefaultCropTop
-        DefaultBottomCrop = My.Settings.DefaultCropBottom
-
-        Dim savedMasterSize As New Size
-        Dim cropWithDefault As New Rectangle
+        Dim savedMasterSize As Size
+        Dim cropWithDefault As Rectangle
         Dim submitterName = My.Settings.TwitchChannel
 
         If isRightWindow = True Then
             GetCurrentCropSettings(True)
 
-            savedMasterSize = New Size(MasterWidthRight, MasterHeightRight)
+            savedMasterSize = New Size(_masterWidthRight, _masterHeightRight)
 
-            Dim MasterSizeWithoutDefault_Right As Size = CropperMath.RemoveDefaultCropSize(savedMasterSize)
+            Dim masterSizeWithoutDefaultRight As Size = _cropperMath.RemoveDefaultCropSize(savedMasterSize)
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
                                    _txtCropRightGame_Top.Text,
                                    _txtCropRightGame_Right.Text,
                                    _txtCropRightGame_Bottom.Text)
 
-            Dim CropWithoutDefault_RightGame As Rectangle = CropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultRightGame As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropRightTimer_Left.Text,
                                                  _txtCropRightTimer_Top.Text,
                                                  _txtCropRightTimer_Right.Text,
                                                  _txtCropRightTimer_Bottom.Text)
 
-            Dim CropWithoutDefault_RightTimer As Rectangle = CropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultRightTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             Using context As New CropDbContext
                 If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
@@ -338,16 +331,16 @@ Public Class OBSWebSocketCropper
                         context.Crops.Add(rightRunner)
                     End If
 
-                    rightRunner.GameCropTop = CropWithoutDefault_RightGame.Top
-                    rightRunner.GameCropBottom = CropWithoutDefault_RightGame.Bottom
-                    rightRunner.GameCropRight = CropWithoutDefault_RightGame.Right
-                    rightRunner.GameCropLeft = CropWithoutDefault_RightGame.Left
-                    rightRunner.TimerCropTop = CropWithoutDefault_RightTimer.Top
-                    rightRunner.TimerCropBottom = CropWithoutDefault_RightTimer.Bottom
-                    rightRunner.TimerCropRight = CropWithoutDefault_RightTimer.Right
-                    rightRunner.TimerCropLeft = CropWithoutDefault_RightTimer.Left
-                    rightRunner.SizeHeight = MasterSizeWithoutDefault_Right.Height
-                    rightRunner.SizeWidth = MasterSizeWithoutDefault_Right.Width
+                    rightRunner.GameCropTop = cropWithoutDefaultRightGame.Top
+                    rightRunner.GameCropBottom = cropWithoutDefaultRightGame.Bottom
+                    rightRunner.GameCropRight = cropWithoutDefaultRightGame.Right
+                    rightRunner.GameCropLeft = cropWithoutDefaultRightGame.Left
+                    rightRunner.TimerCropTop = cropWithoutDefaultRightTimer.Top
+                    rightRunner.TimerCropBottom = cropWithoutDefaultRightTimer.Bottom
+                    rightRunner.TimerCropRight = cropWithoutDefaultRightTimer.Right
+                    rightRunner.TimerCropLeft = cropWithoutDefaultRightTimer.Left
+                    rightRunner.SizeHeight = masterSizeWithoutDefaultRight.Height
+                    rightRunner.SizeWidth = masterSizeWithoutDefaultRight.Width
                     rightRunner.SubmittedOn = Nothing
                 End If
 
@@ -356,16 +349,16 @@ Public Class OBSWebSocketCropper
         Else
             GetCurrentCropSettings(False)
 
-            savedMasterSize = New Size(MasterWidthLeft, MasterHeightLeft)
+            savedMasterSize = New Size(_masterWidthLeft, _masterHeightLeft)
 
-            Dim MasterSizeWithoutDefault_Left As Size = CropperMath.RemoveDefaultCropSize(savedMasterSize)
+            Dim masterSizeWithoutDefaultLeft As Size = _cropperMath.RemoveDefaultCropSize(savedMasterSize)
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
                                      _txtCropLeftGame_Top.Text,
                                      _txtCropLeftGame_Right.Text,
                                      _txtCropLeftGame_Bottom.Text)
 
-            Dim CropWithoutDefault_LeftGame As Rectangle = CropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultLeftGame As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
                                                  _txtCropLeftTimer_Top.Text,
@@ -373,7 +366,7 @@ Public Class OBSWebSocketCropper
                                                  _txtCropLeftTimer_Bottom.Text)
 
 
-            Dim CropWithoutDefault_LeftTimer As Rectangle = CropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultLeftTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             Using context As New CropDbContext
                 If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
@@ -388,16 +381,16 @@ Public Class OBSWebSocketCropper
                         context.Crops.Add(leftRunner)
                     End If
 
-                    leftRunner.GameCropTop = CropWithoutDefault_LeftGame.Top
-                    leftRunner.GameCropBottom = CropWithoutDefault_LeftGame.Bottom
-                    leftRunner.GameCropRight = CropWithoutDefault_LeftGame.Right
-                    leftRunner.GameCropLeft = CropWithoutDefault_LeftGame.Left
-                    leftRunner.TimerCropTop = CropWithoutDefault_LeftTimer.Top
-                    leftRunner.TimerCropBottom = CropWithoutDefault_LeftTimer.Bottom
-                    leftRunner.TimerCropRight = CropWithoutDefault_LeftTimer.Right
-                    leftRunner.TimerCropLeft = CropWithoutDefault_LeftTimer.Left
-                    leftRunner.SizeHeight = MasterSizeWithoutDefault_Left.Height
-                    leftRunner.SizeWidth = MasterSizeWithoutDefault_Left.Width
+                    leftRunner.GameCropTop = cropWithoutDefaultLeftGame.Top
+                    leftRunner.GameCropBottom = cropWithoutDefaultLeftGame.Bottom
+                    leftRunner.GameCropRight = cropWithoutDefaultLeftGame.Right
+                    leftRunner.GameCropLeft = cropWithoutDefaultLeftGame.Left
+                    leftRunner.TimerCropTop = cropWithoutDefaultLeftTimer.Top
+                    leftRunner.TimerCropBottom = cropWithoutDefaultLeftTimer.Bottom
+                    leftRunner.TimerCropRight = cropWithoutDefaultLeftTimer.Right
+                    leftRunner.TimerCropLeft = cropWithoutDefaultLeftTimer.Left
+                    leftRunner.SizeHeight = masterSizeWithoutDefaultLeft.Height
+                    leftRunner.SizeWidth = masterSizeWithoutDefaultLeft.Width
                     leftRunner.SubmittedOn = Nothing
                 End If
 
@@ -407,29 +400,28 @@ Public Class OBSWebSocketCropper
 
 
     End Sub
-    Private Sub SetMasterSourceDimensions(ByVal isRightWindow As Boolean)
-        Dim scenes = _obs.ListScenes()
+
+    Private Sub SetMasterSourceDimensions()
+        Dim scenes = Obs.ListScenes()
 
         Dim x As Integer
         For x = 0 To scenes.Count - 1
-            Dim Node As New TreeNode(scenes(x).Name)
             Dim y As Integer
             For y = 0 To scenes(x).Items.Count - 1
-                Dim ItemName As String
-                ItemName = scenes(x).Items(y).SourceName
-                If isRightWindow = True Then
-                    If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                        If ItemName.ToLower = My.Settings.RightGameName.ToLower Then
-                            MasterHeightRight = scenes(x).Items(y).SourceHeight
-                            MasterWidthRight = scenes(x).Items(y).SourceWidth
-                        End If
+
+                Dim itemName As String
+                itemName = scenes(x).Items(y).SourceName
+                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+                    If itemName.ToLower = My.Settings.RightGameName.ToLower Then
+                        _masterHeightRight = scenes(x).Items(y).SourceHeight
+                        _masterWidthRight = scenes(x).Items(y).SourceWidth
                     End If
-                Else
-                    If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                        If ItemName.ToLower = My.Settings.LeftGameName.ToLower Then
-                            MasterHeightLeft = scenes(x).Items(y).SourceHeight
-                            MasterWidthLeft = scenes(x).Items(y).SourceWidth
-                        End If
+                End If
+
+                If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+                    If itemName.ToLower = My.Settings.LeftGameName.ToLower Then
+                        _masterHeightLeft = scenes(x).Items(y).SourceHeight
+                        _masterWidthLeft = scenes(x).Items(y).SourceWidth
                     End If
                 End If
             Next
@@ -450,43 +442,43 @@ Public Class OBSWebSocketCropper
         lblRSourceWidth.Text = "Master Width: 0"
     End Sub
     Private Sub SetHeightLabels()
-        lblLMasterHeight.Text = "Master Height: " & MasterHeightLeft
-        lblLMasterWidth.Text = "Master Width: " & MasterWidthLeft
-        lblLSourceHeight.Text = "Source Height: " & LSourceHeight
-        lblLSourceWidth.Text = "Master Width: " & LSourceWidth
+        lblLMasterHeight.Text = "Master Height: " & _masterHeightLeft
+        lblLMasterWidth.Text = "Master Width: " & _masterWidthLeft
+        lblLSourceHeight.Text = "Source Height: " & _lSourceHeight
+        lblLSourceWidth.Text = "Master Width: " & _lSourceWidth
 
-        lblRMasterHeight.Text = "Master Height: " & MasterHeightRight
-        lblRMasterWidth.Text = "Master Width: " & MasterWidthRight
-        lblRSourceHeight.Text = "Source Height: " & RSourceHeight
-        lblRSourceWidth.Text = "Master Width: " & RSourceWidth
+        lblRMasterHeight.Text = "Master Height: " & _masterHeightRight
+        lblRMasterWidth.Text = "Master Width: " & _masterWidthRight
+        lblRSourceHeight.Text = "Source Height: " & _rSourceHeight
+        lblRSourceWidth.Text = "Master Width: " & _rSourceWidth
     End Sub
-    Private Sub GetCurrentSceneInfo(ByVal isRightWindow As Boolean)
+    Private Sub GetCurrentSceneInfo(isRightWindow As Boolean)
         If isRightWindow = False Then
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                LeftRunnerGameSceneInfo = _obs.GetSceneItemProperties("", My.Settings.LeftGameName)
+                _leftRunnerGameSceneInfo = Obs.GetSceneItemProperties("", My.Settings.LeftGameName)
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
-                LeftRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", My.Settings.LeftTimerName)
+                _leftRunnerTimerSceneInfo = Obs.GetSceneItemProperties("", My.Settings.LeftTimerName)
             End If
         Else
             If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                RightRunnerGameSceneInfo = _obs.GetSceneItemProperties("", My.Settings.RightGameName)
+                _rightRunnerGameSceneInfo = Obs.GetSceneItemProperties("", My.Settings.RightGameName)
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
-                RightRunnerTimerSceneInfo = _obs.GetSceneItemProperties("", My.Settings.RightTimerName)
+                _rightRunnerTimerSceneInfo = Obs.GetSceneItemProperties("", My.Settings.RightTimerName)
             End If
         End If
     End Sub
     Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String)
-        Dim resultingCrop = CropperMath.AdjustCrop(New CropInfo With {
-                                                      .MasterSizeWithoutDefault = CropperMath.RemoveDefaultCropSize(savedMasterSize),
-                                                      .CropWithoutDefault = CropperMath.RemoveDefaultCrop(cropWithDefault)
-                                                      }, CropperMath.RemoveDefaultCropSize(currentMasterSize))
+        Dim resultingCrop = _cropperMath.AdjustCrop(New CropInfo With {
+                                                      .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(savedMasterSize),
+                                                      .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(cropWithDefault)
+                                                      }, _cropperMath.RemoveDefaultCropSize(currentMasterSize))
 
 
-        Dim realCrop = CropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
-        _obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
-        If OBSConnectionStatus2 = "Connected" Then
+        Dim realCrop = _cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
+        Obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+        If ObsConnectionStatus2 = "Connected" Then
             _obs2.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
         End If
     End Sub
@@ -497,14 +489,14 @@ Public Class OBSWebSocketCropper
         RefreshCropperDefaultCrop()
 
         If isRightWindow Then
-            If MasterHeightRight > 0 And MasterWidthRight > 0 Then
+            If _masterHeightRight > 0 And _masterWidthRight > 0 Then
                 If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
                     ProcessCrop(Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
                                                    _txtCropRightGame_Top.Text,
                                                    _txtCropRightGame_Right.Text,
                                                    _txtCropRightGame_Bottom.Text),
-                                New Size(MasterWidthRight, MasterHeightRight),
-                                New Size(RSourceWidth, RSourceHeight),
+                                New Size(_masterWidthRight, _masterHeightRight),
+                                New Size(_rSourceWidth, _rSourceHeight),
                                 My.Settings.RightGameName
                         )
                 End If
@@ -514,8 +506,8 @@ Public Class OBSWebSocketCropper
                                                    _txtCropRightTimer_Top.Text,
                                                    _txtCropRightTimer_Right.Text,
                                                    _txtCropRightTimer_Bottom.Text),
-                                New Size(MasterWidthRight, MasterHeightRight),
-                                New Size(RSourceWidth, RSourceHeight),
+                                New Size(_masterWidthRight, _masterHeightRight),
+                                New Size(_rSourceWidth, _rSourceHeight),
                                 My.Settings.RightTimerName
                                 )
                 End If
@@ -525,14 +517,14 @@ Public Class OBSWebSocketCropper
             End If
 
         Else
-            If MasterHeightLeft > 0 And MasterWidthLeft > 0 Then
+            If _masterHeightLeft > 0 And _masterWidthLeft > 0 Then
                 If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
                     ProcessCrop(Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
                                                    _txtCropLeftGame_Top.Text,
                                                    _txtCropLeftGame_Right.Text,
                                                    _txtCropLeftGame_Bottom.Text),
-                                New Size(MasterWidthLeft, MasterHeightLeft),
-                                New Size(LSourceWidth, LSourceHeight),
+                                New Size(_masterWidthLeft, _masterHeightLeft),
+                                New Size(_lSourceWidth, _lSourceHeight),
                                 My.Settings.LeftGameName
                                 )
                 End If
@@ -542,8 +534,8 @@ Public Class OBSWebSocketCropper
                                                    _txtCropLeftTimer_Top.Text,
                                                    _txtCropLeftTimer_Right.Text,
                                                    _txtCropLeftTimer_Bottom.Text),
-                                New Size(MasterWidthLeft, MasterHeightLeft),
-                                New Size(LSourceWidth, LSourceHeight),
+                                New Size(_masterWidthLeft, _masterHeightLeft),
+                                New Size(_lSourceWidth, _lSourceHeight),
                                 My.Settings.LeftTimerName
                                 )
                 End If
@@ -559,8 +551,8 @@ Public Class OBSWebSocketCropper
 #End Region
 #Region " Refresh / Set User Info "
     Private Sub RefreshRunnerNames()
-        Dim TempLeftRunner As String = cbLeftRunnerName.Text
-        Dim TempRightRunner As String = cbRightRunnerName.Text
+        Dim tempLeftRunner As String = cbLeftRunnerName.Text
+        Dim tempRightRunner As String = cbRightRunnerName.Text
 
         Using context As New CropDbContext
             Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList().OrderBy(Function(r) r.RacerName, System.StringComparer.CurrentCultureIgnoreCase)
@@ -574,20 +566,16 @@ Public Class OBSWebSocketCropper
 
         End Using
 
-        cbLeftRunnerName.Text = TempLeftRunner
-        cbRightRunnerName.Text = TempRightRunner
+        cbLeftRunnerName.Text = tempLeftRunner
+        cbRightRunnerName.Text = tempRightRunner
 
     End Sub
-    Private Sub RefreshCropFromData(ByVal isRightWindow As Boolean)
-        Dim DefaultCropBottom, DefaultCropTop As Integer
+    Private Sub RefreshCropFromData(isRightWindow As Boolean)
 
-        DefaultCropTop = My.Settings.DefaultCropTop
-        DefaultCropBottom = My.Settings.DefaultCropBottom
-
-        Dim savedMasterSize As New Size
-        Dim realMasterSize As New Size
-        Dim savedCrop As New Rectangle
-        Dim realCrop As New Rectangle
+        Dim savedMasterSize As Size
+        Dim realMasterSize As Size
+        Dim savedCrop As Rectangle
+        Dim realCrop As Rectangle
 
         Using context As New CropDbContext
             Dim runnerInfo As Crop
@@ -611,7 +599,7 @@ Public Class OBSWebSocketCropper
             End If
 
             savedCrop = Rectangle.FromLTRB(runnerInfo.TimerCropLeft, runnerInfo.TimerCropTop, runnerInfo.TimerCropRight, runnerInfo.TimerCropBottom)
-            realCrop = CropperMath.AddDefaultCrop(savedCrop)
+            realCrop = _cropperMath.AddDefaultCrop(savedCrop)
 
             If isRightWindow Then
                 txtCropRightTimer_Top.Text = realCrop.Top
@@ -626,7 +614,7 @@ Public Class OBSWebSocketCropper
             End If
 
             savedCrop = Rectangle.FromLTRB(runnerInfo.GameCropLeft, runnerInfo.GameCropTop, runnerInfo.GameCropRight, runnerInfo.GameCropBottom)
-            realCrop = CropperMath.AddDefaultCrop(savedCrop)
+            realCrop = _cropperMath.AddDefaultCrop(savedCrop)
 
             If isRightWindow Then
                 txtCropRightGame_Top.Text = realCrop.Top
@@ -641,29 +629,31 @@ Public Class OBSWebSocketCropper
             End If
 
             savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
-            realMasterSize = CropperMath.AddDefaultCropSize(savedMasterSize)
+            realMasterSize = _cropperMath.AddDefaultCropSize(savedMasterSize)
 
             If isRightWindow Then
-                MasterWidthRight = realMasterSize.Width
-                MasterHeightRight = realMasterSize.Height
+                _masterWidthRight = realMasterSize.Width
+                _masterHeightRight = realMasterSize.Height
             Else
-                MasterWidthLeft = realMasterSize.Width
-                MasterHeightLeft = realMasterSize.Height
+                _masterWidthLeft = realMasterSize.Width
+                _masterHeightLeft = realMasterSize.Height
             End If
         End Using
 
 
         SetHeightLabels()
     End Sub
+
     Private Sub RefreshOBS()
         Dim lObs = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
         If lObs.Count > 1 Then
             Timer1.Stop()
-            GetINIFile(False, True)
-            Check2ndOBS = False
+            GetIniFile(False, True)
+            _check2NdObs = False
         End If
     End Sub
+
     Private Sub RefreshVLC()
 
         Dim lVLC = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
@@ -682,23 +672,24 @@ Public Class OBSWebSocketCropper
             TLeftVLC = ""
         End If
 
-        VLCListLeft.Clear()
-        VLCListRight.Clear()
+        _vlcListLeft.Clear()
+        _vlcListRight.Clear()
 
         Dim x As Integer
-        For x = 0 To lVLC.Count - 1
+        For x = 0 To lVlc.Count - 1
             Dim dr As DataRow
-            dr = VLCListLeft.Tables("Processes").NewRow
-            dr.Item("VLCName") = lVLC.Item(x).MainWindowTitle
-            VLCListLeft.Tables("Processes").Rows.Add(dr)
-        Next
-        VLCListRight = VLCListLeft.Copy
+            dr = _vlcListLeft.Tables("Processes").NewRow
+            dr.Item("VLCName") = lVlc.Item(x).MainWindowTitle
+            _vlcListLeft.Tables("Processes").Rows.Add(dr)
 
-        cbLeftVLCSource.DataSource = VLCListLeft.Tables("Processes")
+        Next
+        _vlcListRight = _vlcListLeft.Copy
+
+        cbLeftVLCSource.DataSource = _vlcListLeft.Tables("Processes")
         cbLeftVLCSource.DisplayMember = "VLCName"
         cbLeftVLCSource.ValueMember = "VLCName"
 
-        cbRightVLCSource.DataSource = VLCListRight.Tables("Processes")
+        cbRightVLCSource.DataSource = _vlcListRight.Tables("Processes")
         cbRightVLCSource.DisplayMember = "VLCName"
         cbRightVLCSource.ValueMember = "VLCName"
 
@@ -706,7 +697,7 @@ Public Class OBSWebSocketCropper
         cbLeftVLCSource.Text = TLeftVLC
 
     End Sub
-    Private Sub ClearTextBoxes(ByVal isRightWindow As Boolean)
+    Private Sub ClearTextBoxes(isRightWindow As Boolean)
         If isRightWindow = True Then
             txtCropRightGame_Bottom.Text = ""
             txtCropRightGame_Left.Text = ""
@@ -727,34 +718,36 @@ Public Class OBSWebSocketCropper
             txtCropLeftTimer_Top.Text = ""
         End If
     End Sub
-    Private Sub FillCurrentCropInfoFromOBS(ByVal isRightWindow As Boolean)
+    Private Sub FillCurrentCropInfoFromObs(isRightWindow As Boolean)
         If isRightWindow = True Then
-            If RightRunnerTimerSceneInfo IsNot Nothing Then
-                txtCropRightTimer_Top.Text = RightRunnerTimerSceneInfo.Crop.Top
-                txtCropRightTimer_Bottom.Text = RightRunnerTimerSceneInfo.Crop.Bottom
-                txtCropRightTimer_Left.Text = RightRunnerTimerSceneInfo.Crop.Left
-                txtCropRightTimer_Right.Text = RightRunnerTimerSceneInfo.Crop.Right
+
+            If _rightRunnerTimerSceneInfo IsNot Nothing Then
+                txtCropRightTimer_Top.Text = _rightRunnerTimerSceneInfo.Crop.Top
+                txtCropRightTimer_Bottom.Text = _rightRunnerTimerSceneInfo.Crop.Bottom
+                txtCropRightTimer_Left.Text = _rightRunnerTimerSceneInfo.Crop.Left
+                txtCropRightTimer_Right.Text = _rightRunnerTimerSceneInfo.Crop.Right
             End If
 
-            If RightRunnerGameSceneInfo IsNot Nothing Then
-                txtCropRightGame_Top.Text = RightRunnerGameSceneInfo.Crop.Top
-                txtCropRightGame_Bottom.Text = RightRunnerGameSceneInfo.Crop.Bottom
-                txtCropRightGame_Left.Text = RightRunnerGameSceneInfo.Crop.Left
-                txtCropRightGame_Right.Text = RightRunnerGameSceneInfo.Crop.Right
+            If _rightRunnerGameSceneInfo IsNot Nothing Then
+                txtCropRightGame_Top.Text = _rightRunnerGameSceneInfo.Crop.Top
+                txtCropRightGame_Bottom.Text = _rightRunnerGameSceneInfo.Crop.Bottom
+                txtCropRightGame_Left.Text = _rightRunnerGameSceneInfo.Crop.Left
+                txtCropRightGame_Right.Text = _rightRunnerGameSceneInfo.Crop.Right
             End If
         Else
-            If LeftRunnerTimerSceneInfo IsNot Nothing Then
-                txtCropLeftTimer_Top.Text = LeftRunnerTimerSceneInfo.Crop.Top
-                txtCropLeftTimer_Bottom.Text = LeftRunnerTimerSceneInfo.Crop.Bottom
-                txtCropLeftTimer_Left.Text = LeftRunnerTimerSceneInfo.Crop.Left
-                txtCropLeftTimer_Right.Text = LeftRunnerTimerSceneInfo.Crop.Right
+            If _leftRunnerTimerSceneInfo IsNot Nothing Then
+                txtCropLeftTimer_Top.Text = _leftRunnerTimerSceneInfo.Crop.Top
+                txtCropLeftTimer_Bottom.Text = _leftRunnerTimerSceneInfo.Crop.Bottom
+                txtCropLeftTimer_Left.Text = _leftRunnerTimerSceneInfo.Crop.Left
+                txtCropLeftTimer_Right.Text = _leftRunnerTimerSceneInfo.Crop.Right
             End If
 
-            If LeftRunnerGameSceneInfo IsNot Nothing Then
-                txtCropLeftGame_Top.Text = LeftRunnerGameSceneInfo.Crop.Top
-                txtCropLeftGame_Bottom.Text = LeftRunnerGameSceneInfo.Crop.Bottom
-                txtCropLeftGame_Left.Text = LeftRunnerGameSceneInfo.Crop.Left
-                txtCropLeftGame_Right.Text = LeftRunnerGameSceneInfo.Crop.Right
+            If _leftRunnerGameSceneInfo IsNot Nothing Then
+                txtCropLeftGame_Top.Text = _leftRunnerGameSceneInfo.Crop.Top
+                txtCropLeftGame_Bottom.Text = _leftRunnerGameSceneInfo.Crop.Bottom
+                txtCropLeftGame_Left.Text = _leftRunnerGameSceneInfo.Crop.Left
+                txtCropLeftGame_Right.Text = _leftRunnerGameSceneInfo.Crop.Right
+
             End If
         End If
 
@@ -811,8 +804,8 @@ Public Class OBSWebSocketCropper
     Private Sub txtCropLeftGame_Bottom_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtCropLeftGame_Bottom.KeyPress
         e.Handled = CheckIfKeyAllowed(e.KeyChar)
     End Sub
-    Public Function CheckIfKeyAllowed(ByVal KeyChar As String) As Boolean
-        If Not ApprovedChars.Contains(KeyChar) And KeyChar <> vbBack Then
+    Public Function CheckIfKeyAllowed(keyChar As String) As Boolean
+        If Not _approvedChars.Contains(keyChar) And keyChar <> vbBack Then
             Return True
         Else
             Return False
@@ -911,7 +904,9 @@ Public Class OBSWebSocketCropper
 #End Region
 
 #Region " Misc Functions "
-    Private Sub EnableButtons(ByVal isConnected As Boolean)
+
+    Private Sub EnableButtons(isConnected As Boolean)
+
         btnGetCrop.Enabled = isConnected
         btnSetLeftCrop.Enabled = isConnected
         btnSetMaster.Enabled = isConnected
@@ -955,27 +950,26 @@ Public Class OBSWebSocketCropper
         End If
 
 
-        ProgramLoaded = False
-
         ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
         CreateNewSourceTable()
 
         If My.Settings.HasFinishedWelcome = False Then
-            Dim USettings As New UserSettings
+            Dim uSettings As New UserSettings
 
-            UserSettings.ShowVLCOption = True
-            USettings.ShowDialog()
+            UserSettings.ShowVlcOption = True
+            uSettings.ShowDialog()
 
             If My.Settings.HasFinishedWelcome = False Then
                 MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
-                Me.Close()
+                Close()
             End If
 
             CheckUnusedFields()
 
             If OBSSettingsResult = "VLC" Then
                 VLCSettings.ShowDialog()
+
             End If
 
             RefreshRunnerNames()
@@ -996,18 +990,20 @@ Public Class OBSWebSocketCropper
         RefreshExpertSettings()
 
         ProgramLoaded = True
+
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         About.ShowDialog()
     End Sub
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Me.Close()
+        Close()
     End Sub
+
     Private Sub GetSyncFromServer()
 
         Dim cropList As IEnumerable(Of RunnerInfo)
         Try
-            cropList = CropApi.GetCrops()
+            cropList = _cropApi.GetCrops()
 
         Catch ex As Exception
             MessageBox.Show(Me, "Error While retrieving data from server: " & ex.ToString())
@@ -1061,17 +1057,17 @@ Public Class OBSWebSocketCropper
 
         RefreshRunnerNames()
     End Sub
-    Private Sub GetINIFile(ByVal Python As Boolean, ByVal ResetWebSocketPort As Boolean)
+    Private Sub GetIniFile(python As Boolean, resetWebSocketPort As Boolean)
 
         Dim appDataPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 
-        Dim FileName As String = appDataPath & "\obs-studio\global.ini"
+        Dim fileName As String = appDataPath & "\obs-studio\global.ini"
 
-        Dim IniContents As Dictionary(Of String, Dictionary(Of String, String)) = IniParser.ParseFile(FileName)
+        Dim iniContents As Dictionary(Of String, Dictionary(Of String, String)) = IniParser.ParseFile(fileName)
 
-        For Each SectionName As String In IniContents.Keys
-            For Each ValueName As String In IniContents(SectionName).Keys
-                Dim Value As String = IniContents(SectionName)(ValueName)
+        For Each sectionName As String In iniContents.Keys
+            For Each valueName As String In iniContents(sectionName).Keys
+                Dim value As String = iniContents(sectionName)(valueName)
 
                 '[SectionName]
                 'ValueName=Value
@@ -1081,19 +1077,22 @@ Public Class OBSWebSocketCropper
                 'ValueName  : The name of the current value   (ex: Email).
                 'Value      : The value of [ValueName]        (ex: josh.jones@gmail.com).
 
-                If Python = True Then
-                    If SectionName.ToLower = "python" Then
-                        If ValueName.ToLower = "path64bit" Then
-
+                If python = True Then
+                    If sectionName.ToLower = "python" Then
+                        If valueName.ToLower = "path64bit" Then
+                            MsgBox(value, MsgBoxStyle.OkOnly)
+                            ''IniParser.WritePrivateProfileStringW(SectionName, ValueName, Value & "_Test", FileName)
                         End If
                     End If
                 Else
-                    If SectionName.ToLower = "websocketapi" Then
-                        If ValueName.ToLower = "serverport" Then
-                            If ResetWebSocketPort = True Then
-                                IniParser.WritePrivateProfileStringW(SectionName, ValueName, My.Settings.ConnectionPort1, FileName)
+                    If sectionName.ToLower = "websocketapi" Then
+                        If valueName.ToLower = "serverport" Then
+                            'MsgBox(Value, MsgBoxStyle.OkOnly)
+                            If resetWebSocketPort = True Then
+                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort1, fileName)
+
                             Else
-                                IniParser.WritePrivateProfileStringW(SectionName, ValueName, My.Settings.ConnectionPort2, FileName)
+                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort2, fileName)
                                 MsgBox("Try opening a 2nd instance of OBS", MsgBoxStyle.OkOnly, ProgramName)
                             End If
 
@@ -1120,7 +1119,7 @@ Public Class OBSWebSocketCropper
                             .Id = localRunner.Id
                             }
 
-                    CropApi.UpdateCrop(runner)
+                    _cropApi.UpdateCrop(runner)
                     localRunner.SubmittedOn = runner.SubmittedOn
 
                 Next
@@ -1133,17 +1132,17 @@ Public Class OBSWebSocketCropper
 
     End Sub
     Private Sub RefreshCropperDefaultCrop()
-        CropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
+        _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
     End Sub
     Private Sub ChangeUserSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
-        Dim USettings As New UserSettings
+        Dim uSettings As New UserSettings
 
-        USettings.ShowVLCOption = False
-        USettings.ShowDialog()
+        UserSettings.ShowVlcOption = False
+        uSettings.ShowDialog()
 
         If My.Settings.HasFinishedWelcome = False Then
             MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
-            Me.Close()
+            Close()
 
         Else
             RefreshRunnerNames()
@@ -1152,24 +1151,26 @@ Public Class OBSWebSocketCropper
         End If
     End Sub
     Private Sub ChangeVLCSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeVLCSettingsToolStripMenuItem.Click
-        VLCSettings.ShowDialog()
+        VlcSettings.ShowDialog()
 
         RefreshCropperDefaultCrop()
     End Sub
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        LastUpdate = LastUpdate + 1
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        _lastUpdate = _lastUpdate + 1
 
-        If LastUpdate > 30 Then
-            LastUpdate = 0
-            If Check2ndOBS = True Then
-                RefreshOBS()
+        If _lastUpdate > 30 Then
+            _lastUpdate = 0
+            If _check2NdObs = True Then
+                RefreshObs()
             End If
         End If
     End Sub
-    Public Sub ConnectToOBS2()
-        Me.Cursor = Cursors.WaitCursor
+
+    Private Sub ConnectToObs2()
+        Cursor = Cursors.WaitCursor
 
         Try
+
 
             ConnectionString2 = My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
 
@@ -1186,12 +1187,14 @@ Public Class OBSWebSocketCropper
                         OBSConnectionStatus2 = "Not Connected"
                         lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
                     End If
+
                 End If
 
 
-                If _obs2.IsConnected = True Then
-                    OBSConnectionStatus2 = "Connected"
-                    lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+
+            If _obs2.IsConnected = True Then
+                ObsConnectionStatus2 = "Connected"
+                lblOBS2ConnectedStatus.Text = ObsConnectionStatus2
 
                 Else
                     lblOBS2ConnectedStatus.Text = "Not Connected"
@@ -1203,11 +1206,10 @@ Public Class OBSWebSocketCropper
         End Try
 
     End Sub
-    Public Sub ConnectToOBS()
-        Me.Cursor = Cursors.WaitCursor
+    Public Sub ConnectToObs()
+        Cursor = Cursors.WaitCursor
 
         Try
-
 
             ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
@@ -1236,6 +1238,7 @@ Public Class OBSWebSocketCropper
                     RefreshVLC()
                 Else
                     lblOBS1ConnectedStatus.Text = "Not Connected"
+
                 End If
             End If
         Finally
@@ -1251,6 +1254,7 @@ Public Class OBSWebSocketCropper
         visComms = Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS)
         txtCommentaryNames.Visible = visComms
         lblCommentary.Visible = visComms
+
 
         visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) OrElse
             Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) OrElse
@@ -1341,6 +1345,7 @@ Public Class OBSWebSocketCropper
     End Sub
     Private Sub chkAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkAlwaysOnTop.CheckedChanged
         Me.TopMost = chkAlwaysOnTop.Checked
+
     End Sub
     Private Sub AddNewRunner(ByVal isRightWindow As Boolean)
         NewRunnerName = ""

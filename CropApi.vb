@@ -47,7 +47,4 @@ Public Class CropApi
         Client.Timeout = TimeSpan.FromSeconds(10)
     End Sub
 
-    Private Sub New()
-
-    End Sub
 End Class

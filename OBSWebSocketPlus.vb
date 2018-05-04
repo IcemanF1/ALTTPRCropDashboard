@@ -2,11 +2,11 @@
 Imports Newtonsoft.Json.Linq
 Imports OBSWebsocketDotNet
 
-Public Class OBSWebSocketPlus
+Public Class ObsWebSocketPlus
     Inherits OBSWebsocket
     Public Function GetSceneItemProperties(
-           ByVal sceneName As String,
-           ByVal item As String) As SceneItemProperties
+           sceneName As String,
+           item As String) As SceneItemProperties
 
         Dim requestParameters As New JObject
 
@@ -20,7 +20,7 @@ Public Class OBSWebSocketPlus
 
     End Function
     Public Function GetSourceSettings(
-           ByVal sourcename As String) As SourceSettings
+           sourcename As String) As SourceSettings
 
         Dim requestParameters As New JObject
 
@@ -29,29 +29,29 @@ Public Class OBSWebSocketPlus
         Return New SourceSettings(SendRequest("GetSourceSettings", requestParameters))
 
     End Function
-    Public Sub SetTextGDI(ByVal source As String, ByVal TextValue As String)
+    Public Sub SetTextGdi(source As String, textValue As String)
         Dim requestParameters As New JObject
 
         requestParameters.Add("source", source)
-        requestParameters.Add("text", TextValue)
+        requestParameters.Add("text", textValue)
 
         SendRequest("SetTextGDIPlusProperties", requestParameters)
     End Sub
-    Public Sub SetSourceSettings(ByVal source As String, ByVal cursor As Boolean, ByVal window As String, ByVal priority As Integer)
+    Public Sub SetSourceSettings(source As String, cursor As Boolean, window As String, priority As Integer)
         Dim requestParameters As New JObject
 
-        Dim SourceSettings As New JObject
-        SourceSettings.Add("window", window)
+        Dim sourceSettings As New JObject
+        sourceSettings.Add("window", window)
         'SourceSettings.Add("cursor", cursor)
         'SourceSettings.Add("priority", priority)
 
         requestParameters.Add("sourceName", source)
         requestParameters.Add("sourceType", "window_capture")
-        requestParameters.Add("sourceSettings", SourceSettings)
+        requestParameters.Add("sourceSettings", sourceSettings)
 
         SendRequest("SetSourceSettings", requestParameters)
     End Sub
-    Public Sub SetBrowserSource(ByVal source As String, ByVal urlValue As String)
+    Public Sub SetBrowserSource(source As String, urlValue As String)
         Dim requestParameters As New JObject
 
         requestParameters.Add("source", source)
@@ -60,37 +60,37 @@ Public Class OBSWebSocketPlus
         SendRequest("SetBrowserSourceProperties", requestParameters)
 
     End Sub
-    Public Sub SetSceneItemProperties(ByVal item As String, ByVal CropT As Integer, ByVal CropB As Integer,
-                                    ByVal CropL As Integer, ByVal CropR As Integer)
+    Public Sub SetSceneItemProperties(item As String, cropT As Integer, cropB As Integer,
+                                    cropL As Integer, cropR As Integer)
 
         Dim requestParameters As New JObject
 
         Dim cropInfo As New JObject
 
-        cropInfo.Add("top", CropT)
-        cropInfo.Add("bottom", CropB)
-        cropInfo.Add("left", CropL)
-        cropInfo.Add("right", CropR)
+        cropInfo.Add("top", cropT)
+        cropInfo.Add("bottom", cropB)
+        cropInfo.Add("left", cropL)
+        cropInfo.Add("right", cropR)
         requestParameters.Add("item", item)
         requestParameters.Add("crop", cropInfo)
 
         SendRequest("SetSceneItemProperties", requestParameters)
     End Sub
-    Public Function IsPortOpen(ByVal ConnectionAddress As String) As Boolean
-        Dim Client As TcpClient = Nothing
+    Public Function IsPortOpen(connectionAddress As String) As Boolean
+        Dim client As TcpClient = Nothing
 
 
-        Dim Host As String = ConnectionAddress.Split(":")(1).Remove(0, 2)
-        Dim PortNumber As Integer = ConnectionAddress.Split(":")(2)
+        Dim host As String = connectionAddress.Split(":")(1).Remove(0, 2)
+        Dim portNumber As Integer = connectionAddress.Split(":")(2)
 
         Try
-            Client = New TcpClient(Host, PortNumber)
+            client = New TcpClient(host, portNumber)
             Return True
         Catch ex As SocketException
             Return False
         Finally
-            If Not Client Is Nothing Then
-                Client.Close()
+            If Not client Is Nothing Then
+                client.Close()
             End If
         End Try
     End Function
@@ -104,10 +104,12 @@ Public Class OBSWebSocketPlus
 End Class
 Public Class SourceSettings
     'Public Property SourceName As String
-    Public Property window As String
-    Public Property priority As Integer
-    Public Property cursor As Boolean
-    Public Property sourcetype As String
+
+    Public Property Window As String
+    Public Property Priority As Integer
+    Public Property Cursor As Boolean
+              Public Property SourceType As String
+
 
     Public Sub New(ByRef data As JObject)
         sourcetype = CType(data("sourceType"), String)
@@ -132,7 +134,7 @@ End Class
 Public Class SceneItemProperties
     Public Property Crop As SceneItemCropInfo
     Public Property Name As String
-    Public Property ItemID As Integer
+    Public Property ItemId As Integer
     Public Property PositionX As Double
     Public Property PositionY As Double
     Public Property PositionAlignment As Double
