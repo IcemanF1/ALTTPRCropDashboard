@@ -4,9 +4,18 @@ Made with the intentions of making cropping and setup of a ALTTPR Restream easie
 
 VERY EARLY DEVELOPMENT!  Still a big work in progress!
 
-Currently working decently - Save OBS/Crop settings locally, pull source crop settings from OBS.
+Currently working decently:
+- Initial setup to save settings
+- Save OBS/Crop settings to a local DB file
+- Set Commentary/Runner names and tracker URL's to OBS
+- Send the VLC video to the proper sources
+- Pull source crop settings from OBS
+- Set crop from pulled database
 
-Somewhat working but needs lots of work - Sending the crop info to OBS.  If the VLC source remains the same, re-cropping is fine.  It's when the resolution changes drastically from what it was and/or there are black bars to either side.  Math behind this as well as the way the information is sent to OBS is in major need of revamp to make this dynamic and allow one person to set the cropping for others to benefit.
+Somewhat working but needs work:
+- Ability to change the OBS Websocket port to open a 2nd instance without it complaining/crashing
+- Open VLC of the stream of the player selected (works but a redesign of what we save to the DB will mean this changes as well)
+- Expert mode for features to test and thus not quite ready for widespread use
 
 # Notes
 

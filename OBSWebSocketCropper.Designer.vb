@@ -124,6 +124,7 @@ Partial Class ObsWebSocketCropper
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
         Me.gbLeftGameWindow.SuspendLayout()
+        Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -692,6 +693,7 @@ Partial Class ObsWebSocketCropper
         '
         'mnuMainMenu
         '
+        Me.mnuMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.mnuMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMainMenu.Name = "mnuMainMenu"
         Me.mnuMainMenu.Size = New System.Drawing.Size(847, 24)
@@ -1078,6 +1080,7 @@ Partial Class ObsWebSocketCropper
         Me.Controls.Add(Me.mnuMainMenu)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
+        Me.MainMenuStrip = Me.mnuMainMenu
         Me.Name = "ObsWebSocketCropper"
         Me.Text = "OBS Websocket Cropper"
         Me.gbRightGameWindow.ResumeLayout(False)
@@ -1088,6 +1091,8 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.PerformLayout()
         Me.gbLeftGameWindow.ResumeLayout(False)
         Me.gbLeftGameWindow.PerformLayout()
+        Me.mnuMainMenu.ResumeLayout(False)
+        Me.mnuMainMenu.PerformLayout()
         Me.gbTrackerComms.ResumeLayout(False)
         Me.gbTrackerComms.PerformLayout()
         Me.ResumeLayout(False)
@@ -1155,16 +1160,10 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents txtCommentaryNames As TextBox
     Friend WithEvents btnSetTrackCommNames As Button
     Friend WithEvents mnuMainMenu As MenuStrip
-    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ttMainToolTip As ToolTip
     Friend WithEvents gbTrackerComms As GroupBox
     Friend WithEvents btnSyncWithServer As Button
-    Friend WithEvents ChangeUserSettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents lblOBS1ConnectedStatus As Label
-    Friend WithEvents ChangeVLCSettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnGetLeftCrop As Button
     Friend WithEvents btnGetRightCrop As Button
     Friend WithEvents btnSaveLeftCrop As Button
@@ -1187,7 +1186,13 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents lblLeftVOD As Label
     Friend WithEvents lblViewRightOnTwitch As Label
     Friend WithEvents lblRightVOD As Label
-    Friend WithEvents ExpertModeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents lblLeftStreamlink As Label
     Friend WithEvents lblRightStreamlink As Label
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ChangeUserSettingsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ChangeVLCSettingsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExpertModeToolStripMenuItem As ToolStripMenuItem
 End Class

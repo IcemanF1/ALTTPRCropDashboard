@@ -1002,11 +1002,39 @@ Public Class ObsWebSocketCropper
         ProgramLoaded = True
 
     End Sub
-    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+    Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         About.ShowDialog()
     End Sub
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+    Private Sub ExitToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Close()
+    End Sub
+    Private Sub ChangeVLCSettingsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ChangeVLCSettingsToolStripMenuItem.Click
+        VlcSettings.ShowDialog()
+
+        RefreshCropperDefaultCrop()
+    End Sub
+    Private Sub ExpertModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExpertModeToolStripMenuItem.Click
+        My.Settings.ExpertMode = ExpertModeToolStripMenuItem.Checked
+        My.Settings.Save()
+
+        RefreshExpertSettings()
+    End Sub
+
+    Private Sub ChangeUserSettingsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
+        Dim uSettings As New UserSettings
+
+        UserSettings.ShowVLCOption = False
+        uSettings.ShowDialog()
+
+        If My.Settings.HasFinishedWelcome = False Then
+            MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
+            Close()
+
+        Else
+            RefreshRunnerNames()
+            RefreshCropperDefaultCrop()
+            CheckUnusedFields()
+        End If
     End Sub
 
     Private Sub GetSyncFromServer()
@@ -1143,27 +1171,6 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub RefreshCropperDefaultCrop()
         _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
-    End Sub
-    Private Sub ChangeUserSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
-        Dim uSettings As New UserSettings
-
-        UserSettings.ShowVLCOption = False
-        uSettings.ShowDialog()
-
-        If My.Settings.HasFinishedWelcome = False Then
-            MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
-            Close()
-
-        Else
-            RefreshRunnerNames()
-            RefreshCropperDefaultCrop()
-            CheckUnusedFields()
-        End If
-    End Sub
-    Private Sub ChangeVLCSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeVLCSettingsToolStripMenuItem.Click
-        VlcSettings.ShowDialog()
-
-        RefreshCropperDefaultCrop()
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         _lastUpdate = _lastUpdate + 1
@@ -1421,12 +1428,6 @@ Public Class ObsWebSocketCropper
             Process.Start("https://twitch.tv/" & cbRightRunnerName.Text & "/videos/all")
         End If
     End Sub
-    Private Sub ExpertModeToolStripMenuItem_CheckedChanged(sender As Object, e As EventArgs) Handles ExpertModeToolStripMenuItem.CheckedChanged
-        My.Settings.ExpertMode = ExpertModeToolStripMenuItem.Checked
-        My.Settings.Save()
-
-        RefreshExpertSettings()
-    End Sub
     Private Sub RefreshExpertSettings()
         chkAlwaysOnTop.Visible = My.Settings.ExpertMode
         lblLeftVOD.Visible = My.Settings.ExpertMode
@@ -1486,5 +1487,9 @@ Public Class ObsWebSocketCropper
             MsgBox("No Runner selected, cannot continue.")
         End If
     End Sub
+
+
+
+
 #End Region
 End Class
