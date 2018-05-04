@@ -946,6 +946,8 @@ Public Class OBSWebSocketCropper
         lblRightVOD.Enabled = isConnected
         lblViewRightOnTwitch.Enabled = isConnected
         lblViewLeftOnTwitch.Enabled = isConnected
+        lblLeftStreamlink.Enabled = isConnected
+        lblRightStreamlink.Enabled = isConnected
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.UpgradeRequired = True Then
@@ -958,6 +960,11 @@ Public Class OBSWebSocketCropper
         ProgramLoaded = False
 
         ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
+
+
+        lblLeftStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        lblRightStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        chkAlwaysOnTop.DataBindings.Add("Checked", My.Settings, NameOf(My.Settings.AlwaysOnTop), False, DataSourceUpdateMode.OnPropertyChanged)
 
         CreateNewSourceTable()
 
@@ -991,7 +998,6 @@ Public Class OBSWebSocketCropper
         End If
 
         ExpertModeToolStripMenuItem.Checked = My.Settings.ExpertMode
-        chkAlwaysOnTop.Checked = My.Settings.AlwaysOnTop
 
         RefreshExpertSettings()
 
@@ -1411,6 +1417,58 @@ Public Class OBSWebSocketCropper
         lblRightVOD.Visible = My.Settings.ExpertMode
         lblViewLeftOnTwitch.Visible = My.Settings.ExpertMode
         lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
+    End Sub
+    Private Sub StartStreamlink(twitch As String)
+        Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
+        If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
+            Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Streamlink", "bin")
+            Dim fsDialog As New OpenFileDialog
+            fsDialog.FileName = "streamlink.exe"
+            fsDialog.Title = "Please provide the path to streamlink.exe"
+            fsDialog.Filter = "Exe files |*.exe"
+            fsDialog.InitialDirectory = initialPath
+            fsDialog.CheckFileExists = True
+
+            Dim result = fsDialog.ShowDialog(Me)
+
+            If result <> DialogResult.OK OrElse Not File.Exists(fsDialog.FileName) Then
+                Exit Sub
+            End If
+
+            My.Settings.StreamlinkPath = fsDialog.FileName
+            My.Settings.Save()
+
+            replacedPath = fsDialog.FileName
+        End If
+
+
+        Dim myProcess = New Process
+        myProcess.StartInfo = New ProcessStartInfo With {
+            .UseShellExecute = False,
+            .CreateNoWindow = True,
+            .WindowStyle = ProcessWindowStyle.Hidden,
+            .FileName = replacedPath,
+            .Arguments = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http",
+            .RedirectStandardError = False,
+            .RedirectStandardOutput = True
+                        }
+
+        myProcess.Start()
+    End Sub
+    Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink.Click
+        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
+            StartStreamlink(cbLeftRunnerName.Text)
+        Else
+            MsgBox("No Runner selected, cannot continue.")
+        End If
+    End Sub
+
+    Private Sub lblRightStreamlink_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink.Click
+        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
+            StartStreamlink(cbRightRunnerName.Text)
+        Else
+            MsgBox("No Runner selected, cannot continue.")
+        End If
     End Sub
 #End Region
 End Class
