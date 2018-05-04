@@ -1438,7 +1438,7 @@ Public Class ObsWebSocketCropper
     Private Sub StartStreamlink(twitch As String)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
         If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
-            Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Streamlink", "bin")
+            Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Streamlink", "bin")
             Dim fsDialog As New OpenFileDialog
             fsDialog.FileName = "streamlink.exe"
             fsDialog.Title = "Please provide the path to streamlink.exe"
@@ -1479,7 +1479,6 @@ Public Class ObsWebSocketCropper
             MsgBox("No Runner selected, cannot continue.")
         End If
     End Sub
-
     Private Sub lblRightStreamlink_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink.Click
         If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
             StartStreamlink(cbRightRunnerName.Text)
