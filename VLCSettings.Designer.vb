@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class VLCSettings
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class VlcSettings
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,8 +20,9 @@ Partial Class VLCSettings
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VlcSettings))
         Me.txtDefaultCropBottom = New System.Windows.Forms.TextBox()
         Me.lblBottom = New System.Windows.Forms.Label()
         Me.lblTop = New System.Windows.Forms.Label()
@@ -148,7 +149,7 @@ Partial Class VLCSettings
         Me.btnSaveSettings.Text = "Save VLC Settings"
         Me.btnSaveSettings.UseVisualStyleBackColor = True
         '
-        'VLCSettings
+        'VlcSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -161,7 +162,8 @@ Partial Class VLCSettings
         Me.Controls.Add(Me.lblTop)
         Me.Controls.Add(Me.txtDefaultCropTop)
         Me.Controls.Add(Me.chkOverrideDefault)
-        Me.Name = "VLCSettings"
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Name = "VlcSettings"
         Me.Text = "VLCSettings"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()

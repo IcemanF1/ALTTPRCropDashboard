@@ -22,6 +22,7 @@ Partial Class UserSettings
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UserSettings))
         Me.btnSaveSettings = New System.Windows.Forms.Button()
         Me.gbConnection1 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -40,6 +41,15 @@ Partial Class UserSettings
         Me.roCustom = New System.Windows.Forms.RadioButton()
         Me.btnSaveThenVLC = New System.Windows.Forms.Button()
         Me.panOBS = New System.Windows.Forms.Panel()
+        Me.lblRightTimerStatus = New System.Windows.Forms.Label()
+        Me.lblLeftTimerStatus = New System.Windows.Forms.Label()
+        Me.lblRightRunnerStatus = New System.Windows.Forms.Label()
+        Me.lblLeftRunnerStatus = New System.Windows.Forms.Label()
+        Me.lblRightGameStatus = New System.Windows.Forms.Label()
+        Me.lblLeftGameStatus = New System.Windows.Forms.Label()
+        Me.lblCommentaryStatus = New System.Windows.Forms.Label()
+        Me.lblRightTrackerStatus = New System.Windows.Forms.Label()
+        Me.lblLeftTrackerStatus = New System.Windows.Forms.Label()
         Me.cbCommentaryOBS = New System.Windows.Forms.ComboBox()
         Me.cbRightTrackerOBS = New System.Windows.Forms.ComboBox()
         Me.cbRightRunnerOBS = New System.Windows.Forms.ComboBox()
@@ -51,15 +61,6 @@ Partial Class UserSettings
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.lblLeftTrackerStatus = New System.Windows.Forms.Label()
-        Me.lblRightTrackerStatus = New System.Windows.Forms.Label()
-        Me.lblCommentaryStatus = New System.Windows.Forms.Label()
-        Me.lblLeftGameStatus = New System.Windows.Forms.Label()
-        Me.lblRightGameStatus = New System.Windows.Forms.Label()
-        Me.lblLeftRunnerStatus = New System.Windows.Forms.Label()
-        Me.lblRightRunnerStatus = New System.Windows.Forms.Label()
-        Me.lblLeftTimerStatus = New System.Windows.Forms.Label()
-        Me.lblRightTimerStatus = New System.Windows.Forms.Label()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -249,6 +250,96 @@ Partial Class UserSettings
         Me.panOBS.Size = New System.Drawing.Size(1008, 635)
         Me.panOBS.TabIndex = 94
         '
+        'lblRightTimerStatus
+        '
+        Me.lblRightTimerStatus.AutoSize = True
+        Me.lblRightTimerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightTimerStatus.Location = New System.Drawing.Point(890, 90)
+        Me.lblRightTimerStatus.Name = "lblRightTimerStatus"
+        Me.lblRightTimerStatus.Size = New System.Drawing.Size(94, 13)
+        Me.lblRightTimerStatus.TabIndex = 99
+        Me.lblRightTimerStatus.Text = "Right Timer Status"
+        '
+        'lblLeftTimerStatus
+        '
+        Me.lblLeftTimerStatus.AutoSize = True
+        Me.lblLeftTimerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftTimerStatus.Location = New System.Drawing.Point(17, 90)
+        Me.lblLeftTimerStatus.Name = "lblLeftTimerStatus"
+        Me.lblLeftTimerStatus.Size = New System.Drawing.Size(87, 13)
+        Me.lblLeftTimerStatus.TabIndex = 98
+        Me.lblLeftTimerStatus.Text = "Left Timer Status"
+        '
+        'lblRightRunnerStatus
+        '
+        Me.lblRightRunnerStatus.AutoSize = True
+        Me.lblRightRunnerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightRunnerStatus.Location = New System.Drawing.Point(566, 90)
+        Me.lblRightRunnerStatus.Name = "lblRightRunnerStatus"
+        Me.lblRightRunnerStatus.Size = New System.Drawing.Size(103, 13)
+        Me.lblRightRunnerStatus.TabIndex = 97
+        Me.lblRightRunnerStatus.Text = "Right Runner Status"
+        '
+        'lblLeftRunnerStatus
+        '
+        Me.lblLeftRunnerStatus.AutoSize = True
+        Me.lblLeftRunnerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftRunnerStatus.Location = New System.Drawing.Point(305, 90)
+        Me.lblLeftRunnerStatus.Name = "lblLeftRunnerStatus"
+        Me.lblLeftRunnerStatus.Size = New System.Drawing.Size(96, 13)
+        Me.lblLeftRunnerStatus.TabIndex = 96
+        Me.lblLeftRunnerStatus.Text = "Left Runner Status"
+        '
+        'lblRightGameStatus
+        '
+        Me.lblRightGameStatus.AutoSize = True
+        Me.lblRightGameStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightGameStatus.Location = New System.Drawing.Point(611, 232)
+        Me.lblRightGameStatus.Name = "lblRightGameStatus"
+        Me.lblRightGameStatus.Size = New System.Drawing.Size(96, 13)
+        Me.lblRightGameStatus.TabIndex = 95
+        Me.lblRightGameStatus.Text = "Right Game Status"
+        '
+        'lblLeftGameStatus
+        '
+        Me.lblLeftGameStatus.AutoSize = True
+        Me.lblLeftGameStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftGameStatus.Location = New System.Drawing.Point(50, 232)
+        Me.lblLeftGameStatus.Name = "lblLeftGameStatus"
+        Me.lblLeftGameStatus.Size = New System.Drawing.Size(89, 13)
+        Me.lblLeftGameStatus.TabIndex = 94
+        Me.lblLeftGameStatus.Text = "Left Game Status"
+        '
+        'lblCommentaryStatus
+        '
+        Me.lblCommentaryStatus.AutoSize = True
+        Me.lblCommentaryStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblCommentaryStatus.Location = New System.Drawing.Point(433, 609)
+        Me.lblCommentaryStatus.Name = "lblCommentaryStatus"
+        Me.lblCommentaryStatus.Size = New System.Drawing.Size(98, 13)
+        Me.lblCommentaryStatus.TabIndex = 93
+        Me.lblCommentaryStatus.Text = "Commentary Status"
+        '
+        'lblRightTrackerStatus
+        '
+        Me.lblRightTrackerStatus.AutoSize = True
+        Me.lblRightTrackerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightTrackerStatus.Location = New System.Drawing.Point(772, 519)
+        Me.lblRightTrackerStatus.Name = "lblRightTrackerStatus"
+        Me.lblRightTrackerStatus.Size = New System.Drawing.Size(105, 13)
+        Me.lblRightTrackerStatus.TabIndex = 92
+        Me.lblRightTrackerStatus.Text = "Right Tracker Status"
+        '
+        'lblLeftTrackerStatus
+        '
+        Me.lblLeftTrackerStatus.AutoSize = True
+        Me.lblLeftTrackerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftTrackerStatus.Location = New System.Drawing.Point(38, 531)
+        Me.lblLeftTrackerStatus.Name = "lblLeftTrackerStatus"
+        Me.lblLeftTrackerStatus.Size = New System.Drawing.Size(98, 13)
+        Me.lblLeftTrackerStatus.TabIndex = 91
+        Me.lblLeftTrackerStatus.Text = "Left Tracker Status"
+        '
         'cbCommentaryOBS
         '
         Me.cbCommentaryOBS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -361,96 +452,6 @@ Partial Class UserSettings
         Me.Panel1.Size = New System.Drawing.Size(1014, 781)
         Me.Panel1.TabIndex = 101
         '
-        'lblLeftTrackerStatus
-        '
-        Me.lblLeftTrackerStatus.AutoSize = True
-        Me.lblLeftTrackerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblLeftTrackerStatus.Location = New System.Drawing.Point(38, 531)
-        Me.lblLeftTrackerStatus.Name = "lblLeftTrackerStatus"
-        Me.lblLeftTrackerStatus.Size = New System.Drawing.Size(98, 13)
-        Me.lblLeftTrackerStatus.TabIndex = 91
-        Me.lblLeftTrackerStatus.Text = "Left Tracker Status"
-        '
-        'lblRightTrackerStatus
-        '
-        Me.lblRightTrackerStatus.AutoSize = True
-        Me.lblRightTrackerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblRightTrackerStatus.Location = New System.Drawing.Point(772, 519)
-        Me.lblRightTrackerStatus.Name = "lblRightTrackerStatus"
-        Me.lblRightTrackerStatus.Size = New System.Drawing.Size(105, 13)
-        Me.lblRightTrackerStatus.TabIndex = 92
-        Me.lblRightTrackerStatus.Text = "Right Tracker Status"
-        '
-        'lblCommentaryStatus
-        '
-        Me.lblCommentaryStatus.AutoSize = True
-        Me.lblCommentaryStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblCommentaryStatus.Location = New System.Drawing.Point(433, 609)
-        Me.lblCommentaryStatus.Name = "lblCommentaryStatus"
-        Me.lblCommentaryStatus.Size = New System.Drawing.Size(98, 13)
-        Me.lblCommentaryStatus.TabIndex = 93
-        Me.lblCommentaryStatus.Text = "Commentary Status"
-        '
-        'lblLeftGameStatus
-        '
-        Me.lblLeftGameStatus.AutoSize = True
-        Me.lblLeftGameStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblLeftGameStatus.Location = New System.Drawing.Point(50, 232)
-        Me.lblLeftGameStatus.Name = "lblLeftGameStatus"
-        Me.lblLeftGameStatus.Size = New System.Drawing.Size(89, 13)
-        Me.lblLeftGameStatus.TabIndex = 94
-        Me.lblLeftGameStatus.Text = "Left Game Status"
-        '
-        'lblRightGameStatus
-        '
-        Me.lblRightGameStatus.AutoSize = True
-        Me.lblRightGameStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblRightGameStatus.Location = New System.Drawing.Point(611, 232)
-        Me.lblRightGameStatus.Name = "lblRightGameStatus"
-        Me.lblRightGameStatus.Size = New System.Drawing.Size(96, 13)
-        Me.lblRightGameStatus.TabIndex = 95
-        Me.lblRightGameStatus.Text = "Right Game Status"
-        '
-        'lblLeftRunnerStatus
-        '
-        Me.lblLeftRunnerStatus.AutoSize = True
-        Me.lblLeftRunnerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblLeftRunnerStatus.Location = New System.Drawing.Point(305, 90)
-        Me.lblLeftRunnerStatus.Name = "lblLeftRunnerStatus"
-        Me.lblLeftRunnerStatus.Size = New System.Drawing.Size(96, 13)
-        Me.lblLeftRunnerStatus.TabIndex = 96
-        Me.lblLeftRunnerStatus.Text = "Left Runner Status"
-        '
-        'lblRightRunnerStatus
-        '
-        Me.lblRightRunnerStatus.AutoSize = True
-        Me.lblRightRunnerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblRightRunnerStatus.Location = New System.Drawing.Point(566, 90)
-        Me.lblRightRunnerStatus.Name = "lblRightRunnerStatus"
-        Me.lblRightRunnerStatus.Size = New System.Drawing.Size(103, 13)
-        Me.lblRightRunnerStatus.TabIndex = 97
-        Me.lblRightRunnerStatus.Text = "Right Runner Status"
-        '
-        'lblLeftTimerStatus
-        '
-        Me.lblLeftTimerStatus.AutoSize = True
-        Me.lblLeftTimerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblLeftTimerStatus.Location = New System.Drawing.Point(17, 90)
-        Me.lblLeftTimerStatus.Name = "lblLeftTimerStatus"
-        Me.lblLeftTimerStatus.Size = New System.Drawing.Size(87, 13)
-        Me.lblLeftTimerStatus.TabIndex = 98
-        Me.lblLeftTimerStatus.Text = "Left Timer Status"
-        '
-        'lblRightTimerStatus
-        '
-        Me.lblRightTimerStatus.AutoSize = True
-        Me.lblRightTimerStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblRightTimerStatus.Location = New System.Drawing.Point(890, 90)
-        Me.lblRightTimerStatus.Name = "lblRightTimerStatus"
-        Me.lblRightTimerStatus.Size = New System.Drawing.Size(94, 13)
-        Me.lblRightTimerStatus.TabIndex = 99
-        Me.lblRightTimerStatus.Text = "Right Timer Status"
-        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -458,6 +459,7 @@ Partial Class UserSettings
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1014, 781)
         Me.Controls.Add(Me.Panel1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "UserSettings"
         Me.Text = "User Settings"
         Me.gbConnection1.ResumeLayout(False)

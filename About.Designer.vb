@@ -52,6 +52,7 @@ Partial Class About
         Me.ClientSize = New System.Drawing.Size(296, 179)
         Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.Label1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "About"
         Me.Text = "About"
         Me.ResumeLayout(False)

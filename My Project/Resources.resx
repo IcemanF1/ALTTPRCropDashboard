@@ -124,6 +124,9 @@
   <data name="Settings_Background_Resized" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings_Background_Resized.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="triforce_light_192_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\triforce_light_192_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="VLC_Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\VLC_Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

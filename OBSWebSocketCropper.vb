@@ -1465,7 +1465,7 @@ Public Class ObsWebSocketCropper
             .CreateNoWindow = True,
             .WindowStyle = ProcessWindowStyle.Hidden,
             .FileName = replacedPath,
-            .Arguments = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http",
+            .Arguments = $"--player-args=""--player-no-close --file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http",
             .RedirectStandardError = False,
             .RedirectStandardOutput = True
                         }

@@ -23,6 +23,7 @@ Partial Class ObsWebSocketCropper
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ObsWebSocketCropper))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnSetRightCrop = New System.Windows.Forms.Button()
         Me.txtCropRightGame_Top = New System.Windows.Forms.TextBox()
@@ -123,7 +124,6 @@ Partial Class ObsWebSocketCropper
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
         Me.gbLeftGameWindow.SuspendLayout()
-        Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -692,7 +692,6 @@ Partial Class ObsWebSocketCropper
         '
         'mnuMainMenu
         '
-        Me.mnuMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.mnuMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMainMenu.Name = "mnuMainMenu"
         Me.mnuMainMenu.Size = New System.Drawing.Size(847, 24)
@@ -827,7 +826,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnConnectOBS2
         '
-        Me.btnConnectOBS2.Location = New System.Drawing.Point(0, 336)
+        Me.btnConnectOBS2.Location = New System.Drawing.Point(12, 336)
         Me.btnConnectOBS2.Name = "btnConnectOBS2"
         Me.btnConnectOBS2.Size = New System.Drawing.Size(117, 23)
         Me.btnConnectOBS2.TabIndex = 73
@@ -835,7 +834,6 @@ Partial Class ObsWebSocketCropper
         Me.ttMainToolTip.SetToolTip(Me.btnConnectOBS2, "Attempt to connect to the OBS Websocket based off" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the connection string and pass" &
         "word")
         Me.btnConnectOBS2.UseVisualStyleBackColor = True
-        Me.btnConnectOBS2.Visible = False
         '
         'btnSetRightVLC
         '
@@ -941,7 +939,6 @@ Partial Class ObsWebSocketCropper
         Me.lblOBS2ConnectedStatus.Size = New System.Drawing.Size(92, 13)
         Me.lblOBS2ConnectedStatus.TabIndex = 72
         Me.lblOBS2ConnectedStatus.Text = "Connected Status"
-        Me.lblOBS2ConnectedStatus.Visible = False
         '
         'chkAlwaysOnTop
         '
@@ -1025,7 +1022,7 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink.TabIndex = 83
         Me.lblRightStreamlink.Text = "Open VLC"
         '
-        'OBSWebSocketCropper
+        'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1079,8 +1076,9 @@ Partial Class ObsWebSocketCropper
         Me.Controls.Add(Me.btnSetRightCrop)
         Me.Controls.Add(Me.btnGetCrop)
         Me.Controls.Add(Me.mnuMainMenu)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
-        Me.Name = "OBSWebSocketCropper"
+        Me.Name = "ObsWebSocketCropper"
         Me.Text = "OBS Websocket Cropper"
         Me.gbRightGameWindow.ResumeLayout(False)
         Me.gbRightGameWindow.PerformLayout()
@@ -1090,8 +1088,6 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.PerformLayout()
         Me.gbLeftGameWindow.ResumeLayout(False)
         Me.gbLeftGameWindow.PerformLayout()
-        Me.mnuMainMenu.ResumeLayout(False)
-        Me.mnuMainMenu.PerformLayout()
         Me.gbTrackerComms.ResumeLayout(False)
         Me.gbTrackerComms.PerformLayout()
         Me.ResumeLayout(False)

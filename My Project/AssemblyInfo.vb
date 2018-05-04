@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("ALTTPRCropDashboard")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("ALTTPRandomizer Restream Crop Dashboard")>
+<Assembly: AssemblyCompany("ALTTPRandomizer")>
 <Assembly: AssemblyProduct("ALTTPRCropDashboard")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.1.3")>
-<Assembly: AssemblyFileVersion("1.0.1.3")>
+<Assembly: AssemblyVersion("1.0.1.6")>
+<Assembly: AssemblyFileVersion("1.0.1.6")>
