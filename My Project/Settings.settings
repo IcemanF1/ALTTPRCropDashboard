@@ -83,5 +83,8 @@
     <Setting Name="AlwaysOnTop" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="StreamlinkPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%LOCALAPPDATA%\Streamlink\bin\streamlink.exe</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
