@@ -87,6 +87,7 @@ Partial Class ObsWebSocketCropper
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeUserSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeVLCSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -116,7 +117,8 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftVOD = New System.Windows.Forms.Label()
         Me.lblViewRightOnTwitch = New System.Windows.Forms.Label()
         Me.lblRightVOD = New System.Windows.Forms.Label()
-        Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lblLeftStreamlink = New System.Windows.Forms.Label()
+        Me.lblRightStreamlink = New System.Windows.Forms.Label()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -716,6 +718,13 @@ Partial Class ObsWebSocketCropper
         Me.ChangeVLCSettingsToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ChangeVLCSettingsToolStripMenuItem.Text = "Change VLC Settings"
         '
+        'ExpertModeToolStripMenuItem
+        '
+        Me.ExpertModeToolStripMenuItem.CheckOnClick = True
+        Me.ExpertModeToolStripMenuItem.Name = "ExpertModeToolStripMenuItem"
+        Me.ExpertModeToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ExpertModeToolStripMenuItem.Text = "Expert Mode"
+        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
@@ -962,7 +971,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftVOD.BackColor = System.Drawing.Color.Transparent
         Me.lblLeftVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLeftVOD.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblLeftVOD.Location = New System.Drawing.Point(243, 127)
+        Me.lblLeftVOD.Location = New System.Drawing.Point(237, 127)
         Me.lblLeftVOD.Name = "lblLeftVOD"
         Me.lblLeftVOD.Size = New System.Drawing.Size(61, 13)
         Me.lblLeftVOD.TabIndex = 79
@@ -992,18 +1001,37 @@ Partial Class ObsWebSocketCropper
         Me.lblRightVOD.TabIndex = 81
         Me.lblRightVOD.Text = "View VODs"
         '
-        'ExpertModeToolStripMenuItem
+        'lblLeftStreamlink
         '
-        Me.ExpertModeToolStripMenuItem.CheckOnClick = True
-        Me.ExpertModeToolStripMenuItem.Name = "ExpertModeToolStripMenuItem"
-        Me.ExpertModeToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-        Me.ExpertModeToolStripMenuItem.Text = "Expert Mode"
+        Me.lblLeftStreamlink.AutoSize = True
+        Me.lblLeftStreamlink.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftStreamlink.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLeftStreamlink.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblLeftStreamlink.Location = New System.Drawing.Point(300, 127)
+        Me.lblLeftStreamlink.Name = "lblLeftStreamlink"
+        Me.lblLeftStreamlink.Size = New System.Drawing.Size(56, 13)
+        Me.lblLeftStreamlink.TabIndex = 82
+        Me.lblLeftStreamlink.Text = "Open VLC"
+        '
+        'lblRightStreamlink
+        '
+        Me.lblRightStreamlink.AutoSize = True
+        Me.lblRightStreamlink.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightStreamlink.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRightStreamlink.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblRightStreamlink.Location = New System.Drawing.Point(641, 131)
+        Me.lblRightStreamlink.Name = "lblRightStreamlink"
+        Me.lblRightStreamlink.Size = New System.Drawing.Size(56, 13)
+        Me.lblRightStreamlink.TabIndex = 83
+        Me.lblRightStreamlink.Text = "Open VLC"
         '
         'OBSWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 506)
+        Me.Controls.Add(Me.lblRightStreamlink)
+        Me.Controls.Add(Me.lblLeftStreamlink)
         Me.Controls.Add(Me.lblRightVOD)
         Me.Controls.Add(Me.lblViewRightOnTwitch)
         Me.Controls.Add(Me.lblLeftVOD)
@@ -1164,4 +1192,6 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents lblViewRightOnTwitch As Label
     Friend WithEvents lblRightVOD As Label
     Friend WithEvents ExpertModeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents lblLeftStreamlink As Label
+    Friend WithEvents lblRightStreamlink As Label
 End Class
