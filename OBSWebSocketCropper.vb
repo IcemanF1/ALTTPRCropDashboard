@@ -10,7 +10,7 @@ Public Class ObsWebSocketCropper
     Public ObsConnectionStatus As String
     Public ObsConnectionStatus2 As String
 
-    Dim ReadOnly _obs2 As New ObsWebSocketPlus
+    ReadOnly _obs2 As New ObsWebSocketPlus
     Public ConnectionString As String
     Public ConnectionString2 As String
 
@@ -45,6 +45,7 @@ Public Class ObsWebSocketCropper
     Dim _check2NdObs As Boolean = False
     Dim _lastUpdate As Integer
 
+    Dim ProgramLoaded As Boolean
 
     Public Shared OBSSettingsResult As String
 
@@ -74,8 +75,8 @@ Public Class ObsWebSocketCropper
 #End Region
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
-        If MasterHeightLeft = 0 Then
-            SetMasterSourceDimensions(True)
+        If _masterHeightLeft = 0 Then
+            SetMasterSourceDimensions()
         End If
 
         GetCurrentSceneInfo(True)
@@ -106,12 +107,12 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub btnSetMaster_Click(sender As Object, e As EventArgs) Handles btnSetMaster.Click
-        SetMasterSourceDimensions(True)
-        SetMasterSourceDimensions(False)
+        SetMasterSourceDimensions()
+        SetMasterSourceDimensions()
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
-        If MasterHeightLeft = 0 Then
-            SetMasterSourceDimensions(False)
+        If _masterHeightLeft = 0 Then
+            SetMasterSourceDimensions()
         End If
 
         GetCurrentSceneInfo(False)
@@ -677,10 +678,10 @@ Public Class ObsWebSocketCropper
         _vlcListRight.Clear()
 
         Dim x As Integer
-        For x = 0 To lVlc.Count - 1
+        For x = 0 To lVLC.Count - 1
             Dim dr As DataRow
             dr = _vlcListLeft.Tables("Processes").NewRow
-            dr.Item("VLCName") = lVlc.Item(x).MainWindowTitle
+            dr.Item("VLCName") = lVLC.Item(x).MainWindowTitle
             _vlcListLeft.Tables("Processes").Rows.Add(dr)
 
         Next
@@ -891,7 +892,7 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub cbRightRunner_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName.TextChanged
-        If ReuseInfo = False Then
+        If ReuseInfo = True Then
             ClearTextBoxes(True)
             RefreshCropFromData(True)
         End If
@@ -950,6 +951,8 @@ Public Class ObsWebSocketCropper
             My.Settings.Save()
         End If
 
+        ProgramLoaded = False
+        ReuseInfo = True
 
         ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
@@ -958,7 +961,7 @@ Public Class ObsWebSocketCropper
         If My.Settings.HasFinishedWelcome = False Then
             Dim uSettings As New UserSettings
 
-            UserSettings.ShowVlcOption = True
+            UserSettings.ShowVLCOption = True
             uSettings.ShowDialog()
 
             If My.Settings.HasFinishedWelcome = False Then
@@ -969,7 +972,7 @@ Public Class ObsWebSocketCropper
             CheckUnusedFields()
 
             If OBSSettingsResult = "VLC" Then
-                VLCSettings.ShowDialog()
+                VlcSettings.ShowDialog()
 
             End If
 
@@ -1138,7 +1141,7 @@ Public Class ObsWebSocketCropper
     Private Sub ChangeUserSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
         Dim uSettings As New UserSettings
 
-        UserSettings.ShowVlcOption = False
+        UserSettings.ShowVLCOption = False
         uSettings.ShowDialog()
 
         If My.Settings.HasFinishedWelcome = False Then
@@ -1162,7 +1165,7 @@ Public Class ObsWebSocketCropper
         If _lastUpdate > 30 Then
             _lastUpdate = 0
             If _check2NdObs = True Then
-                RefreshObs()
+                RefreshOBS()
             End If
         End If
     End Sub
@@ -1185,17 +1188,17 @@ Public Class ObsWebSocketCropper
                 Else
                     If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
                         _obs2.Disconnect()
-                        OBSConnectionStatus2 = "Not Connected"
-                        lblOBS2ConnectedStatus.Text = OBSConnectionStatus2
+                        ObsConnectionStatus2 = "Not Connected"
+                        lblOBS2ConnectedStatus.Text = ObsConnectionStatus2
                     End If
 
                 End If
 
 
 
-            If _obs2.IsConnected = True Then
-                ObsConnectionStatus2 = "Connected"
-                lblOBS2ConnectedStatus.Text = ObsConnectionStatus2
+                If _obs2.IsConnected = True Then
+                    ObsConnectionStatus2 = "Connected"
+                    lblOBS2ConnectedStatus.Text = ObsConnectionStatus2
 
                 Else
                     lblOBS2ConnectedStatus.Text = "Not Connected"
@@ -1214,26 +1217,26 @@ Public Class ObsWebSocketCropper
 
             ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
-            Dim PortOpen As Boolean = _obs.IsPortOpen(ConnectionString)
+            Dim PortOpen As Boolean = Obs.IsPortOpen(ConnectionString)
 
             If PortOpen = False Then
                 MsgBox("OBS WebSocket is not running.  Please make sure the OBS WebSocket is enabled before continuing!", MsgBoxStyle.OkOnly, ProgramName)
             Else
-                If _obs.IsConnected = False Then
-                    _obs.Connect(ConnectionString, My.Settings.Password1)
+                If Obs.IsConnected = False Then
+                    Obs.Connect(ConnectionString, My.Settings.Password1)
                 Else
                     If MsgBox("This connection is already connected.  Do you wish to disconnect?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                        _obs.Disconnect()
-                        OBSConnectionStatus = "Not Connected"
-                        lblOBS1ConnectedStatus.Text = OBSConnectionStatus
+                        Obs.Disconnect()
+                        ObsConnectionStatus = "Not Connected"
+                        lblOBS1ConnectedStatus.Text = ObsConnectionStatus
                         EnableButtons(False)
                     End If
                 End If
 
 
-                If _obs.IsConnected = True Then
-                    OBSConnectionStatus = "Connected"
-                    lblOBS1ConnectedStatus.Text = OBSConnectionStatus
+                If Obs.IsConnected = True Then
+                    ObsConnectionStatus = "Connected"
+                    lblOBS1ConnectedStatus.Text = ObsConnectionStatus
 
                     EnableButtons(True)
 
@@ -1330,7 +1333,7 @@ Public Class ObsWebSocketCropper
             SetNewNewMath(False)
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
             GetCurrentSceneInfo(False)
-            FillCurrentCropInfoFromOBS(False)
+            FillCurrentCropInfoFromObs(False)
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
             SaveRunnerCrop(False)
             RefreshRunnerNames()
@@ -1339,7 +1342,7 @@ Public Class ObsWebSocketCropper
             SetNewNewMath(True)
         ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
             GetCurrentSceneInfo(True)
-            FillCurrentCropInfoFromOBS(True)
+            FillCurrentCropInfoFromObs(True)
         ElseIf (e.KeyCode = Keys.Y AndAlso e.Modifiers = Keys.Control) Then
             SaveRunnerCrop(True)
             RefreshRunnerNames()
@@ -1364,8 +1367,8 @@ Public Class ObsWebSocketCropper
                     cbRightRunnerName.Text = NewRunnerName
                 End If
                 If GetOBSInfo = True Then
-                    If MasterHeightLeft = 0 Then
-                        SetMasterSourceDimensions(False)
+                    If _masterHeightLeft = 0 Then
+                        SetMasterSourceDimensions()
                     End If
 
                     GetCurrentSceneInfo(False)
@@ -1377,8 +1380,8 @@ Public Class ObsWebSocketCropper
                     cbLeftRunnerName.Text = NewRunnerName
                 End If
                 If GetOBSInfo = True Then
-                    If MasterHeightLeft = 0 Then
-                        SetMasterSourceDimensions(True)
+                    If _masterHeightLeft = 0 Then
+                        SetMasterSourceDimensions()
                     End If
 
                     GetCurrentSceneInfo(True)
@@ -1425,5 +1428,6 @@ Public Class ObsWebSocketCropper
         lblViewLeftOnTwitch.Visible = My.Settings.ExpertMode
         lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
     End Sub
+
 #End Region
 End Class

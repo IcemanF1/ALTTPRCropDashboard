@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class OBSWebSocketCropper
+Partial Class ObsWebSocketCropper
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.

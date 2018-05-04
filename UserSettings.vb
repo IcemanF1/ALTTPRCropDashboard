@@ -1,5 +1,4 @@
-
-﻿Imports System.Configuration
+'﻿Imports System.Configuration
 
 Public Class UserSettings
     ReadOnly _obsSourceListLeftGame As New DataSet
@@ -408,7 +407,7 @@ Public Class UserSettings
 
         'SourceName = cbLeftRunnerOBS.Text
         If SourceName <> "System.Data.DataRowView" Then
-            sSettings = OBSWebSocketCropper._obs.ConfirmSourceType(ExpectedSourceType, SourceName)
+            sSettings = ObsWebSocketCropper.Obs.ConfirmSourceType(ExpectedSourceType, SourceName)
         End If
 
         Return sSettings
@@ -417,8 +416,8 @@ Public Class UserSettings
     Function CheckItemInList(ByVal ListValue As String) As Boolean
         Dim x As Integer
         Dim MatchedValue As Boolean
-        For x = 0 To OBSSourceListLeftGame.Tables("Sources").Rows.Count - 1
-            If ListValue = OBSSourceListLeftGame.Tables("Sources").Rows(x)("SourceName") Then
+        For x = 0 To _obsSourceListLeftGame.Tables("Sources").Rows.Count - 1
+            If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName") Then
                 MatchedValue = True
                 Exit For
             End If
