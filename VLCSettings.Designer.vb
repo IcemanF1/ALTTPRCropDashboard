@@ -82,10 +82,11 @@ Partial Class VLCSettings
         '
         Me.chkStatusBar.AutoSize = True
         Me.chkStatusBar.BackColor = System.Drawing.Color.Transparent
-        Me.chkStatusBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkStatusBar.Location = New System.Drawing.Point(549, 256)
+        Me.chkStatusBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkStatusBar.ForeColor = System.Drawing.Color.Red
+        Me.chkStatusBar.Location = New System.Drawing.Point(530, 256)
         Me.chkStatusBar.Name = "chkStatusBar"
-        Me.chkStatusBar.Size = New System.Drawing.Size(144, 21)
+        Me.chkStatusBar.Size = New System.Drawing.Size(163, 21)
         Me.chkStatusBar.TabIndex = 75
         Me.chkStatusBar.Text = "I have a status bar"
         Me.chkStatusBar.UseVisualStyleBackColor = False
@@ -94,10 +95,11 @@ Partial Class VLCSettings
         '
         Me.chkPlayPauseControls.AutoSize = True
         Me.chkPlayPauseControls.BackColor = System.Drawing.Color.Transparent
-        Me.chkPlayPauseControls.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkPlayPauseControls.Location = New System.Drawing.Point(698, 221)
+        Me.chkPlayPauseControls.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkPlayPauseControls.ForeColor = System.Drawing.Color.Red
+        Me.chkPlayPauseControls.Location = New System.Drawing.Point(692, 221)
         Me.chkPlayPauseControls.Name = "chkPlayPauseControls"
-        Me.chkPlayPauseControls.Size = New System.Drawing.Size(119, 21)
+        Me.chkPlayPauseControls.Size = New System.Drawing.Size(134, 21)
         Me.chkPlayPauseControls.TabIndex = 74
         Me.chkPlayPauseControls.Text = "I have controls"
         Me.chkPlayPauseControls.UseVisualStyleBackColor = False
@@ -106,10 +108,11 @@ Partial Class VLCSettings
         '
         Me.chkMenuBar.AutoSize = True
         Me.chkMenuBar.BackColor = System.Drawing.Color.Transparent
-        Me.chkMenuBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMenuBar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMenuBar.ForeColor = System.Drawing.Color.Red
         Me.chkMenuBar.Location = New System.Drawing.Point(609, 51)
         Me.chkMenuBar.Name = "chkMenuBar"
-        Me.chkMenuBar.Size = New System.Drawing.Size(141, 21)
+        Me.chkMenuBar.Size = New System.Drawing.Size(158, 21)
         Me.chkMenuBar.TabIndex = 73
         Me.chkMenuBar.Text = "I have a menu bar"
         Me.chkMenuBar.UseVisualStyleBackColor = False

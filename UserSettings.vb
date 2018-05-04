@@ -1,4 +1,7 @@
-﻿Public Class UserSettings
+
+﻿Imports System.Configuration
+
+Public Class UserSettings
     ReadOnly _obsSourceListLeftGame As New DataSet
     Dim _obsSourceListRightGame As New DataSet
     Dim _obsSourceListLeftTimer As New DataSet
@@ -8,8 +11,13 @@
     Dim _obsSourceListLeftTracker As New DataSet
     Dim _obsSourceListRightTracker As New DataSet
     Dim _obsCommentary As New DataSet
+    Dim CorrectMessage As String = "Correct Source Type"
+    Dim IncorrectMessage As String = "Incorrect Source Type"
 
-    Public Shared ShowVlcOption As Boolean
+    Dim CorrectColour As Color = Color.Green
+    Dim InCorrectColour As Color = Color.Red
+
+    Public Shared ShowVLCOption As Boolean
 
     Function VerifySettings() As Boolean
         If String.IsNullOrWhiteSpace(txtTwitchChannel.Text) Then
@@ -64,22 +72,61 @@
 
         If settingsVerified = True Then
 
-            My.Settings.LeftTimerName = cbLeftTimerWindow.Text
-            My.Settings.LeftGameName = cbLeftGameWindow.Text
-            My.Settings.RightTimerName = cbRightTimerWindow.Text
-            My.Settings.RightGameName = cbRightGameWindow.Text
+            Dim FullyValid As Boolean
+
+            FullyValid = CheckFullyValid("window_capture", cbLeftTimerWindow.Text)
+            If FullyValid = True Then
+                My.Settings.LeftTimerName = cbLeftTimerWindow.Text
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", cbLeftGameWindow.Text)
+            If FullyValid = True Then
+                My.Settings.LeftGameName = cbLeftGameWindow.Text
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", cbRightTimerWindow.Text)
+            If FullyValid = True Then
+                My.Settings.RightTimerName = cbRightTimerWindow.Text
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", cbRightGameWindow.Text)
+            If FullyValid = True Then
+                My.Settings.RightGameName = cbRightGameWindow.Text
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", cbLeftRunnerOBS.Text)
+            If FullyValid = True Then
+                My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", cbRightRunnerOBS.Text)
+            If FullyValid = True Then
+                My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
+            End If
+
+            FullyValid = CheckFullyValid("browser_source", cbLeftTrackerOBS.Text)
+            If FullyValid = True Then
+                My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
+            End If
+
+            FullyValid = CheckFullyValid("browser_source", cbRightTrackerOBS.Text)
+            If FullyValid = True Then
+                My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", cbCommentaryOBS.Text)
+            If FullyValid = True Then
+                My.Settings.CommentaryOBS = cbCommentaryOBS.Text
+            End If
+
             My.Settings.ConnectionString1 = txtConnectionString1.Text
             My.Settings.Password1 = txtPassword1.Text
             My.Settings.ConnectionPort1 = txtConnectionPort.Text
-            My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
-            My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
-            My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
-            My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
-            My.Settings.CommentaryOBS = cbCommentaryOBS.Text
             My.Settings.TwitchChannel = txtTwitchChannel.Text
             My.Settings.DefaultConnection = roDefault.Checked
             My.Settings.HasFinishedWelcome = True
-
+            My.Settings.ExpertMode = My.Settings.ExpertMode
+            My.Settings.AlwaysOnTop = My.Settings.AlwaysOnTop
 
             My.Settings.Save()
 
@@ -324,6 +371,7 @@
     Private Sub btnResetSettings_Click(sender As Object, e As EventArgs) Handles btnResetSettings.Click
         If MsgBox("Are you sure you wish to reset your settings back to default?", MsgBoxStyle.YesNo, OBSWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
             My.Settings.Reset()
+            My.Settings.UpgradeRequired = False
             My.Settings.Save()
             My.Settings.Reload()
 
@@ -342,7 +390,6 @@
             roDefault.Checked = True
         End If
     End Sub
-
     Private Sub roDefault_CheckedChanged(sender As Object, e As EventArgs) Handles roDefault.CheckedChanged
         If roDefault.Checked = True Then
             roCustom.Checked = False
@@ -356,4 +403,256 @@
     Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
         SaveSettings(True)
     End Sub
+    Function CheckForValidSourceTypes(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
+        Dim sSettings As Boolean
+
+        'SourceName = cbLeftRunnerOBS.Text
+        If SourceName <> "System.Data.DataRowView" Then
+            sSettings = OBSWebSocketCropper._obs.ConfirmSourceType(ExpectedSourceType, SourceName)
+        End If
+
+        Return sSettings
+    End Function
+
+    Function CheckItemInList(ByVal ListValue As String) As Boolean
+        Dim x As Integer
+        Dim MatchedValue As Boolean
+        For x = 0 To OBSSourceListLeftGame.Tables("Sources").Rows.Count - 1
+            If ListValue = OBSSourceListLeftGame.Tables("Sources").Rows(x)("SourceName") Then
+                MatchedValue = True
+                Exit For
+            End If
+        Next
+
+        Return MatchedValue
+
+    End Function
+
+    Private Sub cbLeftRunnerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerOBS.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbLeftRunnerOBS.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbLeftRunnerOBS.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbLeftRunnerOBS.Text)
+
+                lblLeftRunnerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblLeftRunnerStatus.Text = CorrectMessage
+                    lblLeftRunnerStatus.ForeColor = CorrectColour
+                Else
+                    lblLeftRunnerStatus.Text = IncorrectMessage
+                    lblLeftRunnerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblLeftRunnerStatus.Visible = False
+            End If
+        Else
+            lblLeftRunnerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbRightRunnerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerOBS.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbRightRunnerOBS.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbRightRunnerOBS.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbRightRunnerOBS.Text)
+
+                lblRightRunnerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblRightRunnerStatus.Text = CorrectMessage
+                    lblRightRunnerStatus.ForeColor = CorrectColour
+                Else
+                    lblRightRunnerStatus.Text = IncorrectMessage
+                    lblRightRunnerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblRightRunnerStatus.Visible = False
+            End If
+        Else
+            lblRightRunnerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbLeftTimerWindow_TextChanged(sender As Object, e As EventArgs) Handles cbLeftTimerWindow.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbLeftTimerWindow.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbLeftTimerWindow.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbLeftTimerWindow.Text)
+
+                lblLeftTimerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblLeftTimerStatus.Text = CorrectMessage
+                    lblLeftTimerStatus.ForeColor = CorrectColour
+                Else
+                    lblLeftTimerStatus.Text = IncorrectMessage
+                    lblLeftTimerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblLeftTimerStatus.Visible = False
+            End If
+        Else
+            lblLeftTimerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbRightTimerWindow_TextChanged(sender As Object, e As EventArgs) Handles cbRightTimerWindow.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbRightTimerWindow.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbRightTimerWindow.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbRightTimerWindow.Text)
+
+                lblRightTimerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblRightTimerStatus.Text = CorrectMessage
+                    lblRightTimerStatus.ForeColor = CorrectColour
+                Else
+                    lblRightTimerStatus.Text = IncorrectMessage
+                    lblRightTimerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblRightTimerStatus.Visible = False
+            End If
+        Else
+            lblRightTimerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbLeftGameWindow_TextChanged(sender As Object, e As EventArgs) Handles cbLeftGameWindow.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbLeftGameWindow.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbLeftGameWindow.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbLeftGameWindow.Text)
+
+                lblLeftGameStatus.Visible = True
+
+                If sSettings = True Then
+                    lblLeftGameStatus.Text = CorrectMessage
+                    lblLeftGameStatus.ForeColor = CorrectColour
+                Else
+                    lblLeftGameStatus.Text = IncorrectMessage
+                    lblLeftGameStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblLeftGameStatus.Visible = False
+            End If
+        Else
+            lblLeftGameStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbRightGameWindow_TextChanged(sender As Object, e As EventArgs) Handles cbRightGameWindow.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbRightGameWindow.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbRightGameWindow.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbRightGameWindow.Text)
+
+                lblRightGameStatus.Visible = True
+
+                If sSettings = True Then
+                    lblRightGameStatus.Text = CorrectMessage
+                    lblRightGameStatus.ForeColor = CorrectColour
+                Else
+                    lblRightGameStatus.Text = IncorrectMessage
+                    lblRightGameStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblRightGameStatus.Visible = False
+            End If
+        Else
+            lblRightGameStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbLeftTrackerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbLeftTrackerOBS.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbLeftTrackerOBS.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbLeftTrackerOBS.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("browser_source", cbLeftTrackerOBS.Text)
+
+                lblLeftTrackerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblLeftTrackerStatus.Text = CorrectMessage
+                    lblLeftTrackerStatus.ForeColor = CorrectColour
+                Else
+                    lblLeftTrackerStatus.Text = IncorrectMessage
+                    lblLeftTrackerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblLeftTrackerStatus.Visible = False
+            End If
+        Else
+            lblLeftTrackerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbRightTrackerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbRightTrackerOBS.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbRightTrackerOBS.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbRightTrackerOBS.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("browser_source", cbRightTrackerOBS.Text)
+
+                lblRightTrackerStatus.Visible = True
+
+                If sSettings = True Then
+                    lblRightTrackerStatus.Text = CorrectMessage
+                    lblRightTrackerStatus.ForeColor = CorrectColour
+                Else
+                    lblRightTrackerStatus.Text = IncorrectMessage
+                    lblRightTrackerStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblRightTrackerStatus.Visible = False
+            End If
+        Else
+            lblRightTrackerStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbCommentaryOBS_TextChanged(sender As Object, e As EventArgs) Handles cbCommentaryOBS.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbCommentaryOBS.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbCommentaryOBS.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbCommentaryOBS.Text)
+
+                lblCommentaryStatus.Visible = True
+
+                If sSettings = True Then
+                    lblCommentaryStatus.Text = CorrectMessage
+                    lblCommentaryStatus.ForeColor = CorrectColour
+                Else
+                    lblCommentaryStatus.Text = IncorrectMessage
+                    lblCommentaryStatus.ForeColor = InCorrectColour
+                End If
+            Else
+                lblCommentaryStatus.Visible = False
+            End If
+        Else
+            lblCommentaryStatus.Visible = False
+        End If
+    End Sub
+    Function CheckFullyValid(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
+        Dim FullyValid As Boolean = False
+
+        If Not String.IsNullOrWhiteSpace(SourceName) Then
+            Dim MatchedValue As Boolean = CheckItemInList(SourceName)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes(ExpectedSourceType, SourceName)
+
+                lblCommentaryStatus.Visible = True
+
+                FullyValid = sSettings
+
+            End If
+        Else
+            FullyValid = True
+        End If
+
+        Return FullyValid
+    End Function
 End Class

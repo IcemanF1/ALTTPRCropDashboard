@@ -122,6 +122,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRunner.Designer.vb">
+      <DependentUpon>NewRunner.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NewRunner.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CropApi.vb" />
     <Compile Include="CropperMath.vb" />
     <Compile Include="Data\RunnerCropAdd.vb" />
@@ -167,6 +179,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRunner.resx">
+      <DependentUpon>NewRunner.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

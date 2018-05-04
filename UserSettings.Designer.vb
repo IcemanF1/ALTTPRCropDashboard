@@ -50,13 +50,24 @@ Partial Class UserSettings
         Me.cbRightTimerWindow = New System.Windows.Forms.ComboBox()
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblLeftTrackerStatus = New System.Windows.Forms.Label()
+        Me.lblRightTrackerStatus = New System.Windows.Forms.Label()
+        Me.lblCommentaryStatus = New System.Windows.Forms.Label()
+        Me.lblLeftGameStatus = New System.Windows.Forms.Label()
+        Me.lblRightGameStatus = New System.Windows.Forms.Label()
+        Me.lblLeftRunnerStatus = New System.Windows.Forms.Label()
+        Me.lblRightRunnerStatus = New System.Windows.Forms.Label()
+        Me.lblLeftTimerStatus = New System.Windows.Forms.Label()
+        Me.lblRightTimerStatus = New System.Windows.Forms.Label()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnSaveSettings
         '
-        Me.btnSaveSettings.Location = New System.Drawing.Point(591, 733)
+        Me.btnSaveSettings.Location = New System.Drawing.Point(591, 736)
         Me.btnSaveSettings.Name = "btnSaveSettings"
         Me.btnSaveSettings.Size = New System.Drawing.Size(137, 39)
         Me.btnSaveSettings.TabIndex = 73
@@ -71,7 +82,7 @@ Partial Class UserSettings
         Me.gbConnection1.Controls.Add(Me.txtPassword1)
         Me.gbConnection1.Controls.Add(Me.txtConnectionString1)
         Me.gbConnection1.Controls.Add(Me.Label25)
-        Me.gbConnection1.Location = New System.Drawing.Point(511, 12)
+        Me.gbConnection1.Location = New System.Drawing.Point(604, 12)
         Me.gbConnection1.Name = "gbConnection1"
         Me.gbConnection1.Size = New System.Drawing.Size(390, 71)
         Me.gbConnection1.TabIndex = 92
@@ -129,7 +140,7 @@ Partial Class UserSettings
         'lblOBS1ConnectedStatus
         '
         Me.lblOBS1ConnectedStatus.AutoSize = True
-        Me.lblOBS1ConnectedStatus.Location = New System.Drawing.Point(159, 62)
+        Me.lblOBS1ConnectedStatus.Location = New System.Drawing.Point(150, 62)
         Me.lblOBS1ConnectedStatus.Name = "lblOBS1ConnectedStatus"
         Me.lblOBS1ConnectedStatus.Size = New System.Drawing.Size(92, 13)
         Me.lblOBS1ConnectedStatus.TabIndex = 94
@@ -137,7 +148,7 @@ Partial Class UserSettings
         '
         'btnConnectOBS1
         '
-        Me.btnConnectOBS1.Location = New System.Drawing.Point(169, 34)
+        Me.btnConnectOBS1.Location = New System.Drawing.Point(160, 34)
         Me.btnConnectOBS1.Name = "btnConnectOBS1"
         Me.btnConnectOBS1.Size = New System.Drawing.Size(117, 23)
         Me.btnConnectOBS1.TabIndex = 93
@@ -146,7 +157,7 @@ Partial Class UserSettings
         '
         'btnResetSettings
         '
-        Me.btnResetSettings.Location = New System.Drawing.Point(26, 746)
+        Me.btnResetSettings.Location = New System.Drawing.Point(26, 749)
         Me.btnResetSettings.Name = "btnResetSettings"
         Me.btnResetSettings.Size = New System.Drawing.Size(121, 23)
         Me.btnResetSettings.TabIndex = 93
@@ -156,15 +167,15 @@ Partial Class UserSettings
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(3, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(81, 13)
+        Me.Label1.Size = New System.Drawing.Size(145, 13)
         Me.Label1.TabIndex = 95
-        Me.Label1.Text = "Twitch Channel"
+        Me.Label1.Text = "Twitch Channel / User Name"
         '
         'txtTwitchChannel
         '
-        Me.txtTwitchChannel.Location = New System.Drawing.Point(99, 6)
+        Me.txtTwitchChannel.Location = New System.Drawing.Point(153, 6)
         Me.txtTwitchChannel.Name = "txtTwitchChannel"
         Me.txtTwitchChannel.Size = New System.Drawing.Size(160, 20)
         Me.txtTwitchChannel.TabIndex = 96
@@ -172,7 +183,7 @@ Partial Class UserSettings
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(265, 9)
+        Me.Label2.Location = New System.Drawing.Point(328, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(232, 13)
         Me.Label2.TabIndex = 97
@@ -181,7 +192,7 @@ Partial Class UserSettings
         'roDefault
         '
         Me.roDefault.AutoSize = True
-        Me.roDefault.Location = New System.Drawing.Point(33, 38)
+        Me.roDefault.Location = New System.Drawing.Point(24, 38)
         Me.roDefault.Name = "roDefault"
         Me.roDefault.Size = New System.Drawing.Size(59, 17)
         Me.roDefault.TabIndex = 98
@@ -192,7 +203,7 @@ Partial Class UserSettings
         'roCustom
         '
         Me.roCustom.AutoSize = True
-        Me.roCustom.Location = New System.Drawing.Point(103, 37)
+        Me.roCustom.Location = New System.Drawing.Point(94, 37)
         Me.roCustom.Name = "roCustom"
         Me.roCustom.Size = New System.Drawing.Size(60, 17)
         Me.roCustom.TabIndex = 99
@@ -203,7 +214,7 @@ Partial Class UserSettings
         'btnSaveThenVLC
         '
         Me.btnSaveThenVLC.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 724)
+        Me.btnSaveThenVLC.Location = New System.Drawing.Point(756, 727)
         Me.btnSaveThenVLC.Name = "btnSaveThenVLC"
         Me.btnSaveThenVLC.Size = New System.Drawing.Size(252, 54)
         Me.btnSaveThenVLC.TabIndex = 100
@@ -214,6 +225,15 @@ Partial Class UserSettings
         '
         Me.panOBS.BackgroundImage = Global.ALTTPRCropDashboard.My.Resources.Resources.Settings_Background_Resized
         Me.panOBS.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.panOBS.Controls.Add(Me.lblRightTimerStatus)
+        Me.panOBS.Controls.Add(Me.lblLeftTimerStatus)
+        Me.panOBS.Controls.Add(Me.lblRightRunnerStatus)
+        Me.panOBS.Controls.Add(Me.lblLeftRunnerStatus)
+        Me.panOBS.Controls.Add(Me.lblRightGameStatus)
+        Me.panOBS.Controls.Add(Me.lblLeftGameStatus)
+        Me.panOBS.Controls.Add(Me.lblCommentaryStatus)
+        Me.panOBS.Controls.Add(Me.lblRightTrackerStatus)
+        Me.panOBS.Controls.Add(Me.lblLeftTrackerStatus)
         Me.panOBS.Controls.Add(Me.cbCommentaryOBS)
         Me.panOBS.Controls.Add(Me.cbRightTrackerOBS)
         Me.panOBS.Controls.Add(Me.cbRightRunnerOBS)
@@ -224,7 +244,7 @@ Partial Class UserSettings
         Me.panOBS.Controls.Add(Me.cbRightTimerWindow)
         Me.panOBS.Controls.Add(Me.cbLeftGameWindow)
         Me.panOBS.Controls.Add(Me.btnRefreshScenes)
-        Me.panOBS.Location = New System.Drawing.Point(0, 89)
+        Me.panOBS.Location = New System.Drawing.Point(6, 89)
         Me.panOBS.Name = "panOBS"
         Me.panOBS.Size = New System.Drawing.Size(1008, 635)
         Me.panOBS.TabIndex = 94
@@ -320,30 +340,133 @@ Partial Class UserSettings
         Me.btnRefreshScenes.Text = "Refresh OBS Scenes"
         Me.btnRefreshScenes.UseVisualStyleBackColor = True
         '
+        'Panel1
+        '
+        Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.btnSaveThenVLC)
+        Me.Panel1.Controls.Add(Me.lblOBS1ConnectedStatus)
+        Me.Panel1.Controls.Add(Me.btnResetSettings)
+        Me.Panel1.Controls.Add(Me.panOBS)
+        Me.Panel1.Controls.Add(Me.btnSaveSettings)
+        Me.Panel1.Controls.Add(Me.gbConnection1)
+        Me.Panel1.Controls.Add(Me.roCustom)
+        Me.Panel1.Controls.Add(Me.txtTwitchChannel)
+        Me.Panel1.Controls.Add(Me.btnConnectOBS1)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.roDefault)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1014, 781)
+        Me.Panel1.TabIndex = 101
+        '
+        'lblLeftTrackerStatus
+        '
+        Me.lblLeftTrackerStatus.AutoSize = True
+        Me.lblLeftTrackerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftTrackerStatus.Location = New System.Drawing.Point(38, 531)
+        Me.lblLeftTrackerStatus.Name = "lblLeftTrackerStatus"
+        Me.lblLeftTrackerStatus.Size = New System.Drawing.Size(98, 13)
+        Me.lblLeftTrackerStatus.TabIndex = 91
+        Me.lblLeftTrackerStatus.Text = "Left Tracker Status"
+        '
+        'lblRightTrackerStatus
+        '
+        Me.lblRightTrackerStatus.AutoSize = True
+        Me.lblRightTrackerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightTrackerStatus.Location = New System.Drawing.Point(772, 519)
+        Me.lblRightTrackerStatus.Name = "lblRightTrackerStatus"
+        Me.lblRightTrackerStatus.Size = New System.Drawing.Size(105, 13)
+        Me.lblRightTrackerStatus.TabIndex = 92
+        Me.lblRightTrackerStatus.Text = "Right Tracker Status"
+        '
+        'lblCommentaryStatus
+        '
+        Me.lblCommentaryStatus.AutoSize = True
+        Me.lblCommentaryStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblCommentaryStatus.Location = New System.Drawing.Point(433, 609)
+        Me.lblCommentaryStatus.Name = "lblCommentaryStatus"
+        Me.lblCommentaryStatus.Size = New System.Drawing.Size(98, 13)
+        Me.lblCommentaryStatus.TabIndex = 93
+        Me.lblCommentaryStatus.Text = "Commentary Status"
+        '
+        'lblLeftGameStatus
+        '
+        Me.lblLeftGameStatus.AutoSize = True
+        Me.lblLeftGameStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftGameStatus.Location = New System.Drawing.Point(50, 232)
+        Me.lblLeftGameStatus.Name = "lblLeftGameStatus"
+        Me.lblLeftGameStatus.Size = New System.Drawing.Size(89, 13)
+        Me.lblLeftGameStatus.TabIndex = 94
+        Me.lblLeftGameStatus.Text = "Left Game Status"
+        '
+        'lblRightGameStatus
+        '
+        Me.lblRightGameStatus.AutoSize = True
+        Me.lblRightGameStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightGameStatus.Location = New System.Drawing.Point(611, 232)
+        Me.lblRightGameStatus.Name = "lblRightGameStatus"
+        Me.lblRightGameStatus.Size = New System.Drawing.Size(96, 13)
+        Me.lblRightGameStatus.TabIndex = 95
+        Me.lblRightGameStatus.Text = "Right Game Status"
+        '
+        'lblLeftRunnerStatus
+        '
+        Me.lblLeftRunnerStatus.AutoSize = True
+        Me.lblLeftRunnerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftRunnerStatus.Location = New System.Drawing.Point(305, 90)
+        Me.lblLeftRunnerStatus.Name = "lblLeftRunnerStatus"
+        Me.lblLeftRunnerStatus.Size = New System.Drawing.Size(96, 13)
+        Me.lblLeftRunnerStatus.TabIndex = 96
+        Me.lblLeftRunnerStatus.Text = "Left Runner Status"
+        '
+        'lblRightRunnerStatus
+        '
+        Me.lblRightRunnerStatus.AutoSize = True
+        Me.lblRightRunnerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightRunnerStatus.Location = New System.Drawing.Point(566, 90)
+        Me.lblRightRunnerStatus.Name = "lblRightRunnerStatus"
+        Me.lblRightRunnerStatus.Size = New System.Drawing.Size(103, 13)
+        Me.lblRightRunnerStatus.TabIndex = 97
+        Me.lblRightRunnerStatus.Text = "Right Runner Status"
+        '
+        'lblLeftTimerStatus
+        '
+        Me.lblLeftTimerStatus.AutoSize = True
+        Me.lblLeftTimerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftTimerStatus.Location = New System.Drawing.Point(17, 90)
+        Me.lblLeftTimerStatus.Name = "lblLeftTimerStatus"
+        Me.lblLeftTimerStatus.Size = New System.Drawing.Size(87, 13)
+        Me.lblLeftTimerStatus.TabIndex = 98
+        Me.lblLeftTimerStatus.Text = "Left Timer Status"
+        '
+        'lblRightTimerStatus
+        '
+        Me.lblRightTimerStatus.AutoSize = True
+        Me.lblRightTimerStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightTimerStatus.Location = New System.Drawing.Point(890, 90)
+        Me.lblRightTimerStatus.Name = "lblRightTimerStatus"
+        Me.lblRightTimerStatus.Size = New System.Drawing.Size(94, 13)
+        Me.lblRightTimerStatus.TabIndex = 99
+        Me.lblRightTimerStatus.Text = "Right Timer Status"
+        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1014, 781)
-        Me.Controls.Add(Me.btnSaveThenVLC)
-        Me.Controls.Add(Me.lblOBS1ConnectedStatus)
-        Me.Controls.Add(Me.roCustom)
-        Me.Controls.Add(Me.btnConnectOBS1)
-        Me.Controls.Add(Me.roDefault)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.panOBS)
-        Me.Controls.Add(Me.txtTwitchChannel)
-        Me.Controls.Add(Me.btnResetSettings)
-        Me.Controls.Add(Me.gbConnection1)
-        Me.Controls.Add(Me.btnSaveSettings)
+        Me.Controls.Add(Me.Panel1)
         Me.Name = "UserSettings"
         Me.Text = "User Settings"
         Me.gbConnection1.ResumeLayout(False)
         Me.gbConnection1.PerformLayout()
         Me.panOBS.ResumeLayout(False)
+        Me.panOBS.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents btnSaveSettings As Button
@@ -374,4 +497,14 @@ Partial Class UserSettings
     Friend WithEvents btnSaveThenVLC As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents txtConnectionPort As TextBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents lblLeftTrackerStatus As Label
+    Friend WithEvents lblRightTrackerStatus As Label
+    Friend WithEvents lblRightTimerStatus As Label
+    Friend WithEvents lblLeftTimerStatus As Label
+    Friend WithEvents lblRightRunnerStatus As Label
+    Friend WithEvents lblLeftRunnerStatus As Label
+    Friend WithEvents lblRightGameStatus As Label
+    Friend WithEvents lblLeftGameStatus As Label
+    Friend WithEvents lblCommentaryStatus As Label
 End Class
