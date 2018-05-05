@@ -552,7 +552,7 @@ Public Class ObsWebSocketCropper
         Dim tempRightRunner As String = cbRightRunnerName.Text
 
         Using context As New CropDbContext
-            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.Runner}).Distinct().ToList().OrderBy(Function(r) r.RacerName, System.StringComparer.CurrentCultureIgnoreCase)
+            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.RunnerName}).Distinct().ToList().OrderBy(Function(r) r.RacerName, System.StringComparer.CurrentCultureIgnoreCase)
 
             cbLeftRunnerName.DataSource = validNames.ToList()
             cbRightRunnerName.DataSource = validNames.ToList()
@@ -578,17 +578,17 @@ Public Class ObsWebSocketCropper
             Dim runnerInfo As Crop
 
             If (isRightWindow) Then
-                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.Runner = cbRightRunnerName.Text)
+                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.RunnerName = cbRightRunnerName.Text)
                 If runnerInfo Is Nothing Then
-                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.Runner = cbRightRunnerName.Text)
+                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.RunnerName = cbRightRunnerName.Text)
                 End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
                 End If
             Else
-                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.Runner = cbLeftRunnerName.Text)
+                runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.RunnerName = cbLeftRunnerName.Text)
                 If runnerInfo Is Nothing Then
-                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.Runner = cbLeftRunnerName.Text)
+                    runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.RunnerName = cbLeftRunnerName.Text)
                 End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
@@ -1451,6 +1451,7 @@ Public Class ObsWebSocketCropper
         lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
         lblOBS2ConnectedStatus.Visible = My.Settings.ExpertMode
         btnConnectOBS2.Visible = My.Settings.ExpertMode
+        btn2ndOBS.Visible = My.Settings.ExpertMode
     End Sub
     Private Sub StartStreamlink(twitch As String)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
