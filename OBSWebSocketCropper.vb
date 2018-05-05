@@ -962,7 +962,7 @@ Public Class ObsWebSocketCropper
             Dim uSettings As New UserSettings
 
             UserSettings.ShowVLCOption = True
-            uSettings.ShowDialog()
+            uSettings.ShowDialog(Me)
 
             If My.Settings.HasFinishedWelcome = False Then
                 MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
@@ -972,7 +972,7 @@ Public Class ObsWebSocketCropper
             CheckUnusedFields()
 
             If OBSSettingsResult = "VLC" Then
-                VlcSettings.ShowDialog()
+                VlcSettings.ShowDialog(Me)
 
             End If
 
@@ -996,13 +996,13 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        About.ShowDialog()
+        About.ShowDialog(Me)
     End Sub
     Private Sub ExitToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Close()
     End Sub
     Private Sub ChangeVLCSettingsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ChangeVLCSettingsToolStripMenuItem.Click
-        VlcSettings.ShowDialog()
+        VlcSettings.ShowDialog(Me)
 
         RefreshCropperDefaultCrop()
     End Sub
@@ -1016,7 +1016,7 @@ Public Class ObsWebSocketCropper
         Dim uSettings As New UserSettings
 
         UserSettings.ShowVLCOption = False
-        uSettings.ShowDialog()
+        uSettings.ShowDialog(Me)
 
         If My.Settings.HasFinishedWelcome = False Then
             MsgBox("There are no default settings loaded.  Program will close.  Please change and then save some settings before continuing.", MsgBoxStyle.OkOnly, ProgramName)
@@ -1369,7 +1369,7 @@ Public Class ObsWebSocketCropper
         ReuseInfo = True
 
         Dim dResult As New DialogResult
-        dResult = NewRunner.ShowDialog()
+        dResult = NewRunner.ShowDialog(Me)
 
         If dResult = DialogResult.OK Then
             If isRightWindow = True Then
@@ -1449,6 +1449,8 @@ Public Class ObsWebSocketCropper
         lblRightVOD.Visible = My.Settings.ExpertMode
         lblViewLeftOnTwitch.Visible = My.Settings.ExpertMode
         lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
+        lblOBS2ConnectedStatus.Visible = My.Settings.ExpertMode
+        btnConnectOBS2.Visible = My.Settings.ExpertMode
     End Sub
     Private Sub StartStreamlink(twitch As String)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
