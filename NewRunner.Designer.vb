@@ -30,6 +30,7 @@ Partial Class NewRunner
         Me.chkAdjustInOBS = New System.Windows.Forms.CheckBox()
         Me.chkReuseInfo = New System.Windows.Forms.CheckBox()
         Me.btnGo = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'lblCommentary
@@ -95,11 +96,22 @@ Partial Class NewRunner
         Me.btnGo.Text = "&Go"
         Me.btnGo.UseVisualStyleBackColor = True
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Transparent
+        Me.Label2.Location = New System.Drawing.Point(85, 68)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(251, 13)
+        Me.Label2.TabIndex = 62
+        Me.Label2.Text = "Leaving runner name blank will use the twitch name"
+        '
         'NewRunner
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(381, 218)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.btnGo)
         Me.Controls.Add(Me.chkReuseInfo)
         Me.Controls.Add(Me.chkAdjustInOBS)
@@ -122,4 +134,5 @@ Partial Class NewRunner
     Friend WithEvents chkAdjustInOBS As CheckBox
     Friend WithEvents chkReuseInfo As CheckBox
     Friend WithEvents btnGo As Button
+    Friend WithEvents Label2 As Label
 End Class

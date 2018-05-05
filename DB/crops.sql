@@ -13,6 +13,7 @@
 	`TimerCropRight`	INTEGER NOT NULL,
 	`SizeWidth`	INTEGER NOT NULL,
 	`SizeHeight`	INTEGER NOT NULL,
+	`RunnerName`	TEXT,
 	PRIMARY KEY(`Id`)
 );
 CREATE INDEX `idx_runner` ON `Crops` (

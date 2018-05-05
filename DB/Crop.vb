@@ -21,6 +21,7 @@ Namespace DB
         Public Overridable Property TimerCropRight As Integer
         Public Overridable Property SizeWidth As Integer
         Public Overridable Property SizeHeight As Integer
+        Public Overridable Property RunnerName As String
         <NotMapped>
         Public Property TimerCrop As SceneItemCropInfo
             Get

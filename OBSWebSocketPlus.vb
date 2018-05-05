@@ -108,25 +108,25 @@ Public Class SourceSettings
     Public Property Window As String
     Public Property Priority As Integer
     Public Property Cursor As Boolean
-              Public Property SourceType As String
+    Public Property SourceType As String
 
 
     Public Sub New(ByRef data As JObject)
-        sourcetype = CType(data("sourceType"), String)
+        SourceType = CType(data("sourceType"), String)
 
-        If sourcetype = "window_capture" Then
-            window = CType(data("sourceSettings").Item("window"), String)
-            priority = If(CType(data("sourceSettings").Item("priority"), Integer?), 1)
+        If SourceType = "window_capture" Then
+            Window = CType(data("sourceSettings").Item("window"), String)
+            Priority = If(CType(data("sourceSettings").Item("priority"), Integer?), 1)
 
             If data("sourceSettings").Item("cursor") Is Nothing Then
-                cursor = False
+                Cursor = False
             Else
-                cursor = CType(data("sourceSettings").Item("cursor"), Boolean)
+                Cursor = CType(data("sourceSettings").Item("cursor"), Boolean)
             End If
         Else
-            window = ""
-            priority = 0
-            cursor = False
+            Window = ""
+            Priority = 0
+            Cursor = False
         End If
 
     End Sub
@@ -180,12 +180,20 @@ Public Class SceneItemProperties
             Locked = CType(data("locked"), Boolean)
         End If
 
-
         Dim boundsInfo As JObject = data("bounds")
-        BoundsX = CType(boundsInfo("x"), Double)
-        BoundsY = CType(boundsInfo("y"), Double)
         BoundsType = CType(boundsInfo("type"), String)
-        BoundsAlignment = CType(boundsInfo("alignment"), Double)
+
+        If BoundsType <> "OBS_BOUNDS_NONE" Then
+            BoundsX = CType(boundsInfo("x"), Double)
+            BoundsY = CType(boundsInfo("y"), Double)
+            BoundsAlignment = CType(boundsInfo("alignment"), Double)
+        Else
+            BoundsX = 0
+            BoundsY = 0
+            BoundsAlignment = 0
+        End If
+
+
 
     End Sub
 

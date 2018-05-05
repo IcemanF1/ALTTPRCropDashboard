@@ -54,6 +54,9 @@ Public Class ObsWebSocketCropper
     Public Shared GetOBSInfo As Boolean
     Public Shared ReuseInfo As Boolean
 
+    Dim LeftRunnerTwitch As String
+    Dim RightRunnerTwitch As String
+
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
         If _vlcListLeft.Tables.Count = 0 Then
@@ -87,10 +90,6 @@ Public Class ObsWebSocketCropper
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToObs()
     End Sub
-    Private Sub btnGetCrop_Click(sender As Object, e As EventArgs) Handles btnGetCrop.Click
-        GetCurrentCropSettings(True)
-        GetCurrentCropSettings(False)
-    End Sub
     Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop.Click
         GetCurrentSceneInfo(False)
 
@@ -105,10 +104,6 @@ Public Class ObsWebSocketCropper
         If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
             FillCurrentCropInfoFromObs(True)
         End If
-    End Sub
-    Private Sub btnSetMaster_Click(sender As Object, e As EventArgs) Handles btnSetMaster.Click
-        SetMasterSourceDimensions()
-        SetMasterSourceDimensions()
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
         If _masterHeightLeft = 0 Then
@@ -161,7 +156,6 @@ Public Class ObsWebSocketCropper
             End If
         End If
     End Sub
-
     Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
         SaveRunnerCrop(False)
 
@@ -173,7 +167,6 @@ Public Class ObsWebSocketCropper
         RefreshRunnerNames()
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
-
         SyncWithServer()
     End Sub
     Private Sub SyncWithServer()
@@ -291,7 +284,6 @@ Public Class ObsWebSocketCropper
 
         SetHeightLabels()
     End Sub
-
     Private Sub SaveRunnerCrop(isRightWindow As Boolean)
         SetMasterSourceDimensions()
 
@@ -321,13 +313,15 @@ Public Class ObsWebSocketCropper
             Dim cropWithoutDefaultRightTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             Using context As New CropDbContext
-                If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-                    Dim rightRunner = context.Crops.FirstOrDefault(Function(x) x.Submitter = submitterName AndAlso x.Runner = cbRightRunnerName.Text)
+
+                If Not String.IsNullOrWhiteSpace(RightRunnerTwitch) Then
+                    Dim rightRunner = context.Crops.FirstOrDefault(Function(x) x.Submitter = submitterName AndAlso x.Runner = RightRunnerTwitch)
 
                     If rightRunner Is Nothing Then
+                        'Swap with twitch name
                         rightRunner = New Crop With {
                                 .Submitter = submitterName,
-                                .Runner = cbRightRunnerName.Text,
+                                .Runner = RightRunnerTwitch,
                                 .Id = Guid.NewGuid()
                             }
                         context.Crops.Add(rightRunner)
@@ -344,6 +338,7 @@ Public Class ObsWebSocketCropper
                     rightRunner.SizeHeight = masterSizeWithoutDefaultRight.Height
                     rightRunner.SizeWidth = masterSizeWithoutDefaultRight.Width
                     rightRunner.SubmittedOn = Nothing
+                    rightRunner.RunnerName = cbRightRunnerName.Text
                 End If
 
                 context.SaveChanges()
@@ -371,13 +366,13 @@ Public Class ObsWebSocketCropper
             Dim cropWithoutDefaultLeftTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
 
             Using context As New CropDbContext
-                If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-                    Dim leftRunner = context.Crops.FirstOrDefault(Function(x) x.Submitter = submitterName AndAlso x.Runner = cbLeftRunnerName.Text)
+                If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
+                    Dim leftRunner = context.Crops.FirstOrDefault(Function(x) x.Submitter = submitterName AndAlso x.Runner = LeftRunnerTwitch)
 
                     If leftRunner Is Nothing Then
                         leftRunner = New Crop With {
                             .Submitter = submitterName,
-                            .Runner = cbLeftRunnerName.Text,
+                            .Runner = LeftRunnerTwitch,
                             .Id = Guid.NewGuid()
                             }
                         context.Crops.Add(leftRunner)
@@ -394,6 +389,7 @@ Public Class ObsWebSocketCropper
                     leftRunner.SizeHeight = masterSizeWithoutDefaultLeft.Height
                     leftRunner.SizeWidth = masterSizeWithoutDefaultLeft.Width
                     leftRunner.SubmittedOn = Nothing
+                    leftRunner.RunnerName = cbLeftRunnerName.Text
                 End If
 
                 context.SaveChanges()
@@ -402,7 +398,6 @@ Public Class ObsWebSocketCropper
 
 
     End Sub
-
     Private Sub SetMasterSourceDimensions()
         Dim scenes = Obs.ListScenes()
 
@@ -623,11 +618,15 @@ Public Class ObsWebSocketCropper
                 txtCropRightGame_Bottom.Text = realCrop.Bottom
                 txtCropRightGame_Left.Text = realCrop.Left
                 txtCropRightGame_Right.Text = realCrop.Right
+                RightRunnerTwitch = runnerInfo.Runner
+                lblRightRunnerTwitch.Text = "Twitch: " & RightRunnerTwitch
             Else
                 txtCropLeftGame_Top.Text = realCrop.Top
                 txtCropLeftGame_Bottom.Text = realCrop.Bottom
                 txtCropLeftGame_Left.Text = realCrop.Left
                 txtCropLeftGame_Right.Text = realCrop.Right
+                LeftRunnerTwitch = runnerInfo.Runner
+                lblLeftRunnerTwitch.Text = "Twitch: " & LeftRunnerTwitch
             End If
 
             savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
@@ -645,7 +644,6 @@ Public Class ObsWebSocketCropper
 
         SetHeightLabels()
     End Sub
-
     Private Sub RefreshOBS()
         Dim lObs = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
@@ -655,7 +653,6 @@ Public Class ObsWebSocketCropper
             _check2NdObs = False
         End If
     End Sub
-
     Private Sub RefreshVLC()
 
         Dim lVLC = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
@@ -906,12 +903,8 @@ Public Class ObsWebSocketCropper
 #End Region
 
 #Region " Misc Functions "
-
     Private Sub EnableButtons(isConnected As Boolean)
-
-        btnGetCrop.Enabled = isConnected
         btnSetLeftCrop.Enabled = isConnected
-        btnSetMaster.Enabled = isConnected
         btnSetRightCrop.Enabled = isConnected
         btnSetTrackCommNames.Enabled = isConnected
         btnSyncWithServer.Enabled = isConnected
@@ -1019,7 +1012,6 @@ Public Class ObsWebSocketCropper
 
         RefreshExpertSettings()
     End Sub
-
     Private Sub ChangeUserSettingsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
         Dim uSettings As New UserSettings
 
@@ -1036,7 +1028,6 @@ Public Class ObsWebSocketCropper
             CheckUnusedFields()
         End If
     End Sub
-
     Private Sub GetSyncFromServer()
 
         Dim cropList As IEnumerable(Of RunnerInfo)
@@ -1075,6 +1066,12 @@ Public Class ObsWebSocketCropper
                     matchingItem.Submitter = crop.Submitter
 
                     matchingItem.SubmittedOn = crop.SubmittedOn
+
+                    If crop.RunnerName Is Nothing Then
+                        matchingItem.RunnerName = runnerInfo.Runner
+                    Else
+                        matchingItem.RunnerName = crop.RunnerName
+                    End If
 
                     If matchingItem.Id <> crop.Id Then
                         matchingItem.Id = crop.Id
@@ -1153,6 +1150,7 @@ Public Class ObsWebSocketCropper
                             .GameCrop = localRunner.GameCrop,
                             .TimerCrop = localRunner.TimerCrop,
                             .Runner = localRunner.Runner,
+                            .RunnerName = localRunner.RunnerName,
                             .Submitter = localRunner.Submitter,
                             .Id = localRunner.Id
                             }
@@ -1182,7 +1180,6 @@ Public Class ObsWebSocketCropper
             End If
         End If
     End Sub
-
     Private Sub ConnectToObs2()
         Cursor = Cursors.WaitCursor
 
@@ -1379,6 +1376,15 @@ Public Class ObsWebSocketCropper
                 If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
                     cbRightRunnerName.Text = NewRunnerName
                 End If
+
+                If Not String.IsNullOrWhiteSpace(NewRunnerTwitch) Then
+                    RightRunnerTwitch = NewRunnerTwitch
+                Else
+                    RightRunnerTwitch = NewRunnerName
+                End If
+
+                lblRightRunnerTwitch.Text = "Twitch: " & RightRunnerTwitch
+
                 If GetOBSInfo = True Then
                     If _masterHeightLeft = 0 Then
                         SetMasterSourceDimensions()
@@ -1392,6 +1398,15 @@ Public Class ObsWebSocketCropper
                 If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
                     cbLeftRunnerName.Text = NewRunnerName
                 End If
+
+                If Not String.IsNullOrWhiteSpace(NewRunnerTwitch) Then
+                    LeftRunnerTwitch = NewRunnerTwitch
+                Else
+                    LeftRunnerTwitch = NewRunnerName
+                End If
+
+                lblLeftRunnerTwitch.Text = "Twitch: " & LeftRunnerTwitch
+
                 If GetOBSInfo = True Then
                     If _masterHeightLeft = 0 Then
                         SetMasterSourceDimensions()
@@ -1409,23 +1424,23 @@ Public Class ObsWebSocketCropper
         ReuseInfo = True
     End Sub
     Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
-        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text)
+        If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
+            Process.Start("https://twitch.tv/" & LeftRunnerTwitch)
         End If
     End Sub
     Private Sub lblViewRightOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewRightOnTwitch.Click
-        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text)
+        If Not String.IsNullOrWhiteSpace(RightRunnerTwitch) Then
+            Process.Start("https://twitch.tv/" & RightRunnerTwitch)
         End If
     End Sub
     Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs) Handles lblLeftVOD.Click
-        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbLeftRunnerName.Text & "/videos/all")
+        If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
+            Process.Start("https://twitch.tv/" & LeftRunnerTwitch & "/videos/all")
         End If
     End Sub
     Private Sub lblRightVOD_Click(sender As Object, e As EventArgs) Handles lblRightVOD.Click
-        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-            Process.Start("https://twitch.tv/" & cbRightRunnerName.Text & "/videos/all")
+        If Not String.IsNullOrWhiteSpace(RightRunnerTwitch) Then
+            Process.Start("https://twitch.tv/" & RightRunnerTwitch & "/videos/all")
         End If
     End Sub
     Private Sub RefreshExpertSettings()
@@ -1435,7 +1450,6 @@ Public Class ObsWebSocketCropper
         lblViewLeftOnTwitch.Visible = My.Settings.ExpertMode
         lblViewRightOnTwitch.Visible = My.Settings.ExpertMode
     End Sub
-
     Private Sub StartStreamlink(twitch As String)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
         If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
@@ -1474,22 +1488,29 @@ Public Class ObsWebSocketCropper
         myProcess.Start()
     End Sub
     Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink.Click
-        If Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            StartStreamlink(cbLeftRunnerName.Text)
+        If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
+            StartStreamlink(LeftRunnerTwitch)
         Else
             MsgBox("No Runner selected, cannot continue.")
         End If
     End Sub
     Private Sub lblRightStreamlink_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink.Click
-        If Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-            StartStreamlink(cbRightRunnerName.Text)
+        If Not String.IsNullOrWhiteSpace(RightRunnerTwitch) Then
+            StartStreamlink(RightRunnerTwitch)
         Else
             MsgBox("No Runner selected, cannot continue.")
         End If
     End Sub
+    Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs) Handles btnTestSourceSettings.Click
+        Dim RightGameSourceInfo As SourceSettings
+        Dim CommentarySizeInfo As SceneItemProperties
 
+        CommentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.CommentaryOBS)
+        RightGameSourceInfo = Obs.GetSourceSettings(My.Settings.CommentaryOBS)
 
+        If RightGameSourceInfo Is Nothing Then
 
-
+        End If
+    End Sub
 #End Region
 End Class

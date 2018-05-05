@@ -9,6 +9,6 @@ Namespace Data
         Public Property Size As WindowSize
         Public Property Submitter As String
         Public Property SubmittedOn As DateTime?
-        Public Property Name As String
+        Public Property RunnerName As String
     End Class
 End Namespace
