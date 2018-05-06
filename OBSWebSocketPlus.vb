@@ -51,6 +51,13 @@ Public Class ObsWebSocketPlus
 
         SendRequest("SetSourceSettings", requestParameters)
     End Sub
+    Public Function GetTextGDIProperties(source As String) As TextGDI
+        Dim requestParameters As New JObject
+
+        requestParameters.Add("source", source)
+
+        Return New TextGDI(SendRequest("GetTextGDIPlusProperties", requestParameters))
+    End Function
     Public Sub SetBrowserSource(source As String, urlValue As String)
         Dim requestParameters As New JObject
 
@@ -101,6 +108,17 @@ Public Class ObsWebSocketPlus
         Return SourceInfo.sourcetype = ExpectedSourceType
 
     End Function
+End Class
+Public Class TextGDI
+    Public Property FontFace As String
+    Public Property FontSize As Integer
+    Public Property text As String
+
+    Public Sub New(ByRef data As JObject)
+        FontFace = CType(data("font").Item("face"), String)
+        FontSize = CType(data("font").Item("size"), Integer)
+        text = CType(data("text"), String)
+    End Sub
 End Class
 Public Class SourceSettings
     'Public Property SourceName As String

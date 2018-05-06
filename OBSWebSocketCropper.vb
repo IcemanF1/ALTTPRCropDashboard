@@ -1507,13 +1507,57 @@ Public Class ObsWebSocketCropper
     Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs) Handles btnTestSourceSettings.Click
         Dim RightGameSourceInfo As SourceSettings
         Dim CommentarySizeInfo As SceneItemProperties
+        Dim CommentaryFontInfo As TextGDI
+        Dim MicIconInfo As SceneItemProperties
 
+
+        MicIconInfo = Obs.GetSceneItemProperties("", "MicIcon")
         CommentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.CommentaryOBS)
         RightGameSourceInfo = Obs.GetSourceSettings(My.Settings.CommentaryOBS)
+        CommentaryFontInfo = Obs.GetTextGDIProperties(My.Settings.CommentaryOBS)
 
-        If RightGameSourceInfo Is Nothing Then
+
+        If CommentaryFontInfo Is Nothing = False Then
+            Dim TextString As String
+            Dim FontSize As Integer
+            Dim FontName As String
+
+            FontName = CommentaryFontInfo.FontFace
+            FontSize = CommentaryFontInfo.FontSize
+
+            Dim TextFont As New Font(FontName, FontSize)
+
+            TextString = CommentaryFontInfo.text
+
+            Dim ComSize As Size = TextRenderer.MeasureText(TextString, TextFont)
+
+            Dim sizeOfString As New SizeF
+            Dim g As Graphics = Me.CreateGraphics
+            sizeOfString = g.MeasureString(TextString, TextFont)
+
+            Dim MicX As Integer = (CommentarySizeInfo.PositionX - (sizeOfString.Width / 3))
+
+            Obs.SetSceneItemPosition("MicIcon", MicX, MicIconInfo.PositionY)
 
         End If
+    End Sub
+    Private Sub MeasureStringMin(e As PaintEventArgs)
+
+        ' Set up string.
+        Dim measureString As String = "Measure String"
+        Dim stringFont As New Font("Arial", 16)
+
+        ' Measure string.
+        Dim stringSize As New SizeF
+        stringSize = e.Graphics.MeasureString(measureString, stringFont)
+
+        ' Draw rectangle representing size of string.
+        e.Graphics.DrawRectangle(New Pen(Color.Red, 1), 0.0F, 0.0F,
+        stringSize.Width, stringSize.Height)
+
+        ' Draw string to screen.
+        e.Graphics.DrawString(measureString, stringFont, Brushes.Black,
+        New PointF(0, 0))
     End Sub
 #End Region
 End Class

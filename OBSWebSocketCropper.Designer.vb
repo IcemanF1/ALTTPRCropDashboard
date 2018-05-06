@@ -852,8 +852,7 @@ Partial Class ObsWebSocketCropper
         Me.btnTestSourceSettings.Size = New System.Drawing.Size(137, 23)
         Me.btnTestSourceSettings.TabIndex = 84
         Me.btnTestSourceSettings.Text = "Test Source Settings"
-        Me.ttMainToolTip.SetToolTip(Me.btnTestSourceSettings, "Gets the current height/width of the game scenes" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and sets the source height/widt" &
-        "h as that.")
+        Me.ttMainToolTip.SetToolTip(Me.btnTestSourceSettings, "Testing stuff.  Nothing to see here.")
         Me.btnTestSourceSettings.UseVisualStyleBackColor = True
         Me.btnTestSourceSettings.Visible = False
         '
