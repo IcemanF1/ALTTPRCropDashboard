@@ -5,6 +5,7 @@ Imports ALTTPRCropDashboard.DB
 Imports System.IO
 
 Public Class ObsWebSocketCropper
+    Public ReadOnly contextString As String
 
     Public ReadOnly Obs As New ObsWebSocketPlus
     Public ObsConnectionStatus As String
@@ -78,93 +79,112 @@ Public Class ObsWebSocketCropper
 #End Region
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
-        If _masterHeightLeft = 0 Then
-            SetMasterSourceDimensions()
+        If ConnectionIsActive() = True Then
+            If _masterHeightLeft = 0 Then
+                SetMasterSourceDimensions()
+            End If
+
+            GetCurrentSceneInfo(True)
+
+
+            SetNewNewMath(True)
         End If
 
-        GetCurrentSceneInfo(True)
-
-
-        SetNewNewMath(True)
     End Sub
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToObs()
     End Sub
     Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop.Click
-        GetCurrentSceneInfo(False)
+        If ConnectionIsActive() = True Then
+            GetCurrentSceneInfo(False)
 
-        If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-            FillCurrentCropInfoFromObs(False)
+            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                FillCurrentCropInfoFromObs(False)
+            End If
         End If
-
     End Sub
     Private Sub btnGetRightCrop_Click(sender As Object, e As EventArgs) Handles btnGetRightCrop.Click
-        GetCurrentSceneInfo(True)
+        If ConnectionIsActive() = True Then
+            GetCurrentSceneInfo(True)
 
-        If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-            FillCurrentCropInfoFromObs(True)
+            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                FillCurrentCropInfoFromObs(True)
+            End If
         End If
+
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
-        If _masterHeightLeft = 0 Then
-            SetMasterSourceDimensions()
+        If ConnectionIsActive() = True Then
+            If _masterHeightLeft = 0 Then
+                SetMasterSourceDimensions()
+            End If
+
+            GetCurrentSceneInfo(False)
+
+            SetNewNewMath(False)
         End If
 
-        GetCurrentSceneInfo(False)
-
-        SetNewNewMath(False)
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
-            If cbLeftRunnerName.Text.Trim.Length > 0 Then
-                Obs.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
-                If ObsConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+        If ConnectionIsActive() = True Then
+            If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
+                If cbLeftRunnerName.Text.Trim.Length > 0 Then
+                    Obs.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
+                    End If
+                End If
+            End If
+            If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) Then
+                If cbRightRunnerName.Text.Trim.Length > 0 Then
+                    Obs.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
+                    End If
+                End If
+            End If
+            If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) Then
+                If txtCommentaryNames.Text.Trim.Length > 0 Then
+                    Obs.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
+                    End If
+                End If
+            End If
+            If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) Then
+                If txtLeftTrackerURL.Text.Trim.Length > 0 Then
+                    Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                    End If
+                End If
+            End If
+            If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
+                If txtRightTrackerURL.Text.Trim.Length > 0 Then
+                    Obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                    If ObsConnectionStatus2 = "Connected" Then
+                        _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                    End If
                 End If
             End If
         End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) Then
-            If cbRightRunnerName.Text.Trim.Length > 0 Then
-                Obs.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
-                If ObsConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text)
-                End If
-            End If
-        End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) Then
-            If txtCommentaryNames.Text.Trim.Length > 0 Then
-                Obs.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
-                If ObsConnectionStatus2 = "Connected" Then
-                    _obs2.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text)
-                End If
-            End If
-        End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) Then
-            If txtLeftTrackerURL.Text.Trim.Length > 0 Then
-                Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
-                If ObsConnectionStatus2 = "Connected" Then
-                    _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
-                End If
-            End If
-        End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
-            If txtRightTrackerURL.Text.Trim.Length > 0 Then
-                Obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
-                If ObsConnectionStatus2 = "Connected" Then
-                    _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
-                End If
-            End If
-        End If
+
+
     End Sub
     Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
-        SaveRunnerCrop(False)
+        If ConnectionIsActive() = True Then
+            SaveRunnerCrop(False)
 
-        RefreshRunnerNames()
+            RefreshRunnerNames()
+        End If
     End Sub
     Private Sub btnSaveRightCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRightCrop.Click
-        SaveRunnerCrop(True)
+        If ConnectionIsActive() = True Then
+            SaveRunnerCrop(True)
 
-        RefreshRunnerNames()
+            RefreshRunnerNames()
+        End If
+
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
         SyncWithServer()
@@ -189,7 +209,10 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
-        SetVlcWindows(False)
+        If ConnectionIsActive() = True Then
+            SetVlcWindows(False)
+        End If
+
     End Sub
     Private Sub SetVlcWindows(isRightWindow As Boolean)
         Dim vlcString As String
@@ -231,22 +254,41 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub btn2ndOBS_Click(sender As Object, e As EventArgs) Handles btn2ndOBS.Click
-        GetIniFile(False, False)
+        If ConnectionIsActive() = True Then
+            GetIniFile(False, False)
 
-        _check2NdObs = True
-        Timer1.Start()
+            _check2NdObs = True
+            Timer1.Start()
+        End If
+
+
     End Sub
     Private Sub btnConnectOBS2_Click(sender As Object, e As EventArgs) Handles btnConnectOBS2.Click
-        ConnectToObs2()
+        If ConnectionIsActive() = True Then
+            ConnectToObs2()
+        End If
+
     End Sub
     Private Sub btnSetRightVLC_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC.Click
-        SetVlcWindows(True)
+        If ConnectionIsActive() = True Then
+            SetVlcWindows(True)
+        End If
+
+
     End Sub
     Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner.Click
-        AddNewRunner(False)
+        If ConnectionIsActive() = True Then
+            AddNewRunner(False)
+        End If
+
+
     End Sub
     Private Sub btnNewRightRunner_Click(sender As Object, e As EventArgs) Handles btnNewRightRunner.Click
-        AddNewRunner(True)
+        If ConnectionIsActive() = True Then
+            AddNewRunner(True)
+        End If
+
+
     End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
@@ -1558,6 +1600,19 @@ Public Class ObsWebSocketCropper
         ' Draw string to screen.
         e.Graphics.DrawString(measureString, stringFont, Brushes.Black,
         New PointF(0, 0))
+
     End Sub
+    Function ConnectionIsActive() As Boolean
+        If Obs.WSConnection.IsAlive = True Then
+            Return True
+        Else
+            Obs.Disconnect()
+            MsgBox("It looks like OBS was closed before disconnecting.  Please try re-connecting before doing any action.", MsgBoxStyle.OkOnly, ProgramName)
+            ObsConnectionStatus = "Not Connected"
+            lblOBS1ConnectedStatus.Text = ObsConnectionStatus
+            EnableButtons(False)
+            Return False
+        End If
+    End Function
 #End Region
 End Class
