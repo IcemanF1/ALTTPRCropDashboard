@@ -153,17 +153,29 @@ Public Class ObsWebSocketCropper
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) Then
                 If txtLeftTrackerURL.Text.Trim.Length > 0 Then
-                    Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                    Dim TrackerString As String
+                    If txtLeftTrackerURL.Text.ToLower.StartsWith("http") Then
+                        TrackerString = txtLeftTrackerURL.Text
+                    Else
+                        TrackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtLeftTrackerURL.Text
+                    End If
+                    Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, TrackerString)
                     If ObsConnectionStatus2 = "Connected" Then
-                        _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, txtLeftTrackerURL.Text)
+                        _obs2.SetBrowserSource(My.Settings.LeftTrackerOBS, TrackerString)
                     End If
                 End If
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
                 If txtRightTrackerURL.Text.Trim.Length > 0 Then
-                    Obs.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                    Dim TrackerString As String
+                    If txtRightTrackerURL.Text.ToLower.StartsWith("http") Then
+                        TrackerString = txtRightTrackerURL.Text
+                    Else
+                        TrackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtRightTrackerURL.Text
+                    End If
+                    Obs.SetBrowserSource(My.Settings.RightTrackerOBS, TrackerString)
                     If ObsConnectionStatus2 = "Connected" Then
-                        _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, txtRightTrackerURL.Text)
+                        _obs2.SetBrowserSource(My.Settings.RightTrackerOBS, TrackerString)
                     End If
                 End If
             End If
@@ -993,6 +1005,8 @@ Public Class ObsWebSocketCropper
 
         ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
+        lblOBS1ConnectedStatus.Text = "Not Connected"
+        lblOBS2ConnectedStatus.Text = "Not Connected"
 
         lblLeftStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
         lblRightStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
@@ -1389,10 +1403,10 @@ Public Class ObsWebSocketCropper
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
             SaveRunnerCrop(False)
             RefreshRunnerNames()
-        ElseIf (e.KeyCode = Keys.T AndAlso e.Modifiers = Keys.Control) Then
+        ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
             GetCurrentSceneInfo(True)
             SetNewNewMath(True)
-        ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
+        ElseIf (e.KeyCode = Keys.T AndAlso e.Modifiers = Keys.Control) Then
             GetCurrentSceneInfo(True)
             FillCurrentCropInfoFromObs(True)
         ElseIf (e.KeyCode = Keys.Y AndAlso e.Modifiers = Keys.Control) Then
@@ -1525,7 +1539,7 @@ Public Class ObsWebSocketCropper
             .CreateNoWindow = True,
             .WindowStyle = ProcessWindowStyle.Hidden,
             .FileName = replacedPath,
-            .Arguments = $"--player-args=""--player-no-close --file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http",
+            .Arguments = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close",
             .RedirectStandardError = False,
             .RedirectStandardOutput = True
                         }
