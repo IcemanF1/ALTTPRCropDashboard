@@ -85,11 +85,14 @@ Public Class ObsWebSocketCropper
             If _masterHeightLeft = 0 Then
                 SetMasterSourceDimensions()
             End If
+            Try
+                GetCurrentSceneInfo(True)
 
-            GetCurrentSceneInfo(True)
+                SetNewNewMath(True)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
 
-
-            SetNewNewMath(True)
         End If
 
     End Sub
@@ -98,32 +101,44 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop.Click
         If ConnectionIsActive() = True Then
-            GetCurrentSceneInfo(False)
+            Try
+                GetCurrentSceneInfo(False)
+                If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                    FillCurrentCropInfoFromObs(False)
+                End If
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
 
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(False)
-            End If
         End If
     End Sub
     Private Sub btnGetRightCrop_Click(sender As Object, e As EventArgs) Handles btnGetRightCrop.Click
         If ConnectionIsActive() = True Then
-            GetCurrentSceneInfo(True)
+            Try
+                GetCurrentSceneInfo(True)
 
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(True)
-            End If
+                If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                    FillCurrentCropInfoFromObs(True)
+                End If
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         End If
 
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
         If ConnectionIsActive() = True Then
-            If _masterHeightLeft = 0 Then
-                SetMasterSourceDimensions()
-            End If
+            Try
+                If _masterHeightLeft = 0 Then
+                    SetMasterSourceDimensions()
+                End If
 
-            GetCurrentSceneInfo(False)
+                GetCurrentSceneInfo(False)
 
-            SetNewNewMath(False)
+                SetNewNewMath(False)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         End If
 
     End Sub
@@ -462,35 +477,39 @@ Public Class ObsWebSocketCropper
 
 
     End Sub
+    Private Function GetMasterSize(isRight As Boolean) As Size
+
+        If isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+            Return Size.Empty
+        End If
+        If Not isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+            Return Size.Empty
+        End If
+
+        Dim currentScene As OBSScene = IIf(Obs.StudioModeEnabled, Obs.GetPreviewScene(), Obs.GetCurrentScene())
+        Dim target = IIf(isRight, My.Settings.RightGameName, My.Settings.LeftGameName).ToLower
+
+        Dim adequateSource = currentScene.Items.FirstOrDefault(Function(scene) scene.SourceName.ToLower = target)
+
+        If adequateSource.SourceName Is Nothing OrElse String.IsNullOrWhiteSpace(adequateSource.SourceName) Then
+            MessageBox.Show(Me, $"Cannot find source {target} in the current scene. Are you on the right scene?")
+        End If
+
+        Return New Size(adequateSource.SourceWidth, adequateSource.SourceHeight)
+
+    End Function
     Private Sub SetMasterSourceDimensions()
-        Dim scenes = Obs.ListScenes()
 
-        Dim x As Integer
-        For x = 0 To scenes.Count - 1
-            Dim y As Integer
-            For y = 0 To scenes(x).Items.Count - 1
+        Dim leftSize = GetMasterSize(False)
+        _masterHeightLeft = leftSize.Height
+        _masterWidthLeft = leftSize.Height
+        _masterScaleLeft = ParsePercent(cbLeftScaling.Text)
 
-                Dim itemName As String
-                itemName = scenes(x).Items(y).SourceName
-                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                    If itemName.ToLower = My.Settings.RightGameName.ToLower Then
-                        _masterHeightRight = scenes(x).Items(y).SourceHeight
-                        _masterWidthRight = scenes(x).Items(y).SourceWidth
-                        _masterScaleRight = ParsePercent(cbRightScaling.Text)
+        Dim rightSize = GetMasterSize(True)
+        _masterHeightRight = rightSize.Height
+        _masterWidthRight = rightSize.Height
+        _masterScaleRight = ParsePercent(cbRightScaling.Text)
 
-                    End If
-                End If
-
-                If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                    If itemName.ToLower = My.Settings.LeftGameName.ToLower Then
-                        _masterHeightLeft = scenes(x).Items(y).SourceHeight
-                        _masterWidthLeft = scenes(x).Items(y).SourceWidth
-                        _masterScaleLeft = ParsePercent(cbLeftScaling.Text)
-                    End If
-                End If
-            Next
-
-        Next
 
         SetHeightLabels()
     End Sub
@@ -517,19 +536,20 @@ Public Class ObsWebSocketCropper
         lblRSourceWidth.Text = "Master Width: " & _rSourceWidth
     End Sub
     Private Sub GetCurrentSceneInfo(isRightWindow As Boolean)
+        Dim sceneName As String = IIf(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
         If isRightWindow = False Then
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                _leftRunnerGameSceneInfo = Obs.GetSceneItemProperties("", My.Settings.LeftGameName)
+                _leftRunnerGameSceneInfo = Obs.GetSceneItemProperties(sceneName, My.Settings.LeftGameName)
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
-                _leftRunnerTimerSceneInfo = Obs.GetSceneItemProperties("", My.Settings.LeftTimerName)
+                _leftRunnerTimerSceneInfo = Obs.GetSceneItemProperties(sceneName, My.Settings.LeftTimerName)
             End If
         Else
             If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                _rightRunnerGameSceneInfo = Obs.GetSceneItemProperties("", My.Settings.RightGameName)
+                _rightRunnerGameSceneInfo = Obs.GetSceneItemProperties(sceneName, My.Settings.RightGameName)
             End If
             If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
-                _rightRunnerTimerSceneInfo = Obs.GetSceneItemProperties("", My.Settings.RightTimerName)
+                _rightRunnerTimerSceneInfo = Obs.GetSceneItemProperties(sceneName, My.Settings.RightTimerName)
             End If
         End If
     End Sub
@@ -542,9 +562,9 @@ Public Class ObsWebSocketCropper
 
         Dim realCrop = _cropperMath.AddScaling(_cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault), _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(resultingCrop.MasterSizeWithoutDefault), scaling), scaling)
 
-        Obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+        Obs.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right)
         If ObsConnectionStatus2 = "Connected" Then
-            _obs2.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
+            _obs2.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right)
         End If
     End Sub
     Private Sub SetNewNewMath(isRightWindow As Boolean)
@@ -648,6 +668,9 @@ Public Class ObsWebSocketCropper
     End Function
 
     Private Sub RefreshCropFromData(isRightWindow As Boolean)
+        If Not Obs.IsConnected Then
+            Return
+        End If
 
         Dim savedMasterSize As Size
         Dim realMasterSize As Size
@@ -659,20 +682,30 @@ Public Class ObsWebSocketCropper
             Dim runnerInfo As Crop
 
             If (isRightWindow) Then
+                scaling = ParsePercent(cbRightScaling.Text)
                 runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.RunnerName = cbRightRunnerName.Text)
                 If runnerInfo Is Nothing Then
                     runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.RunnerName = cbRightRunnerName.Text)
                 End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
+                    Dim initialSize = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(GetMasterSize(isRightWindow), scaling))
+                    runnerInfo.SizeWidth = initialSize.Width
+                    runnerInfo.SizeHeight = initialSize.Height
+
                 End If
             Else
+                scaling = ParsePercent(cbLeftScaling.Text)
                 runnerInfo = context.Crops.FirstOrDefault(Function(r) r.Submitter = My.Settings.TwitchChannel AndAlso r.RunnerName = cbLeftRunnerName.Text)
                 If runnerInfo Is Nothing Then
                     runnerInfo = context.Crops.OrderByDescending(Function(r) r.SubmittedOn).FirstOrDefault(Function(r) r.RunnerName = cbLeftRunnerName.Text)
                 End If
                 If runnerInfo Is Nothing Then
                     runnerInfo = New Crop
+                    Dim initialSize = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(GetMasterSize(isRightWindow), scaling))
+                    runnerInfo.SizeWidth = initialSize.Width
+                    runnerInfo.SizeHeight = initialSize.Height
+
                 End If
             End If
 
@@ -682,7 +715,6 @@ Public Class ObsWebSocketCropper
             savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
 
             If isRightWindow Then
-                scaling = ParsePercent(cbRightScaling.Text)
                 realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
                 realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbRightScaling.Text))
                 txtCropRightTimer_Top.Text = realCrop.Top
@@ -690,7 +722,6 @@ Public Class ObsWebSocketCropper
                 txtCropRightTimer_Left.Text = realCrop.Left
                 txtCropRightTimer_Right.Text = realCrop.Right
             Else
-                scaling = ParsePercent(cbLeftScaling.Text)
                 realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
                 realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbLeftScaling.Text))
                 txtCropLeftTimer_Top.Text = realCrop.Top
@@ -1438,23 +1469,47 @@ Public Class ObsWebSocketCropper
         If (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
             SyncWithServer()
         ElseIf (e.KeyCode = Keys.Q AndAlso e.Modifiers = Keys.Control) Then
-            GetCurrentSceneInfo(False)
-            SetNewNewMath(False)
+            Try
+                GetCurrentSceneInfo(False)
+                SetNewNewMath(False)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
-            GetCurrentSceneInfo(False)
-            FillCurrentCropInfoFromObs(False)
+            Try
+                GetCurrentSceneInfo(False)
+                FillCurrentCropInfoFromObs(False)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
-            SaveRunnerCrop(False)
-            RefreshRunnerNames()
+            Try
+                SaveRunnerCrop(False)
+                RefreshRunnerNames()
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
-            GetCurrentSceneInfo(True)
-            SetNewNewMath(True)
+            Try
+                GetCurrentSceneInfo(True)
+                SetNewNewMath(True)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         ElseIf (e.KeyCode = Keys.T AndAlso e.Modifiers = Keys.Control) Then
-            GetCurrentSceneInfo(True)
-            FillCurrentCropInfoFromObs(True)
+            Try
+                GetCurrentSceneInfo(True)
+                FillCurrentCropInfoFromObs(True)
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         ElseIf (e.KeyCode = Keys.Y AndAlso e.Modifiers = Keys.Control) Then
-            SaveRunnerCrop(True)
-            RefreshRunnerNames()
+            Try
+                SaveRunnerCrop(True)
+                RefreshRunnerNames()
+            Catch ex As ErrorResponseException
+                MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+            End Try
         End If
     End Sub
     Private Sub chkAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkAlwaysOnTop.CheckedChanged
@@ -1489,9 +1544,12 @@ Public Class ObsWebSocketCropper
                         SetMasterSourceDimensions()
                     End If
 
-                    GetCurrentSceneInfo(False)
-
-                    SetNewNewMath(False)
+                    Try
+                        GetCurrentSceneInfo(False)
+                        SetNewNewMath(False)
+                    Catch ex As ErrorResponseException
+                        MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+                    End Try
                 End If
             Else
                 If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
@@ -1511,10 +1569,12 @@ Public Class ObsWebSocketCropper
                         SetMasterSourceDimensions()
                     End If
 
-                    GetCurrentSceneInfo(True)
-
-
-                    SetNewNewMath(True)
+                    Try
+                        GetCurrentSceneInfo(True)
+                        SetNewNewMath(True)
+                    Catch ex As ErrorResponseException
+                        MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+                    End Try
                 End If
             End If
         End If
