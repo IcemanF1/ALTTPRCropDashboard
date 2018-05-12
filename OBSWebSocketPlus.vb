@@ -10,6 +10,10 @@ Public Class ObsWebSocketPlus
 
         Dim requestParameters As New JObject
 
+        If String.IsNullOrEmpty(sceneName) Then
+            sceneName = IIf(StudioModeEnabled, GetPreviewScene().Name, GetCurrentScene().Name)
+        End If
+
         If Not String.IsNullOrEmpty(sceneName) Then
             requestParameters.Add("scene-name", sceneName)
         End If
@@ -73,6 +77,8 @@ Public Class ObsWebSocketPlus
         Dim requestParameters As New JObject
 
         Dim cropInfo As New JObject
+
+        requestParameters.Add("scene-name", CType(IIf(StudioModeEnabled, GetPreviewScene().Name, GetCurrentScene().Name), String))
 
         cropInfo.Add("top", cropT)
         cropInfo.Add("bottom", cropB)
