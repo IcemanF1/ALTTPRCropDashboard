@@ -486,8 +486,8 @@ Public Class ObsWebSocketCropper
             Return Size.Empty
         End If
 
-        Dim currentScene As OBSScene = IIf(Obs.StudioModeEnabled, Obs.GetPreviewScene(), Obs.GetCurrentScene())
-        Dim target = IIf(isRight, My.Settings.RightGameName, My.Settings.LeftGameName).ToLower
+        Dim currentScene = If(Obs.StudioModeEnabled, Obs.GetPreviewScene(), Obs.GetCurrentScene())
+        Dim target = If(isRight, My.Settings.RightGameName, My.Settings.LeftGameName).ToLower
 
         Dim adequateSource = currentScene.Items.FirstOrDefault(Function(scene) scene.SourceName.ToLower = target)
 
@@ -536,7 +536,7 @@ Public Class ObsWebSocketCropper
         lblRSourceWidth.Text = "Master Width: " & _rSourceWidth
     End Sub
     Private Sub GetCurrentSceneInfo(isRightWindow As Boolean)
-        Dim sceneName As String = IIf(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
+        Dim sceneName As String = If(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
         If isRightWindow = False Then
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
                 _leftRunnerGameSceneInfo = Obs.GetSceneItemProperties(sceneName, My.Settings.LeftGameName)
