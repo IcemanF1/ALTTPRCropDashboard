@@ -25,9 +25,11 @@ Public Class ObsWebSocketCropper
 
     Dim _masterWidthRight As Integer
     Dim _masterHeightRight As Integer
+    Dim _masterScaleRight As Double
 
     Dim _masterWidthLeft As Integer
     Dim _masterHeightLeft As Integer
+    Dim _masterScaleLeft As Double
 
     Dim _vlcListLeft As New DataSet
     Dim _vlcListRight As New DataSet
@@ -332,27 +334,31 @@ Public Class ObsWebSocketCropper
         Dim savedMasterSize As Size
         Dim cropWithDefault As Rectangle
         Dim submitterName = My.Settings.TwitchChannel
+        Dim scaling As Double
 
         If isRightWindow = True Then
             GetCurrentCropSettings(True)
+            scaling = ParsePercent(cbRightScaling.Text)
 
             savedMasterSize = New Size(_masterWidthRight, _masterHeightRight)
+            ' Has the scaling changed since MasterSize has been set? If yes, we need to account for that..
+            Dim correctedMasterSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(savedMasterSize, _masterScaleRight), scaling)
 
-            Dim masterSizeWithoutDefaultRight As Size = _cropperMath.RemoveDefaultCropSize(savedMasterSize)
+            Dim masterSizeWithoutDefaultRight As Size = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, _masterScaleRight))
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropRightGame_Left.Text,
                                    _txtCropRightGame_Top.Text,
                                    _txtCropRightGame_Right.Text,
                                    _txtCropRightGame_Bottom.Text)
 
-            Dim cropWithoutDefaultRightGame As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultRightGame As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, correctedMasterSize, scaling))
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropRightTimer_Left.Text,
                                                  _txtCropRightTimer_Top.Text,
                                                  _txtCropRightTimer_Right.Text,
                                                  _txtCropRightTimer_Bottom.Text)
 
-            Dim cropWithoutDefaultRightTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultRightTimer As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, correctedMasterSize, scaling))
 
             Using context As New CropDbContext
 
@@ -387,17 +393,21 @@ Public Class ObsWebSocketCropper
             End Using
         Else
             GetCurrentCropSettings(False)
+            scaling = ParsePercent(cbLeftScaling.Text)
 
             savedMasterSize = New Size(_masterWidthLeft, _masterHeightLeft)
 
-            Dim masterSizeWithoutDefaultLeft As Size = _cropperMath.RemoveDefaultCropSize(savedMasterSize)
+            ' Has the scaling changed since MasterSize has been set? If yes, we need to account for that..
+            Dim correctedMasterSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(savedMasterSize, _masterScaleLeft), scaling)
+
+            Dim masterSizeWithoutDefaultLeft As Size = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, _masterScaleLeft))
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
                                      _txtCropLeftGame_Top.Text,
                                      _txtCropLeftGame_Right.Text,
                                      _txtCropLeftGame_Bottom.Text)
 
-            Dim cropWithoutDefaultLeftGame As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultLeftGame As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, correctedMasterSize, scaling))
 
             cropWithDefault = Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
                                                  _txtCropLeftTimer_Top.Text,
@@ -405,7 +415,7 @@ Public Class ObsWebSocketCropper
                                                  _txtCropLeftTimer_Bottom.Text)
 
 
-            Dim cropWithoutDefaultLeftTimer As Rectangle = _cropperMath.RemoveDefaultCrop(cropWithDefault)
+            Dim cropWithoutDefaultLeftTimer As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, correctedMasterSize, scaling))
 
             Using context As New CropDbContext
                 If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
@@ -454,6 +464,8 @@ Public Class ObsWebSocketCropper
                     If itemName.ToLower = My.Settings.RightGameName.ToLower Then
                         _masterHeightRight = scenes(x).Items(y).SourceHeight
                         _masterWidthRight = scenes(x).Items(y).SourceWidth
+                        _masterScaleRight = ParsePercent(cbRightScaling.Text)
+
                     End If
                 End If
 
@@ -461,6 +473,7 @@ Public Class ObsWebSocketCropper
                     If itemName.ToLower = My.Settings.LeftGameName.ToLower Then
                         _masterHeightLeft = scenes(x).Items(y).SourceHeight
                         _masterWidthLeft = scenes(x).Items(y).SourceWidth
+                        _masterScaleLeft = ParsePercent(cbLeftScaling.Text)
                     End If
                 End If
             Next
@@ -508,14 +521,15 @@ Public Class ObsWebSocketCropper
             End If
         End If
     End Sub
-    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String)
+    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String, scaling As Double)
         Dim resultingCrop = _cropperMath.AdjustCrop(New CropInfo With {
-                                                      .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(savedMasterSize),
-                                                      .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(cropWithDefault)
-                                                      }, _cropperMath.RemoveDefaultCropSize(currentMasterSize))
+                                                      .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, scaling)),
+                                                      .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, savedMasterSize, scaling))
+                                                      }, _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(currentMasterSize, scaling)))
 
 
-        Dim realCrop = _cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault)
+        Dim realCrop = _cropperMath.AddScaling(_cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault), _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(resultingCrop.MasterSizeWithoutDefault), scaling), scaling)
+
         Obs.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
         If ObsConnectionStatus2 = "Connected" Then
             _obs2.SetSceneItemCrop(sourceName, New SceneItemCropInfo With {.Top = realCrop.Top, .Bottom = realCrop.Bottom, .Left = realCrop.Left, .Right = realCrop.Right})
@@ -536,7 +550,8 @@ Public Class ObsWebSocketCropper
                                                    _txtCropRightGame_Bottom.Text),
                                 New Size(_masterWidthRight, _masterHeightRight),
                                 New Size(_rSourceWidth, _rSourceHeight),
-                                My.Settings.RightGameName
+                                My.Settings.RightGameName,
+                                ParsePercent(cbRightScaling.Text)
                         )
                 End If
 
@@ -547,7 +562,8 @@ Public Class ObsWebSocketCropper
                                                    _txtCropRightTimer_Bottom.Text),
                                 New Size(_masterWidthRight, _masterHeightRight),
                                 New Size(_rSourceWidth, _rSourceHeight),
-                                My.Settings.RightTimerName
+                                My.Settings.RightTimerName,
+                                ParsePercent(cbRightScaling.Text)
                                 )
                 End If
 
@@ -564,7 +580,8 @@ Public Class ObsWebSocketCropper
                                                    _txtCropLeftGame_Bottom.Text),
                                 New Size(_masterWidthLeft, _masterHeightLeft),
                                 New Size(_lSourceWidth, _lSourceHeight),
-                                My.Settings.LeftGameName
+                                My.Settings.LeftGameName,
+                                ParsePercent(cbLeftScaling.Text)
                                 )
                 End If
 
@@ -575,7 +592,8 @@ Public Class ObsWebSocketCropper
                                                    _txtCropLeftTimer_Bottom.Text),
                                 New Size(_masterWidthLeft, _masterHeightLeft),
                                 New Size(_lSourceWidth, _lSourceHeight),
-                                My.Settings.LeftTimerName
+                                My.Settings.LeftTimerName,
+                                ParsePercent(cbLeftScaling.Text)
                                 )
                 End If
 
@@ -609,10 +627,19 @@ Public Class ObsWebSocketCropper
         cbRightRunnerName.Text = tempRightRunner
 
     End Sub
+    Private Function ParsePercent(percent As String) As Double
+        If (String.IsNullOrWhiteSpace(percent)) Then
+            Return 1
+        End If
+
+        Return Double.Parse(percent.Replace("%",""))/100.0
+    End Function
+
     Private Sub RefreshCropFromData(isRightWindow As Boolean)
 
         Dim savedMasterSize As Size
         Dim realMasterSize As Size
+        Dim scaling As Double
         Dim savedCrop As Rectangle
         Dim realCrop As Rectangle
 
@@ -640,12 +667,20 @@ Public Class ObsWebSocketCropper
             savedCrop = Rectangle.FromLTRB(runnerInfo.TimerCropLeft, runnerInfo.TimerCropTop, runnerInfo.TimerCropRight, runnerInfo.TimerCropBottom)
             realCrop = _cropperMath.AddDefaultCrop(savedCrop)
 
+            savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
+
             If isRightWindow Then
+                scaling = ParsePercent(cbRightScaling.Text)
+                realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
+                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbRightScaling.Text))
                 txtCropRightTimer_Top.Text = realCrop.Top
                 txtCropRightTimer_Bottom.Text = realCrop.Bottom
                 txtCropRightTimer_Left.Text = realCrop.Left
                 txtCropRightTimer_Right.Text = realCrop.Right
             Else
+                scaling = ParsePercent(cbLeftScaling.Text)
+                realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
+                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbLeftScaling.Text))
                 txtCropLeftTimer_Top.Text = realCrop.Top
                 txtCropLeftTimer_Bottom.Text = realCrop.Bottom
                 txtCropLeftTimer_Left.Text = realCrop.Left
@@ -656,6 +691,7 @@ Public Class ObsWebSocketCropper
             realCrop = _cropperMath.AddDefaultCrop(savedCrop)
 
             If isRightWindow Then
+                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
                 txtCropRightGame_Top.Text = realCrop.Top
                 txtCropRightGame_Bottom.Text = realCrop.Bottom
                 txtCropRightGame_Left.Text = realCrop.Left
@@ -663,6 +699,7 @@ Public Class ObsWebSocketCropper
                 RightRunnerTwitch = runnerInfo.Runner
                 lblRightRunnerTwitch.Text = "Twitch: " & RightRunnerTwitch
             Else
+                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
                 txtCropLeftGame_Top.Text = realCrop.Top
                 txtCropLeftGame_Bottom.Text = realCrop.Bottom
                 txtCropLeftGame_Left.Text = realCrop.Left
@@ -671,15 +708,15 @@ Public Class ObsWebSocketCropper
                 lblLeftRunnerTwitch.Text = "Twitch: " & LeftRunnerTwitch
             End If
 
-            savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
-            realMasterSize = _cropperMath.AddDefaultCropSize(savedMasterSize)
 
             If isRightWindow Then
                 _masterWidthRight = realMasterSize.Width
                 _masterHeightRight = realMasterSize.Height
+                _masterScaleRight = scaling
             Else
                 _masterWidthLeft = realMasterSize.Width
                 _masterHeightLeft = realMasterSize.Height
+                _masterScaleLeft = scaling
             End If
         End Using
 
@@ -760,6 +797,8 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub FillCurrentCropInfoFromObs(isRightWindow As Boolean)
+        SetMasterSourceDimensions()
+
         If isRightWindow = True Then
 
             If _rightRunnerTimerSceneInfo IsNot Nothing Then
@@ -996,6 +1035,10 @@ Public Class ObsWebSocketCropper
 
         lblLeftStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
         lblRightStreamlink.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        lblLeftScaling.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        cbLeftScaling.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        lblRightScaling.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
+        cbRightScaling.DataBindings.Add("Visible", My.Settings, NameOf(My.Settings.ExpertMode), False, DataSourceUpdateMode.OnPropertyChanged)
         chkAlwaysOnTop.DataBindings.Add("Checked", My.Settings, NameOf(My.Settings.AlwaysOnTop), False, DataSourceUpdateMode.OnPropertyChanged)
 
         CreateNewSourceTable()
@@ -1525,7 +1568,7 @@ Public Class ObsWebSocketCropper
             .CreateNoWindow = True,
             .WindowStyle = ProcessWindowStyle.Hidden,
             .FileName = replacedPath,
-            .Arguments = $"--player-args=""--player-no-close --file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http",
+            .Arguments = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close",
             .RedirectStandardError = False,
             .RedirectStandardOutput = True
                         }
@@ -1614,5 +1657,98 @@ Public Class ObsWebSocketCropper
             Return False
         End If
     End Function
+
+    Private Function TransScale(rect As Rectangle, originalSize As Size, originalScaling As Double, newSize As Size, newScaling As Double) As Rectangle
+        Return _cropperMath.AddScaling(_cropperMath.RemoveScaling(rect, originalSize, originalScaling), newSize, newScaling)
+    End Function
+
+    Private Sub cbLeftScaling_TextChanged(sender As Object, e As EventArgs) Handles cbLeftScaling.TextChanged
+
+        Dim newScale = ParsePercent(cbLeftScaling.Text)
+        If Math.Abs(newScale - _masterScaleLeft) < 0.0001 Or _masterScaleLeft = 0 Then
+            Exit Sub
+        End If
+        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(New Size(_masterWidthLeft, _masterHeightLeft), _masterScaleLeft), newScale)
+        Dim newValuesGame = TransScale(
+            Rectangle.FromLTRB(txtCropLeftGame_Left.Text,
+                               txtCropLeftGame_Top.Text,
+                               txtCropLeftGame_Right.Text,
+                               txtCropLeftGame_Bottom.Text),
+            New Size(_masterWidthLeft, _masterHeightLeft),
+            _masterScaleLeft,
+            newSize,
+            newScale
+            )
+
+        txtCropLeftGame_Left.Text = newValuesGame.Left
+        txtCropLeftGame_Right.Text = newValuesGame.Right
+        txtCropLeftGame_Top.Text = newValuesGame.Top
+        txtCropLeftGame_Bottom.Text = newValuesGame.Bottom
+
+        Dim newValuesTimer = TransScale(
+            Rectangle.FromLTRB(txtCropLeftTimer_Left.Text,
+                               txtCropLeftTimer_Top.Text,
+                               txtCropLeftTimer_Right.Text,
+                               txtCropLeftTimer_Bottom.Text),
+            New Size(_masterWidthLeft, _masterHeightLeft),
+            _masterScaleLeft,
+            newSize,
+            newScale
+            )
+
+        txtCropLeftTimer_Left.Text = newValuesTimer.Left
+        txtCropLeftTimer_Right.Text = newValuesTimer.Right
+        txtCropLeftTimer_Top.Text = newValuesTimer.Top
+        txtCropLeftTimer_Bottom.Text = newValuesTimer.Bottom
+
+        _masterWidthLeft = newSize.Width
+        _masterHeightLeft = newSize.Height
+        _masterScaleLeft = newScale
+    End Sub
+    Private Sub cbRightScaling_TextChanged(sender As Object, e As EventArgs) Handles cbRightScaling.TextChanged
+
+        Dim newScale = ParsePercent(cbRightScaling.Text)
+        If Math.Abs(newScale - _masterScaleRight) < 0.0001 Or _masterScaleRight = 0 Then
+            Exit Sub
+        End If
+        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(New Size(_masterWidthRight, _masterHeightRight), _masterScaleRight), newScale)
+        Dim newValuesGame = TransScale(
+            Rectangle.FromLTRB(txtCropRightGame_Left.Text,
+                               txtCropRightGame_Top.Text,
+                               txtCropRightGame_Right.Text,
+                               txtCropRightGame_Bottom.Text),
+            New Size(_masterWidthRight, _masterHeightRight),
+            _masterScaleRight,
+            newSize,
+            newScale
+            )
+
+        txtCropRightGame_Left.Text = newValuesGame.Left
+        txtCropRightGame_Right.Text = newValuesGame.Right
+        txtCropRightGame_Top.Text = newValuesGame.Top
+        txtCropRightGame_Bottom.Text = newValuesGame.Bottom
+
+
+        Dim newValuesTimer = TransScale(
+            Rectangle.FromLTRB(txtCropRightTimer_Left.Text,
+                               txtCropRightTimer_Top.Text,
+                               txtCropRightTimer_Right.Text,
+                               txtCropRightTimer_Bottom.Text),
+            New Size(_masterWidthRight, _masterHeightRight),
+            _masterScaleRight,
+            newSize,
+            newScale
+            )
+
+        txtCropRightTimer_Left.Text = newValuesTimer.Left
+        txtCropRightTimer_Right.Text = newValuesTimer.Right
+        txtCropRightTimer_Top.Text = newValuesTimer.Top
+        txtCropRightTimer_Bottom.Text = newValuesTimer.Bottom
+
+        _masterWidthRight = newSize.Width
+        _masterHeightRight = newSize.Height
+        _masterScaleRight = newScale
+    End Sub
+
 #End Region
 End Class

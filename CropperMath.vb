@@ -20,6 +20,40 @@
         Return Rectangle.FromLTRB(rect.Left + DefaultCrop.Left, rect.Top + DefaultCrop.Top, rect.Right + DefaultCrop.Right, rect.Bottom + DefaultCrop.Bottom)
     End Function
 
+    Public Function RemoveScaling(rect As Rectangle, size As Size, scaling As Double) As Rectangle
+        If scaling = 1 Or scaling = 0 Then
+            Return rect
+        End If
+
+        Dim changedSize = New Size(size.Width - size.Width / scaling, size.Height - size.Height / scaling)
+
+        Return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right - changedSize.Width, rect.Bottom - changedSize.Height)
+
+    End Function
+    Public Function RemoveScaling(size As Size, scaling As Double) As Size
+        If scaling = 1 Or scaling = 0 Then
+            Return size
+        End If
+
+        Return New Size(size.Width / scaling, size.Height / scaling)
+    End Function
+    Public Function AddScaling(rect As Rectangle, size As Size, scaling As Double) As Rectangle
+        If scaling = 1 Or scaling = 0 Then
+            Return rect
+        End If
+
+        Dim changedSize = New Size(size.Width - size.Width / scaling, size.Height - size.Height / scaling)
+
+        Return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right + changedSize.Width, rect.Bottom + changedSize.Height)
+    End Function
+    Public Function AddScaling(size As Size, scaling As Double) As Size
+        If scaling = 1 Or scaling = 0 Then
+            Return size
+        End If
+
+        Return New Size(size.Width * scaling, size.Height * scaling)
+    End Function
+
 
     Public Function AddDefaultCropSize(size As Size) As Size
         Return New Size(size.Width + DefaultCrop.Left + DefaultCrop.Right,
