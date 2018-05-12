@@ -36,6 +36,8 @@ Partial Class ObsWebSocketCropper
         Me.btnConnectOBS1 = New System.Windows.Forms.Button()
         Me.gbRightGameWindow = New System.Windows.Forms.GroupBox()
         Me.gbRightTimerWindow = New System.Windows.Forms.GroupBox()
+        Me.cbRightScaling = New System.Windows.Forms.ComboBox()
+        Me.lblRightScaling = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtCropRightTimer_Top = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -45,6 +47,8 @@ Partial Class ObsWebSocketCropper
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txtCropRightTimer_Right = New System.Windows.Forms.TextBox()
         Me.gbLeftTimerWindow = New System.Windows.Forms.GroupBox()
+        Me.cbLeftScaling = New System.Windows.Forms.ComboBox()
+        Me.lblLeftScaling = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.txtCropLeftTimer_Top = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -236,6 +240,8 @@ Partial Class ObsWebSocketCropper
         'gbRightTimerWindow
         '
         Me.gbRightTimerWindow.BackColor = System.Drawing.Color.MistyRose
+        Me.gbRightTimerWindow.Controls.Add(Me.cbRightScaling)
+        Me.gbRightTimerWindow.Controls.Add(Me.lblRightScaling)
         Me.gbRightTimerWindow.Controls.Add(Me.Label7)
         Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Top)
         Me.gbRightTimerWindow.Controls.Add(Me.Label8)
@@ -250,6 +256,26 @@ Partial Class ObsWebSocketCropper
         Me.gbRightTimerWindow.TabIndex = 4
         Me.gbRightTimerWindow.TabStop = False
         Me.gbRightTimerWindow.Text = "Right Timer Window"
+        '
+        'cbRightScaling
+        '
+        Me.cbRightScaling.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbRightScaling.FormattingEnabled = True
+        Me.cbRightScaling.Items.AddRange(New Object() {"100%", "125%", "150%", "175%", "200%", "225%", "250%", "275%", "300%"})
+        Me.cbRightScaling.Location = New System.Drawing.Point(242, 0)
+        Me.cbRightScaling.Name = "cbRightScaling"
+        Me.cbRightScaling.Size = New System.Drawing.Size(54, 23)
+        Me.cbRightScaling.TabIndex = 90
+        Me.cbRightScaling.Text = "100%"
+        '
+        'lblRightScaling
+        '
+        Me.lblRightScaling.AutoSize = True
+        Me.lblRightScaling.Location = New System.Drawing.Point(193, 4)
+        Me.lblRightScaling.Name = "lblRightScaling"
+        Me.lblRightScaling.Size = New System.Drawing.Size(45, 13)
+        Me.lblRightScaling.TabIndex = 89
+        Me.lblRightScaling.Text = "Scaling:"
         '
         'Label7
         '
@@ -318,6 +344,8 @@ Partial Class ObsWebSocketCropper
         'gbLeftTimerWindow
         '
         Me.gbLeftTimerWindow.BackColor = System.Drawing.Color.PaleGreen
+        Me.gbLeftTimerWindow.Controls.Add(Me.cbLeftScaling)
+        Me.gbLeftTimerWindow.Controls.Add(Me.lblLeftScaling)
         Me.gbLeftTimerWindow.Controls.Add(Me.Label12)
         Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Top)
         Me.gbLeftTimerWindow.Controls.Add(Me.Label13)
@@ -332,6 +360,26 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.TabIndex = 1
         Me.gbLeftTimerWindow.TabStop = False
         Me.gbLeftTimerWindow.Text = "Left Timer Window"
+        '
+        'cbLeftScaling
+        '
+        Me.cbLeftScaling.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbLeftScaling.FormattingEnabled = True
+        Me.cbLeftScaling.Items.AddRange(New Object() {"100%", "125%", "150%", "175%", "200%", "225%", "250%", "275%", "300%"})
+        Me.cbLeftScaling.Location = New System.Drawing.Point(242, 0)
+        Me.cbLeftScaling.Name = "cbLeftScaling"
+        Me.cbLeftScaling.Size = New System.Drawing.Size(54, 23)
+        Me.cbLeftScaling.TabIndex = 88
+        Me.cbLeftScaling.Text = "100%"
+        '
+        'lblLeftScaling
+        '
+        Me.lblLeftScaling.AutoSize = True
+        Me.lblLeftScaling.Location = New System.Drawing.Point(193, 4)
+        Me.lblLeftScaling.Name = "lblLeftScaling"
+        Me.lblLeftScaling.Size = New System.Drawing.Size(45, 13)
+        Me.lblLeftScaling.TabIndex = 87
+        Me.lblLeftScaling.Text = "Scaling:"
         '
         'Label12
         '
@@ -1203,4 +1251,8 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents btnTestSourceSettings As Button
     Friend WithEvents lblLeftRunnerTwitch As Label
     Friend WithEvents lblRightRunnerTwitch As Label
+    Friend WithEvents lblLeftScaling As Label
+    Friend WithEvents cbRightScaling As ComboBox
+    Friend WithEvents lblRightScaling As Label
+    Friend WithEvents cbLeftScaling As ComboBox
 End Class
