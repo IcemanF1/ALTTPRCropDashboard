@@ -502,12 +502,12 @@ Public Class ObsWebSocketCropper
 
         Dim leftSize = GetMasterSize(False)
         _masterHeightLeft = leftSize.Height
-        _masterWidthLeft = leftSize.Height
+        _masterWidthLeft = leftSize.Width
         _masterScaleLeft = ParsePercent(cbLeftScaling.Text)
 
         Dim rightSize = GetMasterSize(True)
         _masterHeightRight = rightSize.Height
-        _masterWidthRight = rightSize.Height
+        _masterWidthRight = rightSize.Width
         _masterScaleRight = ParsePercent(cbRightScaling.Text)
 
 
@@ -1612,7 +1612,7 @@ Public Class ObsWebSocketCropper
         btnConnectOBS2.Visible = My.Settings.ExpertMode
         btn2ndOBS.Visible = My.Settings.ExpertMode
     End Sub
-    Private Sub StartStreamlink(twitch As String)
+    Private Sub StartStreamlink(twitch As String, isRightWindow As Boolean)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
         If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
             Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Streamlink", "bin")
@@ -1635,6 +1635,17 @@ Public Class ObsWebSocketCropper
             replacedPath = fsDialog.FileName
         End If
 
+        Dim StreamLinkArguments As String = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close"
+
+        If isRightWindow = True Then
+            If Not String.IsNullOrWhiteSpace(My.Settings.RightStreamlinkVlcParams) Then
+                StreamLinkArguments = My.Settings.RightStreamlinkVlcParams
+            End If
+        Else
+            If Not String.IsNullOrWhiteSpace(My.Settings.LeftStreamlinkVlcParams) Then
+                StreamLinkArguments = My.Settings.LeftStreamlinkVlcParams
+            End If
+        End If
 
         Dim myProcess = New Process
         myProcess.StartInfo = New ProcessStartInfo With {
@@ -1642,8 +1653,8 @@ Public Class ObsWebSocketCropper
             .CreateNoWindow = True,
             .WindowStyle = ProcessWindowStyle.Hidden,
             .FileName = replacedPath,
-            .Arguments = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close",
-            .RedirectStandardError = False,
+            .Arguments = StreamLinkArguments,
+        .RedirectStandardError = False,
             .RedirectStandardOutput = True
                         }
 
@@ -1651,14 +1662,14 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink.Click
         If Not String.IsNullOrWhiteSpace(LeftRunnerTwitch) Then
-            StartStreamlink(LeftRunnerTwitch)
+            StartStreamlink(LeftRunnerTwitch, False)
         Else
             MsgBox("No Runner selected, cannot continue.")
         End If
     End Sub
     Private Sub lblRightStreamlink_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink.Click
         If Not String.IsNullOrWhiteSpace(RightRunnerTwitch) Then
-            StartStreamlink(RightRunnerTwitch)
+            StartStreamlink(RightRunnerTwitch, True)
         Else
             MsgBox("No Runner selected, cannot continue.")
         End If

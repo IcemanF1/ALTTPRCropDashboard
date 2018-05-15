@@ -86,5 +86,11 @@
     <Setting Name="StreamlinkPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">%LOCALAPPDATA%\Streamlink\bin\streamlink.exe</Value>
     </Setting>
+    <Setting Name="LeftStreamlinkVlcParams" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightStreamlinkVlcParams" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
