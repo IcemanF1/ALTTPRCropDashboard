@@ -82,7 +82,7 @@ Public Class ObsWebSocketCropper
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
         If ConnectionIsActive() = True Then
-            If _masterHeightLeft = 0 Then
+            If _masterHeightRight = 0 Then
                 SetMasterSourceDimensions()
             End If
             Try
@@ -324,34 +324,14 @@ Public Class ObsWebSocketCropper
     Private Sub GetCurrentCropSettings(isRightWindow As Boolean)
         Dim scenes = Obs.ListScenes()
 
-        Dim x As Integer
-        For x = 0 To scenes.Count - 1
-            Dim y As Integer
-            For y = 0 To scenes(x).Items.Count - 1
-                Dim itemName As String
-                itemName = scenes(x).Items(y).SourceName
-                If isRightWindow = True Then
-                    If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                        If itemName.ToLower = My.Settings.RightGameName.ToLower Then
-                            _rSourceHeight = scenes(x).Items(y).SourceHeight
-                            _rSourceWidth = scenes(x).Items(y).SourceWidth
-                        End If
-                    End If
-
-                Else
-                    If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                        If itemName.ToLower = My.Settings.LeftGameName.ToLower Then
-                            _lSourceHeight = scenes(x).Items(y).SourceHeight
-                            _lSourceWidth = scenes(x).Items(y).SourceWidth
-                        End If
-                    End If
-
-                End If
-
-
-            Next
-
-        Next
+        Dim theSize = GetMasterSize(isRightWindow)
+        If isRightWindow Then
+            _rSourceHeight = theSize.Height
+            _rSourceWidth = theSize.Width
+        Else
+            _lSourceHeight = theSize.Height
+            _lSourceWidth = theSize.Width
+        End If
 
         SetHeightLabels()
     End Sub
