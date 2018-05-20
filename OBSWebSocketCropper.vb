@@ -585,7 +585,7 @@ Public Class ObsWebSocketCropper
 
         Else
             If _masterHeightLeft > 0 And _masterWidthLeft > 0 Then
-                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+                If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
                     ProcessCrop(Rectangle.FromLTRB(_txtCropLeftGame_Left.Text,
                                                    _txtCropLeftGame_Top.Text,
                                                    _txtCropLeftGame_Right.Text,
@@ -597,7 +597,7 @@ Public Class ObsWebSocketCropper
                                 )
                 End If
 
-                If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+                If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
                     ProcessCrop(Rectangle.FromLTRB(_txtCropLeftTimer_Left.Text,
                                                    _txtCropLeftTimer_Top.Text,
                                                    _txtCropLeftTimer_Right.Text,
@@ -794,8 +794,30 @@ Public Class ObsWebSocketCropper
         cbRightVLCSource.DisplayMember = "VLCName"
         cbRightVLCSource.ValueMember = "VLCName"
 
-        cbRightVLCSource.Text = TRightVLC
-        cbLeftVLCSource.Text = TLeftVLC
+        cbRightVLCSource.Text = ""
+        cbLeftVLCSource.Text = ""
+
+        If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch.Text) Then
+            Dim y As Integer
+            For y = 0 To _vlcListLeft.Tables("Processes").Rows.Count - 1
+                If _vlcListLeft.Tables("Processes").Rows(y)("VLCName").ToString.ToLower.StartsWith(lblLeftRunnerTwitch.Text.ToLower.Remove(0, 8)) Then
+                    cbLeftVLCSource.Text = _vlcListLeft.Tables("Processes").Rows(y)("VLCName")
+                    Exit For
+                End If
+            Next
+        End If
+
+
+        If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch.Text) Then
+            Dim y As Integer
+            For y = 0 To _vlcListRight.Tables("Processes").Rows.Count - 1
+                If _vlcListRight.Tables("Processes").Rows(y)("VLCName").ToString.ToLower.StartsWith(lblRightRunnerTwitch.Text.ToLower.Remove(0, 8)) Then
+                    cbRightVLCSource.Text = _vlcListRight.Tables("Processes").Rows(y)("VLCName")
+                    Exit For
+                End If
+            Next
+        End If
+
 
     End Sub
     Private Sub ClearTextBoxes(isRightWindow As Boolean)
