@@ -216,7 +216,9 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub btnSyncWithServer_Click(sender As Object, e As EventArgs) Handles btnSyncWithServer.Click
-        SyncWithServer()
+        If ConnectionIsActive() = True Then
+            SyncWithServer()
+        End If
     End Sub
     Private Sub SyncWithServer()
         Me.Cursor = Cursors.WaitCursor
@@ -318,6 +320,42 @@ Public Class ObsWebSocketCropper
         End If
 
 
+    End Sub
+    Private Sub btnLeftTimerDB_Click(sender As Object, e As EventArgs) Handles btnLeftTimerDB.Click
+        ClearTextBoxes(False, "Timer")
+        RefreshCropFromData(False, "Timer")
+    End Sub
+    Private Sub btnLeftGameDB_Click(sender As Object, e As EventArgs) Handles btnLeftGameDB.Click
+        ClearTextBoxes(False, "Game")
+        RefreshCropFromData(False, "Game")
+    End Sub
+    Private Sub btnRightTimerDB_Click(sender As Object, e As EventArgs) Handles btnRightTimerDB.Click
+        ClearTextBoxes(True, "Timer")
+        RefreshCropFromData(True, "Timer")
+    End Sub
+    Private Sub btnRightGameDB_Click(sender As Object, e As EventArgs) Handles btnRightGameDB.Click
+        ClearTextBoxes(True, "Game")
+        RefreshCropFromData(True, "Game")
+    End Sub
+    Private Sub btnLeftTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftTimerUncrop.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
+            Uncrop(My.Settings.LeftTimerName)
+        End If
+    End Sub
+    Private Sub btnRightTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnRightTimerUncrop.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
+            Uncrop(My.Settings.RightTimerName)
+        End If
+    End Sub
+    Private Sub btnRightGameUncrop_Click(sender As Object, e As EventArgs) Handles btnRightGameUncrop.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
+            Uncrop(My.Settings.RightGameName)
+        End If
+    End Sub
+    Private Sub btnLeftGameUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftGameUncrop.Click
+        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
+            Uncrop(My.Settings.LeftGameName)
+        End If
     End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
@@ -494,7 +532,7 @@ Public Class ObsWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub ResetHeightWidthLabels()
-        lblLMasterHeight.Text = "Master Height: 0"
+        lblLMasterHeight.Text = "Master Height:  0"
         lblLMasterWidth.Text = "Master Width: 0"
         lblLSourceHeight.Text = "Source Height: 0"
         lblLSourceWidth.Text = "Master Width: 0"
@@ -647,7 +685,7 @@ Public Class ObsWebSocketCropper
         Return Double.Parse(percent.Replace("%",""))/100.0
     End Function
 
-    Private Sub RefreshCropFromData(isRightWindow As Boolean)
+    Private Sub RefreshCropFromData(isRightWindow As Boolean, ByVal RefreshAction As String)
         If Not Obs.IsConnected Then
             Return
         End If
@@ -695,42 +733,49 @@ Public Class ObsWebSocketCropper
             savedMasterSize = New Size(runnerInfo.SizeWidth, runnerInfo.SizeHeight)
 
             If isRightWindow Then
-                realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
-                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbRightScaling.Text))
-                txtCropRightTimer_Top.Text = realCrop.Top
-                txtCropRightTimer_Bottom.Text = realCrop.Bottom
-                txtCropRightTimer_Left.Text = realCrop.Left
-                txtCropRightTimer_Right.Text = realCrop.Right
+                If RefreshAction = "Both" Or RefreshAction = "Timer" Then
+                    realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
+                    realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbRightScaling.Text))
+                    txtCropRightTimer_Top.Text = realCrop.Top
+                    txtCropRightTimer_Bottom.Text = realCrop.Bottom
+                    txtCropRightTimer_Left.Text = realCrop.Left
+                    txtCropRightTimer_Right.Text = realCrop.Right
+                End If
             Else
-                realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
-                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbLeftScaling.Text))
-                txtCropLeftTimer_Top.Text = realCrop.Top
-                txtCropLeftTimer_Bottom.Text = realCrop.Bottom
-                txtCropLeftTimer_Left.Text = realCrop.Left
-                txtCropLeftTimer_Right.Text = realCrop.Right
+                If RefreshAction = "Both" Or RefreshAction = "Timer" Then
+                    realMasterSize = _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(savedMasterSize), scaling)
+                    realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, ParsePercent(cbLeftScaling.Text))
+                    txtCropLeftTimer_Top.Text = realCrop.Top
+                    txtCropLeftTimer_Bottom.Text = realCrop.Bottom
+                    txtCropLeftTimer_Left.Text = realCrop.Left
+                    txtCropLeftTimer_Right.Text = realCrop.Right
+                End If
             End If
 
             savedCrop = Rectangle.FromLTRB(runnerInfo.GameCropLeft, runnerInfo.GameCropTop, runnerInfo.GameCropRight, runnerInfo.GameCropBottom)
             realCrop = _cropperMath.AddDefaultCrop(savedCrop)
 
             If isRightWindow Then
-                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
-                txtCropRightGame_Top.Text = realCrop.Top
-                txtCropRightGame_Bottom.Text = realCrop.Bottom
-                txtCropRightGame_Left.Text = realCrop.Left
-                txtCropRightGame_Right.Text = realCrop.Right
-                RightRunnerTwitch = runnerInfo.Runner
-                lblRightRunnerTwitch.Text = "Twitch: " & RightRunnerTwitch
+                If RefreshAction = "Both" Or RefreshAction = "Game" Then
+                    realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
+                    txtCropRightGame_Top.Text = realCrop.Top
+                    txtCropRightGame_Bottom.Text = realCrop.Bottom
+                    txtCropRightGame_Left.Text = realCrop.Left
+                    txtCropRightGame_Right.Text = realCrop.Right
+                    RightRunnerTwitch = runnerInfo.Runner
+                    lblRightRunnerTwitch.Text = "Twitch: " & RightRunnerTwitch
+                End If
             Else
-                realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
-                txtCropLeftGame_Top.Text = realCrop.Top
-                txtCropLeftGame_Bottom.Text = realCrop.Bottom
-                txtCropLeftGame_Left.Text = realCrop.Left
-                txtCropLeftGame_Right.Text = realCrop.Right
-                LeftRunnerTwitch = runnerInfo.Runner
-                lblLeftRunnerTwitch.Text = "Twitch: " & LeftRunnerTwitch
+                If RefreshAction = "Both" Or RefreshAction = "Game" Then
+                    realCrop = _cropperMath.AddScaling(realCrop, realMasterSize, scaling)
+                    txtCropLeftGame_Top.Text = realCrop.Top
+                    txtCropLeftGame_Bottom.Text = realCrop.Bottom
+                    txtCropLeftGame_Left.Text = realCrop.Left
+                    txtCropLeftGame_Right.Text = realCrop.Right
+                    LeftRunnerTwitch = runnerInfo.Runner
+                    lblLeftRunnerTwitch.Text = "Twitch: " & LeftRunnerTwitch
+                End If
             End If
-
 
             If isRightWindow Then
                 _masterWidthRight = realMasterSize.Width
@@ -820,25 +865,31 @@ Public Class ObsWebSocketCropper
 
 
     End Sub
-    Private Sub ClearTextBoxes(isRightWindow As Boolean)
+    Private Sub ClearTextBoxes(isRightWindow As Boolean, ByVal RefreshAction As String)
         If isRightWindow = True Then
-            txtCropRightGame_Bottom.Text = ""
-            txtCropRightGame_Left.Text = ""
-            txtCropRightGame_Right.Text = ""
-            txtCropRightGame_Top.Text = ""
-            txtCropRightTimer_Bottom.Text = ""
-            txtCropRightTimer_Left.Text = ""
-            txtCropRightTimer_Right.Text = ""
-            txtCropRightTimer_Top.Text = ""
+            If RefreshAction = "Both" Or RefreshAction = "Game" Then
+                txtCropRightGame_Bottom.Text = ""
+                txtCropRightGame_Left.Text = ""
+                txtCropRightGame_Right.Text = ""
+                txtCropRightGame_Top.Text = ""
+            ElseIf RefreshAction = "Both" Or RefreshAction = "Timer" Then
+                txtCropRightTimer_Bottom.Text = ""
+                txtCropRightTimer_Left.Text = ""
+                txtCropRightTimer_Right.Text = ""
+                txtCropRightTimer_Top.Text = ""
+            End If
         Else
-            txtCropLeftGame_Bottom.Text = ""
-            txtCropLeftGame_Left.Text = ""
-            txtCropLeftGame_Right.Text = ""
-            txtCropLeftGame_Top.Text = ""
-            txtCropLeftTimer_Bottom.Text = ""
-            txtCropLeftTimer_Left.Text = ""
-            txtCropLeftTimer_Right.Text = ""
-            txtCropLeftTimer_Top.Text = ""
+            If RefreshAction = "Both" Or RefreshAction = "Game" Then
+                txtCropLeftGame_Bottom.Text = ""
+                txtCropLeftGame_Left.Text = ""
+                txtCropLeftGame_Right.Text = ""
+                txtCropLeftGame_Top.Text = ""
+            ElseIf RefreshAction = "Both" Or RefreshAction = "Timer" Then
+                txtCropLeftTimer_Bottom.Text = ""
+                txtCropLeftTimer_Left.Text = ""
+                txtCropLeftTimer_Right.Text = ""
+                txtCropLeftTimer_Top.Text = ""
+            End If
         End If
     End Sub
     Private Sub FillCurrentCropInfoFromObs(isRightWindow As Boolean)
@@ -1016,14 +1067,14 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub cbRightRunner_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName.TextChanged
         If ReuseInfo = True Then
-            ClearTextBoxes(True)
-            RefreshCropFromData(True)
+            ClearTextBoxes(True, "Both")
+            RefreshCropFromData(True, "Both")
         End If
     End Sub
     Private Sub cbLeftRunner_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName.TextChanged
         If ReuseInfo = True Then
-            ClearTextBoxes(False)
-            RefreshCropFromData(False)
+            ClearTextBoxes(False, "Both")
+            RefreshCropFromData(False, "Both")
         End If
     End Sub
 #End Region
@@ -1613,6 +1664,10 @@ Public Class ObsWebSocketCropper
         lblOBS2ConnectedStatus.Visible = My.Settings.ExpertMode
         btnConnectOBS2.Visible = My.Settings.ExpertMode
         btn2ndOBS.Visible = My.Settings.ExpertMode
+        btnLeftGameDB.Visible = My.Settings.ExpertMode
+        btnLeftTimerDB.Visible = My.Settings.ExpertMode
+        btnRightTimerDB.Visible = My.Settings.ExpertMode
+        btnRightGameDB.Visible = My.Settings.ExpertMode
     End Sub
     Private Sub StartStreamlink(twitch As String, isRightWindow As Boolean)
         Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
@@ -1835,6 +1890,12 @@ Public Class ObsWebSocketCropper
         _masterWidthRight = newSize.Width
         _masterHeightRight = newSize.Height
         _masterScaleRight = newScale
+    End Sub
+    Private Sub Uncrop(ByVal sourceName As String)
+        Obs.SetSceneItemProperties(sourceName, 0, 0, 0, 0)
+        If ObsConnectionStatus2 = "Connected" Then
+            _obs2.SetSceneItemProperties(sourceName, 0, 0, 0, 0)
+        End If
     End Sub
 
 #End Region

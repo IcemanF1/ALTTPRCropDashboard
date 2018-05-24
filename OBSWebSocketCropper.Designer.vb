@@ -125,6 +125,14 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink = New System.Windows.Forms.Label()
         Me.lblLeftRunnerTwitch = New System.Windows.Forms.Label()
         Me.lblRightRunnerTwitch = New System.Windows.Forms.Label()
+        Me.btnLeftTimerDB = New System.Windows.Forms.Button()
+        Me.btnLeftGameDB = New System.Windows.Forms.Button()
+        Me.btnRightGameDB = New System.Windows.Forms.Button()
+        Me.btnRightTimerDB = New System.Windows.Forms.Button()
+        Me.btnLeftGameUncrop = New System.Windows.Forms.Button()
+        Me.btnLeftTimerUncrop = New System.Windows.Forms.Button()
+        Me.btnRightTimerUncrop = New System.Windows.Forms.Button()
+        Me.btnRightGameUncrop = New System.Windows.Forms.Button()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -136,7 +144,7 @@ Partial Class ObsWebSocketCropper
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(7, 76)
+        Me.Label1.Location = New System.Drawing.Point(7, 94)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(26, 13)
         Me.Label1.TabIndex = 1
@@ -155,14 +163,14 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightGame_Top
         '
-        Me.txtCropRightGame_Top.Location = New System.Drawing.Point(39, 73)
+        Me.txtCropRightGame_Top.Location = New System.Drawing.Point(39, 91)
         Me.txtCropRightGame_Top.Name = "txtCropRightGame_Top"
         Me.txtCropRightGame_Top.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightGame_Top.TabIndex = 7
         '
         'txtCropRightGame_Left
         '
-        Me.txtCropRightGame_Left.Location = New System.Drawing.Point(39, 37)
+        Me.txtCropRightGame_Left.Location = New System.Drawing.Point(39, 55)
         Me.txtCropRightGame_Left.Name = "txtCropRightGame_Left"
         Me.txtCropRightGame_Left.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightGame_Left.TabIndex = 3
@@ -170,7 +178,7 @@ Partial Class ObsWebSocketCropper
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 40)
+        Me.Label2.Location = New System.Drawing.Point(7, 58)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(25, 13)
         Me.Label2.TabIndex = 4
@@ -178,7 +186,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightGame_Right
         '
-        Me.txtCropRightGame_Right.Location = New System.Drawing.Point(196, 40)
+        Me.txtCropRightGame_Right.Location = New System.Drawing.Point(196, 58)
         Me.txtCropRightGame_Right.Name = "txtCropRightGame_Right"
         Me.txtCropRightGame_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightGame_Right.TabIndex = 5
@@ -186,7 +194,7 @@ Partial Class ObsWebSocketCropper
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(158, 43)
+        Me.Label3.Location = New System.Drawing.Point(158, 61)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(32, 13)
         Me.Label3.TabIndex = 6
@@ -194,7 +202,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightGame_Bottom
         '
-        Me.txtCropRightGame_Bottom.Location = New System.Drawing.Point(196, 76)
+        Me.txtCropRightGame_Bottom.Location = New System.Drawing.Point(196, 94)
         Me.txtCropRightGame_Bottom.Name = "txtCropRightGame_Bottom"
         Me.txtCropRightGame_Bottom.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightGame_Bottom.TabIndex = 9
@@ -202,7 +210,7 @@ Partial Class ObsWebSocketCropper
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(158, 79)
+        Me.Label4.Location = New System.Drawing.Point(158, 97)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(40, 13)
         Me.Label4.TabIndex = 8
@@ -222,6 +230,8 @@ Partial Class ObsWebSocketCropper
         'gbRightGameWindow
         '
         Me.gbRightGameWindow.BackColor = System.Drawing.Color.MistyRose
+        Me.gbRightGameWindow.Controls.Add(Me.btnRightGameUncrop)
+        Me.gbRightGameWindow.Controls.Add(Me.btnRightGameDB)
         Me.gbRightGameWindow.Controls.Add(Me.Label1)
         Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Top)
         Me.gbRightGameWindow.Controls.Add(Me.Label2)
@@ -240,6 +250,8 @@ Partial Class ObsWebSocketCropper
         'gbRightTimerWindow
         '
         Me.gbRightTimerWindow.BackColor = System.Drawing.Color.MistyRose
+        Me.gbRightTimerWindow.Controls.Add(Me.btnRightTimerUncrop)
+        Me.gbRightTimerWindow.Controls.Add(Me.btnRightTimerDB)
         Me.gbRightTimerWindow.Controls.Add(Me.cbRightScaling)
         Me.gbRightTimerWindow.Controls.Add(Me.lblRightScaling)
         Me.gbRightTimerWindow.Controls.Add(Me.Label7)
@@ -280,7 +292,7 @@ Partial Class ObsWebSocketCropper
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(7, 76)
+        Me.Label7.Location = New System.Drawing.Point(7, 85)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(26, 13)
         Me.Label7.TabIndex = 1
@@ -288,7 +300,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightTimer_Top
         '
-        Me.txtCropRightTimer_Top.Location = New System.Drawing.Point(39, 73)
+        Me.txtCropRightTimer_Top.Location = New System.Drawing.Point(39, 82)
         Me.txtCropRightTimer_Top.Name = "txtCropRightTimer_Top"
         Me.txtCropRightTimer_Top.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightTimer_Top.TabIndex = 7
@@ -296,7 +308,7 @@ Partial Class ObsWebSocketCropper
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(7, 40)
+        Me.Label8.Location = New System.Drawing.Point(7, 49)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(25, 13)
         Me.Label8.TabIndex = 4
@@ -304,14 +316,14 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightTimer_Left
         '
-        Me.txtCropRightTimer_Left.Location = New System.Drawing.Point(39, 37)
+        Me.txtCropRightTimer_Left.Location = New System.Drawing.Point(39, 46)
         Me.txtCropRightTimer_Left.Name = "txtCropRightTimer_Left"
         Me.txtCropRightTimer_Left.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightTimer_Left.TabIndex = 3
         '
         'txtCropRightTimer_Bottom
         '
-        Me.txtCropRightTimer_Bottom.Location = New System.Drawing.Point(196, 76)
+        Me.txtCropRightTimer_Bottom.Location = New System.Drawing.Point(196, 85)
         Me.txtCropRightTimer_Bottom.Name = "txtCropRightTimer_Bottom"
         Me.txtCropRightTimer_Bottom.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightTimer_Bottom.TabIndex = 9
@@ -319,7 +331,7 @@ Partial Class ObsWebSocketCropper
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(158, 43)
+        Me.Label9.Location = New System.Drawing.Point(158, 52)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(32, 13)
         Me.Label9.TabIndex = 6
@@ -328,7 +340,7 @@ Partial Class ObsWebSocketCropper
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(158, 79)
+        Me.Label10.Location = New System.Drawing.Point(158, 88)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(40, 13)
         Me.Label10.TabIndex = 8
@@ -336,7 +348,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropRightTimer_Right
         '
-        Me.txtCropRightTimer_Right.Location = New System.Drawing.Point(196, 40)
+        Me.txtCropRightTimer_Right.Location = New System.Drawing.Point(196, 49)
         Me.txtCropRightTimer_Right.Name = "txtCropRightTimer_Right"
         Me.txtCropRightTimer_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropRightTimer_Right.TabIndex = 5
@@ -344,6 +356,8 @@ Partial Class ObsWebSocketCropper
         'gbLeftTimerWindow
         '
         Me.gbLeftTimerWindow.BackColor = System.Drawing.Color.PaleGreen
+        Me.gbLeftTimerWindow.Controls.Add(Me.btnLeftTimerUncrop)
+        Me.gbLeftTimerWindow.Controls.Add(Me.btnLeftTimerDB)
         Me.gbLeftTimerWindow.Controls.Add(Me.cbLeftScaling)
         Me.gbLeftTimerWindow.Controls.Add(Me.lblLeftScaling)
         Me.gbLeftTimerWindow.Controls.Add(Me.Label12)
@@ -384,7 +398,7 @@ Partial Class ObsWebSocketCropper
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(7, 76)
+        Me.Label12.Location = New System.Drawing.Point(7, 82)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(26, 13)
         Me.Label12.TabIndex = 1
@@ -392,7 +406,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftTimer_Top
         '
-        Me.txtCropLeftTimer_Top.Location = New System.Drawing.Point(39, 73)
+        Me.txtCropLeftTimer_Top.Location = New System.Drawing.Point(39, 79)
         Me.txtCropLeftTimer_Top.Name = "txtCropLeftTimer_Top"
         Me.txtCropLeftTimer_Top.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftTimer_Top.TabIndex = 7
@@ -400,7 +414,7 @@ Partial Class ObsWebSocketCropper
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(7, 40)
+        Me.Label13.Location = New System.Drawing.Point(7, 46)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(25, 13)
         Me.Label13.TabIndex = 4
@@ -408,14 +422,14 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftTimer_Left
         '
-        Me.txtCropLeftTimer_Left.Location = New System.Drawing.Point(39, 37)
+        Me.txtCropLeftTimer_Left.Location = New System.Drawing.Point(39, 43)
         Me.txtCropLeftTimer_Left.Name = "txtCropLeftTimer_Left"
         Me.txtCropLeftTimer_Left.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftTimer_Left.TabIndex = 3
         '
         'txtCropLeftTimer_Bottom
         '
-        Me.txtCropLeftTimer_Bottom.Location = New System.Drawing.Point(196, 76)
+        Me.txtCropLeftTimer_Bottom.Location = New System.Drawing.Point(196, 82)
         Me.txtCropLeftTimer_Bottom.Name = "txtCropLeftTimer_Bottom"
         Me.txtCropLeftTimer_Bottom.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftTimer_Bottom.TabIndex = 9
@@ -423,7 +437,7 @@ Partial Class ObsWebSocketCropper
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(158, 43)
+        Me.Label14.Location = New System.Drawing.Point(158, 49)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(32, 13)
         Me.Label14.TabIndex = 6
@@ -432,7 +446,7 @@ Partial Class ObsWebSocketCropper
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(158, 79)
+        Me.Label15.Location = New System.Drawing.Point(158, 85)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(40, 13)
         Me.Label15.TabIndex = 8
@@ -440,7 +454,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftTimer_Right
         '
-        Me.txtCropLeftTimer_Right.Location = New System.Drawing.Point(196, 40)
+        Me.txtCropLeftTimer_Right.Location = New System.Drawing.Point(196, 46)
         Me.txtCropLeftTimer_Right.Name = "txtCropLeftTimer_Right"
         Me.txtCropLeftTimer_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftTimer_Right.TabIndex = 5
@@ -448,6 +462,8 @@ Partial Class ObsWebSocketCropper
         'gbLeftGameWindow
         '
         Me.gbLeftGameWindow.BackColor = System.Drawing.Color.PaleGreen
+        Me.gbLeftGameWindow.Controls.Add(Me.btnLeftGameUncrop)
+        Me.gbLeftGameWindow.Controls.Add(Me.btnLeftGameDB)
         Me.gbLeftGameWindow.Controls.Add(Me.Label17)
         Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Top)
         Me.gbLeftGameWindow.Controls.Add(Me.Label18)
@@ -466,7 +482,7 @@ Partial Class ObsWebSocketCropper
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(7, 76)
+        Me.Label17.Location = New System.Drawing.Point(7, 97)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(26, 13)
         Me.Label17.TabIndex = 1
@@ -474,7 +490,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftGame_Top
         '
-        Me.txtCropLeftGame_Top.Location = New System.Drawing.Point(39, 73)
+        Me.txtCropLeftGame_Top.Location = New System.Drawing.Point(39, 94)
         Me.txtCropLeftGame_Top.Name = "txtCropLeftGame_Top"
         Me.txtCropLeftGame_Top.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftGame_Top.TabIndex = 7
@@ -482,7 +498,7 @@ Partial Class ObsWebSocketCropper
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(7, 40)
+        Me.Label18.Location = New System.Drawing.Point(7, 61)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(25, 13)
         Me.Label18.TabIndex = 4
@@ -490,14 +506,14 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftGame_Left
         '
-        Me.txtCropLeftGame_Left.Location = New System.Drawing.Point(39, 37)
+        Me.txtCropLeftGame_Left.Location = New System.Drawing.Point(39, 58)
         Me.txtCropLeftGame_Left.Name = "txtCropLeftGame_Left"
         Me.txtCropLeftGame_Left.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftGame_Left.TabIndex = 3
         '
         'txtCropLeftGame_Bottom
         '
-        Me.txtCropLeftGame_Bottom.Location = New System.Drawing.Point(196, 76)
+        Me.txtCropLeftGame_Bottom.Location = New System.Drawing.Point(196, 97)
         Me.txtCropLeftGame_Bottom.Name = "txtCropLeftGame_Bottom"
         Me.txtCropLeftGame_Bottom.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftGame_Bottom.TabIndex = 9
@@ -505,7 +521,7 @@ Partial Class ObsWebSocketCropper
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(158, 43)
+        Me.Label19.Location = New System.Drawing.Point(158, 64)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(32, 13)
         Me.Label19.TabIndex = 6
@@ -514,7 +530,7 @@ Partial Class ObsWebSocketCropper
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(158, 79)
+        Me.Label20.Location = New System.Drawing.Point(158, 100)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(40, 13)
         Me.Label20.TabIndex = 8
@@ -522,7 +538,7 @@ Partial Class ObsWebSocketCropper
         '
         'txtCropLeftGame_Right
         '
-        Me.txtCropLeftGame_Right.Location = New System.Drawing.Point(196, 40)
+        Me.txtCropLeftGame_Right.Location = New System.Drawing.Point(196, 61)
         Me.txtCropLeftGame_Right.Name = "txtCropLeftGame_Right"
         Me.txtCropLeftGame_Right.Size = New System.Drawing.Size(100, 20)
         Me.txtCropLeftGame_Right.TabIndex = 5
@@ -1078,6 +1094,86 @@ Partial Class ObsWebSocketCropper
         Me.lblRightRunnerTwitch.TabIndex = 86
         Me.lblRightRunnerTwitch.Text = "Runner Twitch"
         '
+        'btnLeftTimerDB
+        '
+        Me.btnLeftTimerDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftTimerDB.Name = "btnLeftTimerDB"
+        Me.btnLeftTimerDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftTimerDB.TabIndex = 87
+        Me.btnLeftTimerDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerDB, "Resets the timer data to what the current DB has")
+        Me.btnLeftTimerDB.UseVisualStyleBackColor = True
+        '
+        'btnLeftGameDB
+        '
+        Me.btnLeftGameDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftGameDB.Name = "btnLeftGameDB"
+        Me.btnLeftGameDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftGameDB.TabIndex = 89
+        Me.btnLeftGameDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameDB, "Resets the game data to what the current DB has")
+        Me.btnLeftGameDB.UseVisualStyleBackColor = True
+        '
+        'btnRightGameDB
+        '
+        Me.btnRightGameDB.Location = New System.Drawing.Point(40, 19)
+        Me.btnRightGameDB.Name = "btnRightGameDB"
+        Me.btnRightGameDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightGameDB.TabIndex = 88
+        Me.btnRightGameDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameDB, "Resets the game data to what the current DB has")
+        Me.btnRightGameDB.UseVisualStyleBackColor = True
+        '
+        'btnRightTimerDB
+        '
+        Me.btnRightTimerDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnRightTimerDB.Name = "btnRightTimerDB"
+        Me.btnRightTimerDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightTimerDB.TabIndex = 91
+        Me.btnRightTimerDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerDB, "Resets the timer data to what the current DB has")
+        Me.btnRightTimerDB.UseVisualStyleBackColor = True
+        '
+        'btnLeftGameUncrop
+        '
+        Me.btnLeftGameUncrop.Location = New System.Drawing.Point(145, 19)
+        Me.btnLeftGameUncrop.Name = "btnLeftGameUncrop"
+        Me.btnLeftGameUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftGameUncrop.TabIndex = 90
+        Me.btnLeftGameUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameUncrop, "Sets OBS to 0 crop for the game")
+        Me.btnLeftGameUncrop.UseVisualStyleBackColor = True
+        '
+        'btnLeftTimerUncrop
+        '
+        Me.btnLeftTimerUncrop.Location = New System.Drawing.Point(145, 17)
+        Me.btnLeftTimerUncrop.Name = "btnLeftTimerUncrop"
+        Me.btnLeftTimerUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftTimerUncrop.TabIndex = 91
+        Me.btnLeftTimerUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerUncrop, "Sets OBS to 0 crop for the timer")
+        Me.btnLeftTimerUncrop.UseVisualStyleBackColor = True
+        '
+        'btnRightTimerUncrop
+        '
+        Me.btnRightTimerUncrop.Location = New System.Drawing.Point(145, 20)
+        Me.btnRightTimerUncrop.Name = "btnRightTimerUncrop"
+        Me.btnRightTimerUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightTimerUncrop.TabIndex = 92
+        Me.btnRightTimerUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerUncrop, "Sets OBS to 0 crop for the timer")
+        Me.btnRightTimerUncrop.UseVisualStyleBackColor = True
+        '
+        'btnRightGameUncrop
+        '
+        Me.btnRightGameUncrop.Location = New System.Drawing.Point(145, 19)
+        Me.btnRightGameUncrop.Name = "btnRightGameUncrop"
+        Me.btnRightGameUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightGameUncrop.TabIndex = 93
+        Me.btnRightGameUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameUncrop, "Sets OBS to 0 crop for the game")
+        Me.btnRightGameUncrop.UseVisualStyleBackColor = True
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1255,4 +1351,12 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents cbRightScaling As ComboBox
     Friend WithEvents lblRightScaling As Label
     Friend WithEvents cbLeftScaling As ComboBox
+    Friend WithEvents btnRightGameDB As Button
+    Friend WithEvents btnRightTimerDB As Button
+    Friend WithEvents btnLeftTimerDB As Button
+    Friend WithEvents btnLeftGameDB As Button
+    Friend WithEvents btnRightGameUncrop As Button
+    Friend WithEvents btnRightTimerUncrop As Button
+    Friend WithEvents btnLeftTimerUncrop As Button
+    Friend WithEvents btnLeftGameUncrop As Button
 End Class
