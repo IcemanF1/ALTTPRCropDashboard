@@ -177,6 +177,9 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Data\ViewModels\CropperViewModel.vb" />
+    <Compile Include="Data\ViewModels\RunnerViewModel.vb" />
+    <Compile Include="Data\ViewModels\CropViewModel.vb" />
     <Compile Include="NewRunner.Designer.vb">
       <DependentUpon>NewRunner.vb</DependentUpon>
     </Compile>
@@ -214,12 +217,14 @@
     <Compile Include="OBSWebSocketPlus.vb" />
     <Compile Include="Data\RunnerInfo.vb" />
     <Compile Include="Data\RunnerCrop.vb" />
+    <Compile Include="Data\ViewModels\SizeViewModel.vb" />
     <Compile Include="UserSettings.Designer.vb">
       <DependentUpon>UserSettings.vb</DependentUpon>
     </Compile>
     <Compile Include="UserSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Data\ViewModels\ViewModelBase.vb" />
     <Compile Include="VLCSettings.Designer.vb">
       <DependentUpon>VLCSettings.vb</DependentUpon>
     </Compile>
