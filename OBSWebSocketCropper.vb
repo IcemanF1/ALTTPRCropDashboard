@@ -843,24 +843,20 @@ Public Class ObsWebSocketCropper
         cbLeftVLCSource.Text = ""
 
         If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch.Text) Then
-            Dim y As Integer
-            For y = 0 To _vlcListLeft.Tables("Processes").Rows.Count - 1
-                If _vlcListLeft.Tables("Processes").Rows(y)("VLCName").ToString.ToLower.StartsWith(lblLeftRunnerTwitch.Text.ToLower.Remove(0, 8)) Then
-                    cbLeftVLCSource.Text = _vlcListLeft.Tables("Processes").Rows(y)("VLCName")
-                    Exit For
-                End If
-            Next
+            Dim row As DataRow = _vlcListLeft.Tables("Processes").Select("VLCName like '%" & lblLeftRunnerTwitch.Text.ToLower.Remove(0, 8) & "%'").FirstOrDefault()
+
+            If Not row Is Nothing Then
+                cbLeftVLCSource.Text = row.Item(0).ToString
+            End If
         End If
 
 
         If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch.Text) Then
-            Dim y As Integer
-            For y = 0 To _vlcListRight.Tables("Processes").Rows.Count - 1
-                If _vlcListRight.Tables("Processes").Rows(y)("VLCName").ToString.ToLower.StartsWith(lblRightRunnerTwitch.Text.ToLower.Remove(0, 8)) Then
-                    cbRightVLCSource.Text = _vlcListRight.Tables("Processes").Rows(y)("VLCName")
-                    Exit For
-                End If
-            Next
+            Dim row As DataRow = _vlcListRight.Tables("Processes").Select("VLCName like '%" & lblRightRunnerTwitch.Text.ToLower.Remove(0, 8) & "%'").FirstOrDefault()
+
+            If Not row Is Nothing Then
+                cbRightVLCSource.Text = row.Item(0).ToString
+            End If
         End If
 
 
@@ -1892,9 +1888,9 @@ Public Class ObsWebSocketCropper
         _masterScaleRight = newScale
     End Sub
     Private Sub Uncrop(ByVal sourceName As String)
-        Obs.SetSceneItemProperties(sourceName, 0, 0, 0, 0)
+        Obs.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0)
         If ObsConnectionStatus2 = "Connected" Then
-            _obs2.SetSceneItemProperties(sourceName, 0, 0, 0, 0)
+            _obs2.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0)
         End If
     End Sub
 
