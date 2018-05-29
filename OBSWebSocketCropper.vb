@@ -144,6 +144,11 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
         If ConnectionIsActive() = True Then
+            Dim TrackerURL As String
+            If Not String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings("TrackerURL")) Then
+                TrackerURL = ConfigurationManager.AppSettings("TrackerURL")
+            End If
+
             If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) Then
                 If cbLeftRunnerName.Text.Trim.Length > 0 Then
                     Obs.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text)
@@ -174,7 +179,9 @@ Public Class ObsWebSocketCropper
                     If txtLeftTrackerURL.Text.ToLower.StartsWith("http") Then
                         TrackerString = txtLeftTrackerURL.Text
                     Else
-                        TrackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtLeftTrackerURL.Text
+                        If Not String.IsNullOrWhiteSpace(TrackerURL) Then
+                            TrackerString = TrackerURL & txtLeftTrackerURL.Text
+                        End If
                     End If
                     Obs.SetBrowserSource(My.Settings.LeftTrackerOBS, TrackerString)
                     If ObsConnectionStatus2 = "Connected" Then
@@ -182,13 +189,16 @@ Public Class ObsWebSocketCropper
                     End If
                 End If
             End If
+
             If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) Then
                 If txtRightTrackerURL.Text.Trim.Length > 0 Then
                     Dim TrackerString As String
                     If txtRightTrackerURL.Text.ToLower.StartsWith("http") Then
                         TrackerString = txtRightTrackerURL.Text
                     Else
-                        TrackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtRightTrackerURL.Text
+                        If Not String.IsNullOrWhiteSpace(TrackerURL) Then
+                            TrackerString = TrackerURL & txtRightTrackerURL.Text
+                        End If
                     End If
                     Obs.SetBrowserSource(My.Settings.RightTrackerOBS, TrackerString)
                     If ObsConnectionStatus2 = "Connected" Then
