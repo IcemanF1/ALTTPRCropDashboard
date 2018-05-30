@@ -105,6 +105,7 @@ Public Class ObsWebSocketCropper
             DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text))
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtLeftTrackerURL.Text) Then
+            Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
             Dim trackerString As String
             If txtLeftTrackerURL.Text.ToLower.StartsWith("http") Then
                 trackerString = txtLeftTrackerURL.Text
@@ -114,7 +115,8 @@ Public Class ObsWebSocketCropper
 
             DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.LeftTrackerOBS, trackerString))
         End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL.Text) Then
+        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL.Text) ThenDim TrackerURL As String
+            Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
             Dim trackerString As String
             If txtRightTrackerURL.Text.ToLower.StartsWith("http") Then
                 trackerString = txtRightTrackerURL.Text
