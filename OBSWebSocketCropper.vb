@@ -110,18 +110,18 @@ Public Class ObsWebSocketCropper
             If txtLeftTrackerURL.Text.ToLower.StartsWith("http") Then
                 trackerString = txtLeftTrackerURL.Text
             Else
-                trackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtLeftTrackerURL.Text
+                trackerString = TrackerURL & txtLeftTrackerURL.Text
             End If
 
             DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.LeftTrackerOBS, trackerString))
         End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL.Text) ThenDim TrackerURL As String
+        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL.Text) Then
             Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
             Dim trackerString As String
             If txtRightTrackerURL.Text.ToLower.StartsWith("http") Then
                 trackerString = txtRightTrackerURL.Text
             Else
-                trackerString = "https://lttp-tracker-spring2018.firebaseapp.com/" & txtRightTrackerURL.Text
+                trackerString = TrackerURL & txtRightTrackerURL.Text
             End If
 
             DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.RightTrackerOBS, trackerString))
