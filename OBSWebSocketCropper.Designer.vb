@@ -35,7 +35,11 @@ Partial Class ObsWebSocketCropper
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnConnectOBS1 = New System.Windows.Forms.Button()
         Me.gbRightGameWindow = New System.Windows.Forms.GroupBox()
+        Me.btnRightGameUncrop = New System.Windows.Forms.Button()
+        Me.btnRightGameDB = New System.Windows.Forms.Button()
         Me.gbRightTimerWindow = New System.Windows.Forms.GroupBox()
+        Me.btnRightTimerUncrop = New System.Windows.Forms.Button()
+        Me.btnRightTimerDB = New System.Windows.Forms.Button()
         Me.cbRightScaling = New System.Windows.Forms.ComboBox()
         Me.lblRightScaling = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -47,6 +51,8 @@ Partial Class ObsWebSocketCropper
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txtCropRightTimer_Right = New System.Windows.Forms.TextBox()
         Me.gbLeftTimerWindow = New System.Windows.Forms.GroupBox()
+        Me.btnLeftTimerUncrop = New System.Windows.Forms.Button()
+        Me.btnLeftTimerDB = New System.Windows.Forms.Button()
         Me.cbLeftScaling = New System.Windows.Forms.ComboBox()
         Me.lblLeftScaling = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -58,6 +64,8 @@ Partial Class ObsWebSocketCropper
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtCropLeftTimer_Right = New System.Windows.Forms.TextBox()
         Me.gbLeftGameWindow = New System.Windows.Forms.GroupBox()
+        Me.btnLeftGameUncrop = New System.Windows.Forms.Button()
+        Me.btnLeftGameDB = New System.Windows.Forms.Button()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.txtCropLeftGame_Top = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -125,14 +133,6 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink = New System.Windows.Forms.Label()
         Me.lblLeftRunnerTwitch = New System.Windows.Forms.Label()
         Me.lblRightRunnerTwitch = New System.Windows.Forms.Label()
-        Me.btnLeftTimerDB = New System.Windows.Forms.Button()
-        Me.btnLeftGameDB = New System.Windows.Forms.Button()
-        Me.btnRightGameDB = New System.Windows.Forms.Button()
-        Me.btnRightTimerDB = New System.Windows.Forms.Button()
-        Me.btnLeftGameUncrop = New System.Windows.Forms.Button()
-        Me.btnLeftTimerUncrop = New System.Windows.Forms.Button()
-        Me.btnRightTimerUncrop = New System.Windows.Forms.Button()
-        Me.btnRightGameUncrop = New System.Windows.Forms.Button()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -247,6 +247,26 @@ Partial Class ObsWebSocketCropper
         Me.gbRightGameWindow.TabStop = False
         Me.gbRightGameWindow.Text = "Right Game Window"
         '
+        'btnRightGameUncrop
+        '
+        Me.btnRightGameUncrop.Location = New System.Drawing.Point(145, 19)
+        Me.btnRightGameUncrop.Name = "btnRightGameUncrop"
+        Me.btnRightGameUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightGameUncrop.TabIndex = 93
+        Me.btnRightGameUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameUncrop, "Sets OBS to 0 crop for the game")
+        Me.btnRightGameUncrop.UseVisualStyleBackColor = True
+        '
+        'btnRightGameDB
+        '
+        Me.btnRightGameDB.Location = New System.Drawing.Point(40, 19)
+        Me.btnRightGameDB.Name = "btnRightGameDB"
+        Me.btnRightGameDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightGameDB.TabIndex = 88
+        Me.btnRightGameDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameDB, "Resets the game data to what the current DB has")
+        Me.btnRightGameDB.UseVisualStyleBackColor = True
+        '
         'gbRightTimerWindow
         '
         Me.gbRightTimerWindow.BackColor = System.Drawing.Color.MistyRose
@@ -268,6 +288,26 @@ Partial Class ObsWebSocketCropper
         Me.gbRightTimerWindow.TabIndex = 4
         Me.gbRightTimerWindow.TabStop = False
         Me.gbRightTimerWindow.Text = "Right Timer Window"
+        '
+        'btnRightTimerUncrop
+        '
+        Me.btnRightTimerUncrop.Location = New System.Drawing.Point(145, 20)
+        Me.btnRightTimerUncrop.Name = "btnRightTimerUncrop"
+        Me.btnRightTimerUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightTimerUncrop.TabIndex = 92
+        Me.btnRightTimerUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerUncrop, "Sets OBS to 0 crop for the timer")
+        Me.btnRightTimerUncrop.UseVisualStyleBackColor = True
+        '
+        'btnRightTimerDB
+        '
+        Me.btnRightTimerDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnRightTimerDB.Name = "btnRightTimerDB"
+        Me.btnRightTimerDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightTimerDB.TabIndex = 91
+        Me.btnRightTimerDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerDB, "Resets the timer data to what the current DB has")
+        Me.btnRightTimerDB.UseVisualStyleBackColor = True
         '
         'cbRightScaling
         '
@@ -375,6 +415,26 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.TabStop = False
         Me.gbLeftTimerWindow.Text = "Left Timer Window"
         '
+        'btnLeftTimerUncrop
+        '
+        Me.btnLeftTimerUncrop.Location = New System.Drawing.Point(145, 17)
+        Me.btnLeftTimerUncrop.Name = "btnLeftTimerUncrop"
+        Me.btnLeftTimerUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftTimerUncrop.TabIndex = 91
+        Me.btnLeftTimerUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerUncrop, "Sets OBS to 0 crop for the timer")
+        Me.btnLeftTimerUncrop.UseVisualStyleBackColor = True
+        '
+        'btnLeftTimerDB
+        '
+        Me.btnLeftTimerDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftTimerDB.Name = "btnLeftTimerDB"
+        Me.btnLeftTimerDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftTimerDB.TabIndex = 87
+        Me.btnLeftTimerDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerDB, "Resets the timer data to what the current DB has")
+        Me.btnLeftTimerDB.UseVisualStyleBackColor = True
+        '
         'cbLeftScaling
         '
         Me.cbLeftScaling.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -479,6 +539,26 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftGameWindow.TabStop = False
         Me.gbLeftGameWindow.Text = "Left Game Window"
         '
+        'btnLeftGameUncrop
+        '
+        Me.btnLeftGameUncrop.Location = New System.Drawing.Point(145, 19)
+        Me.btnLeftGameUncrop.Name = "btnLeftGameUncrop"
+        Me.btnLeftGameUncrop.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftGameUncrop.TabIndex = 90
+        Me.btnLeftGameUncrop.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameUncrop, "Sets OBS to 0 crop for the game")
+        Me.btnLeftGameUncrop.UseVisualStyleBackColor = True
+        '
+        'btnLeftGameDB
+        '
+        Me.btnLeftGameDB.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftGameDB.Name = "btnLeftGameDB"
+        Me.btnLeftGameDB.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftGameDB.TabIndex = 89
+        Me.btnLeftGameDB.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameDB, "Resets the game data to what the current DB has")
+        Me.btnLeftGameDB.UseVisualStyleBackColor = True
+        '
         'Label17
         '
         Me.Label17.AutoSize = True
@@ -576,19 +656,23 @@ Partial Class ObsWebSocketCropper
         '
         'cbLeftRunnerName
         '
+        Me.cbLeftRunnerName.DisplayMember = "RacerName"
         Me.cbLeftRunnerName.FormattingEnabled = True
         Me.cbLeftRunnerName.Location = New System.Drawing.Point(248, 103)
         Me.cbLeftRunnerName.Name = "cbLeftRunnerName"
         Me.cbLeftRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftRunnerName.TabIndex = 14
+        Me.cbLeftRunnerName.ValueMember = "RacerName"
         '
         'cbRightRunnerName
         '
+        Me.cbRightRunnerName.DisplayMember = "RacerName"
         Me.cbRightRunnerName.FormattingEnabled = True
         Me.cbRightRunnerName.Location = New System.Drawing.Point(590, 103)
         Me.cbRightRunnerName.Name = "cbRightRunnerName"
         Me.cbRightRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbRightRunnerName.TabIndex = 26
+        Me.cbRightRunnerName.ValueMember = "RacerName"
         '
         'lblLMasterHeight
         '
@@ -1093,86 +1177,6 @@ Partial Class ObsWebSocketCropper
         Me.lblRightRunnerTwitch.Size = New System.Drawing.Size(77, 13)
         Me.lblRightRunnerTwitch.TabIndex = 86
         Me.lblRightRunnerTwitch.Text = "Runner Twitch"
-        '
-        'btnLeftTimerDB
-        '
-        Me.btnLeftTimerDB.Location = New System.Drawing.Point(39, 19)
-        Me.btnLeftTimerDB.Name = "btnLeftTimerDB"
-        Me.btnLeftTimerDB.Size = New System.Drawing.Size(52, 23)
-        Me.btnLeftTimerDB.TabIndex = 87
-        Me.btnLeftTimerDB.Text = "Reset"
-        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerDB, "Resets the timer data to what the current DB has")
-        Me.btnLeftTimerDB.UseVisualStyleBackColor = True
-        '
-        'btnLeftGameDB
-        '
-        Me.btnLeftGameDB.Location = New System.Drawing.Point(39, 19)
-        Me.btnLeftGameDB.Name = "btnLeftGameDB"
-        Me.btnLeftGameDB.Size = New System.Drawing.Size(52, 23)
-        Me.btnLeftGameDB.TabIndex = 89
-        Me.btnLeftGameDB.Text = "Reset"
-        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameDB, "Resets the game data to what the current DB has")
-        Me.btnLeftGameDB.UseVisualStyleBackColor = True
-        '
-        'btnRightGameDB
-        '
-        Me.btnRightGameDB.Location = New System.Drawing.Point(40, 19)
-        Me.btnRightGameDB.Name = "btnRightGameDB"
-        Me.btnRightGameDB.Size = New System.Drawing.Size(52, 23)
-        Me.btnRightGameDB.TabIndex = 88
-        Me.btnRightGameDB.Text = "Reset"
-        Me.ttMainToolTip.SetToolTip(Me.btnRightGameDB, "Resets the game data to what the current DB has")
-        Me.btnRightGameDB.UseVisualStyleBackColor = True
-        '
-        'btnRightTimerDB
-        '
-        Me.btnRightTimerDB.Location = New System.Drawing.Point(39, 19)
-        Me.btnRightTimerDB.Name = "btnRightTimerDB"
-        Me.btnRightTimerDB.Size = New System.Drawing.Size(52, 23)
-        Me.btnRightTimerDB.TabIndex = 91
-        Me.btnRightTimerDB.Text = "Reset"
-        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerDB, "Resets the timer data to what the current DB has")
-        Me.btnRightTimerDB.UseVisualStyleBackColor = True
-        '
-        'btnLeftGameUncrop
-        '
-        Me.btnLeftGameUncrop.Location = New System.Drawing.Point(145, 19)
-        Me.btnLeftGameUncrop.Name = "btnLeftGameUncrop"
-        Me.btnLeftGameUncrop.Size = New System.Drawing.Size(53, 23)
-        Me.btnLeftGameUncrop.TabIndex = 90
-        Me.btnLeftGameUncrop.Text = "Uncrop"
-        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameUncrop, "Sets OBS to 0 crop for the game")
-        Me.btnLeftGameUncrop.UseVisualStyleBackColor = True
-        '
-        'btnLeftTimerUncrop
-        '
-        Me.btnLeftTimerUncrop.Location = New System.Drawing.Point(145, 17)
-        Me.btnLeftTimerUncrop.Name = "btnLeftTimerUncrop"
-        Me.btnLeftTimerUncrop.Size = New System.Drawing.Size(53, 23)
-        Me.btnLeftTimerUncrop.TabIndex = 91
-        Me.btnLeftTimerUncrop.Text = "Uncrop"
-        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerUncrop, "Sets OBS to 0 crop for the timer")
-        Me.btnLeftTimerUncrop.UseVisualStyleBackColor = True
-        '
-        'btnRightTimerUncrop
-        '
-        Me.btnRightTimerUncrop.Location = New System.Drawing.Point(145, 20)
-        Me.btnRightTimerUncrop.Name = "btnRightTimerUncrop"
-        Me.btnRightTimerUncrop.Size = New System.Drawing.Size(53, 23)
-        Me.btnRightTimerUncrop.TabIndex = 92
-        Me.btnRightTimerUncrop.Text = "Uncrop"
-        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerUncrop, "Sets OBS to 0 crop for the timer")
-        Me.btnRightTimerUncrop.UseVisualStyleBackColor = True
-        '
-        'btnRightGameUncrop
-        '
-        Me.btnRightGameUncrop.Location = New System.Drawing.Point(145, 19)
-        Me.btnRightGameUncrop.Name = "btnRightGameUncrop"
-        Me.btnRightGameUncrop.Size = New System.Drawing.Size(53, 23)
-        Me.btnRightGameUncrop.TabIndex = 93
-        Me.btnRightGameUncrop.Text = "Uncrop"
-        Me.ttMainToolTip.SetToolTip(Me.btnRightGameUncrop, "Sets OBS to 0 crop for the game")
-        Me.btnRightGameUncrop.UseVisualStyleBackColor = True
         '
         'ObsWebSocketCropper
         '
