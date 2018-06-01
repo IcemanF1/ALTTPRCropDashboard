@@ -2,6 +2,10 @@ image: Visual Studio 2017
 
 platform: Any CPU
 
+configuration:
+  - Debug
+  - Release
+ 
 init:
   - git config --global core.autocrlf input
 
@@ -12,9 +16,10 @@ build:
   project: ALTTPRCropDashboard.sln
   verbosity: minimal
 
+  
 cache:
   - packages -> **\packages.config 
 
 artifacts:
-  - path: ALTTPRCropDashboard\bin\$(configuration)
+  - path: bin
     name: alttprcropdashboard
