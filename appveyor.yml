@@ -1,0 +1,20 @@
+image: Visual Studio 2017
+
+platform: Any CPU
+
+init:
+  - git config --global core.autocrlf input
+
+before_build:
+  - nuget restore
+
+build:
+  project: ALTTPRCropDashboard.sln
+  verbosity: minimal
+
+cache:
+  - packages -> **\packages.config 
+
+artifacts:
+  - path: ALTTPRCropDashboard\bin\$(configuration)
+    name: alttprcropdashboard
