@@ -1,11 +1,10 @@
 image: Visual Studio 2017
-
 platform: Any CPU
 
 configuration:
   - Debug
   - Release
- 
+
 init:
   - git config --global core.autocrlf input
 
@@ -15,7 +14,6 @@ before_build:
 build:
   project: ALTTPRCropDashboard.sln
   verbosity: minimal
-
   
 cache:
   - packages -> **\packages.config 
