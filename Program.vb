@@ -3,12 +3,9 @@ Imports Squirrel
 
 Public Module Program
 
-    Private Sub HandleEvents()
-
-    End Sub
     Private Sub CheckForUpdate()
         Task.Run(Async Function()
-                     Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("TrackerURL"), "C:\TestReleases"))
+                     Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
                          Return Await updateMgr.UpdateApp()
                      End Using
                  End Function)
@@ -23,7 +20,7 @@ Public Module Program
     End Sub
 
     Public Sub Main()
-        Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("TrackerURL"), "C:\TestReleases"))
+        Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
 
             ' ReSharper disable AccessToDisposedClosure
             SquirrelAwareApp.HandleEvents(
