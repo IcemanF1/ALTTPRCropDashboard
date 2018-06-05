@@ -120,7 +120,7 @@ Public Class UserSettings
 
             My.Settings.ConnectionString1 = txtConnectionString1.Text
             My.Settings.Password1 = txtPassword1.Text
-            My.Settings.ConnectionPort1 = txtConnectionPort.Text
+            My.Settings.ConnectionPort1 = CInt(txtConnectionPort.Text)
             My.Settings.TwitchChannel = txtTwitchChannel.Text
             My.Settings.DefaultConnection = roDefault.Checked
             My.Settings.HasFinishedWelcome = True
@@ -222,13 +222,13 @@ Public Class UserSettings
     Private Sub SaveConnectionForTest()
         My.Settings.ConnectionString1 = txtConnectionString1.Text
         My.Settings.Password1 = txtPassword1.Text
-        My.Settings.ConnectionPort1 = txtConnectionPort.Text
+        My.Settings.ConnectionPort1 = CInt(txtConnectionPort.Text)
 
         My.Settings.Save()
     End Sub
     Private Sub UserSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         txtConnectionString1.Text = My.Settings.ConnectionString1
-        txtConnectionPort.Text = My.Settings.ConnectionPort1
+        txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
         txtPassword1.Text = My.Settings.Password1
 
         panOBS.Visible = False
@@ -417,7 +417,7 @@ Public Class UserSettings
         Dim x As Integer
         Dim MatchedValue As Boolean
         For x = 0 To _obsSourceListLeftGame.Tables("Sources").Rows.Count - 1
-            If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName") Then
+            If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName")?.ToString() Then
                 MatchedValue = True
                 Exit For
             End If

@@ -10,13 +10,13 @@
         Dim defaultCropTop, defaultCropBottom As Integer
 
         If txtDefaultCropTop.Text.Trim.Length > 0 Then
-            DefaultCropTop = txtDefaultCropTop.Text
+            defaultCropTop = CInt(txtDefaultCropTop.Text)
         Else
             DefaultCropTop = 0
         End If
 
         If txtDefaultCropBottom.Text.Trim.Length > 0 Then
-            DefaultCropBottom = txtDefaultCropBottom.Text
+            defaultCropBottom = CInt(txtDefaultCropBottom.Text)
         Else
             DefaultCropBottom = 0
         End If
@@ -34,8 +34,8 @@
         Close()
     End Sub
     Private Sub RefreshSettings()
-        txtDefaultCropTop.Text = My.Settings.DefaultCropTop
-        txtDefaultCropBottom.Text = My.Settings.DefaultCropBottom
+        txtDefaultCropTop.Text = My.Settings.DefaultCropTop.ToString
+        txtDefaultCropBottom.Text = My.Settings.DefaultCropBottom.ToString
         chkOverrideDefault.Checked = My.Settings.VLCOverrideDefault
         chkPlayPauseControls.Checked = My.Settings.VLCPlayPauseControls
         chkMenuBar.Checked = My.Settings.VLCMenuBar
@@ -79,12 +79,12 @@
 
     Private Sub CheckPersonalValuesAgainstStandard()
         If chkOverrideDefault.Checked = False Then
-            txtDefaultCropTop.Text = _defaultTopValue
+            txtDefaultCropTop.Text = _defaultTopValue.ToString()
 
             If _defaultBottomValue < 0 Then
-                txtDefaultCropBottom.Text = 0
+                txtDefaultCropBottom.Text = "0"
             Else
-                txtDefaultCropBottom.Text = _defaultBottomValue
+                txtDefaultCropBottom.Text = _defaultBottomValue.ToString()
             End If
         End If
 

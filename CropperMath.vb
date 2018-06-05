@@ -25,7 +25,7 @@
             Return rect
         End If
 
-        Dim changedSize = New Size(size.Width - size.Width / scaling, size.Height - size.Height / scaling)
+        Dim changedSize = New Size(CInt(size.Width - size.Width / scaling), CInt(size.Height - size.Height / scaling))
 
         Return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right - changedSize.Width, rect.Bottom - changedSize.Height)
 
@@ -35,14 +35,14 @@
             Return size
         End If
 
-        Return New Size(size.Width / scaling, size.Height / scaling)
+        Return New Size(CInt(size.Width / scaling), CInt(size.Height / scaling))
     End Function
     Public Function AddScaling(rect As Rectangle, size As Size, scaling As Double) As Rectangle
         If scaling = 1 Or scaling = 0 Then
             Return rect
         End If
 
-        Dim changedSize = New Size(size.Width - size.Width / scaling, size.Height - size.Height / scaling)
+        Dim changedSize = New Size(CInt(size.Width - size.Width / scaling), CInt(size.Height - size.Height / scaling))
 
         Return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right + changedSize.Width, rect.Bottom + changedSize.Height)
     End Function
@@ -51,7 +51,7 @@
             Return size
         End If
 
-        Return New Size(size.Width * scaling, size.Height * scaling)
+        Return New Size(CInt(size.Width * scaling), CInt(size.Height * scaling))
     End Function
 
 
@@ -62,25 +62,25 @@
 
     Public Function AdjustCrop(crop As CropInfo, newMasterSizeWithoutDefault As Size) As CropInfo
         'Let's calculate how much we differ from the original source
-        Dim aspectRatioScale As New PointF(newMasterSizeWithoutDefault.Width / crop.MasterSizeWithoutDefault.Width, newMasterSizeWithoutDefault.Height / crop.MasterSizeWithoutDefault.Height)
+        Dim aspectRatioScale As New PointF(CSng(newMasterSizeWithoutDefault.Width / crop.MasterSizeWithoutDefault.Width), CSng(newMasterSizeWithoutDefault.Height / crop.MasterSizeWithoutDefault.Height))
         'From that, we take the smaller ratio
         Dim aspectRatioChange = Math.Min(aspectRatioScale.X, aspectRatioScale.Y)
         'Then by scaling the original, we get the size of the video when scaled up.
-        Dim scaledMasterSize As New Size(crop.MasterSizeWithoutDefault.Width * aspectRatioChange,
-                                         crop.MasterSizeWithoutDefault.Height * aspectRatioChange)
+        Dim scaledMasterSize As New Size(CInt(crop.MasterSizeWithoutDefault.Width * aspectRatioChange),
+                                         CInt(crop.MasterSizeWithoutDefault.Height * aspectRatioChange))
         'And the remaining space is black bars.
         Dim blackBarsSize As New Size(newMasterSizeWithoutDefault.Width - scaledMasterSize.Width,
                                       newMasterSizeWithoutDefault.Height - scaledMasterSize.Height)
         'These black bars are around the source. On non-even sizes, 1px bigger on one side.
-        Dim blackBars = Rectangle.FromLTRB(Math.Ceiling(blackBarsSize.Width / 2.0),
-                                           Math.Ceiling(blackBarsSize.Height / 2.0),
-                                           Math.Floor(blackBarsSize.Width / 2.0),
-                                           Math.Floor(blackBarsSize.Height / 2.0))
+        Dim blackBars = Rectangle.FromLTRB(CInt(Math.Ceiling(blackBarsSize.Width / 2.0)),
+                                           CInt(Math.Ceiling(blackBarsSize.Height / 2.0)),
+                                           CInt(Math.Floor(blackBarsSize.Width / 2.0)),
+                                           CInt(Math.Floor(blackBarsSize.Height / 2.0)))
         'Now we also scale the crop numbers, since they now refer to a much bigger stream.
-        Dim scaledCrop = Rectangle.FromLTRB(crop.CropWithoutDefault.Left * aspectRatioChange,
-                                            crop.CropWithoutDefault.Top * aspectRatioChange,
-                                            crop.CropWithoutDefault.Right * aspectRatioChange,
-                                            crop.CropWithoutDefault.Bottom * aspectRatioChange)
+        Dim scaledCrop = Rectangle.FromLTRB(CInt(crop.CropWithoutDefault.Left * aspectRatioChange),
+                                            CInt(crop.CropWithoutDefault.Top * aspectRatioChange),
+                                            CInt(crop.CropWithoutDefault.Right * aspectRatioChange),
+                                            CInt(crop.CropWithoutDefault.Bottom * aspectRatioChange))
 
 
         Return New CropInfo With {

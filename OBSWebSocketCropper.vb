@@ -4,7 +4,6 @@ Imports ALTTPRCropDashboard.Data
 Imports ALTTPRCropDashboard.DB
 Imports System.IO
 Imports ALTTPRCropDashboard.Data.ViewModels
-Imports Squirrel
 
 Public Class ObsWebSocketCropper
     Public ProgramName As String = "OBS WebSocket Cropper"
@@ -601,10 +600,10 @@ Public Class ObsWebSocketCropper
         Dim gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
 
         If Not String.IsNullOrWhiteSpace(timerSource) Then
-            runnerVm.TimerCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, timerSource)?.Crop)
+            runnerVm.TimerCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, timerSource).Crop)
         End If
         If Not String.IsNullOrWhiteSpace(gameSource) Then
-            runnerVm.GameCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, gameSource)?.Crop)
+            runnerVm.GameCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, gameSource).Crop)
         End If
 
     End Sub
@@ -785,11 +784,7 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Task.Run(Async Function()
-                     Using updateMgr = New UpdateManager("C:\\TestReleases")
-                         Return Await updateMgr.UpdateApp()
-                     End Using
-                 End Function)
+
 
         If My.Settings.UpgradeRequired = True Then
             My.Settings.Upgrade()
@@ -891,8 +886,14 @@ Public Class ObsWebSocketCropper
                 Dim existingCrops = context.Crops.Where(Function(x) x.Runner = runnerInfoCopy.Runner)
 
                 For Each crop In runnerInfo.Crops
-                    validGuids.Add(crop.Id)
-                    Dim matchingItem = If(existingCrops.FirstOrDefault(Function(x) x.Id = crop.Id),
+                    If Not crop.Id.HasValue Then
+                        Throw New ArgumentNullException(NameOf(crop.Id))
+                    End If
+
+                    Dim id = If(crop.Id, Guid.Empty)
+
+                    validGuids.Add(id)
+                    Dim matchingItem = If(existingCrops.FirstOrDefault(Function(x) x.Id = id),
                         New Crop With {.Runner = runnerInfo.Runner})
 
                     matchingItem.SizeWidth = crop.Size.Width
@@ -916,7 +917,7 @@ Public Class ObsWebSocketCropper
                     End If
 
                     If matchingItem.Id <> crop.Id Then
-                        matchingItem.Id = crop.Id
+                        matchingItem.Id = id
                         context.Crops.Add(matchingItem)
                     End If
 
@@ -966,10 +967,10 @@ Public Class ObsWebSocketCropper
                         If valueName.ToLower = "serverport" Then
                             'MsgBox(Value, MsgBoxStyle.OkOnly)
                             If resetWebSocketPort = True Then
-                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort1, fileName)
+                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort1.ToString, fileName)
 
                             Else
-                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort2, fileName)
+                                IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort2.ToString, fileName)
                                 MsgBox("Try opening a 2nd instance of OBS", MsgBoxStyle.OkOnly, ProgramName)
                             End If
 
@@ -1330,9 +1331,9 @@ Public Class ObsWebSocketCropper
             Dim g As Graphics = CreateGraphics()
             sizeOfString = g.MeasureString(textString, textFont)
 
-            Dim micX As Integer = (commentarySizeInfo.PositionX - (sizeOfString.Width / 3))
+            Dim micX As Integer = CInt(commentarySizeInfo.PositionX - (sizeOfString.Width / 3))
 
-            Obs.SetSceneItemPosition("MicIcon", micX, micIconInfo.PositionY)
+            Obs.SetSceneItemPosition("MicIcon", micX, CInt(micIconInfo.PositionY))
 
         End If
     End Sub
@@ -1370,6 +1371,10 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub Uncrop(ByVal sourceName As String)
         DispatchToObs(Sub(o) o.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0))
+    End Sub
+
+    Private Sub ObsWebSocketCropper_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        My.Settings.Save()
     End Sub
 
 #End Region
