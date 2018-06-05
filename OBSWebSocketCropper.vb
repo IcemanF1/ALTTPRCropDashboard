@@ -4,6 +4,7 @@ Imports ALTTPRCropDashboard.Data
 Imports ALTTPRCropDashboard.DB
 Imports System.IO
 Imports ALTTPRCropDashboard.Data.ViewModels
+Imports Squirrel
 
 Public Class ObsWebSocketCropper
     Public ProgramName As String = "OBS WebSocket Cropper"
@@ -784,6 +785,12 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Task.Run(Async Function()
+                     Using updateMgr = New UpdateManager("C:\\TestReleases")
+                         Return Await updateMgr.UpdateApp()
+                     End Using
+                 End Function)
+
         If My.Settings.UpgradeRequired = True Then
             My.Settings.Upgrade()
             My.Settings.UpgradeRequired = False
