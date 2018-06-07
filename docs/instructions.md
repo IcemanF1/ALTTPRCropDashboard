@@ -1,4 +1,4 @@
-#ALTTPR Crop Dashboard Guide
+# ALTTPR Crop Dashboard Guide
 
 This program was made to hopefully make cropping for restreams faster by providing an easy way to interact with OBS as well as have a database of crops to at least get a starting point from.
 
@@ -6,7 +6,7 @@ While this won’t be a perfect system it will hopefully still save time due to 
 
 Below are some screenshots along with what the various portions of those screens are.
 
-##Main User Settings:
+## Main User Settings:
 
 
 
