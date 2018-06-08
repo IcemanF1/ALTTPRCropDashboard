@@ -72,11 +72,14 @@ Public Class ObsWebSocketPlus
 
     End Sub
     Public Sub SetSceneItemProperties(item As String, cropT As Integer, cropB As Integer,
-                                    cropL As Integer, cropR As Integer)
+                                    cropL As Integer, cropR As Integer, boundingWidth As Integer,
+                                      bondingHeight As Integer, positionX As Integer, positionY As Integer)
 
         Dim requestParameters As New JObject
 
         Dim cropInfo As New JObject
+        Dim boundInfo As New JObject
+        Dim positioInfo As New JObject
 
         requestParameters.Add("scene-name", If(StudioModeEnabled(), GetPreviewScene().Name, GetCurrentScene().Name))
 
@@ -84,8 +87,25 @@ Public Class ObsWebSocketPlus
         cropInfo.Add("bottom", cropB)
         cropInfo.Add("left", cropL)
         cropInfo.Add("right", cropR)
+
         requestParameters.Add("item", item)
         requestParameters.Add("crop", cropInfo)
+
+        Dim boundType As String = "OBS_BOUNDS_STRETCH"
+
+        If boundingWidth > 0 Then
+            boundInfo.Add("x", boundingWidth)
+            boundInfo.Add("y", bondingHeight)
+            boundInfo.Add("type", boundType)
+            boundInfo.Add("alignment", 0)
+            requestParameters.Add("bounds", boundInfo)
+        End If
+
+        If positionX > 0 Then
+            positioInfo.Add("x", positionX)
+            positioInfo.Add("y", positionY)
+            requestParameters.Add("position", positioInfo)
+        End If
 
         SendRequest("SetSceneItemProperties", requestParameters)
     End Sub

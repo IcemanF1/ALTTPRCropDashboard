@@ -382,7 +382,8 @@ Public Class ObsWebSocketCropper
         lblRSourceWidth.Text = "Source Width: " & _viewModel.RightRunner.CurrentSize.Width
     End Sub
 
-    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String, scaling As Double)
+    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String, scaling As Double,
+                            boundingSize As Rectangle, positionX As Integer, positionY As Integer)
         Dim resultingCrop = _cropperMath.AdjustCrop(New CropInfo With {
                                                       .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, scaling)),
                                                       .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, savedMasterSize, scaling))
@@ -391,9 +392,9 @@ Public Class ObsWebSocketCropper
 
         Dim realCrop = _cropperMath.AddScaling(_cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault), _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(resultingCrop.MasterSizeWithoutDefault), scaling), scaling)
 
-        Obs.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right)
+        Obs.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
         If ObsConnectionStatus2 = "Connected" Then
-            _obs2.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right)
+            _obs2.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
         End If
     End Sub
     Private Sub SetNewNewMath(isRightWindow As Boolean)
@@ -404,6 +405,18 @@ Public Class ObsWebSocketCropper
         Dim runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
         Dim gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
         Dim timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
+        Dim positionXTimer = If(isRightWindow, 1046, 56)
+        Dim positionXGame = If(isRightWindow, 674, 48)
+
+        Dim boundingSizeGame As New Rectangle
+        boundingSizeGame.Width = 558
+        boundingSizeGame.Height = 446
+
+        Dim boundingSizeTimer As New Rectangle
+        boundingSizeTimer.Width = 178
+        boundingSizeTimer.Height = 47
+
+
 
         If runnerVm.Size.Height > 0 And runnerVm.Size.Width > 0 Then
             If Not String.IsNullOrWhiteSpace(gameSource) Then
@@ -411,8 +424,11 @@ Public Class ObsWebSocketCropper
                             runnerVm.Size.AsSize(),
                             runnerVm.CurrentSize.AsSize(),
                             gameSource,
-                            runnerVm.Scale
-                    )
+                            runnerVm.Scale,
+                            boundingSizeGame,
+                            positionXGame,
+                            83
+)
             End If
 
             If Not String.IsNullOrWhiteSpace(timerSource) Then
@@ -420,8 +436,11 @@ Public Class ObsWebSocketCropper
                             runnerVm.Size.AsSize(),
                             runnerVm.CurrentSize.AsSize(),
                             timerSource,
-                            runnerVm.Scale
-                            )
+                            runnerVm.Scale,
+                            boundingSizeTimer,
+                            positionXTimer,
+                            24
+)
             End If
 
         Else
@@ -1306,8 +1325,8 @@ Public Class ObsWebSocketCropper
         Dim micIconInfo As SceneItemProperties
 
 
-        micIconInfo = Obs.GetSceneItemProperties("", "MicIcon")
-        commentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.CommentaryOBS)
+        'micIconInfo = Obs.GetSceneItemProperties("", "MicIcon")
+        commentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.LeftGameName)
         rightGameSourceInfo = Obs.GetSourceSettings(My.Settings.CommentaryOBS)
         commentaryFontInfo = Obs.GetTextGDIProperties(My.Settings.CommentaryOBS)
 
@@ -1369,7 +1388,7 @@ Public Class ObsWebSocketCropper
         AdjustScaling(_viewModel.RightRunner, ParsePercent(cbRightScaling.Text))
     End Sub
     Private Sub Uncrop(ByVal sourceName As String)
-        DispatchToObs(Sub(o) o.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0))
+        DispatchToObs(Sub(o) o.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0, 0, 0, 0, 0))
     End Sub
 
     Private Sub ObsWebSocketCropper_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
