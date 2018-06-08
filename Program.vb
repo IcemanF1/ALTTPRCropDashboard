@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.IO
+Imports System.Linq
 Imports Squirrel
 
 Public Module Program
@@ -12,13 +13,14 @@ Public Module Program
                  End Function)
     End Sub
     Private Sub CreateShortcuts(mgr As UpdateManager)
-        Dim path = System.IO.Path.Combine(Application.StartupPath, $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
-        mgr.CreateShortcutsForExecutable(path, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
+        Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
+        mgr.CreateShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
 
         mgr.CreateShortcutForThisExe()
     End Sub
     Private Sub DeleteShortcuts(mgr As UpdateManager)
-        mgr.RemoveShortcutsForExecutable("dashboard.exe", ShortcutLocation.Desktop Or ShortcutLocation.StartMenu)
+        Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
+        mgr.RemoveShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu)
         mgr.RemoveShortcutForThisExe()
     End Sub
 
@@ -34,7 +36,7 @@ Public Module Program
         Dim updatePath = If(ConfigurationManager.AppSettings("ReleasesURL"), testFolder)
 
         If (updatePath <> testFolder OrElse System.IO.Directory.Exists(testFolder)) AndAlso
-            File.Exists(Path.Combine(Application.StartupPath, "Update.exe")) Then
+            File.Exists(Path.Combine(Path.GetDirectoryName(Application.StartupPath), "Update.exe")) Then
             Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
 
                 ' ReSharper disable AccessToDisposedClosure
