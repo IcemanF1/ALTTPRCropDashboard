@@ -4,6 +4,7 @@ Imports ALTTPRCropDashboard.Data
 Imports ALTTPRCropDashboard.DB
 Imports System.IO
 Imports ALTTPRCropDashboard.Data.ViewModels
+Imports System.Globalization
 
 Public Class ObsWebSocketCropper
     Public ProgramName As String = "OBS WebSocket Cropper"
@@ -570,21 +571,15 @@ Public Class ObsWebSocketCropper
         _vlcListLeft.Clear()
         _vlcListRight.Clear()
 
-        Dim x As Integer
-        For x = 0 To vlcProcesses.Count - 1
-            Dim dr As DataRow
-            dr = _vlcListLeft.Tables("Processes").NewRow
-            dr.Item("VLCName") = vlcProcesses.Item(x).MainWindowTitle
-            _vlcListLeft.Tables("Processes").Rows.Add(dr)
+        Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
 
-        Next
         _vlcListRight = _vlcListLeft.Copy
 
-        cbLeftVLCSource.DataSource = _vlcListLeft.Tables("Processes")
+        cbLeftVLCSource.DataSource = data
         cbLeftVLCSource.DisplayMember = "VLCName"
         cbLeftVLCSource.ValueMember = "VLCName"
 
-        cbRightVLCSource.DataSource = _vlcListRight.Tables("Processes")
+        cbRightVLCSource.DataSource = data.ToList()
         cbRightVLCSource.DisplayMember = "VLCName"
         cbRightVLCSource.ValueMember = "VLCName"
 
@@ -592,19 +587,21 @@ Public Class ObsWebSocketCropper
         cbLeftVLCSource.Text = ""
 
         If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch.Text) Then
-            Dim row As DataRow = _vlcListLeft.Tables("Processes").Select("VLCName like '%" & lblLeftRunnerTwitch.Text.ToLower.Remove(0, 8) & "%'").FirstOrDefault()
+            Dim tempText = lblLeftRunnerTwitch.Text.Remove(0, 8)
+            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If Not row Is Nothing Then
-                cbLeftVLCSource.Text = row.Item(0).ToString
+            If match IsNot Nothing Then
+                cbLeftVLCSource.Text = match.VLCName
             End If
         End If
 
 
         If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch.Text) Then
-            Dim row As DataRow = _vlcListRight.Tables("Processes").Select("VLCName like '%" & lblRightRunnerTwitch.Text.ToLower.Remove(0, 8) & "%'").FirstOrDefault()
+            Dim tempText = lblRightRunnerTwitch.Text.Remove(0, 8)
+            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If Not row Is Nothing Then
-                cbRightVLCSource.Text = row.Item(0).ToString
+            If match IsNot Nothing Then
+                cbRightVLCSource.Text = match.VLCName
             End If
         End If
 

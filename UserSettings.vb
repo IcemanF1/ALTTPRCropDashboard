@@ -337,7 +337,7 @@ Public Class UserSettings
         If PortOpen = False Then
             MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
         Else
-            If OBSWebSocketCropper.OBSConnectionStatus = "Connected" Then
+            If ObsWebSocketCropper.Obs.IsConnected Then
                 panOBS.Visible = True
                 RefreshScenes()
                 SetUserSettings()
@@ -357,9 +357,9 @@ Public Class UserSettings
 
         OBSWebSocketCropper.ConnectToOBS()
 
-        lblOBS1ConnectedStatus.Text = OBSWebSocketCropper.OBSConnectionStatus
+        lblOBS1ConnectedStatus.Text = OBSWebSocketCropper.ObsConnectionStatus
 
-        If OBSWebSocketCropper.OBSConnectionStatus = "Connected" Then
+        If ObsWebSocketCropper.Obs.IsConnected Then
             panOBS.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True

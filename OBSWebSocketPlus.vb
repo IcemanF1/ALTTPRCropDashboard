@@ -194,7 +194,7 @@ Public Class SceneItemProperties
 
     Public Sub New(ByRef data As JObject)
         Name = CType(data("name"), String)
-        ItemId = CInt(data("id"))
+        ItemId = CInt(If(data("id"), 0))
 
         Dim positionInfo As JObject = CType(data("position"), JObject)
         PositionX = CType(positionInfo("x"), Double)
@@ -209,14 +209,14 @@ Public Class SceneItemProperties
 
         Dim cropTemp As New SceneItemCropInfo
         Dim cropInfo As JObject = CType(data("crop"), JObject)
-        cropTemp.Bottom = CType(cropInfo("bottom"), Integer)
-        cropTemp.Top = CType(cropInfo("top"), Integer)
-        cropTemp.Left = CType(cropInfo("left"), Integer)
-        cropTemp.Right = CType(cropInfo("right"), Integer)
+        cropTemp.Bottom = CInt(If(cropInfo("bottom"), 0))
+        cropTemp.Top = CInt(If(cropInfo("top"), 0))
+        cropTemp.Left = CInt(If(cropInfo("left"), 0))
+        cropTemp.Right = CInt(If(cropInfo("right"), 0))
 
         Crop = cropTemp
 
-        Visible = CType(data("visible"), Boolean)
+        Visible = If(CType(data("visible"), Boolean?), False)
 
         If data("locked") Is Nothing Then
             Locked = False
