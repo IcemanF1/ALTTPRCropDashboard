@@ -1,4 +1,6 @@
 ﻿Imports System.Configuration
+Imports System.IO
+Imports System.Linq
 Imports Squirrel
 
 Public Module Program
@@ -11,27 +13,45 @@ Public Module Program
                  End Function)
     End Sub
     Private Sub CreateShortcuts(mgr As UpdateManager)
-        mgr.CreateShortcutsForExecutable("dashboard.exe", ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
+        Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
+        mgr.CreateShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
+
         mgr.CreateShortcutForThisExe()
     End Sub
     Private Sub DeleteShortcuts(mgr As UpdateManager)
-        mgr.RemoveShortcutsForExecutable("dashboard.exe", ShortcutLocation.Desktop Or ShortcutLocation.StartMenu)
+        Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
+        mgr.RemoveShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu)
         mgr.RemoveShortcutForThisExe()
     End Sub
 
     Public Sub Main()
-        Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
+        If My.Settings.UpgradeRequired = True Then
+            My.Settings.Upgrade()
+            My.Settings.UpgradeRequired = False
+            My.Settings.Save()
+        End If
 
-            ' ReSharper disable AccessToDisposedClosure
-            SquirrelAwareApp.HandleEvents(
-            onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
-            onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
-            onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
-            ' ReSharper enable AccessToDisposedClosure
+        Dim testFolder = "C:\TestReleases"
 
-        End Using
+        Dim updatePath = If(ConfigurationManager.AppSettings("ReleasesURL"), testFolder)
 
-        CheckForUpdate()
+        If (updatePath <> testFolder OrElse System.IO.Directory.Exists(testFolder)) AndAlso
+            File.Exists(Path.Combine(Path.GetDirectoryName(Application.StartupPath), "Update.exe")) Then
+            Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
+
+                ' ReSharper disable AccessToDisposedClosure
+                SquirrelAwareApp.HandleEvents(
+                onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
+                onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
+                onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
+                ' ReSharper enable AccessToDisposedClosure
+
+            End Using
+
+            CheckForUpdate()
+
+        End If
+
 
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)

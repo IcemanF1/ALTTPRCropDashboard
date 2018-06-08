@@ -13,8 +13,16 @@ Public Class ObsWebSocketCropper
     Public ObsConnectionStatus2 As String
 
     Private WithEvents _obs2 As New ObsWebSocketPlus
-    Public ConnectionString As String
-    Public ConnectionString2 As String
+    Public ReadOnly Property ConnectionString As String
+        Get
+            Return My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
+        End Get
+    End Property
+    Public ReadOnly Property ConnectionString2 As String
+        Get
+            Return My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
+        End Get
+    End Property
 
     Public Shared ObsSettingsResult As String
     Public Shared NewRunnerName As String
@@ -522,6 +530,9 @@ Public Class ObsWebSocketCropper
     Private Sub RefreshVlc()
 
         Dim vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
+        If Not vlcProcesses.Any() Then
+            Exit Sub
+        End If
 
         Dim leftVlc, rightVlc As String
 
@@ -786,19 +797,9 @@ Public Class ObsWebSocketCropper
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
 
 
-        If My.Settings.UpgradeRequired = True Then
-            My.Settings.Upgrade()
-            My.Settings.UpgradeRequired = False
-            My.Settings.Save()
-        End If
-
         ReuseInfo = True
-
-        ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
-
         lblOBS1ConnectedStatus.Text = "Not Connected"
         lblOBS2ConnectedStatus.Text = "Not Connected"
-
         ConfigureDataBindings()
         CreateNewSourceTable()
 
@@ -1027,7 +1028,6 @@ Public Class ObsWebSocketCropper
         Cursor = Cursors.WaitCursor
 
         Try
-            ConnectionString2 = My.Settings.ConnectionString2 & ":" & My.Settings.ConnectionPort2
 
             If Not _obs2.IsConnected Then
 
@@ -1050,7 +1050,6 @@ Public Class ObsWebSocketCropper
     Public Sub ConnectToObs()
         Cursor = Cursors.WaitCursor
         Try
-            ConnectionString = My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
 
             If Obs.IsConnected = False Then
                 Dim isPortOpen As Boolean = Obs.IsPortOpen(ConnectionString)
