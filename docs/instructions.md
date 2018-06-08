@@ -101,7 +101,7 @@ This is the first program I’ve released as well as working with a local databa
 
 **WARNING!  These are advanced features that may not work 100%.  Use at your own risk!**
 
-![Main Window - Expert Settings](https://i.imgur.com/pF4pdzs.png)
+![Main Window - Expert Settings](https://i.imgur.com/MaGoQWD.png)
 
 **2nd OBS** - This will change the OBS Websocket port to a different value to allow you to attempt to load a 2nd OBS to control both at the same time.  It works well enough but there are still some weird things at play so use at your own risk.
 
