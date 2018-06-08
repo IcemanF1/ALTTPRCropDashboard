@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports Squirrel
 
 Public Module Program
@@ -11,7 +12,9 @@ Public Module Program
                  End Function)
     End Sub
     Private Sub CreateShortcuts(mgr As UpdateManager)
-        mgr.CreateShortcutsForExecutable("dashboard.exe", ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
+        Dim path = System.IO.Path.Combine(Application.StartupPath, $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
+        mgr.CreateShortcutsForExecutable(path, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
+
         mgr.CreateShortcutForThisExe()
     End Sub
     Private Sub DeleteShortcuts(mgr As UpdateManager)
@@ -26,18 +29,27 @@ Public Module Program
             My.Settings.Save()
         End If
 
-        Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
+        Dim testFolder = "C:\TestReleases"
 
-            ' ReSharper disable AccessToDisposedClosure
-            SquirrelAwareApp.HandleEvents(
-            onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
-            onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
-            onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
-            ' ReSharper enable AccessToDisposedClosure
+        Dim updatePath = If(ConfigurationManager.AppSettings("ReleasesURL"), testFolder)
 
-        End Using
+        If (updatePath <> testFolder OrElse System.IO.Directory.Exists(testFolder)) AndAlso
+            File.Exists(Path.Combine(Application.StartupPath, "Update.exe")) Then
+            Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
 
-        CheckForUpdate()
+                ' ReSharper disable AccessToDisposedClosure
+                SquirrelAwareApp.HandleEvents(
+                onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
+                onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
+                onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
+                ' ReSharper enable AccessToDisposedClosure
+
+            End Using
+
+            CheckForUpdate()
+
+        End If
+
 
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)
