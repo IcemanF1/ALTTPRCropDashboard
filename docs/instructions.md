@@ -8,6 +8,7 @@ Below are some screenshots along with what the various portions of those screens
 
 ## Main User Settings:
 
+![Main User Settings](https://i.imgur.com/75bnDWm.png)
 
 This should be the first screen you come across.  It’s a way of setting what each section of the program will control.
 
@@ -28,6 +29,7 @@ The various drop downs - These are where you’re going to set which source name
 
 ## VLC Settings:
 
+![VLC Settings](https://i.imgur.com/8YMhfgc.png)
 
 **I have a menu bar** - This should never really be un-checked.  This means you have a menu bar at the top.  Most of the time this should always be true.
 
@@ -35,9 +37,9 @@ The various drop downs - These are where you’re going to set which source name
 
 **I have a status bar** - This one is usually not needed.  If you have a status bar, you should check this.
 
-**Override** - If you have more or less controls/menus at the top or bottom you would likely need to check this an input your own values.  This is important as before saving the crop we remove these numbers and re-add them from other peoples crops to get the most accurate game window size as possible.
+**Override** - If you have more or less controls/menus at the top or bottom you would likely need to check this an input your own values.  This is important as before saving the crop we remove these numbers and re-add them from other peoples crops to get the most accurate game window size as possible.  The only time you would need this is if your version of VLC is different than the restream 101 guide (the pixel values for menus/controls are different) or you added various stuff to the bottm.
 
-To get the values for your system, open VLC and set it as a source with the correct bounding box/size/area.  After that, crop out the top and bottom menu and make a note of what values those are.
+If you need to use the override, to get the values for your system, open VLC and set it as a source with the correct bounding box/size/area in OBS.  After that, crop out the top and bottom menu and make a note of what values those are and enter them into the proper override text boxes in the program.
 
 
 
@@ -45,6 +47,7 @@ To get the values for your system, open VLC and set it as a source with the corr
 
 One thing to note, the sections are basically colour coded with the button that affects them.
 
+![Main Screen](https://i.imgur.com/pF4pdzs.png)
 
 **Connect OBS 1** - This is to connect to OBS with the saved connection settings.  Before anything is allowed to be done in the program you have to connect to OBS.  There is currently a way being tested to connect to multiple OBS instances at a time but nothing fully finished yet.
 
@@ -54,13 +57,15 @@ For the runners, just pick from the drop down, if it exists, or click the “New
 
 **New Runner** - This will open a new form (shown later) that will allow you to type in the runner name as well as the twitch name.  If it exists, it will select it from the list otherwise fills in the info to save.
 
-**Get Processes** - This will check the current running processes to see what VLC windows are running.  This will make it easier to set the game/timer windows to the proper runner
+**Get Processes** - This will check the current running processes to see what VLC windows are running.  This will make it easier to set the game/timer windows to the proper runner.  If you have a runner name selected from the drop down, it will also attempt to set the VLC window to the correct side if the VLC window title contains the same twitch name as the runner.
 
 **Set VLC** - This will set the proper sources to the VLC processes as long as the proper source names were set in the settings
 
 **Get Crop** - This will poll the OBS timer/game sources for their current crop settings and fill them in into the proper text boxes
 
 **Save Crop** - This will save the numbers in the crop text boxes to the selected runner into the local database
+
+**Uncrop** - This will reset that OBS setting to 0 crop to start from scratch
 
 **Set Crop** - This will set the crop settings of the sources in OBS.  After selecting the runner in the drop down if there is crop data it will populate the text boxes and then all that is needed is hitting set crop.  Be warned that depending on how accurate the numbers are for VLC for the person who saved the crop there may be a bit of fine tuning needed but you can then save your numbers and it will prioritize those over anyone else's
 
@@ -71,8 +76,9 @@ IMPORTANT NOTE:  When you do your own crop, or are tweaking someone else's crop,
 
 ## New Runner Window:
 
+![New Runner](https://i.imgur.com/AXFYXwn.png)
 
-**Twitch Name** - This field if needed.  This is the twitch channel name that you are grabbing the crop from
+**Twitch Name** - This field is needed.  This is the twitch channel name that you are grabbing the crop from
 
 **Runner Name** - This field is optional.  If it is the same as the twitch name, you can leave it blank and it will just use the twitch name.  If it is different, please enter what the runner name is.  This is what will show up in the drop down
 
@@ -90,3 +96,34 @@ There is an option for expert settings.  This includes some features that is bei
 To sync with the online server you will need a config file and place it manually in the program folder.  If you get this file, please treat it like the stream keys and not share this file with others even if they are restreamers.  Let the proper people send the file out.
 
 This is the first program I’ve released as well as working with a local database.  As such I haven’t found a way to install it and run with the database running outside the install location.  As such, for the initial version of the program it will need to be run as administrator.  I am sorry for this requirement and I’ll do my best to fix this but it will be a work in progress.
+
+## Expert Settings:
+
+**WARNING!  These are advanced features that may not work 100%.  Use at your own risk!**
+
+![Main Window - Expert Settings](https://i.imgur.com/pF4pdzs.png)
+
+**2nd OBS** - This will change the OBS Websocket port to a different value to allow you to attempt to load a 2nd OBS to control both at the same time.  It works well enough but there are still some weird things at play so use at your own risk.
+
+**Connect 2nd OBS** - This will, after opening the 2nd OBS, connect to it to allow controlling both.
+
+**View on twitch** - This will take the runners twitch info and open their twitch in a browser.
+
+**View VODs** - This will open the runners twitch VODs page in a browser
+
+**Open VLC** - This will, if set right, attempt to open the runners current broadcast in VLC the same way Streamlink GUI would do it.  If the settings aren't correct you'll get errors.  Use at own risk.
+
+**Scaling** - Some people may have windows scaling which may affect the crops.  If you do you can attempt to match your windows scaling with this value to get the crops set properly
+
+**Reset** - This will attempt to reset the crops back to what the database values are in case you made a mistake when cropping.  This one is still a work in progress at this time.
+
+## Crop Examples:
+
+This is an example of a good crop you can save.  The video fills VLC with no black bars on any side.  If we have our VLC settings correct, all that will remain is the video window so subtracting the top and bottom VLC values will give us accurate numbers of where the crops need to happen.
+
+![Good Crop](https://i.imgur.com/fjWwm0G.png)
+
+
+This is an example of a bad crop.  You should NOT save this to the database as it will not work for anyone.  The black bars on the sides will throw off the values when anyone tries to use the crop.
+
+![Bad Crop](https://i.imgur.com/ZORfc9s.png)
