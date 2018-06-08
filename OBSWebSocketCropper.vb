@@ -786,11 +786,6 @@ Public Class ObsWebSocketCropper
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
 
 
-        If My.Settings.UpgradeRequired = True Then
-            My.Settings.Upgrade()
-            My.Settings.UpgradeRequired = False
-            My.Settings.Save()
-        End If
 
         ReuseInfo = True
 

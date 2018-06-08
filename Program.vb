@@ -20,6 +20,12 @@ Public Module Program
     End Sub
 
     Public Sub Main()
+        If My.Settings.UpgradeRequired = True Then
+            My.Settings.Upgrade()
+            My.Settings.UpgradeRequired = False
+            My.Settings.Save()
+        End If
+
         Using updateMgr = New UpdateManager(If(ConfigurationManager.AppSettings("ReleasesURL"), "C:\TestReleases"))
 
             ' ReSharper disable AccessToDisposedClosure
