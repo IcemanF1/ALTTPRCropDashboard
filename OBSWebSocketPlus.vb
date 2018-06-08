@@ -93,8 +93,8 @@ Public Class ObsWebSocketPlus
         Dim client As TcpClient = Nothing
 
 
-        Dim host As String = connectionAddress.Split(":")(1).Remove(0, 2)
-        Dim portNumber As Integer = connectionAddress.Split(":")(2)
+        Dim host As String = connectionAddress.Split(":"c)(1).Remove(0, 2)
+        Dim portNumber As Integer = CInt(connectionAddress.Split(":"c)(2))
 
         Try
             client = New TcpClient(host, portNumber)
@@ -174,21 +174,21 @@ Public Class SceneItemProperties
 
     Public Sub New(ByRef data As JObject)
         Name = CType(data("name"), String)
-        ItemID = CType(data("id"), String)
+        ItemId = CInt(data("id"))
 
-        Dim positionInfo As JObject = data("position")
+        Dim positionInfo As JObject = CType(data("position"), JObject)
         PositionX = CType(positionInfo("x"), Double)
         PositionY = CType(positionInfo("y"), Double)
         PositionAlignment = CType(positionInfo("alignment"), Double)
 
         Rotation = CType(data("rotation"), Double)
 
-        Dim scaleInfo As JObject = data("scale")
+        Dim scaleInfo As JObject = CType(data("scale"), JObject)
         ScaleX = CType(scaleInfo("x"), Double)
         ScaleY = CType(scaleInfo("y"), Double)
 
         Dim cropTemp As New SceneItemCropInfo
-        Dim cropInfo As JObject = data("crop")
+        Dim cropInfo As JObject = CType(data("crop"), JObject)
         cropTemp.Bottom = CType(cropInfo("bottom"), Integer)
         cropTemp.Top = CType(cropInfo("top"), Integer)
         cropTemp.Left = CType(cropInfo("left"), Integer)
@@ -204,7 +204,7 @@ Public Class SceneItemProperties
             Locked = CType(data("locked"), Boolean)
         End If
 
-        Dim boundsInfo As JObject = data("bounds")
+        Dim boundsInfo As JObject = CType(data("bounds"), JObject)
         BoundsType = CType(boundsInfo("type"), String)
 
         If BoundsType <> "OBS_BOUNDS_NONE" Then
