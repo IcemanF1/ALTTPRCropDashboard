@@ -545,6 +545,15 @@ Public Class ObsWebSocketCropper
             Timer1.Stop()
             GetIniFile(False, True)
             _check2NdObs = False
+        ElseIf lObs.Count = 1 Then
+            Dim obsProcess As New ProcessStartInfo
+            Dim workDirectory As String
+            workDirectory = lObs.Item(0).MainModule.FileName.Remove(lObs.Item(0).MainModule.FileName.LastIndexOf("\"), lObs.Item(0).MainModule.FileName.Length - lObs.Item(0).MainModule.FileName.LastIndexOf("\"))
+
+            obsProcess.FileName = lObs.Item(0).MainModule.FileName
+            obsProcess.WorkingDirectory = workDirectory
+
+            Process.Start(obsProcess)
         End If
     End Sub
     Private Sub RefreshVlc()
@@ -982,13 +991,10 @@ Public Class ObsWebSocketCropper
                 Else
                     If sectionName.ToLower = "websocketapi" Then
                         If valueName.ToLower = "serverport" Then
-                            'MsgBox(Value, MsgBoxStyle.OkOnly)
                             If resetWebSocketPort = True Then
                                 IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort1.ToString, fileName)
-
                             Else
                                 IniParser.WritePrivateProfileStringW(sectionName, valueName, My.Settings.ConnectionPort2.ToString, fileName)
-                                MsgBox("Try opening a 2nd instance of OBS", MsgBoxStyle.OkOnly, ProgramName)
                             End If
 
 
@@ -1033,7 +1039,7 @@ Public Class ObsWebSocketCropper
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         _lastUpdate = _lastUpdate + 1
 
-        If _lastUpdate > 30 Then
+        If _lastUpdate > 5 Then
             _lastUpdate = 0
             If _check2NdObs = True Then
                 RefreshObs()
