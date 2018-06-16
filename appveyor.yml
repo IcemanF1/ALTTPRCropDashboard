@@ -10,10 +10,12 @@ assembly_info:
   file: 'My Project\AssemblyInfo.vb'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
-  assembly_informational_version: '{version}-{configuration}'
+  assembly_informational_version: '{version}-$(GIT_HASH)-$(CONFIG_LOWER)'
 
 init:
   - git config --global core.autocrlf input
+  - ps: $env:CONFIG_LOWER = $env:CONFIGURATION.ToLower()
+  - ps: $env:GIT_HASH = $env:APPVEYOR_REPO_COMMIT.Substring(0, 7)
 
 before_build:
   - nuget restore
