@@ -118,6 +118,11 @@ Public Class UserSettings
                 My.Settings.CommentaryOBS = cbCommentaryOBS.Text
             End If
 
+            If Not continueToVlc Then
+                My.Settings.DefaultCropBottom = 53
+                My.Settings.DefaultCropTop = 22
+            End If
+
             My.Settings.ConnectionString1 = txtConnectionString1.Text
             My.Settings.Password1 = txtPassword1.Text
             My.Settings.ConnectionPort1 = CInt(txtConnectionPort.Text)
