@@ -10,7 +10,7 @@
 
         Public ReadOnly Property TimerCrop As CropViewModel = New CropViewModel
         Public ReadOnly Property GameCrop As CropViewModel = New CropViewModel
-        Public ReadOnly Property Size As SizeViewModel = New SizeViewModel
+        Public ReadOnly Property MasterSize As SizeViewModel = New SizeViewModel
         Public ReadOnly Property CurrentSize As SizeViewModel = New SizeViewModel
 
         Public Property Name As String

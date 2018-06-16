@@ -62,8 +62,8 @@ Public Class ObsWebSocketCropper
 #End Region
 #Region " Button Clicks "
     Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
-        If _viewModel.RightRunner.Size.Height = 0 OrElse _viewModel.RightRunner.Size.Width = 0 Then
-            SetMasterSourceDimensions()
+        If _viewModel.RightRunner.MasterSize.Height = 0 OrElse _viewModel.RightRunner.MasterSize.Width = 0 Then
+            _viewModel.RightRunner.MasterSize.UpdateFromSize(GetMasterSize(True))
         End If
         Try
             SetNewNewMath(True)
@@ -94,8 +94,8 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
         Try
-            If _viewModel.LeftRunner.Size.Height = 0 OrElse _viewModel.LeftRunner.Size.Width = 0 Then
-                SetMasterSourceDimensions()
+            If _viewModel.LeftRunner.MasterSize.Height = 0 OrElse _viewModel.LeftRunner.MasterSize.Width = 0 Then
+                _viewModel.LeftRunner.MasterSize.UpdateFromSize(GetMasterSize(False))
             End If
 
             SetNewNewMath(False)
@@ -208,6 +208,7 @@ Public Class ObsWebSocketCropper
         Dim vlcSource As String = If(isRightWindow, cbRightVLCSource.Text, cbLeftVLCSource.Text)
         Dim gameSource As String = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
         Dim timerSource As String = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
+        Dim vmRunner = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
         If Not String.IsNullOrWhiteSpace(vlcSource) Then
             vlcSource = vlcSource.Replace(":", "#3A") & ":QWidget:vlc.exe"
             If Not String.IsNullOrWhiteSpace(gameSource) Then
@@ -216,6 +217,9 @@ Public Class ObsWebSocketCropper
             If Not String.IsNullOrWhiteSpace(timerSource) Then
                 DispatchToObs(Sub(o) o.SetSourceSettings(timerSource, False, vlcSource, 1))
             End If
+
+            GetCurrentCropSettings(isRightWindow)
+
         End If
 
     End Sub
@@ -284,16 +288,16 @@ Public Class ObsWebSocketCropper
         SetHeightLabels()
     End Sub
     Private Sub SaveRunnerCrop(isRightWindow As Boolean)
-        SetMasterSourceDimensions()
 
         Dim needsRefresh = False
         Dim submitterName = My.Settings.TwitchChannel
         Dim runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
+
         Dim runnerTwitch = runnerVm.Twitch
         Dim runnerName = runnerVm.Name
         GetCurrentCropSettings(isRightWindow)
 
-        Dim savedMasterSize = runnerVm.Size.AsSize()
+        Dim savedMasterSize = runnerVm.MasterSize.AsSize()
         Dim masterSizeWithoutDefaultRight As Size = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, runnerVm.Scale))
         Dim cropWithoutDefaultGame As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(runnerVm.GameCrop.AsRectangle(), savedMasterSize, runnerVm.Scale))
         Dim cropWithoutDefaultTimer As Rectangle = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(runnerVm.TimerCrop.AsRectangle(), savedMasterSize, runnerVm.Scale))
@@ -354,12 +358,6 @@ Public Class ObsWebSocketCropper
         Return New Size(adequateSource.SourceWidth, adequateSource.SourceHeight)
 
     End Function
-    Private Sub SetMasterSourceDimensions()
-        _viewModel.LeftRunner.Size.UpdateFromSize(GetMasterSize(False))
-        _viewModel.RightRunner.Size.UpdateFromSize(GetMasterSize(True))
-
-        SetHeightLabels()
-    End Sub
     Private Sub ResetHeightWidthLabels()
         lblLMasterHeight.Text = "Master Height:  0"
         lblLMasterWidth.Text = "Master Width: 0"
@@ -372,13 +370,13 @@ Public Class ObsWebSocketCropper
         lblRSourceWidth.Text = "Master Width: 0"
     End Sub
     Private Sub SetHeightLabels()
-        lblLMasterHeight.Text = "Master Height: " & _viewModel.LeftRunner.Size.Height
-        lblLMasterWidth.Text = "Master Width: " & _viewModel.LeftRunner.Size.Width
+        lblLMasterHeight.Text = "Master Height: " & _viewModel.LeftRunner.MasterSize.Height
+        lblLMasterWidth.Text = "Master Width: " & _viewModel.LeftRunner.MasterSize.Width
         lblLSourceHeight.Text = "Source Height: " & _viewModel.LeftRunner.CurrentSize.Height
         lblLSourceWidth.Text = "Source Width: " & _viewModel.LeftRunner.CurrentSize.Width
 
-        lblRMasterHeight.Text = "Master Height: " & _viewModel.RightRunner.Size.Height
-        lblRMasterWidth.Text = "Master Width: " & _viewModel.RightRunner.Size.Width
+        lblRMasterHeight.Text = "Master Height: " & _viewModel.RightRunner.MasterSize.Height
+        lblRMasterWidth.Text = "Master Width: " & _viewModel.RightRunner.MasterSize.Width
         lblRSourceHeight.Text = "Source Height: " & _viewModel.RightRunner.CurrentSize.Height
         lblRSourceWidth.Text = "Source Width: " & _viewModel.RightRunner.CurrentSize.Width
     End Sub
@@ -419,10 +417,10 @@ Public Class ObsWebSocketCropper
 
 
 
-        If runnerVm.Size.Height > 0 And runnerVm.Size.Width > 0 Then
+        If runnerVm.MasterSize.Height > 0 And runnerVm.MasterSize.Width > 0 Then
             If Not String.IsNullOrWhiteSpace(gameSource) Then
                 ProcessCrop(runnerVm.GameCrop.AsRectangle(),
-                            runnerVm.Size.AsSize(),
+                            runnerVm.MasterSize.AsSize(),
                             runnerVm.CurrentSize.AsSize(),
                             gameSource,
                             runnerVm.Scale,
@@ -434,7 +432,7 @@ Public Class ObsWebSocketCropper
 
             If Not String.IsNullOrWhiteSpace(timerSource) Then
                 ProcessCrop(runnerVm.TimerCrop.AsRectangle(),
-                            runnerVm.Size.AsSize(),
+                            runnerVm.MasterSize.AsSize(),
                             runnerVm.CurrentSize.AsSize(),
                             timerSource,
                             runnerVm.Scale,
@@ -531,7 +529,7 @@ Public Class ObsWebSocketCropper
                 lblLeftRunnerTwitch.Text = "Twitch: " & runnerVm.Twitch
             End If
 
-            runnerVm.Size.UpdateFromSize(realMasterSize)
+            runnerVm.MasterSize.UpdateFromSize(realMasterSize)
             runnerVm.Scale = scaling
         End Using
 
@@ -627,10 +625,11 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub FillCurrentCropInfoFromObs(isRightWindow As Boolean)
-        SetMasterSourceDimensions()
 
         Dim sceneName As String = If(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
         Dim runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
+
+        runnerVm.MasterSize.UpdateFromSize(GetMasterSize(isRightWindow))
 
         Dim timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
         Dim gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
@@ -821,6 +820,7 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        RefreshCropperDefaultCrop()
 
         ReuseInfo = True
         lblOBS1ConnectedStatus.Text = "Not Connected"
@@ -1227,8 +1227,8 @@ Public Class ObsWebSocketCropper
             runnerTwitchField.Text = "Twitch: " & runnerVm.Twitch
 
             If GetObsInfo = True Then
-                If runnerVm.Size.Height = 0 OrElse runnerVm.Size.Width = 0 Then
-                    SetMasterSourceDimensions()
+                If runnerVm.MasterSize.Height = 0 OrElse runnerVm.MasterSize.Width = 0 Then
+                    runnerVm.MasterSize.UpdateFromSize(GetMasterSize(isRightWindow))
                 End If
 
                 Try
@@ -1369,18 +1369,18 @@ Public Class ObsWebSocketCropper
             Exit Sub
         End If
 
-        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(runnerVm.Size.AsSize(), runnerVm.Scale), newScale)
+        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(runnerVm.MasterSize.AsSize(), runnerVm.Scale), newScale)
         runnerVm.GameCrop.UpdateFromRectangle(TransScale(runnerVm.GameCrop.AsRectangle(),
-                                                         runnerVm.Size.AsSize(),
+                                                         runnerVm.MasterSize.AsSize(),
                                                          runnerVm.Scale,
                                                          newSize,
                                                          newScale))
         runnerVm.TimerCrop.UpdateFromRectangle(TransScale(runnerVm.TimerCrop.AsRectangle(),
-                                                          runnerVm.Size.AsSize(),
+                                                          runnerVm.MasterSize.AsSize(),
                                                           runnerVm.Scale,
                                                           newSize,
                                                           newScale))
-        runnerVm.Size.UpdateFromSize(newSize)
+        runnerVm.MasterSize.UpdateFromSize(newSize)
         runnerVm.Scale = newScale
     End Sub
 

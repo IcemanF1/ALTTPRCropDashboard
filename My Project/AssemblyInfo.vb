@@ -32,6 +32,6 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.2.2")>
 <Assembly: AssemblyFileVersion("1.2.*")>
-<Assembly: AssemblyInformationalVersion("1.2.2")>
+<Assembly: AssemblyInformationalVersion("custom-build")>
 
 <Assembly: AssemblyMetadata("SquirrelAwareVersion", "1")>
