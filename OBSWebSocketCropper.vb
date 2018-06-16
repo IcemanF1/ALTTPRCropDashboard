@@ -820,6 +820,7 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        RefreshCropperDefaultCrop()
 
         ReuseInfo = True
         lblOBS1ConnectedStatus.Text = "Not Connected"
