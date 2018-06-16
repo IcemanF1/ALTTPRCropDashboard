@@ -96,7 +96,7 @@ Public Class ObsWebSocketPlus
         If boundingWidth > 0 Then
             boundInfo.Add("x", boundingWidth)
             boundInfo.Add("y", bondingHeight)
-            boundInfo.Add("type", boundType)
+            'boundInfo.Add("type", boundType)
             boundInfo.Add("alignment", 0)
             requestParameters.Add("bounds", boundInfo)
         End If

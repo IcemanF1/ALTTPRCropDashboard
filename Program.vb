@@ -57,7 +57,6 @@ Public Module Program
         Task.Run(Async Sub()
                      Try
                          Using updateMgr = New UpdateManager(updatePath)
-                             BackupSettings()
                              Await updateMgr.UpdateApp()
                          End Using
                      Catch ex As Exception
@@ -96,8 +95,7 @@ Public Module Program
                     SquirrelAwareApp.HandleEvents(
                     onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
                     onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
-                    onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr),
-                    onFirstRun:=Sub() RestoreSettings())
+                    onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
 
                     ' ReSharper enable AccessToDisposedClosure
 
