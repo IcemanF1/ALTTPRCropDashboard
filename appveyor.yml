@@ -10,7 +10,7 @@ assembly_info:
   file: 'My Project\AssemblyInfo.vb'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
-  assembly_informational_version: '{version}-{configuration}'
+  assembly_informational_version: '{version}-ci-$(configuration)-$(APPVEYOR_REPO_COMMIT)'
 
 init:
   - git config --global core.autocrlf input
