@@ -29,4 +29,4 @@ cache:
 
 artifacts:
   - path: bin\$(configuration)
-    name: "croptool-{version}-$(GIT_HASH)-$(configuration)"
+    name: "croptool-$(APPVEYOR_BUILD_VERSION)-$(GIT_HASH)-$(configuration)"
