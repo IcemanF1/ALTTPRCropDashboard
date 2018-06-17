@@ -15,7 +15,7 @@ assembly_info:
 init:
   - git config --global core.autocrlf input
   - ps: $env:CONFIG_LOWER = $env:CONFIGURATION.ToLower()
-  - ps: $env:GIT_HASH = $env:APPVEYOR_REPO_COMMIT.Substring(0, 7)
+  - ps: $env:GIT_HASH = -join $env:APPVEYOR_REPO_COMMIT[0..7]
 
 before_build:
   - nuget restore
