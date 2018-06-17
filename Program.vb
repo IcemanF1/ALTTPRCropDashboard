@@ -146,7 +146,7 @@ Public Module Program
 
                 CheckForUpdate(updatePath)
             Catch ex As Exception
-                MessageBox.Show($"Error checking for update: ${ex}")
+                'MessageBox.Show($"Error checking for update: ${ex}")
             End Try
 
 
