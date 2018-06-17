@@ -23,6 +23,7 @@ Public Module Program
     Private Sub RestoreSettings()
         'Restore settings after application update            
         Dim destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath
+        MsgBox(destFile)
         Dim sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config"
         ' Check if we have settings that we need to restore
         If Not File.Exists(sourceFile) Then
@@ -57,6 +58,7 @@ Public Module Program
         Task.Run(Async Sub()
                      Try
                          Using updateMgr = New UpdateManager(updatePath)
+                             BackupSettings()
                              Await updateMgr.UpdateApp()
                          End Using
                      Catch ex As Exception
@@ -64,13 +66,17 @@ Public Module Program
                      End Try
                  End Sub)
     End Sub
-    Private Sub CreateShortcuts(mgr As UpdateManager)
+    Private Sub CreateShortcuts(mgr As UpdateManager, v As Version)
         Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
         mgr.CreateShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu, False)
 
         mgr.CreateShortcutForThisExe()
     End Sub
-    Private Sub DeleteShortcuts(mgr As UpdateManager)
+    Private Sub HandleUpdate(mgr As UpdateManager, v As Version)
+        CreateShortcuts(mgr, v)
+        RestoreSettings()
+    End Sub
+    Private Sub DeleteShortcuts(mgr As UpdateManager, v As Version)
         Dim thePath = Path.Combine(Path.GetDirectoryName(Application.StartupPath), $"app-{mgr.CurrentlyInstalledVersion()}", "dashboard.exe")
         mgr.RemoveShortcutsForExecutable(thePath, ShortcutLocation.Desktop Or ShortcutLocation.StartMenu)
         mgr.RemoveShortcutForThisExe()
@@ -93,9 +99,9 @@ Public Module Program
 
                     ' ReSharper disable AccessToDisposedClosure
                     SquirrelAwareApp.HandleEvents(
-                    onInitialInstall:=Sub(v) CreateShortcuts(updateMgr),
-                    onAppUpdate:=Sub(v) CreateShortcuts(updateMgr),
-                    onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr))
+                    onInitialInstall:=Sub(v) CreateShortcuts(updateMgr, v),
+                    onAppUpdate:=Sub(v) HandleUpdate(updateMgr, v),
+                    onAppUninstall:=Sub(v) DeleteShortcuts(updateMgr, v))
 
                     ' ReSharper enable AccessToDisposedClosure
 
