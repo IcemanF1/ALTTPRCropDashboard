@@ -113,6 +113,9 @@ Public Class ObsWebSocketCropper
         If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) AndAlso Not String.IsNullOrWhiteSpace(txtCommentaryNames.Text) Then
             DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text))
         End If
+        If Not String.IsNullOrWhiteSpace(My.Settings.GameSettings) AndAlso Not String.IsNullOrWhiteSpace(txtGameSettings.Text) Then
+            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.GameSettings, txtGameSettings.Text))
+        End If
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtLeftTrackerURL.Text) Then
             Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
             Dim trackerString As String
@@ -1092,12 +1095,15 @@ Public Class ObsWebSocketCropper
     Private Sub CheckUnusedFields()
         Dim visComms, visLeftRunner, visRightRunner,
         visLeftTracker, visRightTracker, visLeftTimer, visLeftGame,
-        visRightTimer, visRightGame As Boolean
+        visRightTimer, visRightGame, visGameSettings As Boolean
 
         visComms = Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS)
         txtCommentaryNames.Visible = visComms
         lblCommentary.Visible = visComms
 
+        visGameSettings = Not String.IsNullOrWhiteSpace(My.Settings.GameSettings)
+        txtGameSettings.Visible = visGameSettings
+        lblGameSettings.Visible = visGameSettings
 
         visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) OrElse
             Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) OrElse
@@ -1396,6 +1402,17 @@ Public Class ObsWebSocketCropper
 
     Private Sub ObsWebSocketCropper_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         My.Settings.Save()
+    End Sub
+
+    Private Sub btnResetDatabase_Click(sender As Object, e As EventArgs) Handles btnResetDatabase.Click
+        If MsgBox("This will completely reset the database to nothing.  Are you sure you wish to do this?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+            Using context As New CropDbContext
+                context.Database.ExecuteSqlCommand("Delete from crops")
+                context.SaveChanges()
+                RefreshRunnerNames()
+            End Using
+        End If
+
     End Sub
 
 #End Region

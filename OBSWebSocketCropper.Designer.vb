@@ -133,6 +133,9 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink = New System.Windows.Forms.Label()
         Me.lblLeftRunnerTwitch = New System.Windows.Forms.Label()
         Me.lblRightRunnerTwitch = New System.Windows.Forms.Label()
+        Me.lblGameSettings = New System.Windows.Forms.Label()
+        Me.txtGameSettings = New System.Windows.Forms.TextBox()
+        Me.btnResetDatabase = New System.Windows.Forms.Button()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -153,7 +156,7 @@ Partial Class ObsWebSocketCropper
         'btnSetRightCrop
         '
         Me.btnSetRightCrop.BackColor = System.Drawing.Color.MistyRose
-        Me.btnSetRightCrop.Location = New System.Drawing.Point(511, 500)
+        Me.btnSetRightCrop.Location = New System.Drawing.Point(509, 537)
         Me.btnSetRightCrop.Name = "btnSetRightCrop"
         Me.btnSetRightCrop.Size = New System.Drawing.Size(123, 23)
         Me.btnSetRightCrop.TabIndex = 6
@@ -240,7 +243,7 @@ Partial Class ObsWebSocketCropper
         Me.gbRightGameWindow.Controls.Add(Me.Label3)
         Me.gbRightGameWindow.Controls.Add(Me.Label4)
         Me.gbRightGameWindow.Controls.Add(Me.txtCropRightGame_Right)
-        Me.gbRightGameWindow.Location = New System.Drawing.Point(511, 376)
+        Me.gbRightGameWindow.Location = New System.Drawing.Point(509, 413)
         Me.gbRightGameWindow.Name = "gbRightGameWindow"
         Me.gbRightGameWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbRightGameWindow.TabIndex = 5
@@ -282,7 +285,7 @@ Partial Class ObsWebSocketCropper
         Me.gbRightTimerWindow.Controls.Add(Me.Label9)
         Me.gbRightTimerWindow.Controls.Add(Me.Label10)
         Me.gbRightTimerWindow.Controls.Add(Me.txtCropRightTimer_Right)
-        Me.gbRightTimerWindow.Location = New System.Drawing.Point(511, 250)
+        Me.gbRightTimerWindow.Location = New System.Drawing.Point(509, 287)
         Me.gbRightTimerWindow.Name = "gbRightTimerWindow"
         Me.gbRightTimerWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbRightTimerWindow.TabIndex = 4
@@ -408,7 +411,7 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.Controls.Add(Me.Label14)
         Me.gbLeftTimerWindow.Controls.Add(Me.Label15)
         Me.gbLeftTimerWindow.Controls.Add(Me.txtCropLeftTimer_Right)
-        Me.gbLeftTimerWindow.Location = New System.Drawing.Point(171, 250)
+        Me.gbLeftTimerWindow.Location = New System.Drawing.Point(169, 287)
         Me.gbLeftTimerWindow.Name = "gbLeftTimerWindow"
         Me.gbLeftTimerWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbLeftTimerWindow.TabIndex = 1
@@ -532,7 +535,7 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftGameWindow.Controls.Add(Me.Label19)
         Me.gbLeftGameWindow.Controls.Add(Me.Label20)
         Me.gbLeftGameWindow.Controls.Add(Me.txtCropLeftGame_Right)
-        Me.gbLeftGameWindow.Location = New System.Drawing.Point(171, 376)
+        Me.gbLeftGameWindow.Location = New System.Drawing.Point(169, 413)
         Me.gbLeftGameWindow.Name = "gbLeftGameWindow"
         Me.gbLeftGameWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbLeftGameWindow.TabIndex = 2
@@ -626,7 +629,7 @@ Partial Class ObsWebSocketCropper
         'btnSetLeftCrop
         '
         Me.btnSetLeftCrop.BackColor = System.Drawing.Color.PaleGreen
-        Me.btnSetLeftCrop.Location = New System.Drawing.Point(171, 500)
+        Me.btnSetLeftCrop.Location = New System.Drawing.Point(169, 537)
         Me.btnSetLeftCrop.Name = "btnSetLeftCrop"
         Me.btnSetLeftCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftCrop.TabIndex = 3
@@ -638,7 +641,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblLeftRunner.AutoSize = True
         Me.lblLeftRunner.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblLeftRunner.Location = New System.Drawing.Point(155, 106)
+        Me.lblLeftRunner.Location = New System.Drawing.Point(153, 143)
         Me.lblLeftRunner.Name = "lblLeftRunner"
         Me.lblLeftRunner.Size = New System.Drawing.Size(94, 13)
         Me.lblLeftRunner.TabIndex = 14
@@ -648,7 +651,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblRightRunner.AutoSize = True
         Me.lblRightRunner.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblRightRunner.Location = New System.Drawing.Point(489, 106)
+        Me.lblRightRunner.Location = New System.Drawing.Point(487, 143)
         Me.lblRightRunner.Name = "lblRightRunner"
         Me.lblRightRunner.Size = New System.Drawing.Size(101, 13)
         Me.lblRightRunner.TabIndex = 22
@@ -658,7 +661,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.cbLeftRunnerName.DisplayMember = "RacerName"
         Me.cbLeftRunnerName.FormattingEnabled = True
-        Me.cbLeftRunnerName.Location = New System.Drawing.Point(248, 103)
+        Me.cbLeftRunnerName.Location = New System.Drawing.Point(246, 140)
         Me.cbLeftRunnerName.Name = "cbLeftRunnerName"
         Me.cbLeftRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftRunnerName.TabIndex = 14
@@ -668,7 +671,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.cbRightRunnerName.DisplayMember = "RacerName"
         Me.cbRightRunnerName.FormattingEnabled = True
-        Me.cbRightRunnerName.Location = New System.Drawing.Point(590, 103)
+        Me.cbRightRunnerName.Location = New System.Drawing.Point(588, 140)
         Me.cbRightRunnerName.Name = "cbRightRunnerName"
         Me.cbRightRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbRightRunnerName.TabIndex = 26
@@ -756,14 +759,14 @@ Partial Class ObsWebSocketCropper
         '
         'txtLeftTrackerURL
         '
-        Me.txtLeftTrackerURL.Location = New System.Drawing.Point(115, 47)
+        Me.txtLeftTrackerURL.Location = New System.Drawing.Point(117, 76)
         Me.txtLeftTrackerURL.Name = "txtLeftTrackerURL"
         Me.txtLeftTrackerURL.Size = New System.Drawing.Size(190, 20)
         Me.txtLeftTrackerURL.TabIndex = 31
         '
         'txtRightTrackerURL
         '
-        Me.txtRightTrackerURL.Location = New System.Drawing.Point(440, 47)
+        Me.txtRightTrackerURL.Location = New System.Drawing.Point(442, 76)
         Me.txtRightTrackerURL.Name = "txtRightTrackerURL"
         Me.txtRightTrackerURL.Size = New System.Drawing.Size(189, 20)
         Me.txtRightTrackerURL.TabIndex = 48
@@ -772,7 +775,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblLeftTracker.AutoSize = True
         Me.lblLeftTracker.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblLeftTracker.Location = New System.Drawing.Point(7, 50)
+        Me.lblLeftTracker.Location = New System.Drawing.Point(9, 79)
         Me.lblLeftTracker.Name = "lblLeftTracker"
         Me.lblLeftTracker.Size = New System.Drawing.Size(90, 13)
         Me.lblLeftTracker.TabIndex = 49
@@ -782,7 +785,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblRightTracker.AutoSize = True
         Me.lblRightTracker.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblRightTracker.Location = New System.Drawing.Point(337, 50)
+        Me.lblRightTracker.Location = New System.Drawing.Point(339, 79)
         Me.lblRightTracker.Name = "lblRightTracker"
         Me.lblRightTracker.Size = New System.Drawing.Size(97, 13)
         Me.lblRightTracker.TabIndex = 50
@@ -882,7 +885,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnGetLeftCrop
         '
-        Me.btnGetLeftCrop.Location = New System.Drawing.Point(297, 500)
+        Me.btnGetLeftCrop.Location = New System.Drawing.Point(295, 537)
         Me.btnGetLeftCrop.Name = "btnGetLeftCrop"
         Me.btnGetLeftCrop.Size = New System.Drawing.Size(79, 23)
         Me.btnGetLeftCrop.TabIndex = 61
@@ -892,7 +895,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnGetRightCrop
         '
-        Me.btnGetRightCrop.Location = New System.Drawing.Point(640, 500)
+        Me.btnGetRightCrop.Location = New System.Drawing.Point(638, 537)
         Me.btnGetRightCrop.Name = "btnGetRightCrop"
         Me.btnGetRightCrop.Size = New System.Drawing.Size(76, 23)
         Me.btnGetRightCrop.TabIndex = 62
@@ -902,7 +905,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnSaveLeftCrop
         '
-        Me.btnSaveLeftCrop.Location = New System.Drawing.Point(382, 500)
+        Me.btnSaveLeftCrop.Location = New System.Drawing.Point(380, 537)
         Me.btnSaveLeftCrop.Name = "btnSaveLeftCrop"
         Me.btnSaveLeftCrop.Size = New System.Drawing.Size(96, 23)
         Me.btnSaveLeftCrop.TabIndex = 63
@@ -912,7 +915,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnSaveRightCrop
         '
-        Me.btnSaveRightCrop.Location = New System.Drawing.Point(722, 500)
+        Me.btnSaveRightCrop.Location = New System.Drawing.Point(720, 537)
         Me.btnSaveRightCrop.Name = "btnSaveRightCrop"
         Me.btnSaveRightCrop.Size = New System.Drawing.Size(96, 23)
         Me.btnSaveRightCrop.TabIndex = 64
@@ -922,7 +925,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnGetProcesses
         '
-        Me.btnGetProcesses.Location = New System.Drawing.Point(344, 205)
+        Me.btnGetProcesses.Location = New System.Drawing.Point(342, 242)
         Me.btnGetProcesses.Name = "btnGetProcesses"
         Me.btnGetProcesses.Size = New System.Drawing.Size(114, 23)
         Me.btnGetProcesses.TabIndex = 65
@@ -933,7 +936,7 @@ Partial Class ObsWebSocketCropper
         'btnSetLeftVLC
         '
         Me.btnSetLeftVLC.BackColor = System.Drawing.Color.GreenYellow
-        Me.btnSetLeftVLC.Location = New System.Drawing.Point(169, 205)
+        Me.btnSetLeftVLC.Location = New System.Drawing.Point(167, 242)
         Me.btnSetLeftVLC.Name = "btnSetLeftVLC"
         Me.btnSetLeftVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftVLC.TabIndex = 70
@@ -965,7 +968,7 @@ Partial Class ObsWebSocketCropper
         'btnSetRightVLC
         '
         Me.btnSetRightVLC.BackColor = System.Drawing.Color.PeachPuff
-        Me.btnSetRightVLC.Location = New System.Drawing.Point(487, 205)
+        Me.btnSetRightVLC.Location = New System.Drawing.Point(485, 242)
         Me.btnSetRightVLC.Name = "btnSetRightVLC"
         Me.btnSetRightVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetRightVLC.TabIndex = 74
@@ -975,7 +978,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnNewLeftRunner
         '
-        Me.btnNewLeftRunner.Location = New System.Drawing.Point(364, 144)
+        Me.btnNewLeftRunner.Location = New System.Drawing.Point(362, 181)
         Me.btnNewLeftRunner.Name = "btnNewLeftRunner"
         Me.btnNewLeftRunner.Size = New System.Drawing.Size(114, 23)
         Me.btnNewLeftRunner.TabIndex = 76
@@ -985,7 +988,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnNewRightRunner
         '
-        Me.btnNewRightRunner.Location = New System.Drawing.Point(704, 149)
+        Me.btnNewRightRunner.Location = New System.Drawing.Point(702, 186)
         Me.btnNewRightRunner.Name = "btnNewRightRunner"
         Me.btnNewRightRunner.Size = New System.Drawing.Size(114, 23)
         Me.btnNewRightRunner.TabIndex = 77
@@ -1007,6 +1010,8 @@ Partial Class ObsWebSocketCropper
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.gbTrackerComms.Controls.Add(Me.lblGameSettings)
+        Me.gbTrackerComms.Controls.Add(Me.txtGameSettings)
         Me.gbTrackerComms.Controls.Add(Me.lblCommentary)
         Me.gbTrackerComms.Controls.Add(Me.txtCommentaryNames)
         Me.gbTrackerComms.Controls.Add(Me.txtLeftTrackerURL)
@@ -1015,7 +1020,7 @@ Partial Class ObsWebSocketCropper
         Me.gbTrackerComms.Controls.Add(Me.lblLeftTracker)
         Me.gbTrackerComms.Location = New System.Drawing.Point(169, 12)
         Me.gbTrackerComms.Name = "gbTrackerComms"
-        Me.gbTrackerComms.Size = New System.Drawing.Size(658, 80)
+        Me.gbTrackerComms.Size = New System.Drawing.Size(658, 112)
         Me.gbTrackerComms.TabIndex = 58
         Me.gbTrackerComms.TabStop = False
         Me.gbTrackerComms.Text = "Tracker / Comms info"
@@ -1032,7 +1037,7 @@ Partial Class ObsWebSocketCropper
         'cbRightVLCSource
         '
         Me.cbRightVLCSource.FormattingEnabled = True
-        Me.cbRightVLCSource.Location = New System.Drawing.Point(590, 178)
+        Me.cbRightVLCSource.Location = New System.Drawing.Point(588, 215)
         Me.cbRightVLCSource.Name = "cbRightVLCSource"
         Me.cbRightVLCSource.Size = New System.Drawing.Size(228, 21)
         Me.cbRightVLCSource.TabIndex = 69
@@ -1040,7 +1045,7 @@ Partial Class ObsWebSocketCropper
         'cbLeftVLCSource
         '
         Me.cbLeftVLCSource.FormattingEnabled = True
-        Me.cbLeftVLCSource.Location = New System.Drawing.Point(246, 176)
+        Me.cbLeftVLCSource.Location = New System.Drawing.Point(244, 213)
         Me.cbLeftVLCSource.Name = "cbLeftVLCSource"
         Me.cbLeftVLCSource.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftVLCSource.TabIndex = 66
@@ -1049,7 +1054,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblRightVLC.AutoSize = True
         Me.lblRightVLC.BackColor = System.Drawing.Color.PeachPuff
-        Me.lblRightVLC.Location = New System.Drawing.Point(489, 181)
+        Me.lblRightVLC.Location = New System.Drawing.Point(487, 218)
         Me.lblRightVLC.Name = "lblRightVLC"
         Me.lblRightVLC.Size = New System.Drawing.Size(95, 13)
         Me.lblRightVLC.TabIndex = 68
@@ -1059,7 +1064,7 @@ Partial Class ObsWebSocketCropper
         '
         Me.lblLeftVLC.AutoSize = True
         Me.lblLeftVLC.BackColor = System.Drawing.Color.GreenYellow
-        Me.lblLeftVLC.Location = New System.Drawing.Point(157, 182)
+        Me.lblLeftVLC.Location = New System.Drawing.Point(155, 219)
         Me.lblLeftVLC.Name = "lblLeftVLC"
         Me.lblLeftVLC.Size = New System.Drawing.Size(85, 13)
         Me.lblLeftVLC.TabIndex = 67
@@ -1094,7 +1099,7 @@ Partial Class ObsWebSocketCropper
         Me.lblViewLeftOnTwitch.BackColor = System.Drawing.Color.Transparent
         Me.lblViewLeftOnTwitch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblViewLeftOnTwitch.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblViewLeftOnTwitch.Location = New System.Drawing.Point(155, 150)
+        Me.lblViewLeftOnTwitch.Location = New System.Drawing.Point(153, 187)
         Me.lblViewLeftOnTwitch.Name = "lblViewLeftOnTwitch"
         Me.lblViewLeftOnTwitch.Size = New System.Drawing.Size(76, 13)
         Me.lblViewLeftOnTwitch.TabIndex = 78
@@ -1106,7 +1111,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftVOD.BackColor = System.Drawing.Color.Transparent
         Me.lblLeftVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLeftVOD.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblLeftVOD.Location = New System.Drawing.Point(237, 150)
+        Me.lblLeftVOD.Location = New System.Drawing.Point(235, 187)
         Me.lblLeftVOD.Name = "lblLeftVOD"
         Me.lblLeftVOD.Size = New System.Drawing.Size(61, 13)
         Me.lblLeftVOD.TabIndex = 79
@@ -1118,7 +1123,7 @@ Partial Class ObsWebSocketCropper
         Me.lblViewRightOnTwitch.BackColor = System.Drawing.Color.Transparent
         Me.lblViewRightOnTwitch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblViewRightOnTwitch.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblViewRightOnTwitch.Location = New System.Drawing.Point(490, 154)
+        Me.lblViewRightOnTwitch.Location = New System.Drawing.Point(488, 191)
         Me.lblViewRightOnTwitch.Name = "lblViewRightOnTwitch"
         Me.lblViewRightOnTwitch.Size = New System.Drawing.Size(76, 13)
         Me.lblViewRightOnTwitch.TabIndex = 80
@@ -1130,7 +1135,7 @@ Partial Class ObsWebSocketCropper
         Me.lblRightVOD.BackColor = System.Drawing.Color.Transparent
         Me.lblRightVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRightVOD.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblRightVOD.Location = New System.Drawing.Point(574, 154)
+        Me.lblRightVOD.Location = New System.Drawing.Point(572, 191)
         Me.lblRightVOD.Name = "lblRightVOD"
         Me.lblRightVOD.Size = New System.Drawing.Size(61, 13)
         Me.lblRightVOD.TabIndex = 81
@@ -1142,7 +1147,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftStreamlink.BackColor = System.Drawing.Color.Transparent
         Me.lblLeftStreamlink.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLeftStreamlink.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblLeftStreamlink.Location = New System.Drawing.Point(300, 150)
+        Me.lblLeftStreamlink.Location = New System.Drawing.Point(298, 187)
         Me.lblLeftStreamlink.Name = "lblLeftStreamlink"
         Me.lblLeftStreamlink.Size = New System.Drawing.Size(56, 13)
         Me.lblLeftStreamlink.TabIndex = 82
@@ -1154,7 +1159,7 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink.BackColor = System.Drawing.Color.Transparent
         Me.lblRightStreamlink.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRightStreamlink.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblRightStreamlink.Location = New System.Drawing.Point(641, 154)
+        Me.lblRightStreamlink.Location = New System.Drawing.Point(639, 191)
         Me.lblRightStreamlink.Name = "lblRightStreamlink"
         Me.lblRightStreamlink.Size = New System.Drawing.Size(56, 13)
         Me.lblRightStreamlink.TabIndex = 83
@@ -1163,7 +1168,7 @@ Partial Class ObsWebSocketCropper
         'lblLeftRunnerTwitch
         '
         Me.lblLeftRunnerTwitch.AutoSize = True
-        Me.lblLeftRunnerTwitch.Location = New System.Drawing.Point(157, 130)
+        Me.lblLeftRunnerTwitch.Location = New System.Drawing.Point(155, 167)
         Me.lblLeftRunnerTwitch.Name = "lblLeftRunnerTwitch"
         Me.lblLeftRunnerTwitch.Size = New System.Drawing.Size(77, 13)
         Me.lblLeftRunnerTwitch.TabIndex = 85
@@ -1172,17 +1177,44 @@ Partial Class ObsWebSocketCropper
         'lblRightRunnerTwitch
         '
         Me.lblRightRunnerTwitch.AutoSize = True
-        Me.lblRightRunnerTwitch.Location = New System.Drawing.Point(490, 130)
+        Me.lblRightRunnerTwitch.Location = New System.Drawing.Point(488, 167)
         Me.lblRightRunnerTwitch.Name = "lblRightRunnerTwitch"
         Me.lblRightRunnerTwitch.Size = New System.Drawing.Size(77, 13)
         Me.lblRightRunnerTwitch.TabIndex = 86
         Me.lblRightRunnerTwitch.Text = "Runner Twitch"
         '
+        'lblGameSettings
+        '
+        Me.lblGameSettings.AutoSize = True
+        Me.lblGameSettings.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblGameSettings.Location = New System.Drawing.Point(8, 51)
+        Me.lblGameSettings.Name = "lblGameSettings"
+        Me.lblGameSettings.Size = New System.Drawing.Size(76, 13)
+        Me.lblGameSettings.TabIndex = 56
+        Me.lblGameSettings.Text = "Game Settings"
+        '
+        'txtGameSettings
+        '
+        Me.txtGameSettings.Location = New System.Drawing.Point(117, 50)
+        Me.txtGameSettings.Name = "txtGameSettings"
+        Me.txtGameSettings.Size = New System.Drawing.Size(280, 20)
+        Me.txtGameSettings.TabIndex = 55
+        '
+        'btnResetDatabase
+        '
+        Me.btnResetDatabase.Location = New System.Drawing.Point(12, 208)
+        Me.btnResetDatabase.Name = "btnResetDatabase"
+        Me.btnResetDatabase.Size = New System.Drawing.Size(112, 23)
+        Me.btnResetDatabase.TabIndex = 87
+        Me.btnResetDatabase.Text = "Reset Database"
+        Me.btnResetDatabase.UseVisualStyleBackColor = True
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(847, 544)
+        Me.ClientSize = New System.Drawing.Size(847, 571)
+        Me.Controls.Add(Me.btnResetDatabase)
         Me.Controls.Add(Me.lblRightRunnerTwitch)
         Me.Controls.Add(Me.lblLeftRunnerTwitch)
         Me.Controls.Add(Me.btnTestSourceSettings)
@@ -1363,4 +1395,7 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents btnRightTimerUncrop As Button
     Friend WithEvents btnLeftTimerUncrop As Button
     Friend WithEvents btnLeftGameUncrop As Button
+    Friend WithEvents lblGameSettings As Label
+    Friend WithEvents txtGameSettings As TextBox
+    Friend WithEvents btnResetDatabase As Button
 End Class

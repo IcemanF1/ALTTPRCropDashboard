@@ -10,6 +10,7 @@ Public Class UserSettings
     Dim _obsSourceListLeftTracker As New DataSet
     Dim _obsSourceListRightTracker As New DataSet
     Dim _obsCommentary As New DataSet
+    Dim _obsGameSettings As New DataSet
     Dim CorrectMessage As String = "Correct Source Type"
     Dim IncorrectMessage As String = "Incorrect Source Type"
 
@@ -52,6 +53,9 @@ Public Class UserSettings
         End If
 
         If String.IsNullOrWhiteSpace(cbCommentaryOBS.Text) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(cbGameSettings.Text) And match = False Then
             match = True
         End If
         If match = True Then
@@ -116,6 +120,11 @@ Public Class UserSettings
             FullyValid = CheckFullyValid("text_gdiplus", cbCommentaryOBS.Text)
             If FullyValid = True Then
                 My.Settings.CommentaryOBS = cbCommentaryOBS.Text
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", cbGameSettings.Text)
+            If FullyValid = True Then
+                My.Settings.GameSettings = cbGameSettings.Text
             End If
 
             If Not continueToVlc Then
@@ -202,6 +211,20 @@ Public Class UserSettings
         Else
             _obsSourceListRightTracker.Tables("Sources").Clear()
         End If
+
+        If _obsCommentary.Tables.Count = 0 Then
+            _obsCommentary.Tables.Add("Sources")
+            _obsCommentary.Tables("Sources").Columns.Add("SourceName")
+        Else
+            _obsCommentary.Tables("Sources").Clear()
+        End If
+
+        If _obsGameSettings.Tables.Count = 0 Then
+            _obsGameSettings.Tables.Add("Sources")
+            _obsGameSettings.Tables("Sources").Columns.Add("SourceName")
+        Else
+            _obsGameSettings.Tables("Sources").Clear()
+        End If
     End Sub
 
     Private Sub SetUserSettings()
@@ -217,6 +240,7 @@ Public Class UserSettings
             cbLeftTrackerOBS.Text = My.Settings.LeftTrackerOBS
             cbRightTrackerOBS.Text = My.Settings.RightTrackerOBS
             cbCommentaryOBS.Text = My.Settings.CommentaryOBS
+            cbGameSettings.Text = My.Settings.GameSettings
         End If
     End Sub
 
@@ -264,6 +288,7 @@ Public Class UserSettings
         _obsSourceListLeftTracker.Clear()
         _obsSourceListRightTracker.Clear()
         _obsCommentary.Clear()
+        _obsGameSettings.Clear()
 
         Dim x As Integer
         For x = 0 To scenes.Count - 1
@@ -285,6 +310,7 @@ Public Class UserSettings
         _obsSourceListLeftTracker = _obsSourceListLeftGame.Copy
         _obsSourceListRightTracker = _obsSourceListLeftGame.Copy
         _obsCommentary = _obsSourceListLeftGame.Copy
+        _obsGameSettings = _obsSourceListLeftGame.Copy
 
         cbRightGameWindow.DataSource = _obsSourceListRightGame.Tables("Sources")
         cbRightGameWindow.DisplayMember = "SourceName"
@@ -322,6 +348,10 @@ Public Class UserSettings
         cbCommentaryOBS.DisplayMember = "SourceName"
         cbCommentaryOBS.ValueMember = "SourceName"
 
+        cbGameSettings.DataSource = _obsGameSettings.Tables("Sources")
+        cbGameSettings.DisplayMember = "SourceName"
+        cbGameSettings.ValueMember = "SourceName"
+
         SetBlankDropdowns()
     End Sub
     Private Sub SetBlankDropdowns()
@@ -334,6 +364,7 @@ Public Class UserSettings
         cbLeftTrackerOBS.Text = ""
         cbRightTrackerOBS.Text = ""
         cbCommentaryOBS.Text = ""
+        cbGameSettings.Text = ""
     End Sub
     Private Sub CheckObsPort()
 
@@ -637,6 +668,29 @@ Public Class UserSettings
             End If
         Else
             lblCommentaryStatus.Visible = False
+        End If
+    End Sub
+    Private Sub cbGameSettings_TextChanged(sender As Object, e As EventArgs) Handles cbGameSettings.TextChanged
+        If Not String.IsNullOrWhiteSpace(cbGameSettings.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbGameSettings.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbGameSettings.Text)
+
+                lblGameSettings.Visible = True
+
+                If sSettings = True Then
+                    lblGameSettings.Text = CorrectMessage
+                    lblGameSettings.ForeColor = CorrectColour
+                Else
+                    lblGameSettings.Text = IncorrectMessage
+                    lblGameSettings.ForeColor = InCorrectColour
+                End If
+            Else
+                lblGameSettings.Visible = False
+            End If
+        Else
+            lblGameSettings.Visible = False
         End If
     End Sub
     Function CheckFullyValid(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean

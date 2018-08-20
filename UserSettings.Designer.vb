@@ -61,6 +61,9 @@ Partial Class UserSettings
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblGameSettings = New System.Windows.Forms.Label()
+        Me.cbGameSettings = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -226,6 +229,9 @@ Partial Class UserSettings
         '
         Me.panOBS.BackgroundImage = Global.ALTTPRCropDashboard.My.Resources.Resources.Settings_Background_Resized
         Me.panOBS.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.panOBS.Controls.Add(Me.Label4)
+        Me.panOBS.Controls.Add(Me.lblGameSettings)
+        Me.panOBS.Controls.Add(Me.cbGameSettings)
         Me.panOBS.Controls.Add(Me.lblRightTimerStatus)
         Me.panOBS.Controls.Add(Me.lblLeftTimerStatus)
         Me.panOBS.Controls.Add(Me.lblRightRunnerStatus)
@@ -452,6 +458,35 @@ Partial Class UserSettings
         Me.Panel1.Size = New System.Drawing.Size(1014, 781)
         Me.Panel1.TabIndex = 101
         '
+        'lblGameSettings
+        '
+        Me.lblGameSettings.AutoSize = True
+        Me.lblGameSettings.BackColor = System.Drawing.Color.Transparent
+        Me.lblGameSettings.Location = New System.Drawing.Point(374, 511)
+        Me.lblGameSettings.Name = "lblGameSettings"
+        Me.lblGameSettings.Size = New System.Drawing.Size(109, 13)
+        Me.lblGameSettings.TabIndex = 101
+        Me.lblGameSettings.Text = "Game Settings Status"
+        '
+        'cbGameSettings
+        '
+        Me.cbGameSettings.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbGameSettings.FormattingEnabled = True
+        Me.cbGameSettings.Location = New System.Drawing.Point(368, 483)
+        Me.cbGameSettings.Name = "cbGameSettings"
+        Me.cbGameSettings.Size = New System.Drawing.Size(301, 25)
+        Me.cbGameSettings.TabIndex = 100
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Location = New System.Drawing.Point(286, 489)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(76, 13)
+        Me.Label4.TabIndex = 102
+        Me.Label4.Text = "Game Settings"
+        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -509,4 +544,7 @@ Partial Class UserSettings
     Friend WithEvents lblRightGameStatus As Label
     Friend WithEvents lblLeftGameStatus As Label
     Friend WithEvents lblCommentaryStatus As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents lblGameSettings As Label
+    Friend WithEvents cbGameSettings As ComboBox
 End Class
