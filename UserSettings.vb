@@ -17,6 +17,8 @@ Public Class UserSettings
     Dim CorrectColour As Color = Color.Green
     Dim InCorrectColour As Color = Color.Red
 
+    Dim FourPlayer As Boolean
+
     Public Shared ShowVLCOption As Boolean
 
     Function VerifySettings() As Boolean
@@ -79,42 +81,74 @@ Public Class UserSettings
 
             FullyValid = CheckFullyValid("window_capture", cbLeftTimerWindow.Text)
             If FullyValid = True Then
-                My.Settings.LeftTimerName = cbLeftTimerWindow.Text
+                If FourPlayer Then
+                    My.Settings.LeftTimerName_Bottom = cbLeftTimerWindow.Text
+                Else
+                    My.Settings.LeftTimerName = cbLeftTimerWindow.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("window_capture", cbLeftGameWindow.Text)
             If FullyValid = True Then
-                My.Settings.LeftGameName = cbLeftGameWindow.Text
+                If FourPlayer Then
+                    My.Settings.LeftGameName_Bottom = cbLeftGameWindow.Text
+                Else
+                    My.Settings.LeftGameName = cbLeftGameWindow.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("window_capture", cbRightTimerWindow.Text)
             If FullyValid = True Then
-                My.Settings.RightTimerName = cbRightTimerWindow.Text
+                If FourPlayer Then
+                    My.Settings.RightTimerName_Bottom = cbRightTimerWindow.Text
+                Else
+                    My.Settings.RightTimerName = cbRightTimerWindow.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("window_capture", cbRightGameWindow.Text)
             If FullyValid = True Then
-                My.Settings.RightGameName = cbRightGameWindow.Text
+                If FourPlayer Then
+                    My.Settings.RightGameName_Bottom = cbRightGameWindow.Text
+                Else
+                    My.Settings.RightGameName = cbRightGameWindow.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("text_gdiplus", cbLeftRunnerOBS.Text)
             If FullyValid = True Then
-                My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
+                If FourPlayer Then
+                    My.Settings.LeftRunnerOBS_Bottom = cbLeftRunnerOBS.Text
+                Else
+                    My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("text_gdiplus", cbRightRunnerOBS.Text)
             If FullyValid = True Then
-                My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
+                If FourPlayer Then
+                    My.Settings.RightRunnerOBS_Bottom = cbRightRunnerOBS.Text
+                Else
+                    My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("browser_source", cbLeftTrackerOBS.Text)
             If FullyValid = True Then
-                My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
+                If FourPlayer Then
+                    My.Settings.LeftTrackerOBS_Bottom = cbLeftTrackerOBS.Text
+                Else
+                    My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("browser_source", cbRightTrackerOBS.Text)
             If FullyValid = True Then
-                My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
+                If FourPlayer Then
+                    My.Settings.RightTrackerOBS_Bottom = cbRightTrackerOBS.Text
+                Else
+                    My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
+                End If
             End If
 
             FullyValid = CheckFullyValid("text_gdiplus", cbCommentaryOBS.Text)
@@ -231,16 +265,17 @@ Public Class UserSettings
         If My.Settings.HasFinishedWelcome = False Then
 
         Else
-            cbLeftTimerWindow.Text = My.Settings.LeftTimerName
-            cbLeftGameWindow.Text = My.Settings.LeftGameName
-            cbRightTimerWindow.Text = My.Settings.RightTimerName
-            cbRightGameWindow.Text = My.Settings.RightGameName
-            cbLeftRunnerOBS.Text = My.Settings.LeftRunnerOBS
-            cbRightRunnerOBS.Text = My.Settings.RightRunnerOBS
-            cbLeftTrackerOBS.Text = My.Settings.LeftTrackerOBS
-            cbRightTrackerOBS.Text = My.Settings.RightTrackerOBS
+            cbLeftTimerWindow.Text = If(FourPlayer, My.Settings.LeftTimerName_Bottom, My.Settings.LeftTimerName)
+            cbLeftGameWindow.Text = If(FourPlayer, My.Settings.LeftGameName_Bottom, My.Settings.LeftGameName)
+            cbRightTimerWindow.Text = If(FourPlayer, My.Settings.RightTimerName_Bottom, My.Settings.RightTimerName)
+            cbRightGameWindow.Text = If(FourPlayer, My.Settings.RightGameName_Bottom, My.Settings.RightGameName)
+            cbLeftRunnerOBS.Text = If(FourPlayer, My.Settings.LeftRunnerOBS_Bottom, My.Settings.LeftRunnerOBS)
+            cbRightRunnerOBS.Text = If(FourPlayer, My.Settings.RightRunnerOBS_Bottom, My.Settings.RightRunnerOBS)
+            cbLeftTrackerOBS.Text = If(FourPlayer, My.Settings.LeftTrackerOBS_Bottom, My.Settings.LeftTrackerOBS)
+            cbRightTrackerOBS.Text = If(FourPlayer, My.Settings.RightTrackerOBS_Bottom, My.Settings.RightTrackerOBS)
             cbCommentaryOBS.Text = My.Settings.CommentaryOBS
             cbGameSettings.Text = My.Settings.GameSettings
+
         End If
     End Sub
 
@@ -260,6 +295,8 @@ Public Class UserSettings
         txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
         txtPassword1.Text = My.Settings.Password1
 
+        roTwoPlayer.Visible = False
+        roFourPlayerBottom.Visible = False
         panOBS.Visible = False
 
         txtTwitchChannel.Text = My.Settings.TwitchChannel
@@ -267,13 +304,13 @@ Public Class UserSettings
         gbConnection1.Visible = False
 
         roDefault.Checked = My.Settings.DefaultConnection
+        roTwoPlayer.Checked = True
 
         btnSaveThenVLC.Visible = ShowVLCOption
 
         CreateNewSourceTable()
 
-        CheckOBSPort()
-
+        CheckObsPort()
 
     End Sub
     Private Sub RefreshScenes()
@@ -374,6 +411,8 @@ Public Class UserSettings
             MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
         Else
             If ObsWebSocketCropper.Obs.IsConnected Then
+                roTwoPlayer.Visible = True
+                roFourPlayerBottom.Visible = True
                 panOBS.Visible = True
                 RefreshScenes()
                 SetUserSettings()
@@ -397,6 +436,8 @@ Public Class UserSettings
 
         If ObsWebSocketCropper.Obs.IsConnected Then
             panOBS.Visible = True
+            roTwoPlayer.Visible = True
+            roFourPlayerBottom.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True
             RefreshScenes()
@@ -415,7 +456,6 @@ Public Class UserSettings
         End If
 
     End Sub
-
     Private Sub roCustom_CheckedChanged(sender As Object, e As EventArgs) Handles roCustom.CheckedChanged
         If roCustom.Checked = True Then
             gbConnection1.Visible = True
@@ -431,6 +471,38 @@ Public Class UserSettings
         Else
             roCustom.Checked = True
         End If
+    End Sub
+    Private Sub roTwoPlayer_CheckedChanged(sender As Object, e As EventArgs) Handles roTwoPlayer.CheckedChanged
+        If roTwoPlayer.Checked = True Then
+            roFourPlayerBottom.Checked = False
+        Else
+            roFourPlayerBottom.Checked = True
+        End If
+
+        CheckFourPlayer()
+    End Sub
+    Private Sub roFourPlayerBottom_CheckedChanged(sender As Object, e As EventArgs) Handles roFourPlayerBottom.CheckedChanged
+        If roFourPlayerBottom.Checked = True Then
+            roTwoPlayer.Checked = False
+        Else
+            roTwoPlayer.Checked = True
+        End If
+    End Sub
+    Private Sub CheckFourPlayer()
+        FourPlayer = roFourPlayerBottom.Checked
+
+        If FourPlayer = True Then
+            lblGameSettings.Visible = False
+            cbGameSettings.Visible = False
+            cbCommentaryOBS.Visible = False
+        Else
+            lblGameSettings.Visible = True
+            cbGameSettings.Visible = True
+            cbCommentaryOBS.Visible = True
+        End If
+
+        SetBlankDropdowns()
+        SetUserSettings()
     End Sub
     Private Sub txtConnectionPort_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtConnectionPort.KeyPress
         e.Handled = OBSWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
@@ -448,21 +520,22 @@ Public Class UserSettings
 
         Return sSettings
     End Function
-
     Function CheckItemInList(ByVal ListValue As String) As Boolean
         Dim x As Integer
         Dim MatchedValue As Boolean
-        For x = 0 To _obsSourceListLeftGame.Tables("Sources").Rows.Count - 1
-            If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName")?.ToString() Then
-                MatchedValue = True
-                Exit For
-            End If
-        Next
+        If _obsSourceListLeftGame.Tables.Count > 0 Then
+            For x = 0 To _obsSourceListLeftGame.Tables("Sources").Rows.Count - 1
+                If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName")?.ToString() Then
+                    MatchedValue = True
+                    Exit For
+                End If
+            Next
+
+
+        End If
 
         Return MatchedValue
-
     End Function
-
     Private Sub cbLeftRunnerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerOBS.TextChanged
         If Not String.IsNullOrWhiteSpace(cbLeftRunnerOBS.Text) Then
             Dim MatchedValue As Boolean = CheckItemInList(cbLeftRunnerOBS.Text)
@@ -677,20 +750,25 @@ Public Class UserSettings
             If MatchedValue = True Then
                 Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbGameSettings.Text)
 
-                lblGameSettings.Visible = True
+                If FourPlayer Then
+                    lblGameSettingsStatus.Visible = False
+                Else
+                    lblGameSettingsStatus.Visible = True
+                End If
+
 
                 If sSettings = True Then
-                    lblGameSettings.Text = CorrectMessage
-                    lblGameSettings.ForeColor = CorrectColour
+                    lblGameSettingsStatus.Text = CorrectMessage
+                    lblGameSettingsStatus.ForeColor = CorrectColour
                 Else
-                    lblGameSettings.Text = IncorrectMessage
-                    lblGameSettings.ForeColor = InCorrectColour
+                    lblGameSettingsStatus.Text = IncorrectMessage
+                    lblGameSettingsStatus.ForeColor = InCorrectColour
                 End If
             Else
-                lblGameSettings.Visible = False
+                lblGameSettingsStatus.Visible = False
             End If
         Else
-            lblGameSettings.Visible = False
+            lblGameSettingsStatus.Visible = False
         End If
     End Sub
     Function CheckFullyValid(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean

@@ -95,5 +95,62 @@
     <Setting Name="GameSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DefaultHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">610</Value>
+    </Setting>
+    <Setting Name="DefaultWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">863</Value>
+    </Setting>
+    <Setting Name="FourRacerHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">610</Value>
+    </Setting>
+    <Setting Name="FourRacerWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1523</Value>
+    </Setting>
+    <Setting Name="DefaultGBHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">112</Value>
+    </Setting>
+    <Setting Name="DefaultGBWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">658</Value>
+    </Setting>
+    <Setting Name="FourRacerGBHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">112</Value>
+    </Setting>
+    <Setting Name="FourRacerGBWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1327</Value>
+    </Setting>
+    <Setting Name="FourPlayers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="LeftTimerName_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LeftGameName_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightGameName_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightTimerName_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LeftRunnerOBS_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightRunnerOBS_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LeftTrackerOBS_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightTrackerOBS_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LeftStreamlinkVlcParams_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RightStreamlinkVlcParams_Bottom" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

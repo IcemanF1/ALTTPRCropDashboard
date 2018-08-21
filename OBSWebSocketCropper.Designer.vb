@@ -99,6 +99,7 @@ Partial Class ObsWebSocketCropper
         Me.ChangeUserSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeVLCSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PlayersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -116,7 +117,31 @@ Partial Class ObsWebSocketCropper
         Me.btnNewLeftRunner = New System.Windows.Forms.Button()
         Me.btnNewRightRunner = New System.Windows.Forms.Button()
         Me.btnTestSourceSettings = New System.Windows.Forms.Button()
+        Me.btnNewRightRunner_Bottom = New System.Windows.Forms.Button()
+        Me.btnNewLeftRunner_Bottom = New System.Windows.Forms.Button()
+        Me.btnSetRightVLC_Bottom = New System.Windows.Forms.Button()
+        Me.btnSetLeftVLC_Bottom = New System.Windows.Forms.Button()
+        Me.btnSaveRightCrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnSaveLeftCrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnGetRightCrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnGetLeftCrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnSetLeftCrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnLeftTimerUncrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnLeftTimerDB_Bottom = New System.Windows.Forms.Button()
+        Me.btnLeftGameUncrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnLeftGameDB_Bottom = New System.Windows.Forms.Button()
+        Me.btnRightTimerUncrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnRightTimerDB_Bottom = New System.Windows.Forms.Button()
+        Me.btnRightGameUncrop_Bottom = New System.Windows.Forms.Button()
+        Me.btnRightGameDB_Bottom = New System.Windows.Forms.Button()
+        Me.btnSetRightCrop_Bottom = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
+        Me.txtLeftTrackerURL_Bottom = New System.Windows.Forms.TextBox()
+        Me.txtRightTrackerURL_Bottom = New System.Windows.Forms.TextBox()
+        Me.lblRightTracker_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftTracker_Bottom = New System.Windows.Forms.Label()
+        Me.lblGameSettings = New System.Windows.Forms.Label()
+        Me.txtGameSettings = New System.Windows.Forms.TextBox()
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
         Me.cbRightVLCSource = New System.Windows.Forms.ComboBox()
         Me.cbLeftVLCSource = New System.Windows.Forms.ComboBox()
@@ -133,15 +158,77 @@ Partial Class ObsWebSocketCropper
         Me.lblRightStreamlink = New System.Windows.Forms.Label()
         Me.lblLeftRunnerTwitch = New System.Windows.Forms.Label()
         Me.lblRightRunnerTwitch = New System.Windows.Forms.Label()
-        Me.lblGameSettings = New System.Windows.Forms.Label()
-        Me.txtGameSettings = New System.Windows.Forms.TextBox()
         Me.btnResetDatabase = New System.Windows.Forms.Button()
+        Me.lblRightRunnerTwitch_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftRunnerTwitch_Bottom = New System.Windows.Forms.Label()
+        Me.lblRightStreamlink_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftStreamlink_Bottom = New System.Windows.Forms.Label()
+        Me.lblRightVOD_Bottom = New System.Windows.Forms.Label()
+        Me.lblViewRightOnTwitch_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftVOD_Bottom = New System.Windows.Forms.Label()
+        Me.lblViewLeftOnTwitch_Bottom = New System.Windows.Forms.Label()
+        Me.cbRightVLCSource_Bottom = New System.Windows.Forms.ComboBox()
+        Me.cbLeftVLCSource_Bottom = New System.Windows.Forms.ComboBox()
+        Me.lblRightVLC_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftVLC_Bottom = New System.Windows.Forms.Label()
+        Me.cbRightRunnerName_Bottom = New System.Windows.Forms.ComboBox()
+        Me.cbLeftRunnerName_Bottom = New System.Windows.Forms.ComboBox()
+        Me.lblRightRunner_Bottom = New System.Windows.Forms.Label()
+        Me.lblLeftRunner_Bottom = New System.Windows.Forms.Label()
+        Me.gbLeftTimerWindow_Bottom = New System.Windows.Forms.GroupBox()
+        Me.cbLeftScaling_Bottom = New System.Windows.Forms.ComboBox()
+        Me.lblLeftScaling_Bottom = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.txtCropLeftTimer_Top_BR = New System.Windows.Forms.TextBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.txtCropLeftTimer_Left_BR = New System.Windows.Forms.TextBox()
+        Me.txtCropLeftTimer_Bottom_BR = New System.Windows.Forms.TextBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.txtCropLeftTimer_Right_BR = New System.Windows.Forms.TextBox()
+        Me.gbLeftGameWindow_Bottom = New System.Windows.Forms.GroupBox()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.txtCropLeftGame_Top_BR = New System.Windows.Forms.TextBox()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.txtCropLeftGame_Left_BR = New System.Windows.Forms.TextBox()
+        Me.txtCropLeftGame_Bottom_BR = New System.Windows.Forms.TextBox()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.txtCropLeftGame_Right_BR = New System.Windows.Forms.TextBox()
+        Me.gbRightTimerWindow_Bottom = New System.Windows.Forms.GroupBox()
+        Me.cbRightScaling_Bottom = New System.Windows.Forms.ComboBox()
+        Me.lblRightScaling_Bottom = New System.Windows.Forms.Label()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.txtCropRightTimer_Top_BR = New System.Windows.Forms.TextBox()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.txtCropRightTimer_Left_BR = New System.Windows.Forms.TextBox()
+        Me.txtCropRightTimer_Bottom_BR = New System.Windows.Forms.TextBox()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.txtCropRightTimer_Right_BR = New System.Windows.Forms.TextBox()
+        Me.gbRightGameWindow_Bottom = New System.Windows.Forms.GroupBox()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.txtCropRightGame_Top_BR = New System.Windows.Forms.TextBox()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.txtCropRightGame_Left_BR = New System.Windows.Forms.TextBox()
+        Me.txtCropRightGame_Bottom_BR = New System.Windows.Forms.TextBox()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.txtCropRightGame_Right_BR = New System.Windows.Forms.TextBox()
+        Me.pnlFourPlayer = New System.Windows.Forms.Panel()
+        Me.pnlFourPlayerTracker = New System.Windows.Forms.Panel()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
         Me.gbLeftGameWindow.SuspendLayout()
         Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
+        Me.gbLeftTimerWindow_Bottom.SuspendLayout()
+        Me.gbLeftGameWindow_Bottom.SuspendLayout()
+        Me.gbRightTimerWindow_Bottom.SuspendLayout()
+        Me.gbRightGameWindow_Bottom.SuspendLayout()
+        Me.pnlFourPlayer.SuspendLayout()
+        Me.pnlFourPlayerTracker.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -824,13 +911,13 @@ Partial Class ObsWebSocketCropper
         Me.mnuMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.mnuMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMainMenu.Name = "mnuMainMenu"
-        Me.mnuMainMenu.Size = New System.Drawing.Size(847, 24)
+        Me.mnuMainMenu.Size = New System.Drawing.Size(1507, 24)
         Me.mnuMainMenu.TabIndex = 57
         Me.mnuMainMenu.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.PlayersToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -853,6 +940,13 @@ Partial Class ObsWebSocketCropper
         Me.ExpertModeToolStripMenuItem.Name = "ExpertModeToolStripMenuItem"
         Me.ExpertModeToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ExpertModeToolStripMenuItem.Text = "Expert Mode"
+        '
+        'PlayersToolStripMenuItem
+        '
+        Me.PlayersToolStripMenuItem.CheckOnClick = True
+        Me.PlayersToolStripMenuItem.Name = "PlayersToolStripMenuItem"
+        Me.PlayersToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.PlayersToolStripMenuItem.Text = "4 Players"
         '
         'ExitToolStripMenuItem
         '
@@ -1007,9 +1101,194 @@ Partial Class ObsWebSocketCropper
         Me.btnTestSourceSettings.UseVisualStyleBackColor = True
         Me.btnTestSourceSettings.Visible = False
         '
+        'btnNewRightRunner_Bottom
+        '
+        Me.btnNewRightRunner_Bottom.Location = New System.Drawing.Point(556, 47)
+        Me.btnNewRightRunner_Bottom.Name = "btnNewRightRunner_Bottom"
+        Me.btnNewRightRunner_Bottom.Size = New System.Drawing.Size(114, 23)
+        Me.btnNewRightRunner_Bottom.TabIndex = 110
+        Me.btnNewRightRunner_Bottom.Text = "New Runner"
+        Me.ttMainToolTip.SetToolTip(Me.btnNewRightRunner_Bottom, "Pop-up form to easily add the runner information")
+        Me.btnNewRightRunner_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnNewLeftRunner_Bottom
+        '
+        Me.btnNewLeftRunner_Bottom.Location = New System.Drawing.Point(216, 42)
+        Me.btnNewLeftRunner_Bottom.Name = "btnNewLeftRunner_Bottom"
+        Me.btnNewLeftRunner_Bottom.Size = New System.Drawing.Size(114, 23)
+        Me.btnNewLeftRunner_Bottom.TabIndex = 109
+        Me.btnNewLeftRunner_Bottom.Text = "New Runner"
+        Me.ttMainToolTip.SetToolTip(Me.btnNewLeftRunner_Bottom, "Pop-up form to easily add the runner information")
+        Me.btnNewLeftRunner_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnSetRightVLC_Bottom
+        '
+        Me.btnSetRightVLC_Bottom.BackColor = System.Drawing.Color.PeachPuff
+        Me.btnSetRightVLC_Bottom.Location = New System.Drawing.Point(339, 103)
+        Me.btnSetRightVLC_Bottom.Name = "btnSetRightVLC_Bottom"
+        Me.btnSetRightVLC_Bottom.Size = New System.Drawing.Size(116, 23)
+        Me.btnSetRightVLC_Bottom.TabIndex = 108
+        Me.btnSetRightVLC_Bottom.Text = "Set Right VLC"
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC_Bottom, "Sets the left game/timer window VLC to the above dropdown")
+        Me.btnSetRightVLC_Bottom.UseVisualStyleBackColor = False
+        '
+        'btnSetLeftVLC_Bottom
+        '
+        Me.btnSetLeftVLC_Bottom.BackColor = System.Drawing.Color.GreenYellow
+        Me.btnSetLeftVLC_Bottom.Location = New System.Drawing.Point(21, 103)
+        Me.btnSetLeftVLC_Bottom.Name = "btnSetLeftVLC_Bottom"
+        Me.btnSetLeftVLC_Bottom.Size = New System.Drawing.Size(116, 23)
+        Me.btnSetLeftVLC_Bottom.TabIndex = 107
+        Me.btnSetLeftVLC_Bottom.Text = "Set Left VLC"
+        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC_Bottom, "Sets the left game/timer window VLC to the above dropdown")
+        Me.btnSetLeftVLC_Bottom.UseVisualStyleBackColor = False
+        '
+        'btnSaveRightCrop_Bottom
+        '
+        Me.btnSaveRightCrop_Bottom.Location = New System.Drawing.Point(574, 398)
+        Me.btnSaveRightCrop_Bottom.Name = "btnSaveRightCrop_Bottom"
+        Me.btnSaveRightCrop_Bottom.Size = New System.Drawing.Size(96, 23)
+        Me.btnSaveRightCrop_Bottom.TabIndex = 101
+        Me.btnSaveRightCrop_Bottom.Text = "Save Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveRightCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the right side")
+        Me.btnSaveRightCrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnSaveLeftCrop_Bottom
+        '
+        Me.btnSaveLeftCrop_Bottom.Location = New System.Drawing.Point(234, 398)
+        Me.btnSaveLeftCrop_Bottom.Name = "btnSaveLeftCrop_Bottom"
+        Me.btnSaveLeftCrop_Bottom.Size = New System.Drawing.Size(96, 23)
+        Me.btnSaveLeftCrop_Bottom.TabIndex = 100
+        Me.btnSaveLeftCrop_Bottom.Text = "Save Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the left side")
+        Me.btnSaveLeftCrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnGetRightCrop_Bottom
+        '
+        Me.btnGetRightCrop_Bottom.Location = New System.Drawing.Point(492, 398)
+        Me.btnGetRightCrop_Bottom.Name = "btnGetRightCrop_Bottom"
+        Me.btnGetRightCrop_Bottom.Size = New System.Drawing.Size(76, 23)
+        Me.btnGetRightCrop_Bottom.TabIndex = 99
+        Me.btnGetRightCrop_Bottom.Text = "Get Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnGetRightCrop_Bottom, "Get the current OBS crop settings for the right side")
+        Me.btnGetRightCrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnGetLeftCrop_Bottom
+        '
+        Me.btnGetLeftCrop_Bottom.Location = New System.Drawing.Point(149, 398)
+        Me.btnGetLeftCrop_Bottom.Name = "btnGetLeftCrop_Bottom"
+        Me.btnGetLeftCrop_Bottom.Size = New System.Drawing.Size(79, 23)
+        Me.btnGetLeftCrop_Bottom.TabIndex = 98
+        Me.btnGetLeftCrop_Bottom.Text = "Get Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop_Bottom, "Get the current OBS crop settings for the left side")
+        Me.btnGetLeftCrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnSetLeftCrop_Bottom
+        '
+        Me.btnSetLeftCrop_Bottom.BackColor = System.Drawing.Color.PaleGreen
+        Me.btnSetLeftCrop_Bottom.Location = New System.Drawing.Point(23, 398)
+        Me.btnSetLeftCrop_Bottom.Name = "btnSetLeftCrop_Bottom"
+        Me.btnSetLeftCrop_Bottom.Size = New System.Drawing.Size(116, 23)
+        Me.btnSetLeftCrop_Bottom.TabIndex = 90
+        Me.btnSetLeftCrop_Bottom.Text = "Set Left Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop_Bottom, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.btnSetLeftCrop_Bottom.UseVisualStyleBackColor = False
+        '
+        'btnLeftTimerUncrop_Bottom
+        '
+        Me.btnLeftTimerUncrop_Bottom.Location = New System.Drawing.Point(145, 17)
+        Me.btnLeftTimerUncrop_Bottom.Name = "btnLeftTimerUncrop_Bottom"
+        Me.btnLeftTimerUncrop_Bottom.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftTimerUncrop_Bottom.TabIndex = 91
+        Me.btnLeftTimerUncrop_Bottom.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerUncrop_Bottom, "Sets OBS to 0 crop for the timer")
+        Me.btnLeftTimerUncrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnLeftTimerDB_Bottom
+        '
+        Me.btnLeftTimerDB_Bottom.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftTimerDB_Bottom.Name = "btnLeftTimerDB_Bottom"
+        Me.btnLeftTimerDB_Bottom.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftTimerDB_Bottom.TabIndex = 87
+        Me.btnLeftTimerDB_Bottom.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftTimerDB_Bottom, "Resets the timer data to what the current DB has")
+        Me.btnLeftTimerDB_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnLeftGameUncrop_Bottom
+        '
+        Me.btnLeftGameUncrop_Bottom.Location = New System.Drawing.Point(145, 19)
+        Me.btnLeftGameUncrop_Bottom.Name = "btnLeftGameUncrop_Bottom"
+        Me.btnLeftGameUncrop_Bottom.Size = New System.Drawing.Size(53, 23)
+        Me.btnLeftGameUncrop_Bottom.TabIndex = 90
+        Me.btnLeftGameUncrop_Bottom.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameUncrop_Bottom, "Sets OBS to 0 crop for the game")
+        Me.btnLeftGameUncrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnLeftGameDB_Bottom
+        '
+        Me.btnLeftGameDB_Bottom.Location = New System.Drawing.Point(39, 19)
+        Me.btnLeftGameDB_Bottom.Name = "btnLeftGameDB_Bottom"
+        Me.btnLeftGameDB_Bottom.Size = New System.Drawing.Size(52, 23)
+        Me.btnLeftGameDB_Bottom.TabIndex = 89
+        Me.btnLeftGameDB_Bottom.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnLeftGameDB_Bottom, "Resets the game data to what the current DB has")
+        Me.btnLeftGameDB_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnRightTimerUncrop_Bottom
+        '
+        Me.btnRightTimerUncrop_Bottom.Location = New System.Drawing.Point(145, 20)
+        Me.btnRightTimerUncrop_Bottom.Name = "btnRightTimerUncrop_Bottom"
+        Me.btnRightTimerUncrop_Bottom.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightTimerUncrop_Bottom.TabIndex = 92
+        Me.btnRightTimerUncrop_Bottom.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerUncrop_Bottom, "Sets OBS to 0 crop for the timer")
+        Me.btnRightTimerUncrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnRightTimerDB_Bottom
+        '
+        Me.btnRightTimerDB_Bottom.Location = New System.Drawing.Point(39, 19)
+        Me.btnRightTimerDB_Bottom.Name = "btnRightTimerDB_Bottom"
+        Me.btnRightTimerDB_Bottom.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightTimerDB_Bottom.TabIndex = 91
+        Me.btnRightTimerDB_Bottom.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightTimerDB_Bottom, "Resets the timer data to what the current DB has")
+        Me.btnRightTimerDB_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnRightGameUncrop_Bottom
+        '
+        Me.btnRightGameUncrop_Bottom.Location = New System.Drawing.Point(145, 19)
+        Me.btnRightGameUncrop_Bottom.Name = "btnRightGameUncrop_Bottom"
+        Me.btnRightGameUncrop_Bottom.Size = New System.Drawing.Size(53, 23)
+        Me.btnRightGameUncrop_Bottom.TabIndex = 93
+        Me.btnRightGameUncrop_Bottom.Text = "Uncrop"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameUncrop_Bottom, "Sets OBS to 0 crop for the game")
+        Me.btnRightGameUncrop_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnRightGameDB_Bottom
+        '
+        Me.btnRightGameDB_Bottom.Location = New System.Drawing.Point(40, 19)
+        Me.btnRightGameDB_Bottom.Name = "btnRightGameDB_Bottom"
+        Me.btnRightGameDB_Bottom.Size = New System.Drawing.Size(52, 23)
+        Me.btnRightGameDB_Bottom.TabIndex = 88
+        Me.btnRightGameDB_Bottom.Text = "Reset"
+        Me.ttMainToolTip.SetToolTip(Me.btnRightGameDB_Bottom, "Resets the game data to what the current DB has")
+        Me.btnRightGameDB_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnSetRightCrop_Bottom
+        '
+        Me.btnSetRightCrop_Bottom.BackColor = System.Drawing.Color.MistyRose
+        Me.btnSetRightCrop_Bottom.Location = New System.Drawing.Point(363, 398)
+        Me.btnSetRightCrop_Bottom.Name = "btnSetRightCrop_Bottom"
+        Me.btnSetRightCrop_Bottom.Size = New System.Drawing.Size(123, 23)
+        Me.btnSetRightCrop_Bottom.TabIndex = 93
+        Me.btnSetRightCrop_Bottom.Text = "Set Right Crop"
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightCrop_Bottom, "Set the crop for the right side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.btnSetRightCrop_Bottom.UseVisualStyleBackColor = False
+        '
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.gbTrackerComms.Controls.Add(Me.pnlFourPlayerTracker)
         Me.gbTrackerComms.Controls.Add(Me.lblGameSettings)
         Me.gbTrackerComms.Controls.Add(Me.txtGameSettings)
         Me.gbTrackerComms.Controls.Add(Me.lblCommentary)
@@ -1020,10 +1299,61 @@ Partial Class ObsWebSocketCropper
         Me.gbTrackerComms.Controls.Add(Me.lblLeftTracker)
         Me.gbTrackerComms.Location = New System.Drawing.Point(169, 12)
         Me.gbTrackerComms.Name = "gbTrackerComms"
-        Me.gbTrackerComms.Size = New System.Drawing.Size(658, 112)
+        Me.gbTrackerComms.Size = New System.Drawing.Size(1338, 112)
         Me.gbTrackerComms.TabIndex = 58
         Me.gbTrackerComms.TabStop = False
         Me.gbTrackerComms.Text = "Tracker / Comms info"
+        '
+        'txtLeftTrackerURL_Bottom
+        '
+        Me.txtLeftTrackerURL_Bottom.Location = New System.Drawing.Point(117, 13)
+        Me.txtLeftTrackerURL_Bottom.Name = "txtLeftTrackerURL_Bottom"
+        Me.txtLeftTrackerURL_Bottom.Size = New System.Drawing.Size(190, 20)
+        Me.txtLeftTrackerURL_Bottom.TabIndex = 57
+        '
+        'txtRightTrackerURL_Bottom
+        '
+        Me.txtRightTrackerURL_Bottom.Location = New System.Drawing.Point(442, 13)
+        Me.txtRightTrackerURL_Bottom.Name = "txtRightTrackerURL_Bottom"
+        Me.txtRightTrackerURL_Bottom.Size = New System.Drawing.Size(189, 20)
+        Me.txtRightTrackerURL_Bottom.TabIndex = 58
+        '
+        'lblRightTracker_Bottom
+        '
+        Me.lblRightTracker_Bottom.AutoSize = True
+        Me.lblRightTracker_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblRightTracker_Bottom.Location = New System.Drawing.Point(339, 16)
+        Me.lblRightTracker_Bottom.Name = "lblRightTracker_Bottom"
+        Me.lblRightTracker_Bottom.Size = New System.Drawing.Size(97, 13)
+        Me.lblRightTracker_Bottom.TabIndex = 60
+        Me.lblRightTracker_Bottom.Text = "Right Tracker URL"
+        '
+        'lblLeftTracker_Bottom
+        '
+        Me.lblLeftTracker_Bottom.AutoSize = True
+        Me.lblLeftTracker_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblLeftTracker_Bottom.Location = New System.Drawing.Point(9, 16)
+        Me.lblLeftTracker_Bottom.Name = "lblLeftTracker_Bottom"
+        Me.lblLeftTracker_Bottom.Size = New System.Drawing.Size(90, 13)
+        Me.lblLeftTracker_Bottom.TabIndex = 59
+        Me.lblLeftTracker_Bottom.Text = "Left Tracker URL"
+        '
+        'lblGameSettings
+        '
+        Me.lblGameSettings.AutoSize = True
+        Me.lblGameSettings.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblGameSettings.Location = New System.Drawing.Point(8, 51)
+        Me.lblGameSettings.Name = "lblGameSettings"
+        Me.lblGameSettings.Size = New System.Drawing.Size(76, 13)
+        Me.lblGameSettings.TabIndex = 56
+        Me.lblGameSettings.Text = "Game Settings"
+        '
+        'txtGameSettings
+        '
+        Me.txtGameSettings.Location = New System.Drawing.Point(117, 50)
+        Me.txtGameSettings.Name = "txtGameSettings"
+        Me.txtGameSettings.Size = New System.Drawing.Size(280, 20)
+        Me.txtGameSettings.TabIndex = 55
         '
         'lblOBS1ConnectedStatus
         '
@@ -1183,23 +1513,6 @@ Partial Class ObsWebSocketCropper
         Me.lblRightRunnerTwitch.TabIndex = 86
         Me.lblRightRunnerTwitch.Text = "Runner Twitch"
         '
-        'lblGameSettings
-        '
-        Me.lblGameSettings.AutoSize = True
-        Me.lblGameSettings.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblGameSettings.Location = New System.Drawing.Point(8, 51)
-        Me.lblGameSettings.Name = "lblGameSettings"
-        Me.lblGameSettings.Size = New System.Drawing.Size(76, 13)
-        Me.lblGameSettings.TabIndex = 56
-        Me.lblGameSettings.Text = "Game Settings"
-        '
-        'txtGameSettings
-        '
-        Me.txtGameSettings.Location = New System.Drawing.Point(117, 50)
-        Me.txtGameSettings.Name = "txtGameSettings"
-        Me.txtGameSettings.Size = New System.Drawing.Size(280, 20)
-        Me.txtGameSettings.TabIndex = 55
-        '
         'btnResetDatabase
         '
         Me.btnResetDatabase.Location = New System.Drawing.Point(12, 208)
@@ -1209,11 +1522,606 @@ Partial Class ObsWebSocketCropper
         Me.btnResetDatabase.Text = "Reset Database"
         Me.btnResetDatabase.UseVisualStyleBackColor = True
         '
+        'lblRightRunnerTwitch_Bottom
+        '
+        Me.lblRightRunnerTwitch_Bottom.AutoSize = True
+        Me.lblRightRunnerTwitch_Bottom.Location = New System.Drawing.Point(342, 28)
+        Me.lblRightRunnerTwitch_Bottom.Name = "lblRightRunnerTwitch_Bottom"
+        Me.lblRightRunnerTwitch_Bottom.Size = New System.Drawing.Size(77, 13)
+        Me.lblRightRunnerTwitch_Bottom.TabIndex = 118
+        Me.lblRightRunnerTwitch_Bottom.Text = "Runner Twitch"
+        '
+        'lblLeftRunnerTwitch_Bottom
+        '
+        Me.lblLeftRunnerTwitch_Bottom.AutoSize = True
+        Me.lblLeftRunnerTwitch_Bottom.Location = New System.Drawing.Point(9, 28)
+        Me.lblLeftRunnerTwitch_Bottom.Name = "lblLeftRunnerTwitch_Bottom"
+        Me.lblLeftRunnerTwitch_Bottom.Size = New System.Drawing.Size(77, 13)
+        Me.lblLeftRunnerTwitch_Bottom.TabIndex = 117
+        Me.lblLeftRunnerTwitch_Bottom.Text = "Runner Twitch"
+        '
+        'lblRightStreamlink_Bottom
+        '
+        Me.lblRightStreamlink_Bottom.AutoSize = True
+        Me.lblRightStreamlink_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightStreamlink_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRightStreamlink_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblRightStreamlink_Bottom.Location = New System.Drawing.Point(493, 52)
+        Me.lblRightStreamlink_Bottom.Name = "lblRightStreamlink_Bottom"
+        Me.lblRightStreamlink_Bottom.Size = New System.Drawing.Size(56, 13)
+        Me.lblRightStreamlink_Bottom.TabIndex = 116
+        Me.lblRightStreamlink_Bottom.Text = "Open VLC"
+        '
+        'lblLeftStreamlink_Bottom
+        '
+        Me.lblLeftStreamlink_Bottom.AutoSize = True
+        Me.lblLeftStreamlink_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftStreamlink_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLeftStreamlink_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblLeftStreamlink_Bottom.Location = New System.Drawing.Point(152, 48)
+        Me.lblLeftStreamlink_Bottom.Name = "lblLeftStreamlink_Bottom"
+        Me.lblLeftStreamlink_Bottom.Size = New System.Drawing.Size(56, 13)
+        Me.lblLeftStreamlink_Bottom.TabIndex = 115
+        Me.lblLeftStreamlink_Bottom.Text = "Open VLC"
+        '
+        'lblRightVOD_Bottom
+        '
+        Me.lblRightVOD_Bottom.AutoSize = True
+        Me.lblRightVOD_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblRightVOD_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRightVOD_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblRightVOD_Bottom.Location = New System.Drawing.Point(426, 52)
+        Me.lblRightVOD_Bottom.Name = "lblRightVOD_Bottom"
+        Me.lblRightVOD_Bottom.Size = New System.Drawing.Size(61, 13)
+        Me.lblRightVOD_Bottom.TabIndex = 114
+        Me.lblRightVOD_Bottom.Text = "View VODs"
+        '
+        'lblViewRightOnTwitch_Bottom
+        '
+        Me.lblViewRightOnTwitch_Bottom.AutoSize = True
+        Me.lblViewRightOnTwitch_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblViewRightOnTwitch_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblViewRightOnTwitch_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblViewRightOnTwitch_Bottom.Location = New System.Drawing.Point(342, 52)
+        Me.lblViewRightOnTwitch_Bottom.Name = "lblViewRightOnTwitch_Bottom"
+        Me.lblViewRightOnTwitch_Bottom.Size = New System.Drawing.Size(76, 13)
+        Me.lblViewRightOnTwitch_Bottom.TabIndex = 113
+        Me.lblViewRightOnTwitch_Bottom.Text = "View on twitch"
+        '
+        'lblLeftVOD_Bottom
+        '
+        Me.lblLeftVOD_Bottom.AutoSize = True
+        Me.lblLeftVOD_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblLeftVOD_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLeftVOD_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblLeftVOD_Bottom.Location = New System.Drawing.Point(89, 48)
+        Me.lblLeftVOD_Bottom.Name = "lblLeftVOD_Bottom"
+        Me.lblLeftVOD_Bottom.Size = New System.Drawing.Size(61, 13)
+        Me.lblLeftVOD_Bottom.TabIndex = 112
+        Me.lblLeftVOD_Bottom.Text = "View VODs"
+        '
+        'lblViewLeftOnTwitch_Bottom
+        '
+        Me.lblViewLeftOnTwitch_Bottom.AutoSize = True
+        Me.lblViewLeftOnTwitch_Bottom.BackColor = System.Drawing.Color.Transparent
+        Me.lblViewLeftOnTwitch_Bottom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblViewLeftOnTwitch_Bottom.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.lblViewLeftOnTwitch_Bottom.Location = New System.Drawing.Point(7, 48)
+        Me.lblViewLeftOnTwitch_Bottom.Name = "lblViewLeftOnTwitch_Bottom"
+        Me.lblViewLeftOnTwitch_Bottom.Size = New System.Drawing.Size(76, 13)
+        Me.lblViewLeftOnTwitch_Bottom.TabIndex = 111
+        Me.lblViewLeftOnTwitch_Bottom.Text = "View on twitch"
+        '
+        'cbRightVLCSource_Bottom
+        '
+        Me.cbRightVLCSource_Bottom.FormattingEnabled = True
+        Me.cbRightVLCSource_Bottom.Location = New System.Drawing.Point(442, 76)
+        Me.cbRightVLCSource_Bottom.Name = "cbRightVLCSource_Bottom"
+        Me.cbRightVLCSource_Bottom.Size = New System.Drawing.Size(228, 21)
+        Me.cbRightVLCSource_Bottom.TabIndex = 106
+        '
+        'cbLeftVLCSource_Bottom
+        '
+        Me.cbLeftVLCSource_Bottom.FormattingEnabled = True
+        Me.cbLeftVLCSource_Bottom.Location = New System.Drawing.Point(98, 74)
+        Me.cbLeftVLCSource_Bottom.Name = "cbLeftVLCSource_Bottom"
+        Me.cbLeftVLCSource_Bottom.Size = New System.Drawing.Size(228, 21)
+        Me.cbLeftVLCSource_Bottom.TabIndex = 103
+        '
+        'lblRightVLC_Bottom
+        '
+        Me.lblRightVLC_Bottom.AutoSize = True
+        Me.lblRightVLC_Bottom.BackColor = System.Drawing.Color.PeachPuff
+        Me.lblRightVLC_Bottom.Location = New System.Drawing.Point(341, 79)
+        Me.lblRightVLC_Bottom.Name = "lblRightVLC_Bottom"
+        Me.lblRightVLC_Bottom.Size = New System.Drawing.Size(95, 13)
+        Me.lblRightVLC_Bottom.TabIndex = 105
+        Me.lblRightVLC_Bottom.Text = "Right VLC  Source"
+        '
+        'lblLeftVLC_Bottom
+        '
+        Me.lblLeftVLC_Bottom.AutoSize = True
+        Me.lblLeftVLC_Bottom.BackColor = System.Drawing.Color.GreenYellow
+        Me.lblLeftVLC_Bottom.Location = New System.Drawing.Point(9, 80)
+        Me.lblLeftVLC_Bottom.Name = "lblLeftVLC_Bottom"
+        Me.lblLeftVLC_Bottom.Size = New System.Drawing.Size(85, 13)
+        Me.lblLeftVLC_Bottom.TabIndex = 104
+        Me.lblLeftVLC_Bottom.Text = "Left VLC Source"
+        '
+        'cbRightRunnerName_Bottom
+        '
+        Me.cbRightRunnerName_Bottom.DisplayMember = "RacerName"
+        Me.cbRightRunnerName_Bottom.FormattingEnabled = True
+        Me.cbRightRunnerName_Bottom.Location = New System.Drawing.Point(442, 1)
+        Me.cbRightRunnerName_Bottom.Name = "cbRightRunnerName_Bottom"
+        Me.cbRightRunnerName_Bottom.Size = New System.Drawing.Size(228, 21)
+        Me.cbRightRunnerName_Bottom.TabIndex = 97
+        Me.cbRightRunnerName_Bottom.ValueMember = "RacerName"
+        '
+        'cbLeftRunnerName_Bottom
+        '
+        Me.cbLeftRunnerName_Bottom.DisplayMember = "RacerName"
+        Me.cbLeftRunnerName_Bottom.FormattingEnabled = True
+        Me.cbLeftRunnerName_Bottom.Location = New System.Drawing.Point(100, 1)
+        Me.cbLeftRunnerName_Bottom.Name = "cbLeftRunnerName_Bottom"
+        Me.cbLeftRunnerName_Bottom.Size = New System.Drawing.Size(228, 21)
+        Me.cbLeftRunnerName_Bottom.TabIndex = 95
+        Me.cbLeftRunnerName_Bottom.ValueMember = "RacerName"
+        '
+        'lblRightRunner_Bottom
+        '
+        Me.lblRightRunner_Bottom.AutoSize = True
+        Me.lblRightRunner_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblRightRunner_Bottom.Location = New System.Drawing.Point(341, 4)
+        Me.lblRightRunner_Bottom.Name = "lblRightRunner_Bottom"
+        Me.lblRightRunner_Bottom.Size = New System.Drawing.Size(101, 13)
+        Me.lblRightRunner_Bottom.TabIndex = 96
+        Me.lblRightRunner_Bottom.Text = "Right Runner Name"
+        '
+        'lblLeftRunner_Bottom
+        '
+        Me.lblLeftRunner_Bottom.AutoSize = True
+        Me.lblLeftRunner_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblLeftRunner_Bottom.Location = New System.Drawing.Point(7, 4)
+        Me.lblLeftRunner_Bottom.Name = "lblLeftRunner_Bottom"
+        Me.lblLeftRunner_Bottom.Size = New System.Drawing.Size(94, 13)
+        Me.lblLeftRunner_Bottom.TabIndex = 94
+        Me.lblLeftRunner_Bottom.Text = "Left Runner Name"
+        '
+        'gbLeftTimerWindow_Bottom
+        '
+        Me.gbLeftTimerWindow_Bottom.BackColor = System.Drawing.Color.PaleGreen
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.btnLeftTimerUncrop_Bottom)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.btnLeftTimerDB_Bottom)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.cbLeftScaling_Bottom)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.lblLeftScaling_Bottom)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.Label30)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.txtCropLeftTimer_Top_BR)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.Label31)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.txtCropLeftTimer_Left_BR)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.txtCropLeftTimer_Bottom_BR)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.Label32)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.Label33)
+        Me.gbLeftTimerWindow_Bottom.Controls.Add(Me.txtCropLeftTimer_Right_BR)
+        Me.gbLeftTimerWindow_Bottom.Location = New System.Drawing.Point(23, 148)
+        Me.gbLeftTimerWindow_Bottom.Name = "gbLeftTimerWindow_Bottom"
+        Me.gbLeftTimerWindow_Bottom.Size = New System.Drawing.Size(307, 118)
+        Me.gbLeftTimerWindow_Bottom.TabIndex = 88
+        Me.gbLeftTimerWindow_Bottom.TabStop = False
+        Me.gbLeftTimerWindow_Bottom.Text = "Left Timer Window"
+        '
+        'cbLeftScaling_Bottom
+        '
+        Me.cbLeftScaling_Bottom.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbLeftScaling_Bottom.FormattingEnabled = True
+        Me.cbLeftScaling_Bottom.Items.AddRange(New Object() {"100%", "125%", "150%", "175%", "200%", "225%", "250%", "275%", "300%"})
+        Me.cbLeftScaling_Bottom.Location = New System.Drawing.Point(242, 0)
+        Me.cbLeftScaling_Bottom.Name = "cbLeftScaling_Bottom"
+        Me.cbLeftScaling_Bottom.Size = New System.Drawing.Size(54, 23)
+        Me.cbLeftScaling_Bottom.TabIndex = 88
+        Me.cbLeftScaling_Bottom.Text = "100%"
+        '
+        'lblLeftScaling_Bottom
+        '
+        Me.lblLeftScaling_Bottom.AutoSize = True
+        Me.lblLeftScaling_Bottom.Location = New System.Drawing.Point(193, 4)
+        Me.lblLeftScaling_Bottom.Name = "lblLeftScaling_Bottom"
+        Me.lblLeftScaling_Bottom.Size = New System.Drawing.Size(45, 13)
+        Me.lblLeftScaling_Bottom.TabIndex = 87
+        Me.lblLeftScaling_Bottom.Text = "Scaling:"
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(7, 82)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(26, 13)
+        Me.Label30.TabIndex = 1
+        Me.Label30.Text = "Top"
+        '
+        'txtCropLeftTimer_Top_BR
+        '
+        Me.txtCropLeftTimer_Top_BR.Location = New System.Drawing.Point(39, 79)
+        Me.txtCropLeftTimer_Top_BR.Name = "txtCropLeftTimer_Top_BR"
+        Me.txtCropLeftTimer_Top_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftTimer_Top_BR.TabIndex = 7
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(7, 46)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(25, 13)
+        Me.Label31.TabIndex = 4
+        Me.Label31.Text = "Left"
+        '
+        'txtCropLeftTimer_Left_BR
+        '
+        Me.txtCropLeftTimer_Left_BR.Location = New System.Drawing.Point(39, 43)
+        Me.txtCropLeftTimer_Left_BR.Name = "txtCropLeftTimer_Left_BR"
+        Me.txtCropLeftTimer_Left_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftTimer_Left_BR.TabIndex = 3
+        '
+        'txtCropLeftTimer_Bottom_BR
+        '
+        Me.txtCropLeftTimer_Bottom_BR.Location = New System.Drawing.Point(196, 82)
+        Me.txtCropLeftTimer_Bottom_BR.Name = "txtCropLeftTimer_Bottom_BR"
+        Me.txtCropLeftTimer_Bottom_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftTimer_Bottom_BR.TabIndex = 9
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Location = New System.Drawing.Point(158, 49)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(32, 13)
+        Me.Label32.TabIndex = 6
+        Me.Label32.Text = "Right"
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(158, 85)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(40, 13)
+        Me.Label33.TabIndex = 8
+        Me.Label33.Text = "Bottom"
+        '
+        'txtCropLeftTimer_Right_BR
+        '
+        Me.txtCropLeftTimer_Right_BR.Location = New System.Drawing.Point(196, 46)
+        Me.txtCropLeftTimer_Right_BR.Name = "txtCropLeftTimer_Right_BR"
+        Me.txtCropLeftTimer_Right_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftTimer_Right_BR.TabIndex = 5
+        '
+        'gbLeftGameWindow_Bottom
+        '
+        Me.gbLeftGameWindow_Bottom.BackColor = System.Drawing.Color.PaleGreen
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.btnLeftGameUncrop_Bottom)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.btnLeftGameDB_Bottom)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.Label34)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.txtCropLeftGame_Top_BR)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.Label35)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.txtCropLeftGame_Left_BR)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.txtCropLeftGame_Bottom_BR)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.Label36)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.Label37)
+        Me.gbLeftGameWindow_Bottom.Controls.Add(Me.txtCropLeftGame_Right_BR)
+        Me.gbLeftGameWindow_Bottom.Location = New System.Drawing.Point(23, 274)
+        Me.gbLeftGameWindow_Bottom.Name = "gbLeftGameWindow_Bottom"
+        Me.gbLeftGameWindow_Bottom.Size = New System.Drawing.Size(307, 118)
+        Me.gbLeftGameWindow_Bottom.TabIndex = 89
+        Me.gbLeftGameWindow_Bottom.TabStop = False
+        Me.gbLeftGameWindow_Bottom.Text = "Left Game Window"
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(7, 97)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(26, 13)
+        Me.Label34.TabIndex = 1
+        Me.Label34.Text = "Top"
+        '
+        'txtCropLeftGame_Top_BR
+        '
+        Me.txtCropLeftGame_Top_BR.Location = New System.Drawing.Point(39, 94)
+        Me.txtCropLeftGame_Top_BR.Name = "txtCropLeftGame_Top_BR"
+        Me.txtCropLeftGame_Top_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftGame_Top_BR.TabIndex = 7
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(7, 61)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(25, 13)
+        Me.Label35.TabIndex = 4
+        Me.Label35.Text = "Left"
+        '
+        'txtCropLeftGame_Left_BR
+        '
+        Me.txtCropLeftGame_Left_BR.Location = New System.Drawing.Point(39, 58)
+        Me.txtCropLeftGame_Left_BR.Name = "txtCropLeftGame_Left_BR"
+        Me.txtCropLeftGame_Left_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftGame_Left_BR.TabIndex = 3
+        '
+        'txtCropLeftGame_Bottom_BR
+        '
+        Me.txtCropLeftGame_Bottom_BR.Location = New System.Drawing.Point(196, 97)
+        Me.txtCropLeftGame_Bottom_BR.Name = "txtCropLeftGame_Bottom_BR"
+        Me.txtCropLeftGame_Bottom_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftGame_Bottom_BR.TabIndex = 9
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(158, 64)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(32, 13)
+        Me.Label36.TabIndex = 6
+        Me.Label36.Text = "Right"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(158, 100)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(40, 13)
+        Me.Label37.TabIndex = 8
+        Me.Label37.Text = "Bottom"
+        '
+        'txtCropLeftGame_Right_BR
+        '
+        Me.txtCropLeftGame_Right_BR.Location = New System.Drawing.Point(196, 61)
+        Me.txtCropLeftGame_Right_BR.Name = "txtCropLeftGame_Right_BR"
+        Me.txtCropLeftGame_Right_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropLeftGame_Right_BR.TabIndex = 5
+        '
+        'gbRightTimerWindow_Bottom
+        '
+        Me.gbRightTimerWindow_Bottom.BackColor = System.Drawing.Color.MistyRose
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.btnRightTimerUncrop_Bottom)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.btnRightTimerDB_Bottom)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.cbRightScaling_Bottom)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.lblRightScaling_Bottom)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.Label39)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.txtCropRightTimer_Top_BR)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.Label40)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.txtCropRightTimer_Left_BR)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.txtCropRightTimer_Bottom_BR)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.Label41)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.Label42)
+        Me.gbRightTimerWindow_Bottom.Controls.Add(Me.txtCropRightTimer_Right_BR)
+        Me.gbRightTimerWindow_Bottom.Location = New System.Drawing.Point(363, 148)
+        Me.gbRightTimerWindow_Bottom.Name = "gbRightTimerWindow_Bottom"
+        Me.gbRightTimerWindow_Bottom.Size = New System.Drawing.Size(307, 118)
+        Me.gbRightTimerWindow_Bottom.TabIndex = 91
+        Me.gbRightTimerWindow_Bottom.TabStop = False
+        Me.gbRightTimerWindow_Bottom.Text = "Right Timer Window"
+        '
+        'cbRightScaling_Bottom
+        '
+        Me.cbRightScaling_Bottom.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbRightScaling_Bottom.FormattingEnabled = True
+        Me.cbRightScaling_Bottom.Items.AddRange(New Object() {"100%", "125%", "150%", "175%", "200%", "225%", "250%", "275%", "300%"})
+        Me.cbRightScaling_Bottom.Location = New System.Drawing.Point(242, 0)
+        Me.cbRightScaling_Bottom.Name = "cbRightScaling_Bottom"
+        Me.cbRightScaling_Bottom.Size = New System.Drawing.Size(54, 23)
+        Me.cbRightScaling_Bottom.TabIndex = 90
+        Me.cbRightScaling_Bottom.Text = "100%"
+        '
+        'lblRightScaling_Bottom
+        '
+        Me.lblRightScaling_Bottom.AutoSize = True
+        Me.lblRightScaling_Bottom.Location = New System.Drawing.Point(193, 4)
+        Me.lblRightScaling_Bottom.Name = "lblRightScaling_Bottom"
+        Me.lblRightScaling_Bottom.Size = New System.Drawing.Size(45, 13)
+        Me.lblRightScaling_Bottom.TabIndex = 89
+        Me.lblRightScaling_Bottom.Text = "Scaling:"
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Location = New System.Drawing.Point(7, 85)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(26, 13)
+        Me.Label39.TabIndex = 1
+        Me.Label39.Text = "Top"
+        '
+        'txtCropRightTimer_Top_BR
+        '
+        Me.txtCropRightTimer_Top_BR.Location = New System.Drawing.Point(39, 82)
+        Me.txtCropRightTimer_Top_BR.Name = "txtCropRightTimer_Top_BR"
+        Me.txtCropRightTimer_Top_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightTimer_Top_BR.TabIndex = 7
+        '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Location = New System.Drawing.Point(7, 49)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(25, 13)
+        Me.Label40.TabIndex = 4
+        Me.Label40.Text = "Left"
+        '
+        'txtCropRightTimer_Left_BR
+        '
+        Me.txtCropRightTimer_Left_BR.Location = New System.Drawing.Point(39, 46)
+        Me.txtCropRightTimer_Left_BR.Name = "txtCropRightTimer_Left_BR"
+        Me.txtCropRightTimer_Left_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightTimer_Left_BR.TabIndex = 3
+        '
+        'txtCropRightTimer_Bottom_BR
+        '
+        Me.txtCropRightTimer_Bottom_BR.Location = New System.Drawing.Point(196, 85)
+        Me.txtCropRightTimer_Bottom_BR.Name = "txtCropRightTimer_Bottom_BR"
+        Me.txtCropRightTimer_Bottom_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightTimer_Bottom_BR.TabIndex = 9
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.Location = New System.Drawing.Point(158, 52)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(32, 13)
+        Me.Label41.TabIndex = 6
+        Me.Label41.Text = "Right"
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.Location = New System.Drawing.Point(158, 88)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(40, 13)
+        Me.Label42.TabIndex = 8
+        Me.Label42.Text = "Bottom"
+        '
+        'txtCropRightTimer_Right_BR
+        '
+        Me.txtCropRightTimer_Right_BR.Location = New System.Drawing.Point(196, 49)
+        Me.txtCropRightTimer_Right_BR.Name = "txtCropRightTimer_Right_BR"
+        Me.txtCropRightTimer_Right_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightTimer_Right_BR.TabIndex = 5
+        '
+        'gbRightGameWindow_Bottom
+        '
+        Me.gbRightGameWindow_Bottom.BackColor = System.Drawing.Color.MistyRose
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.btnRightGameUncrop_Bottom)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.btnRightGameDB_Bottom)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.Label43)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.txtCropRightGame_Top_BR)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.Label44)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.txtCropRightGame_Left_BR)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.txtCropRightGame_Bottom_BR)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.Label45)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.Label46)
+        Me.gbRightGameWindow_Bottom.Controls.Add(Me.txtCropRightGame_Right_BR)
+        Me.gbRightGameWindow_Bottom.Location = New System.Drawing.Point(363, 274)
+        Me.gbRightGameWindow_Bottom.Name = "gbRightGameWindow_Bottom"
+        Me.gbRightGameWindow_Bottom.Size = New System.Drawing.Size(307, 118)
+        Me.gbRightGameWindow_Bottom.TabIndex = 92
+        Me.gbRightGameWindow_Bottom.TabStop = False
+        Me.gbRightGameWindow_Bottom.Text = "Right Game Window"
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.Location = New System.Drawing.Point(7, 94)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(26, 13)
+        Me.Label43.TabIndex = 1
+        Me.Label43.Text = "Top"
+        '
+        'txtCropRightGame_Top_BR
+        '
+        Me.txtCropRightGame_Top_BR.Location = New System.Drawing.Point(39, 91)
+        Me.txtCropRightGame_Top_BR.Name = "txtCropRightGame_Top_BR"
+        Me.txtCropRightGame_Top_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightGame_Top_BR.TabIndex = 7
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Location = New System.Drawing.Point(7, 58)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(25, 13)
+        Me.Label44.TabIndex = 4
+        Me.Label44.Text = "Left"
+        '
+        'txtCropRightGame_Left_BR
+        '
+        Me.txtCropRightGame_Left_BR.Location = New System.Drawing.Point(39, 55)
+        Me.txtCropRightGame_Left_BR.Name = "txtCropRightGame_Left_BR"
+        Me.txtCropRightGame_Left_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightGame_Left_BR.TabIndex = 3
+        '
+        'txtCropRightGame_Bottom_BR
+        '
+        Me.txtCropRightGame_Bottom_BR.Location = New System.Drawing.Point(196, 94)
+        Me.txtCropRightGame_Bottom_BR.Name = "txtCropRightGame_Bottom_BR"
+        Me.txtCropRightGame_Bottom_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightGame_Bottom_BR.TabIndex = 9
+        '
+        'Label45
+        '
+        Me.Label45.AutoSize = True
+        Me.Label45.Location = New System.Drawing.Point(158, 61)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(32, 13)
+        Me.Label45.TabIndex = 6
+        Me.Label45.Text = "Right"
+        '
+        'Label46
+        '
+        Me.Label46.AutoSize = True
+        Me.Label46.Location = New System.Drawing.Point(158, 97)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(40, 13)
+        Me.Label46.TabIndex = 8
+        Me.Label46.Text = "Bottom"
+        '
+        'txtCropRightGame_Right_BR
+        '
+        Me.txtCropRightGame_Right_BR.Location = New System.Drawing.Point(196, 58)
+        Me.txtCropRightGame_Right_BR.Name = "txtCropRightGame_Right_BR"
+        Me.txtCropRightGame_Right_BR.Size = New System.Drawing.Size(100, 20)
+        Me.txtCropRightGame_Right_BR.TabIndex = 5
+        '
+        'pnlFourPlayer
+        '
+        Me.pnlFourPlayer.Controls.Add(Me.cbRightRunnerName_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.cbLeftRunnerName_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblLeftRunner_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblRightRunnerTwitch_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSetRightCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblLeftRunnerTwitch_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.gbRightGameWindow_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblRightStreamlink_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.gbRightTimerWindow_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblLeftStreamlink_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.gbLeftGameWindow_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblRightVOD_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.gbLeftTimerWindow_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblViewRightOnTwitch_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSetLeftCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblLeftVOD_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblRightRunner_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblViewLeftOnTwitch_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnNewRightRunner_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnNewLeftRunner_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnGetLeftCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSetRightVLC_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnGetRightCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSetLeftVLC_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSaveLeftCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.cbRightVLCSource_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.btnSaveRightCrop_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.cbLeftVLCSource_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblLeftVLC_Bottom)
+        Me.pnlFourPlayer.Controls.Add(Me.lblRightVLC_Bottom)
+        Me.pnlFourPlayer.Location = New System.Drawing.Point(822, 136)
+        Me.pnlFourPlayer.Name = "pnlFourPlayer"
+        Me.pnlFourPlayer.Size = New System.Drawing.Size(685, 435)
+        Me.pnlFourPlayer.TabIndex = 119
+        '
+        'pnlFourPlayerTracker
+        '
+        Me.pnlFourPlayerTracker.Controls.Add(Me.lblLeftTracker_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.txtLeftTrackerURL_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.lblRightTracker_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.txtRightTrackerURL_Bottom)
+        Me.pnlFourPlayerTracker.Location = New System.Drawing.Point(668, 60)
+        Me.pnlFourPlayerTracker.Name = "pnlFourPlayerTracker"
+        Me.pnlFourPlayerTracker.Size = New System.Drawing.Size(644, 39)
+        Me.pnlFourPlayerTracker.TabIndex = 61
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(847, 571)
+        Me.ClientSize = New System.Drawing.Size(1507, 571)
+        Me.Controls.Add(Me.pnlFourPlayer)
         Me.Controls.Add(Me.btnResetDatabase)
         Me.Controls.Add(Me.lblRightRunnerTwitch)
         Me.Controls.Add(Me.lblLeftRunnerTwitch)
@@ -1282,6 +2190,18 @@ Partial Class ObsWebSocketCropper
         Me.mnuMainMenu.PerformLayout()
         Me.gbTrackerComms.ResumeLayout(False)
         Me.gbTrackerComms.PerformLayout()
+        Me.gbLeftTimerWindow_Bottom.ResumeLayout(False)
+        Me.gbLeftTimerWindow_Bottom.PerformLayout()
+        Me.gbLeftGameWindow_Bottom.ResumeLayout(False)
+        Me.gbLeftGameWindow_Bottom.PerformLayout()
+        Me.gbRightTimerWindow_Bottom.ResumeLayout(False)
+        Me.gbRightTimerWindow_Bottom.PerformLayout()
+        Me.gbRightGameWindow_Bottom.ResumeLayout(False)
+        Me.gbRightGameWindow_Bottom.PerformLayout()
+        Me.pnlFourPlayer.ResumeLayout(False)
+        Me.pnlFourPlayer.PerformLayout()
+        Me.pnlFourPlayerTracker.ResumeLayout(False)
+        Me.pnlFourPlayerTracker.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1398,4 +2318,85 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents lblGameSettings As Label
     Friend WithEvents txtGameSettings As TextBox
     Friend WithEvents btnResetDatabase As Button
+    Friend WithEvents lblRightRunnerTwitch_Bottom As Label
+    Friend WithEvents lblLeftRunnerTwitch_Bottom As Label
+    Friend WithEvents lblRightStreamlink_Bottom As Label
+    Friend WithEvents lblLeftStreamlink_Bottom As Label
+    Friend WithEvents lblRightVOD_Bottom As Label
+    Friend WithEvents lblViewRightOnTwitch_Bottom As Label
+    Friend WithEvents lblLeftVOD_Bottom As Label
+    Friend WithEvents lblViewLeftOnTwitch_Bottom As Label
+    Friend WithEvents btnNewRightRunner_Bottom As Button
+    Friend WithEvents btnNewLeftRunner_Bottom As Button
+    Friend WithEvents btnSetRightVLC_Bottom As Button
+    Friend WithEvents btnSetLeftVLC_Bottom As Button
+    Friend WithEvents cbRightVLCSource_Bottom As ComboBox
+    Friend WithEvents cbLeftVLCSource_Bottom As ComboBox
+    Friend WithEvents lblRightVLC_Bottom As Label
+    Friend WithEvents lblLeftVLC_Bottom As Label
+    Friend WithEvents btnSaveRightCrop_Bottom As Button
+    Friend WithEvents btnSaveLeftCrop_Bottom As Button
+    Friend WithEvents btnGetRightCrop_Bottom As Button
+    Friend WithEvents btnGetLeftCrop_Bottom As Button
+    Friend WithEvents cbRightRunnerName_Bottom As ComboBox
+    Friend WithEvents cbLeftRunnerName_Bottom As ComboBox
+    Friend WithEvents lblRightRunner_Bottom As Label
+    Friend WithEvents lblLeftRunner_Bottom As Label
+    Friend WithEvents btnSetLeftCrop_Bottom As Button
+    Friend WithEvents gbLeftTimerWindow_Bottom As GroupBox
+    Friend WithEvents btnLeftTimerUncrop_Bottom As Button
+    Friend WithEvents btnLeftTimerDB_Bottom As Button
+    Friend WithEvents cbLeftScaling_Bottom As ComboBox
+    Friend WithEvents lblLeftScaling_Bottom As Label
+    Friend WithEvents Label30 As Label
+    Friend WithEvents txtCropLeftTimer_Top_BR As TextBox
+    Friend WithEvents Label31 As Label
+    Friend WithEvents txtCropLeftTimer_Left_BR As TextBox
+    Friend WithEvents txtCropLeftTimer_Bottom_BR As TextBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents Label33 As Label
+    Friend WithEvents txtCropLeftTimer_Right_BR As TextBox
+    Friend WithEvents gbLeftGameWindow_Bottom As GroupBox
+    Friend WithEvents btnLeftGameUncrop_Bottom As Button
+    Friend WithEvents btnLeftGameDB_Bottom As Button
+    Friend WithEvents Label34 As Label
+    Friend WithEvents txtCropLeftGame_Top_BR As TextBox
+    Friend WithEvents Label35 As Label
+    Friend WithEvents txtCropLeftGame_Left_BR As TextBox
+    Friend WithEvents txtCropLeftGame_Bottom_BR As TextBox
+    Friend WithEvents Label36 As Label
+    Friend WithEvents Label37 As Label
+    Friend WithEvents txtCropLeftGame_Right_BR As TextBox
+    Friend WithEvents gbRightTimerWindow_Bottom As GroupBox
+    Friend WithEvents btnRightTimerUncrop_Bottom As Button
+    Friend WithEvents btnRightTimerDB_Bottom As Button
+    Friend WithEvents cbRightScaling_Bottom As ComboBox
+    Friend WithEvents lblRightScaling_Bottom As Label
+    Friend WithEvents Label39 As Label
+    Friend WithEvents txtCropRightTimer_Top_BR As TextBox
+    Friend WithEvents Label40 As Label
+    Friend WithEvents txtCropRightTimer_Left_BR As TextBox
+    Friend WithEvents txtCropRightTimer_Bottom_BR As TextBox
+    Friend WithEvents Label41 As Label
+    Friend WithEvents Label42 As Label
+    Friend WithEvents txtCropRightTimer_Right_BR As TextBox
+    Friend WithEvents gbRightGameWindow_Bottom As GroupBox
+    Friend WithEvents btnRightGameUncrop_Bottom As Button
+    Friend WithEvents btnRightGameDB_Bottom As Button
+    Friend WithEvents Label43 As Label
+    Friend WithEvents txtCropRightGame_Top_BR As TextBox
+    Friend WithEvents Label44 As Label
+    Friend WithEvents txtCropRightGame_Left_BR As TextBox
+    Friend WithEvents txtCropRightGame_Bottom_BR As TextBox
+    Friend WithEvents Label45 As Label
+    Friend WithEvents Label46 As Label
+    Friend WithEvents txtCropRightGame_Right_BR As TextBox
+    Friend WithEvents btnSetRightCrop_Bottom As Button
+    Friend WithEvents txtLeftTrackerURL_Bottom As TextBox
+    Friend WithEvents txtRightTrackerURL_Bottom As TextBox
+    Friend WithEvents lblRightTracker_Bottom As Label
+    Friend WithEvents lblLeftTracker_Bottom As Label
+    Friend WithEvents PlayersToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents pnlFourPlayer As Panel
+    Friend WithEvents pnlFourPlayerTracker As Panel
 End Class

@@ -425,6 +425,234 @@ Namespace My
                 Me("GameSettings") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("610")>  _
+        Public Property DefaultHeight() As Integer
+            Get
+                Return CType(Me("DefaultHeight"),Integer)
+            End Get
+            Set
+                Me("DefaultHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("863")>  _
+        Public Property DefaultWidth() As Integer
+            Get
+                Return CType(Me("DefaultWidth"),Integer)
+            End Get
+            Set
+                Me("DefaultWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("610")>  _
+        Public Property FourRacerHeight() As Integer
+            Get
+                Return CType(Me("FourRacerHeight"),Integer)
+            End Get
+            Set
+                Me("FourRacerHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1523")>  _
+        Public Property FourRacerWidth() As Integer
+            Get
+                Return CType(Me("FourRacerWidth"),Integer)
+            End Get
+            Set
+                Me("FourRacerWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("112")>  _
+        Public Property DefaultGBHeight() As Integer
+            Get
+                Return CType(Me("DefaultGBHeight"),Integer)
+            End Get
+            Set
+                Me("DefaultGBHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("658")>  _
+        Public Property DefaultGBWidth() As Integer
+            Get
+                Return CType(Me("DefaultGBWidth"),Integer)
+            End Get
+            Set
+                Me("DefaultGBWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("112")>  _
+        Public Property FourRacerGBHeight() As Integer
+            Get
+                Return CType(Me("FourRacerGBHeight"),Integer)
+            End Get
+            Set
+                Me("FourRacerGBHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1327")>  _
+        Public Property FourRacerGBWidth() As Integer
+            Get
+                Return CType(Me("FourRacerGBWidth"),Integer)
+            End Get
+            Set
+                Me("FourRacerGBWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property FourPlayers() As Boolean
+            Get
+                Return CType(Me("FourPlayers"),Boolean)
+            End Get
+            Set
+                Me("FourPlayers") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LeftTimerName_Bottom() As String
+            Get
+                Return CType(Me("LeftTimerName_Bottom"),String)
+            End Get
+            Set
+                Me("LeftTimerName_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LeftGameName_Bottom() As String
+            Get
+                Return CType(Me("LeftGameName_Bottom"),String)
+            End Get
+            Set
+                Me("LeftGameName_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property RightGameName_Bottom() As String
+            Get
+                Return CType(Me("RightGameName_Bottom"),String)
+            End Get
+            Set
+                Me("RightGameName_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property RightTimerName_Bottom() As String
+            Get
+                Return CType(Me("RightTimerName_Bottom"),String)
+            End Get
+            Set
+                Me("RightTimerName_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LeftRunnerOBS_Bottom() As String
+            Get
+                Return CType(Me("LeftRunnerOBS_Bottom"),String)
+            End Get
+            Set
+                Me("LeftRunnerOBS_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property RightRunnerOBS_Bottom() As String
+            Get
+                Return CType(Me("RightRunnerOBS_Bottom"),String)
+            End Get
+            Set
+                Me("RightRunnerOBS_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LeftTrackerOBS_Bottom() As String
+            Get
+                Return CType(Me("LeftTrackerOBS_Bottom"),String)
+            End Get
+            Set
+                Me("LeftTrackerOBS_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property RightTrackerOBS_Bottom() As String
+            Get
+                Return CType(Me("RightTrackerOBS_Bottom"),String)
+            End Get
+            Set
+                Me("RightTrackerOBS_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LeftStreamlinkVlcParams_Bottom() As String
+            Get
+                Return CType(Me("LeftStreamlinkVlcParams_Bottom"),String)
+            End Get
+            Set
+                Me("LeftStreamlinkVlcParams_Bottom") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property RightStreamlinkVlcParams_Bottom() As String
+            Get
+                Return CType(Me("RightStreamlinkVlcParams_Bottom"),String)
+            End Get
+            Set
+                Me("RightStreamlinkVlcParams_Bottom") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

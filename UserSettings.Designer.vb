@@ -41,6 +41,9 @@ Partial Class UserSettings
         Me.roCustom = New System.Windows.Forms.RadioButton()
         Me.btnSaveThenVLC = New System.Windows.Forms.Button()
         Me.panOBS = New System.Windows.Forms.Panel()
+        Me.lblGameSettings = New System.Windows.Forms.Label()
+        Me.lblGameSettingsStatus = New System.Windows.Forms.Label()
+        Me.cbGameSettings = New System.Windows.Forms.ComboBox()
         Me.lblRightTimerStatus = New System.Windows.Forms.Label()
         Me.lblLeftTimerStatus = New System.Windows.Forms.Label()
         Me.lblRightRunnerStatus = New System.Windows.Forms.Label()
@@ -61,12 +64,13 @@ Partial Class UserSettings
         Me.cbLeftGameWindow = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.lblGameSettings = New System.Windows.Forms.Label()
-        Me.cbGameSettings = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.roFourPlayerBottom = New System.Windows.Forms.RadioButton()
+        Me.roTwoPlayer = New System.Windows.Forms.RadioButton()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnSaveSettings
@@ -207,7 +211,7 @@ Partial Class UserSettings
         'roCustom
         '
         Me.roCustom.AutoSize = True
-        Me.roCustom.Location = New System.Drawing.Point(94, 37)
+        Me.roCustom.Location = New System.Drawing.Point(94, 38)
         Me.roCustom.Name = "roCustom"
         Me.roCustom.Size = New System.Drawing.Size(60, 17)
         Me.roCustom.TabIndex = 99
@@ -229,8 +233,8 @@ Partial Class UserSettings
         '
         Me.panOBS.BackgroundImage = Global.ALTTPRCropDashboard.My.Resources.Resources.Settings_Background_Resized
         Me.panOBS.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.panOBS.Controls.Add(Me.Label4)
         Me.panOBS.Controls.Add(Me.lblGameSettings)
+        Me.panOBS.Controls.Add(Me.lblGameSettingsStatus)
         Me.panOBS.Controls.Add(Me.cbGameSettings)
         Me.panOBS.Controls.Add(Me.lblRightTimerStatus)
         Me.panOBS.Controls.Add(Me.lblLeftTimerStatus)
@@ -255,6 +259,35 @@ Partial Class UserSettings
         Me.panOBS.Name = "panOBS"
         Me.panOBS.Size = New System.Drawing.Size(1008, 635)
         Me.panOBS.TabIndex = 94
+        '
+        'lblGameSettings
+        '
+        Me.lblGameSettings.AutoSize = True
+        Me.lblGameSettings.BackColor = System.Drawing.Color.Transparent
+        Me.lblGameSettings.Location = New System.Drawing.Point(286, 489)
+        Me.lblGameSettings.Name = "lblGameSettings"
+        Me.lblGameSettings.Size = New System.Drawing.Size(76, 13)
+        Me.lblGameSettings.TabIndex = 102
+        Me.lblGameSettings.Text = "Game Settings"
+        '
+        'lblGameSettingsStatus
+        '
+        Me.lblGameSettingsStatus.AutoSize = True
+        Me.lblGameSettingsStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblGameSettingsStatus.Location = New System.Drawing.Point(374, 511)
+        Me.lblGameSettingsStatus.Name = "lblGameSettingsStatus"
+        Me.lblGameSettingsStatus.Size = New System.Drawing.Size(109, 13)
+        Me.lblGameSettingsStatus.TabIndex = 101
+        Me.lblGameSettingsStatus.Text = "Game Settings Status"
+        '
+        'cbGameSettings
+        '
+        Me.cbGameSettings.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbGameSettings.FormattingEnabled = True
+        Me.cbGameSettings.Location = New System.Drawing.Point(368, 483)
+        Me.cbGameSettings.Name = "cbGameSettings"
+        Me.cbGameSettings.Size = New System.Drawing.Size(301, 25)
+        Me.cbGameSettings.TabIndex = 100
         '
         'lblRightTimerStatus
         '
@@ -440,6 +473,7 @@ Partial Class UserSettings
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.btnSaveThenVLC)
         Me.Panel1.Controls.Add(Me.lblOBS1ConnectedStatus)
@@ -458,34 +492,36 @@ Partial Class UserSettings
         Me.Panel1.Size = New System.Drawing.Size(1014, 781)
         Me.Panel1.TabIndex = 101
         '
-        'lblGameSettings
+        'roFourPlayerBottom
         '
-        Me.lblGameSettings.AutoSize = True
-        Me.lblGameSettings.BackColor = System.Drawing.Color.Transparent
-        Me.lblGameSettings.Location = New System.Drawing.Point(374, 511)
-        Me.lblGameSettings.Name = "lblGameSettings"
-        Me.lblGameSettings.Size = New System.Drawing.Size(109, 13)
-        Me.lblGameSettings.TabIndex = 101
-        Me.lblGameSettings.Text = "Game Settings Status"
+        Me.roFourPlayerBottom.AutoSize = True
+        Me.roFourPlayerBottom.Location = New System.Drawing.Point(139, 3)
+        Me.roFourPlayerBottom.Name = "roFourPlayerBottom"
+        Me.roFourPlayerBottom.Size = New System.Drawing.Size(99, 17)
+        Me.roFourPlayerBottom.TabIndex = 102
+        Me.roFourPlayerBottom.TabStop = True
+        Me.roFourPlayerBottom.Text = "4 Player Bottom"
+        Me.roFourPlayerBottom.UseVisualStyleBackColor = True
         '
-        'cbGameSettings
+        'roTwoPlayer
         '
-        Me.cbGameSettings.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbGameSettings.FormattingEnabled = True
-        Me.cbGameSettings.Location = New System.Drawing.Point(368, 483)
-        Me.cbGameSettings.Name = "cbGameSettings"
-        Me.cbGameSettings.Size = New System.Drawing.Size(301, 25)
-        Me.cbGameSettings.TabIndex = 100
+        Me.roTwoPlayer.AutoSize = True
+        Me.roTwoPlayer.Location = New System.Drawing.Point(5, 3)
+        Me.roTwoPlayer.Name = "roTwoPlayer"
+        Me.roTwoPlayer.Size = New System.Drawing.Size(128, 17)
+        Me.roTwoPlayer.TabIndex = 101
+        Me.roTwoPlayer.TabStop = True
+        Me.roTwoPlayer.Text = "2 Player/4 Player Top"
+        Me.roTwoPlayer.UseVisualStyleBackColor = True
         '
-        'Label4
+        'Panel2
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Location = New System.Drawing.Point(286, 489)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(76, 13)
-        Me.Label4.TabIndex = 102
-        Me.Label4.Text = "Game Settings"
+        Me.Panel2.Controls.Add(Me.roTwoPlayer)
+        Me.Panel2.Controls.Add(Me.roFourPlayerBottom)
+        Me.Panel2.Location = New System.Drawing.Point(283, 38)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(243, 35)
+        Me.Panel2.TabIndex = 103
         '
         'UserSettings
         '
@@ -503,6 +539,8 @@ Partial Class UserSettings
         Me.panOBS.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -544,7 +582,10 @@ Partial Class UserSettings
     Friend WithEvents lblRightGameStatus As Label
     Friend WithEvents lblLeftGameStatus As Label
     Friend WithEvents lblCommentaryStatus As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents lblGameSettings As Label
+    Friend WithEvents lblGameSettingsStatus As Label
     Friend WithEvents cbGameSettings As ComboBox
+    Friend WithEvents roFourPlayerBottom As RadioButton
+    Friend WithEvents roTwoPlayer As RadioButton
+    Friend WithEvents Panel2 As Panel
 End Class
