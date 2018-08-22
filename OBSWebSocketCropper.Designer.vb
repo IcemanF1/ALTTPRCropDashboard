@@ -136,10 +136,11 @@ Partial Class ObsWebSocketCropper
         Me.btnRightGameDB_Bottom = New System.Windows.Forms.Button()
         Me.btnSetRightCrop_Bottom = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
-        Me.txtLeftTrackerURL_Bottom = New System.Windows.Forms.TextBox()
-        Me.txtRightTrackerURL_Bottom = New System.Windows.Forms.TextBox()
-        Me.lblRightTracker_Bottom = New System.Windows.Forms.Label()
+        Me.pnlFourPlayerTracker = New System.Windows.Forms.Panel()
         Me.lblLeftTracker_Bottom = New System.Windows.Forms.Label()
+        Me.txtLeftTrackerURL_Bottom = New System.Windows.Forms.TextBox()
+        Me.lblRightTracker_Bottom = New System.Windows.Forms.Label()
+        Me.txtRightTrackerURL_Bottom = New System.Windows.Forms.TextBox()
         Me.lblGameSettings = New System.Windows.Forms.Label()
         Me.txtGameSettings = New System.Windows.Forms.TextBox()
         Me.lblOBS1ConnectedStatus = New System.Windows.Forms.Label()
@@ -216,19 +217,18 @@ Partial Class ObsWebSocketCropper
         Me.Label46 = New System.Windows.Forms.Label()
         Me.txtCropRightGame_Right_BR = New System.Windows.Forms.TextBox()
         Me.pnlFourPlayer = New System.Windows.Forms.Panel()
-        Me.pnlFourPlayerTracker = New System.Windows.Forms.Panel()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
         Me.gbLeftGameWindow.SuspendLayout()
         Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
+        Me.pnlFourPlayerTracker.SuspendLayout()
         Me.gbLeftTimerWindow_Bottom.SuspendLayout()
         Me.gbLeftGameWindow_Bottom.SuspendLayout()
         Me.gbRightTimerWindow_Bottom.SuspendLayout()
         Me.gbRightGameWindow_Bottom.SuspendLayout()
         Me.pnlFourPlayer.SuspendLayout()
-        Me.pnlFourPlayerTracker.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -911,7 +911,7 @@ Partial Class ObsWebSocketCropper
         Me.mnuMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.mnuMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMainMenu.Name = "mnuMainMenu"
-        Me.mnuMainMenu.Size = New System.Drawing.Size(1507, 24)
+        Me.mnuMainMenu.Size = New System.Drawing.Size(1284, 24)
         Me.mnuMainMenu.TabIndex = 57
         Me.mnuMainMenu.Text = "MenuStrip1"
         '
@@ -1067,7 +1067,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetRightVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetRightVLC.TabIndex = 74
         Me.btnSetRightVLC.Text = "Set Right VLC"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC, "Sets the left game/timer window VLC to the above dropdown")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC, "Sets the right game/timer window VLC to the above dropdown")
         Me.btnSetRightVLC.UseVisualStyleBackColor = False
         '
         'btnNewLeftRunner
@@ -1129,7 +1129,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetRightVLC_Bottom.Size = New System.Drawing.Size(116, 23)
         Me.btnSetRightVLC_Bottom.TabIndex = 108
         Me.btnSetRightVLC_Bottom.Text = "Set Right VLC"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC_Bottom, "Sets the left game/timer window VLC to the above dropdown")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightVLC_Bottom, "Sets the right bottom game/timer window VLC to the above dropdown")
         Me.btnSetRightVLC_Bottom.UseVisualStyleBackColor = False
         '
         'btnSetLeftVLC_Bottom
@@ -1140,7 +1140,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetLeftVLC_Bottom.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftVLC_Bottom.TabIndex = 107
         Me.btnSetLeftVLC_Bottom.Text = "Set Left VLC"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC_Bottom, "Sets the left game/timer window VLC to the above dropdown")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC_Bottom, "Sets the left bottom " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "game/timer window VLC to the above dropdown")
         Me.btnSetLeftVLC_Bottom.UseVisualStyleBackColor = False
         '
         'btnSaveRightCrop_Bottom
@@ -1150,7 +1150,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSaveRightCrop_Bottom.Size = New System.Drawing.Size(96, 23)
         Me.btnSaveRightCrop_Bottom.TabIndex = 101
         Me.btnSaveRightCrop_Bottom.Text = "Save Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSaveRightCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the right side")
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveRightCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the right bottom side")
         Me.btnSaveRightCrop_Bottom.UseVisualStyleBackColor = True
         '
         'btnSaveLeftCrop_Bottom
@@ -1160,7 +1160,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSaveLeftCrop_Bottom.Size = New System.Drawing.Size(96, 23)
         Me.btnSaveLeftCrop_Bottom.TabIndex = 100
         Me.btnSaveLeftCrop_Bottom.Text = "Save Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the left side")
+        Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop_Bottom, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the left bottom side")
         Me.btnSaveLeftCrop_Bottom.UseVisualStyleBackColor = True
         '
         'btnGetRightCrop_Bottom
@@ -1170,7 +1170,7 @@ Partial Class ObsWebSocketCropper
         Me.btnGetRightCrop_Bottom.Size = New System.Drawing.Size(76, 23)
         Me.btnGetRightCrop_Bottom.TabIndex = 99
         Me.btnGetRightCrop_Bottom.Text = "Get Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetRightCrop_Bottom, "Get the current OBS crop settings for the right side")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetRightCrop_Bottom, "Get the current OBS crop settings for the right bottom side")
         Me.btnGetRightCrop_Bottom.UseVisualStyleBackColor = True
         '
         'btnGetLeftCrop_Bottom
@@ -1180,7 +1180,7 @@ Partial Class ObsWebSocketCropper
         Me.btnGetLeftCrop_Bottom.Size = New System.Drawing.Size(79, 23)
         Me.btnGetLeftCrop_Bottom.TabIndex = 98
         Me.btnGetLeftCrop_Bottom.Text = "Get Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop_Bottom, "Get the current OBS crop settings for the left side")
+        Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop_Bottom, "Get the current OBS crop settings for the left bottom side")
         Me.btnGetLeftCrop_Bottom.UseVisualStyleBackColor = True
         '
         'btnSetLeftCrop_Bottom
@@ -1191,7 +1191,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetLeftCrop_Bottom.Size = New System.Drawing.Size(116, 23)
         Me.btnSetLeftCrop_Bottom.TabIndex = 90
         Me.btnSetLeftCrop_Bottom.Text = "Set Left Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop_Bottom, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop_Bottom, "Set the crop for the left bottom side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
         Me.btnSetLeftCrop_Bottom.UseVisualStyleBackColor = False
         '
         'btnLeftTimerUncrop_Bottom
@@ -1282,7 +1282,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetRightCrop_Bottom.Size = New System.Drawing.Size(123, 23)
         Me.btnSetRightCrop_Bottom.TabIndex = 93
         Me.btnSetRightCrop_Bottom.Text = "Set Right Crop"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetRightCrop_Bottom, "Set the crop for the right side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetRightCrop_Bottom, "Set the crop for the right bottom side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
         Me.btnSetRightCrop_Bottom.UseVisualStyleBackColor = False
         '
         'gbTrackerComms
@@ -1304,19 +1304,33 @@ Partial Class ObsWebSocketCropper
         Me.gbTrackerComms.TabStop = False
         Me.gbTrackerComms.Text = "Tracker / Comms info"
         '
+        'pnlFourPlayerTracker
+        '
+        Me.pnlFourPlayerTracker.Controls.Add(Me.lblLeftTracker_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.txtLeftTrackerURL_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.lblRightTracker_Bottom)
+        Me.pnlFourPlayerTracker.Controls.Add(Me.txtRightTrackerURL_Bottom)
+        Me.pnlFourPlayerTracker.Location = New System.Drawing.Point(668, 60)
+        Me.pnlFourPlayerTracker.Name = "pnlFourPlayerTracker"
+        Me.pnlFourPlayerTracker.Size = New System.Drawing.Size(644, 39)
+        Me.pnlFourPlayerTracker.TabIndex = 61
+        '
+        'lblLeftTracker_Bottom
+        '
+        Me.lblLeftTracker_Bottom.AutoSize = True
+        Me.lblLeftTracker_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblLeftTracker_Bottom.Location = New System.Drawing.Point(9, 16)
+        Me.lblLeftTracker_Bottom.Name = "lblLeftTracker_Bottom"
+        Me.lblLeftTracker_Bottom.Size = New System.Drawing.Size(90, 13)
+        Me.lblLeftTracker_Bottom.TabIndex = 59
+        Me.lblLeftTracker_Bottom.Text = "Left Tracker URL"
+        '
         'txtLeftTrackerURL_Bottom
         '
         Me.txtLeftTrackerURL_Bottom.Location = New System.Drawing.Point(117, 13)
         Me.txtLeftTrackerURL_Bottom.Name = "txtLeftTrackerURL_Bottom"
         Me.txtLeftTrackerURL_Bottom.Size = New System.Drawing.Size(190, 20)
         Me.txtLeftTrackerURL_Bottom.TabIndex = 57
-        '
-        'txtRightTrackerURL_Bottom
-        '
-        Me.txtRightTrackerURL_Bottom.Location = New System.Drawing.Point(442, 13)
-        Me.txtRightTrackerURL_Bottom.Name = "txtRightTrackerURL_Bottom"
-        Me.txtRightTrackerURL_Bottom.Size = New System.Drawing.Size(189, 20)
-        Me.txtRightTrackerURL_Bottom.TabIndex = 58
         '
         'lblRightTracker_Bottom
         '
@@ -1328,15 +1342,12 @@ Partial Class ObsWebSocketCropper
         Me.lblRightTracker_Bottom.TabIndex = 60
         Me.lblRightTracker_Bottom.Text = "Right Tracker URL"
         '
-        'lblLeftTracker_Bottom
+        'txtRightTrackerURL_Bottom
         '
-        Me.lblLeftTracker_Bottom.AutoSize = True
-        Me.lblLeftTracker_Bottom.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.lblLeftTracker_Bottom.Location = New System.Drawing.Point(9, 16)
-        Me.lblLeftTracker_Bottom.Name = "lblLeftTracker_Bottom"
-        Me.lblLeftTracker_Bottom.Size = New System.Drawing.Size(90, 13)
-        Me.lblLeftTracker_Bottom.TabIndex = 59
-        Me.lblLeftTracker_Bottom.Text = "Left Tracker URL"
+        Me.txtRightTrackerURL_Bottom.Location = New System.Drawing.Point(442, 13)
+        Me.txtRightTrackerURL_Bottom.Name = "txtRightTrackerURL_Bottom"
+        Me.txtRightTrackerURL_Bottom.Size = New System.Drawing.Size(189, 20)
+        Me.txtRightTrackerURL_Bottom.TabIndex = 58
         '
         'lblGameSettings
         '
@@ -2105,22 +2116,11 @@ Partial Class ObsWebSocketCropper
         Me.pnlFourPlayer.Size = New System.Drawing.Size(685, 435)
         Me.pnlFourPlayer.TabIndex = 119
         '
-        'pnlFourPlayerTracker
-        '
-        Me.pnlFourPlayerTracker.Controls.Add(Me.lblLeftTracker_Bottom)
-        Me.pnlFourPlayerTracker.Controls.Add(Me.txtLeftTrackerURL_Bottom)
-        Me.pnlFourPlayerTracker.Controls.Add(Me.lblRightTracker_Bottom)
-        Me.pnlFourPlayerTracker.Controls.Add(Me.txtRightTrackerURL_Bottom)
-        Me.pnlFourPlayerTracker.Location = New System.Drawing.Point(668, 60)
-        Me.pnlFourPlayerTracker.Name = "pnlFourPlayerTracker"
-        Me.pnlFourPlayerTracker.Size = New System.Drawing.Size(644, 39)
-        Me.pnlFourPlayerTracker.TabIndex = 61
-        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1507, 571)
+        Me.ClientSize = New System.Drawing.Size(1284, 571)
         Me.Controls.Add(Me.pnlFourPlayer)
         Me.Controls.Add(Me.btnResetDatabase)
         Me.Controls.Add(Me.lblRightRunnerTwitch)
@@ -2190,6 +2190,8 @@ Partial Class ObsWebSocketCropper
         Me.mnuMainMenu.PerformLayout()
         Me.gbTrackerComms.ResumeLayout(False)
         Me.gbTrackerComms.PerformLayout()
+        Me.pnlFourPlayerTracker.ResumeLayout(False)
+        Me.pnlFourPlayerTracker.PerformLayout()
         Me.gbLeftTimerWindow_Bottom.ResumeLayout(False)
         Me.gbLeftTimerWindow_Bottom.PerformLayout()
         Me.gbLeftGameWindow_Bottom.ResumeLayout(False)
@@ -2200,8 +2202,6 @@ Partial Class ObsWebSocketCropper
         Me.gbRightGameWindow_Bottom.PerformLayout()
         Me.pnlFourPlayer.ResumeLayout(False)
         Me.pnlFourPlayer.PerformLayout()
-        Me.pnlFourPlayerTracker.ResumeLayout(False)
-        Me.pnlFourPlayerTracker.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
