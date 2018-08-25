@@ -653,6 +653,390 @@ Namespace My
                 Me("RightStreamlinkVlcParams_Bottom") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("558")>  _
+        Public Property BoundingSizeWidthGameTwoPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeWidthGameTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeWidthGameTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("446")>  _
+        Public Property BoundingSizeHeightGameTwoPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeHeightGameTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeHeightGameTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("178")>  _
+        Public Property BoundingSizeWidthTimerTwoPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeWidthTimerTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeWidthTimerTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("47")>  _
+        Public Property BoundingSizeHeightTimerTwoPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeHeightTimerTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeHeightTimerTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("383")>  _
+        Public Property BoundingSizeWidthGameFourPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeWidthGameFourPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeWidthGameFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property BoundingSizeHeightGameFourPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeHeightGameFourPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeHeightGameFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("119")>  _
+        Public Property BoundingSizeWidthTimerFourPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeWidthTimerFourPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeWidthTimerFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("24")>  _
+        Public Property BoundingSizeHeightTimerFourPlayer() As Integer
+            Get
+                Return CType(Me("BoundingSizeHeightTimerFourPlayer"),Integer)
+            End Get
+            Set
+                Me("BoundingSizeHeightTimerFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1116")>  _
+        Public Property PositionXTimerTopRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerTopRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerTopRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("51")>  _
+        Public Property PositionYTimerTopRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerTopRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerTopRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1116")>  _
+        Public Property PositionXTimerBottomRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerBottomRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerBottomRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("410")>  _
+        Public Property PositionYTimerBottomRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerBottomRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerBottomRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("45")>  _
+        Public Property PositionXTimerTopLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerTopLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerTopLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("52")>  _
+        Public Property PositionYTimerTopLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerTopLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerTopLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("45")>  _
+        Public Property PositionXTimerBottomLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerBottomLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerBottomLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("410")>  _
+        Public Property PositionYTimerBottomLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerBottomLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerBottomLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("676")>  _
+        Public Property PositionXGameTopRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameTopRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameTopRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property PositionYGameTopRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameTopRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameTopRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("676")>  _
+        Public Property PositionXGameBottomRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameBottomRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameBottomRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("368")>  _
+        Public Property PositionYGameBottomRightFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameBottomRightFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameBottomRightFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("220")>  _
+        Public Property PositionXGameTopLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameTopLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameTopLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property PositionYGameTopLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameTopLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameTopLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("220")>  _
+        Public Property PositionXGameBottomLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameBottomLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameBottomLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("368")>  _
+        Public Property PositionYGameBottomLeftFourPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameBottomLeftFourPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameBottomLeftFourPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1046")>  _
+        Public Property PositionXTimerRightTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerRightTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerRightTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("24")>  _
+        Public Property PositionYTimerRightTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerRightTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerRightTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("56")>  _
+        Public Property PositionXTimerLeftTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionXTimerLeftTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXTimerLeftTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("24")>  _
+        Public Property PositionYTimerLeftTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionYTimerLeftTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYTimerLeftTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("674")>  _
+        Public Property PositionXGameRightTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameRightTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameRightTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("83")>  _
+        Public Property PositionYGameRightTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameRightTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameRightTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("48")>  _
+        Public Property PositionXGameLeftTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionXGameLeftTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionXGameLeftTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("83")>  _
+        Public Property PositionYGameLeftTwoPlayer() As Integer
+            Get
+                Return CType(Me("PositionYGameLeftTwoPlayer"),Integer)
+            End Get
+            Set
+                Me("PositionYGameLeftTwoPlayer") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -152,5 +152,101 @@
     <Setting Name="RightStreamlinkVlcParams_Bottom" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="BoundingSizeWidthGameTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">558</Value>
+    </Setting>
+    <Setting Name="BoundingSizeHeightGameTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">446</Value>
+    </Setting>
+    <Setting Name="BoundingSizeWidthTimerTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">178</Value>
+    </Setting>
+    <Setting Name="BoundingSizeHeightTimerTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">47</Value>
+    </Setting>
+    <Setting Name="BoundingSizeWidthGameFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">383</Value>
+    </Setting>
+    <Setting Name="BoundingSizeHeightGameFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="BoundingSizeWidthTimerFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">119</Value>
+    </Setting>
+    <Setting Name="BoundingSizeHeightTimerFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="PositionXTimerTopRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1116</Value>
+    </Setting>
+    <Setting Name="PositionYTimerTopRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">51</Value>
+    </Setting>
+    <Setting Name="PositionXTimerBottomRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1116</Value>
+    </Setting>
+    <Setting Name="PositionYTimerBottomRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">410</Value>
+    </Setting>
+    <Setting Name="PositionXTimerTopLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">45</Value>
+    </Setting>
+    <Setting Name="PositionYTimerTopLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">52</Value>
+    </Setting>
+    <Setting Name="PositionXTimerBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">45</Value>
+    </Setting>
+    <Setting Name="PositionYTimerBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">410</Value>
+    </Setting>
+    <Setting Name="PositionXGameTopRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">676</Value>
+    </Setting>
+    <Setting Name="PositionYGameTopRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="PositionXGameBottomRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">676</Value>
+    </Setting>
+    <Setting Name="PositionYGameBottomRightFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">368</Value>
+    </Setting>
+    <Setting Name="PositionXGameTopLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">220</Value>
+    </Setting>
+    <Setting Name="PositionYGameTopLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="PositionXGameBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">220</Value>
+    </Setting>
+    <Setting Name="PositionYGameBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">368</Value>
+    </Setting>
+    <Setting Name="PositionXTimerRightTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1046</Value>
+    </Setting>
+    <Setting Name="PositionYTimerRightTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="PositionXTimerLeftTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">56</Value>
+    </Setting>
+    <Setting Name="PositionYTimerLeftTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="PositionXGameRightTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">674</Value>
+    </Setting>
+    <Setting Name="PositionYGameRightTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">83</Value>
+    </Setting>
+    <Setting Name="PositionXGameLeftTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">48</Value>
+    </Setting>
+    <Setting Name="PositionYGameLeftTwoPlayer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">83</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

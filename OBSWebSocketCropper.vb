@@ -43,6 +43,33 @@ Public Class ObsWebSocketCropper
     Private ReadOnly _viewModelBottom As New CropperViewModel
     Private _check2NdObs As Boolean
     Private _lastUpdate As Integer
+    Private BoundingSizeGame As Rectangle
+    Private BoundingSizeTimer As Rectangle
+
+    Private PositionXTimer_TR As Integer
+    Private PositionXTimer_TL As Integer
+
+    Private PositionYTimer_TR As Integer
+    Private PositionYTimer_TL As Integer
+
+    Private PositionYGame_TL As Integer
+    Private PositionYGame_TR As Integer
+
+    Private positionXGame_TR As Integer
+    Private positionXGame_TL As Integer
+
+    Private PositionXTimer_BR As Integer
+    Private PositionXTimer_BL As Integer
+
+    Private PositionYTimer_BR As Integer
+    Private PositionYTimer_BL As Integer
+
+    Private PositionYGame_BL As Integer
+    Private PositionYGame_BR As Integer
+
+    Private positionXGame_BR As Integer
+    Private positionXGame_BL As Integer
+
 
 #Region " Create New Tables "
     Private Sub CreateNewSourceTable()
@@ -596,58 +623,26 @@ Public Class ObsWebSocketCropper
         Dim runnerVm As RunnerViewModel
         Dim gameSource As String
         Dim timerSource As String
-        Dim positionXTimer, positionXGame As Integer
+
+        Dim PositionYTimer, PositionYGame, positionXTimer, positionXGame As Integer
 
         If isBottomRunner Then
             runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
             gameSource = If(isRightWindow, My.Settings.RightGameName_Bottom, My.Settings.LeftGameName_Bottom)
             timerSource = If(isRightWindow, My.Settings.RightTimerName_Bottom, My.Settings.LeftTimerName_Bottom)
-            positionXTimer = If(isRightWindow, 1116, 45)
-            positionXGame = If(isRightWindow, 676, 221)
+            positionXTimer = If(isRightWindow, PositionXTimer_BR, PositionXTimer_BL)
+            positionXGame = If(isRightWindow, positionXGame_BR, positionXGame_BL)
+            PositionYTimer = If(isRightWindow, PositionYTimer_BR, PositionYTimer_BL)
+            PositionYGame = If(isRightWindow, PositionYGame_BR, PositionYGame_BL)
         Else
             runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
             gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
             timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
-            If PlayersToolStripMenuItem.Checked = True Then
-                positionXTimer = If(isRightWindow, 1116, 45)
-                positionXGame = If(isRightWindow, 676, 221)
-            Else
-                positionXTimer = If(isRightWindow, 1046, 56)
-                positionXGame = If(isRightWindow, 674, 48)
-            End If
+            positionXTimer = If(isRightWindow, PositionXTimer_TR, PositionXTimer_TL)
+            positionXGame = If(isRightWindow, positionXGame_TR, positionXGame_TL)
+            PositionYTimer = If(isRightWindow, PositionYTimer_TR, PositionYTimer_TL)
+            PositionYGame = If(isRightWindow, PositionYGame_TR, PositionYGame_TL)
         End If
-
-
-        Dim boundingSizeGame As New Rectangle
-        Dim boundingSizeTimer As New Rectangle
-        Dim PositionYTimer, PositionYGame As Integer
-
-        If PlayersToolStripMenuItem.Checked = True Then
-            boundingSizeGame.Width = 385
-            boundingSizeGame.Height = 298
-
-            boundingSizeTimer.Width = 120
-            boundingSizeTimer.Height = 24
-
-            If isBottomRunner Then
-                PositionYTimer = 410
-                PositionYGame = 370
-            Else
-                PositionYTimer = 51
-                PositionYGame = 51
-            End If
-        Else
-            boundingSizeGame.Width = 558
-            boundingSizeGame.Height = 446
-
-            boundingSizeTimer.Width = 178
-            boundingSizeTimer.Height = 47
-
-            PositionYTimer = 24
-            PositionYGame = 83
-        End If
-
-
 
         If runnerVm.MasterSize.Height > 0 And runnerVm.MasterSize.Width > 0 Then
             If Not String.IsNullOrWhiteSpace(gameSource) Then
@@ -656,7 +651,7 @@ Public Class ObsWebSocketCropper
                             runnerVm.CurrentSize.AsSize(),
                             gameSource,
                             runnerVm.Scale,
-                            boundingSizeGame,
+                            BoundingSizeGame,
                             positionXGame,
                             PositionYGame
 )
@@ -668,7 +663,7 @@ Public Class ObsWebSocketCropper
                             runnerVm.CurrentSize.AsSize(),
                             timerSource,
                             runnerVm.Scale,
-                            boundingSizeTimer,
+                            BoundingSizeTimer,
                             positionXTimer,
                             PositionYTimer
 )
@@ -1935,6 +1930,7 @@ Public Class ObsWebSocketCropper
         CheckFourPlayerMode()
     End Sub
     Private Sub CheckFourPlayerMode()
+
         Dim fSize As Size
 
         If My.Settings.FourPlayers = True Then
@@ -1952,7 +1948,71 @@ Public Class ObsWebSocketCropper
         End If
 
         Me.Size = fSize
-    End Sub
 
+        RefreshBoundingBoxSize()
+    End Sub
+    Private Sub RefreshBoundingBoxSize()
+        If PlayersToolStripMenuItem.Checked = True Then
+            BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameFourPlayer
+            BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameFourPlayer
+
+            BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerFourPlayer
+            BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerFourPlayer
+
+            PositionXTimer_TR = My.Settings.PositionXTimerTopRightFourPlayer
+            PositionXTimer_TL = My.Settings.PositionXTimerTopLeftFourPlayer
+
+            positionXGame_TR = My.Settings.PositionXGameTopRightFourPlayer
+            positionXGame_TL = My.Settings.PositionXGameTopLeftFourPlayer
+
+            PositionYTimer_TR = My.Settings.PositionYTimerTopRightFourPlayer
+            PositionYTimer_TL = My.Settings.PositionYTimerTopLeftFourPlayer
+
+            PositionYGame_TR = My.Settings.PositionYGameTopRightFourPlayer
+            PositionYGame_TL = My.Settings.PositionYGameTopLeftFourPlayer
+
+            PositionXTimer_BR = My.Settings.PositionXTimerBottomRightFourPlayer
+            PositionXTimer_BL = My.Settings.PositionXTimerBottomLeftFourPlayer
+
+            positionXGame_BR = My.Settings.PositionXGameBottomRightFourPlayer
+            positionXGame_BL = My.Settings.PositionXGameBottomLeftFourPlayer
+
+            PositionYTimer_BR = My.Settings.PositionYTimerBottomRightFourPlayer
+            PositionYTimer_BL = My.Settings.PositionYTimerBottomLeftFourPlayer
+
+            PositionYGame_BR = My.Settings.PositionYGameBottomRightFourPlayer
+            PositionYGame_BL = My.Settings.PositionYGameBottomLeftFourPlayer
+        Else
+            BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameTwoPlayer
+            BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameTwoPlayer
+
+            BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerTwoPlayer
+            BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerTwoPlayer
+
+            PositionXTimer_TR = My.Settings.PositionXTimerRightTwoPlayer
+            PositionXTimer_TL = My.Settings.PositionXTimerLeftTwoPlayer
+
+            positionXGame_TR = My.Settings.PositionXGameRightTwoPlayer
+            positionXGame_TL = My.Settings.PositionXGameLeftTwoPlayer
+
+            PositionYTimer_TR = My.Settings.PositionYTimerRightTwoPlayer
+            PositionYTimer_TL = My.Settings.PositionYTimerLeftTwoPlayer
+
+            PositionYGame_TR = My.Settings.PositionYGameRightTwoPlayer
+            PositionYGame_TL = My.Settings.PositionYGameLeftTwoPlayer
+
+            PositionXTimer_BR = My.Settings.PositionXTimerRightTwoPlayer
+            PositionXTimer_BL = My.Settings.PositionXTimerLeftTwoPlayer
+
+            positionXGame_BR = My.Settings.PositionXGameRightTwoPlayer
+            positionXGame_BL = My.Settings.PositionXGameLeftTwoPlayer
+
+            PositionYTimer_BR = My.Settings.PositionYTimerRightTwoPlayer
+            PositionYTimer_BL = My.Settings.PositionYTimerLeftTwoPlayer
+
+            PositionYGame_BR = My.Settings.PositionYGameRightTwoPlayer
+            PositionYGame_BL = My.Settings.PositionYGameLeftTwoPlayer
+        End If
+    End Sub
 #End Region
 End Class
