@@ -428,7 +428,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("610")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("633")>  _
         Public Property DefaultHeight() As Integer
             Get
                 Return CType(Me("DefaultHeight"),Integer)
@@ -452,7 +452,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("610")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("633")>  _
         Public Property FourRacerHeight() As Integer
             Get
                 Return CType(Me("FourRacerHeight"),Integer)
@@ -1035,6 +1035,30 @@ Namespace My
             End Get
             Set
                 Me("PositionYGameLeftTwoPlayer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property SelectedConfigName() As String
+            Get
+                Return CType(Me("SelectedConfigName"),String)
+            End Get
+            Set
+                Me("SelectedConfigName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property SelectedConfigPath() As String
+            Get
+                Return CType(Me("SelectedConfigPath"),String)
+            End Get
+            Set
+                Me("SelectedConfigPath") = value
             End Set
         End Property
     End Class

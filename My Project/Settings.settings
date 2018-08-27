@@ -96,13 +96,13 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">610</Value>
+      <Value Profile="(Default)">633</Value>
     </Setting>
     <Setting Name="DefaultWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">863</Value>
     </Setting>
     <Setting Name="FourRacerHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">610</Value>
+      <Value Profile="(Default)">633</Value>
     </Setting>
     <Setting Name="FourRacerWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1523</Value>
@@ -247,6 +247,12 @@
     </Setting>
     <Setting Name="PositionYGameLeftTwoPlayer" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">83</Value>
+    </Setting>
+    <Setting Name="SelectedConfigName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SelectedConfigPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

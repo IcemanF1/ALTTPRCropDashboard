@@ -217,6 +217,9 @@ Partial Class ObsWebSocketCropper
         Me.Label46 = New System.Windows.Forms.Label()
         Me.txtCropRightGame_Right_BR = New System.Windows.Forms.TextBox()
         Me.pnlFourPlayer = New System.Windows.Forms.Panel()
+        Me.ConfigEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cbConfigFiles = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -917,7 +920,7 @@ Partial Class ObsWebSocketCropper
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.PlayersToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ConfigEditorToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.PlayersToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -1297,7 +1300,7 @@ Partial Class ObsWebSocketCropper
         Me.gbTrackerComms.Controls.Add(Me.txtRightTrackerURL)
         Me.gbTrackerComms.Controls.Add(Me.lblRightTracker)
         Me.gbTrackerComms.Controls.Add(Me.lblLeftTracker)
-        Me.gbTrackerComms.Location = New System.Drawing.Point(169, 12)
+        Me.gbTrackerComms.Location = New System.Drawing.Point(169, 15)
         Me.gbTrackerComms.Name = "gbTrackerComms"
         Me.gbTrackerComms.Size = New System.Drawing.Size(1338, 112)
         Me.gbTrackerComms.TabIndex = 58
@@ -2116,11 +2119,36 @@ Partial Class ObsWebSocketCropper
         Me.pnlFourPlayer.Size = New System.Drawing.Size(685, 435)
         Me.pnlFourPlayer.TabIndex = 119
         '
+        'ConfigEditorToolStripMenuItem
+        '
+        Me.ConfigEditorToolStripMenuItem.Name = "ConfigEditorToolStripMenuItem"
+        Me.ConfigEditorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ConfigEditorToolStripMenuItem.Text = "Config Editor"
+        '
+        'cbConfigFiles
+        '
+        Me.cbConfigFiles.FormattingEnabled = True
+        Me.cbConfigFiles.Location = New System.Drawing.Point(61, 569)
+        Me.cbConfigFiles.Name = "cbConfigFiles"
+        Me.cbConfigFiles.Size = New System.Drawing.Size(217, 21)
+        Me.cbConfigFiles.TabIndex = 121
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(4, 572)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(56, 13)
+        Me.Label5.TabIndex = 120
+        Me.Label5.Text = "Config File"
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1284, 571)
+        Me.ClientSize = New System.Drawing.Size(1284, 594)
+        Me.Controls.Add(Me.cbConfigFiles)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.pnlFourPlayer)
         Me.Controls.Add(Me.btnResetDatabase)
         Me.Controls.Add(Me.lblRightRunnerTwitch)
@@ -2399,4 +2427,7 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents PlayersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents pnlFourPlayer As Panel
     Friend WithEvents pnlFourPlayerTracker As Panel
+    Friend WithEvents ConfigEditorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents cbConfigFiles As ComboBox
+    Friend WithEvents Label5 As Label
 End Class

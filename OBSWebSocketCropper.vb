@@ -8,6 +8,8 @@ Imports System.Globalization
 
 Public Class ObsWebSocketCropper
     Public ProgramName As String = "OBS WebSocket Cropper"
+    Private isLoaded As Boolean
+    Private _configInfo As New DataSet
 
     Public WithEvents Obs As New ObsWebSocketPlus
     Public ObsConnectionStatus As String
@@ -1197,7 +1199,7 @@ Public Class ObsWebSocketCropper
         RegisterObsDependency(btnSaveLeftCrop, btnSaveRightCrop)
         RegisterObsDependency(btnSetLeftVLC, btnSetRightVLC, btnGetProcesses, cbLeftVLCSource, cbRightVLCSource)
         RegisterObsDependency(btnSetTrackCommNames, btnNewLeftRunner, btnNewRightRunner)
-        RegisterObsDependency(btnSyncWithServer, btn2ndOBS, btnConnectOBS2, btnResetDatabase)
+        RegisterObsDependency(btnSyncWithServer, btn2ndOBS, btnConnectOBS2, btnResetDatabase, cbConfigFiles)
         RegisterObsDependency(gbTrackerComms, gbLeftGameWindow, gbRightGameWindow, gbLeftTimerWindow, gbRightTimerWindow)
         RegisterObsDependency(cbLeftRunnerName, cbRightRunnerName)
         RegisterObsDependency(lblLeftVOD, lblRightVOD)
@@ -1259,6 +1261,7 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
+        isLoaded = False
 
         RefreshCropperDefaultCrop()
 
@@ -1301,6 +1304,17 @@ Public Class ObsWebSocketCropper
         PlayersToolStripMenuItem.Checked = My.Settings.FourPlayers
 
         CheckFourPlayerMode()
+
+        GlobalParam.RefreshConfigList()
+
+        cbConfigFiles.DataSource = GlobalParam._configList.Tables(0)
+
+        cbConfigFiles.DisplayMember = "ConfigName"
+        cbConfigFiles.ValueMember = "ConfigPath"
+
+        cbConfigFiles.Text = "Default"
+
+        isLoaded = True
     End Sub
     Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         About.ShowDialog(Me)
@@ -1952,6 +1966,19 @@ Public Class ObsWebSocketCropper
         RefreshBoundingBoxSize()
     End Sub
     Private Sub RefreshBoundingBoxSize()
+        If Not String.IsNullOrWhiteSpace(cbConfigFiles.Text) Then
+            If cbConfigFiles.Text.Trim.ToLower = "default" Then
+                RefreshBoundingBoxFromDefault()
+            Else
+                RefreshBoundingBoxFromConfigFile()
+            End If
+        Else
+            RefreshBoundingBoxFromDefault()
+        End If
+
+
+    End Sub
+    Private Sub RefreshBoundingBoxFromDefault()
         If PlayersToolStripMenuItem.Checked = True Then
             BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameFourPlayer
             BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameFourPlayer
@@ -2014,5 +2041,131 @@ Public Class ObsWebSocketCropper
             PositionYGame_BL = My.Settings.PositionYGameLeftTwoPlayer
         End If
     End Sub
+    Private Sub RefreshBoundingBoxFromConfigFile()
+        _configInfo.ReadXml(cbConfigFiles.SelectedValue.ToString)
+
+        If _configInfo.Tables.Count > 0 Then
+            If _configInfo.Tables("ConfigInfo").Rows.Count > 0 Then
+                If PlayersToolStripMenuItem.Checked = True Then
+                    BoundingSizeGame.Width = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString)
+                    BoundingSizeGame.Height = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString)
+
+                    BoundingSizeTimer.Width = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString)
+                    BoundingSizeTimer.Height = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString)
+
+                    PositionXTimer_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString)
+                    PositionXTimer_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString)
+
+                    positionXGame_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString)
+                    positionXGame_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString)
+
+                    PositionYTimer_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString)
+                    PositionYTimer_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString)
+
+                    PositionYGame_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString)
+                    PositionYGame_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString)
+
+                    PositionXTimer_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString)
+                    PositionXTimer_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString)
+
+                    positionXGame_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString)
+                    positionXGame_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString)
+
+                    PositionYTimer_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString)
+                    PositionYTimer_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString)
+
+                    PositionYGame_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString)
+                    PositionYGame_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString)
+                Else
+                    BoundingSizeGame.Height = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString)
+                    BoundingSizeGame.Width = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString)
+
+                    BoundingSizeTimer.Height = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerTwoPlayer").ToString)
+                    BoundingSizeTimer.Width = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerTwoPlayer").ToString)
+
+                    PositionXTimer_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString)
+                    PositionXTimer_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString)
+
+                    positionXGame_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString)
+                    positionXGame_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString)
+
+                    PositionYTimer_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString)
+                    PositionYTimer_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString)
+
+                    PositionYGame_TR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString)
+                    PositionYGame_TL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString)
+
+                    PositionXTimer_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString)
+                    PositionXTimer_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString)
+
+                    positionXGame_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString)
+                    positionXGame_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString)
+
+                    PositionYTimer_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString)
+                    PositionYTimer_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString)
+
+                    PositionYGame_BR = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString)
+                    PositionYGame_BL = CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString)
+                End If
+
+            End If
+        End If
+    End Sub
+    Private Sub ConfigEditorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigEditorToolStripMenuItem.Click
+        ConfigEditor.ShowDialog()
+    End Sub
+    Private Sub cbConfigFiles_KeyUp(sender As Object, e As KeyEventArgs) Handles cbConfigFiles.KeyUp
+        Dim index As Integer
+        Dim actual As String
+        Dim found As String
+
+        If ((e.KeyCode = Keys.Back) Or
+    (e.KeyCode = Keys.Left) Or
+    (e.KeyCode = Keys.Right) Or
+    (e.KeyCode = Keys.Up) Or
+    (e.KeyCode = Keys.Delete) Or
+    (e.KeyCode = Keys.Down) Or
+    (e.KeyCode = Keys.PageUp) Or
+    (e.KeyCode = Keys.PageDown) Or
+    (e.KeyCode = Keys.Home) Or
+    (e.KeyCode = Keys.End)) Then
+
+            Return
+        End If
+
+        ' Store the actual text that has been typed.
+        actual = cbConfigFiles.Text
+
+        ' Find the first match for the typed value.
+        index = cbConfigFiles.FindString(actual)
+
+        ' Get the text of the first match.
+        If (index > -1) Then
+            found = cbConfigFiles.Items(index).ToString()
+
+            ' Select this item from the list.
+            cbConfigFiles.SelectedIndex = index
+
+            ' Select the portion of the text that was automatically
+            ' added so that additional typing will replace it.
+            cbConfigFiles.SelectionStart = actual.Length
+            cbConfigFiles.SelectionLength = found.Length
+        End If
+    End Sub
+    Private Sub cbConfigFiles_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbConfigFiles.SelectedValueChanged
+        If isLoaded = True Then
+            If Not String.IsNullOrWhiteSpace(cbConfigFiles.Text) Then
+                If cbConfigFiles.Text.Trim.ToLower = "default" Then
+                    RefreshBoundingBoxFromDefault()
+                Else
+                    RefreshBoundingBoxFromConfigFile()
+                End If
+            Else
+                RefreshBoundingBoxFromDefault()
+            End If
+        End If
+
+    End Sub
+
 #End Region
 End Class

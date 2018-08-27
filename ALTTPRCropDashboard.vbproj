@@ -227,9 +227,16 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ConfigEditor.Designer.vb">
+      <DependentUpon>ConfigEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Data\ViewModels\CropperViewModel.vb" />
     <Compile Include="Data\ViewModels\RunnerViewModel.vb" />
     <Compile Include="Data\ViewModels\CropViewModel.vb" />
+    <Compile Include="GlobalParam.vb" />
     <Compile Include="NewRunner.Designer.vb">
       <DependentUpon>NewRunner.vb</DependentUpon>
     </Compile>
@@ -286,6 +293,9 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigEditor.resx">
+      <DependentUpon>ConfigEditor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewRunner.resx">
       <DependentUpon>NewRunner.vb</DependentUpon>
