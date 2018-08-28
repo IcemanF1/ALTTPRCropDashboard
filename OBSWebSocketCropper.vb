@@ -1316,6 +1316,8 @@ Public Class ObsWebSocketCropper
         cbConfigFiles.Text = "Default"
 
         isLoaded = True
+
+        DynamicButtonTest()
     End Sub
     Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         About.ShowDialog(Me)
@@ -2191,6 +2193,29 @@ Public Class ObsWebSocketCropper
         End With
 
     End Sub
+    Private Sub DynamicButtonTest()
+        Dim btn As New Button
 
+        Dim nLocation As New Point
+        nLocation.X = btnConnectOBS2.Location.X
+        nLocation.Y = btnConnectOBS2.Location.Y + 25
+
+        Dim nSize As New Size
+        nSize.Width = 117
+        nSize.Height = 23
+
+        With btn
+            .Text = "Test Button"
+            .Location = nLocation
+            .Size = nSize
+        End With
+        Me.Controls.Add(btn)
+        AddHandler btn.Click, AddressOf ViewTwitch_Click
+    End Sub
+    Protected Sub ViewTwitch_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
+            Process.Start("https://twitch.tv/" & _viewModel.LeftRunner.Twitch & "/videos/all")
+        End If
+    End Sub
 #End Region
 End Class
