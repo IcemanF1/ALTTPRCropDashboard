@@ -2210,6 +2210,7 @@ Public Class ObsWebSocketCropper
             .Size = nSize
         End With
         Me.Controls.Add(btn)
+        RegisterObsDependency(btn)
         AddHandler btn.Click, AddressOf ViewTwitch_Click
     End Sub
     Protected Sub ViewTwitch_Click(ByVal sender As Object, ByVal e As System.EventArgs)
