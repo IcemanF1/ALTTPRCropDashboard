@@ -276,6 +276,12 @@
     <Compile Include="Data\RunnerCrop.vb" />
     <Compile Include="Data\ViewModels\SizeViewModel.vb" />
     <Compile Include="Program.vb" />
+    <Compile Include="RunnerControls.Designer.vb">
+      <DependentUpon>RunnerControls.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RunnerControls.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserSettings.Designer.vb">
       <DependentUpon>UserSettings.vb</DependentUpon>
     </Compile>
@@ -308,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OBSWebSocketCropper.resx">
       <DependentUpon>OBSWebSocketCropper.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunnerControls.resx">
+      <DependentUpon>RunnerControls.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserSettings.resx">
       <DependentUpon>UserSettings.vb</DependentUpon>

@@ -99,6 +99,7 @@ Partial Class ObsWebSocketCropper
         Me.ChangeUserSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeVLCSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfigEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadConfigFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PlayersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -220,7 +221,6 @@ Partial Class ObsWebSocketCropper
         Me.pnlFourPlayer = New System.Windows.Forms.Panel()
         Me.cbConfigFiles = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.LoadConfigFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ofdOpenConfig = New System.Windows.Forms.OpenFileDialog()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
@@ -509,6 +509,7 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftTimerWindow.TabIndex = 1
         Me.gbLeftTimerWindow.TabStop = False
         Me.gbLeftTimerWindow.Text = "Left Timer Window"
+        Me.gbLeftTimerWindow.Visible = False
         '
         'btnLeftTimerUncrop
         '
@@ -633,6 +634,7 @@ Partial Class ObsWebSocketCropper
         Me.gbLeftGameWindow.TabIndex = 2
         Me.gbLeftGameWindow.TabStop = False
         Me.gbLeftGameWindow.Text = "Left Game Window"
+        Me.gbLeftGameWindow.Visible = False
         '
         'btnLeftGameUncrop
         '
@@ -728,6 +730,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetLeftCrop.Text = "Set Left Crop"
         Me.ttMainToolTip.SetToolTip(Me.btnSetLeftCrop, "Set the crop for the left side (timer and game) based" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "off the math.")
         Me.btnSetLeftCrop.UseVisualStyleBackColor = False
+        Me.btnSetLeftCrop.Visible = False
         '
         'lblLeftRunner
         '
@@ -738,6 +741,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftRunner.Size = New System.Drawing.Size(94, 13)
         Me.lblLeftRunner.TabIndex = 14
         Me.lblLeftRunner.Text = "Left Runner Name"
+        Me.lblLeftRunner.Visible = False
         '
         'lblRightRunner
         '
@@ -758,6 +762,7 @@ Partial Class ObsWebSocketCropper
         Me.cbLeftRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftRunnerName.TabIndex = 14
         Me.cbLeftRunnerName.ValueMember = "RacerName"
+        Me.cbLeftRunnerName.Visible = False
         '
         'cbRightRunnerName
         '
@@ -945,6 +950,12 @@ Partial Class ObsWebSocketCropper
         Me.ConfigEditorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ConfigEditorToolStripMenuItem.Text = "Config Editor"
         '
+        'LoadConfigFileToolStripMenuItem
+        '
+        Me.LoadConfigFileToolStripMenuItem.Name = "LoadConfigFileToolStripMenuItem"
+        Me.LoadConfigFileToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.LoadConfigFileToolStripMenuItem.Text = "Load Config File"
+        '
         'ExpertModeToolStripMenuItem
         '
         Me.ExpertModeToolStripMenuItem.CheckOnClick = True
@@ -997,6 +1008,7 @@ Partial Class ObsWebSocketCropper
         Me.btnGetLeftCrop.Text = "Get Crop"
         Me.ttMainToolTip.SetToolTip(Me.btnGetLeftCrop, "Get the current OBS crop settings for the left side")
         Me.btnGetLeftCrop.UseVisualStyleBackColor = True
+        Me.btnGetLeftCrop.Visible = False
         '
         'btnGetRightCrop
         '
@@ -1017,6 +1029,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSaveLeftCrop.Text = "Save Crop"
         Me.ttMainToolTip.SetToolTip(Me.btnSaveLeftCrop, "Saves the current crop numbers to the database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "for the left side")
         Me.btnSaveLeftCrop.UseVisualStyleBackColor = True
+        Me.btnSaveLeftCrop.Visible = False
         '
         'btnSaveRightCrop
         '
@@ -1030,7 +1043,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnGetProcesses
         '
-        Me.btnGetProcesses.Location = New System.Drawing.Point(342, 242)
+        Me.btnGetProcesses.Location = New System.Drawing.Point(12, 167)
         Me.btnGetProcesses.Name = "btnGetProcesses"
         Me.btnGetProcesses.Size = New System.Drawing.Size(114, 23)
         Me.btnGetProcesses.TabIndex = 65
@@ -1048,6 +1061,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetLeftVLC.Text = "Set Left VLC"
         Me.ttMainToolTip.SetToolTip(Me.btnSetLeftVLC, "Sets the left game/timer window VLC to the above dropdown")
         Me.btnSetLeftVLC.UseVisualStyleBackColor = False
+        Me.btnSetLeftVLC.Visible = False
         '
         'btn2ndOBS
         '
@@ -1090,6 +1104,7 @@ Partial Class ObsWebSocketCropper
         Me.btnNewLeftRunner.Text = "New Runner"
         Me.ttMainToolTip.SetToolTip(Me.btnNewLeftRunner, "Pop-up form to easily add the runner information")
         Me.btnNewLeftRunner.UseVisualStyleBackColor = True
+        Me.btnNewLeftRunner.Visible = False
         '
         'btnNewRightRunner
         '
@@ -1401,6 +1416,7 @@ Partial Class ObsWebSocketCropper
         Me.cbLeftVLCSource.Name = "cbLeftVLCSource"
         Me.cbLeftVLCSource.Size = New System.Drawing.Size(228, 21)
         Me.cbLeftVLCSource.TabIndex = 66
+        Me.cbLeftVLCSource.Visible = False
         '
         'lblRightVLC
         '
@@ -1421,6 +1437,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftVLC.Size = New System.Drawing.Size(85, 13)
         Me.lblLeftVLC.TabIndex = 67
         Me.lblLeftVLC.Text = "Left VLC Source"
+        Me.lblLeftVLC.Visible = False
         '
         'Timer1
         '
@@ -1456,6 +1473,7 @@ Partial Class ObsWebSocketCropper
         Me.lblViewLeftOnTwitch.Size = New System.Drawing.Size(76, 13)
         Me.lblViewLeftOnTwitch.TabIndex = 78
         Me.lblViewLeftOnTwitch.Text = "View on twitch"
+        Me.lblViewLeftOnTwitch.Visible = False
         '
         'lblLeftVOD
         '
@@ -1468,6 +1486,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftVOD.Size = New System.Drawing.Size(61, 13)
         Me.lblLeftVOD.TabIndex = 79
         Me.lblLeftVOD.Text = "View VODs"
+        Me.lblLeftVOD.Visible = False
         '
         'lblViewRightOnTwitch
         '
@@ -1504,6 +1523,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftStreamlink.Size = New System.Drawing.Size(56, 13)
         Me.lblLeftStreamlink.TabIndex = 82
         Me.lblLeftStreamlink.Text = "Open VLC"
+        Me.lblLeftStreamlink.Visible = False
         '
         'lblRightStreamlink
         '
@@ -1525,6 +1545,7 @@ Partial Class ObsWebSocketCropper
         Me.lblLeftRunnerTwitch.Size = New System.Drawing.Size(77, 13)
         Me.lblLeftRunnerTwitch.TabIndex = 85
         Me.lblLeftRunnerTwitch.Text = "Runner Twitch"
+        Me.lblLeftRunnerTwitch.Visible = False
         '
         'lblRightRunnerTwitch
         '
@@ -2143,12 +2164,6 @@ Partial Class ObsWebSocketCropper
         Me.Label5.Size = New System.Drawing.Size(56, 13)
         Me.Label5.TabIndex = 120
         Me.Label5.Text = "Config File"
-        '
-        'LoadConfigFileToolStripMenuItem
-        '
-        Me.LoadConfigFileToolStripMenuItem.Name = "LoadConfigFileToolStripMenuItem"
-        Me.LoadConfigFileToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-        Me.LoadConfigFileToolStripMenuItem.Text = "Load Config File"
         '
         'ofdOpenConfig
         '

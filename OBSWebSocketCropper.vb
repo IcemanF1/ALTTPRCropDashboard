@@ -2194,24 +2194,28 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub DynamicButtonTest()
-        Dim btn As New Button
+        'Dim rControl As New RunnerControls
+        'rControl.Location = New System.Drawing.Point(143, 153)
 
-        Dim nLocation As New Point
-        nLocation.X = btnConnectOBS2.Location.X
-        nLocation.Y = btnConnectOBS2.Location.Y + 25
+        'Me.Controls.Add(rControl)
+        'Dim btn As New Button
 
-        Dim nSize As New Size
-        nSize.Width = 117
-        nSize.Height = 23
+        'Dim nLocation As New Point
+        'nLocation.X = btnConnectOBS2.Location.X
+        'nLocation.Y = btnConnectOBS2.Location.Y + 25
 
-        With btn
-            .Text = "Test Button"
-            .Location = nLocation
-            .Size = nSize
-        End With
-        Me.Controls.Add(btn)
-        RegisterObsDependency(btn)
-        AddHandler btn.Click, AddressOf ViewTwitch_Click
+        'Dim nSize As New Size
+        'nSize.Width = 117
+        'nSize.Height = 23
+
+        'With btn
+        '    .Text = "Test Button"
+        '    .Location = nLocation
+        '    .Size = nSize
+        'End With
+        'Me.Controls.Add(btn)
+        'RegisterObsDependency(btn)
+        'AddHandler btn.Click, AddressOf ViewTwitch_Click
     End Sub
     Protected Sub ViewTwitch_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
