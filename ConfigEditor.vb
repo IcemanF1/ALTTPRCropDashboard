@@ -136,53 +136,53 @@
 
         dr = _configInfo.Tables("ConfigInfo").NewRow
 
-        dr.Item("PositionYGameBottomLeftFourPlayer") = CInt(txtPositionYGameBottomLeftFourPlayer.Text)
-        dr.Item("PositionXGameBottomLeftFourPlayer") = CInt(txtPositionXGameBottomLeftFourPlayer.Text)
+        dr.Item("PositionYGameBottomLeftFourPlayer") = txtPositionYGameBottomLeftFourPlayer.Text
+        dr.Item("PositionXGameBottomLeftFourPlayer") = txtPositionXGameBottomLeftFourPlayer.Text
 
-        dr.Item("PositionYGameTopLeftFourPlayer") = CInt(txtPositionYGameTopLeftFourPlayer.Text)
-        dr.Item("PositionXGameTopLeftFourPlayer") = CInt(txtPositionXGameTopLeftFourPlayer.Text)
+        dr.Item("PositionYGameTopLeftFourPlayer") = txtPositionYGameTopLeftFourPlayer.Text
+        dr.Item("PositionXGameTopLeftFourPlayer") = txtPositionXGameTopLeftFourPlayer.Text
 
-        dr.Item("PositionYGameBottomRightFourPlayer") = CInt(txtPositionYGameBottomRightFourPlayer.Text)
-        dr.Item("PositionXGameBottomRightFourPlayer") = CInt(txtPositionXGameBottomRightFourPlayer.Text)
+        dr.Item("PositionYGameBottomRightFourPlayer") = txtPositionYGameBottomRightFourPlayer.Text
+        dr.Item("PositionXGameBottomRightFourPlayer") = txtPositionXGameBottomRightFourPlayer.Text
 
-        dr.Item("PositionYGameTopRightFourPlayer") = CInt(txtPositionYGameTopRightFourPlayer.Text)
-        dr.Item("PositionXGameTopRightFourPlayer") = CInt(txtPositionXGameTopRightFourPlayer.Text)
+        dr.Item("PositionYGameTopRightFourPlayer") = txtPositionYGameTopRightFourPlayer.Text
+        dr.Item("PositionXGameTopRightFourPlayer") = txtPositionXGameTopRightFourPlayer.Text
 
-        dr.Item("PositionYTimerBottomLeftFourPlayer") = CInt(txtPositionYTimerBottomLeftFourPlayer.Text)
-        dr.Item("PositionXTimerBottomLeftFourPlayer") = CInt(txtPositionXTimerBottomLeftFourPlayer.Text)
+        dr.Item("PositionYTimerBottomLeftFourPlayer") = txtPositionYTimerBottomLeftFourPlayer.Text
+        dr.Item("PositionXTimerBottomLeftFourPlayer") = txtPositionXTimerBottomLeftFourPlayer.Text
 
-        dr.Item("PositionYTimerTopLeftFourPlayer") = CInt(txtPositionYTimerTopLeftFourPlayer.Text)
-        dr.Item("PositionXTimerTopLeftFourPlayer") = CInt(txtPositionXTimerTopLeftFourPlayer.Text)
+        dr.Item("PositionYTimerTopLeftFourPlayer") = txtPositionYTimerTopLeftFourPlayer.Text
+        dr.Item("PositionXTimerTopLeftFourPlayer") = txtPositionXTimerTopLeftFourPlayer.Text
 
-        dr.Item("PositionYTimerBottomRightFourPlayer") = CInt(txtPositionYTimerBottomRightFourPlayer.Text)
-        dr.Item("PositionXTimerBottomRightFourPlayer") = CInt(txtPositionXTimerBottomRightFourPlayer.Text)
+        dr.Item("PositionYTimerBottomRightFourPlayer") = txtPositionYTimerBottomRightFourPlayer.Text
+        dr.Item("PositionXTimerBottomRightFourPlayer") = txtPositionXTimerBottomRightFourPlayer.Text
 
-        dr.Item("PositionYTimerTopRightFourPlayer") = CInt(txtPositionYTimerTopRightFourPlayer.Text)
-        dr.Item("PositionXTimerTopRightFourPlayer") = CInt(txtPositionXTimerTopRightFourPlayer.Text)
+        dr.Item("PositionYTimerTopRightFourPlayer") = txtPositionYTimerTopRightFourPlayer.Text
+        dr.Item("PositionXTimerTopRightFourPlayer") = txtPositionXTimerTopRightFourPlayer.Text
 
-        dr.Item("PositionYTimerRightTwoPlayer") = CInt(txtPositionYTimerRightTwoPlayer.Text)
-        dr.Item("PositionXTimerRightTwoPlayer") = CInt(txtPositionXTimerRightTwoPlayer.Text)
+        dr.Item("PositionYTimerRightTwoPlayer") = txtPositionYTimerRightTwoPlayer.Text
+        dr.Item("PositionXTimerRightTwoPlayer") = txtPositionXTimerRightTwoPlayer.Text
 
-        dr.Item("PositionYTimerLeftTwoPlayer") = CInt(txtPositionYTimerLeftTwoPlayer.Text)
-        dr.Item("PositionXTimerLeftTwoPlayer") = CInt(txtPositionXTimerLeftTwoPlayer.Text)
+        dr.Item("PositionYTimerLeftTwoPlayer") = txtPositionYTimerLeftTwoPlayer.Text
+        dr.Item("PositionXTimerLeftTwoPlayer") = txtPositionXTimerLeftTwoPlayer.Text
 
-        dr.Item("PositionYGameRightTwoPlayer") = CInt(txtPositionYGameRightTwoPlayer.Text)
-        dr.Item("PositionXGameRightTwoPlayer") = CInt(txtPositionXGameRightTwoPlayer.Text)
+        dr.Item("PositionYGameRightTwoPlayer") = txtPositionYGameRightTwoPlayer.Text
+        dr.Item("PositionXGameRightTwoPlayer") = txtPositionXGameRightTwoPlayer.Text
 
-        dr.Item("PositionYGameLeftTwoPlayer") = CInt(txtPositionYGameLeftTwoPlayer.Text)
-        dr.Item("PositionXGameLeftTwoPlayer") = CInt(txtPositionXGameLeftTwoPlayer.Text)
+        dr.Item("PositionYGameLeftTwoPlayer") = txtPositionYGameLeftTwoPlayer.Text
+        dr.Item("PositionXGameLeftTwoPlayer") = txtPositionXGameLeftTwoPlayer.Text
 
-        dr.Item("BoundingSizeHeightGameFourPlayer") = CInt(txtBoundingSizeHeightGameFourPlayer.Text)
-        dr.Item("BoundingSizeWidthGameFourPlayer") = CInt(txtBoundingSizeWidthGameFourPlayer.Text)
+        dr.Item("BoundingSizeHeightGameFourPlayer") = txtBoundingSizeHeightGameFourPlayer.Text
+        dr.Item("BoundingSizeWidthGameFourPlayer") = txtBoundingSizeWidthGameFourPlayer.Text
 
-        dr.Item("BoundingSizeHeightTimerFourPlayer") = CInt(txtBoundingSizeHeightTimerFourPlayer.Text)
-        dr.Item("BoundingSizeWidthTimerFourPlayer") = CInt(txtBoundingSizeWidthTimerFourPlayer.Text)
+        dr.Item("BoundingSizeHeightTimerFourPlayer") = txtBoundingSizeHeightTimerFourPlayer.Text
+        dr.Item("BoundingSizeWidthTimerFourPlayer") = txtBoundingSizeWidthTimerFourPlayer.Text
 
-        dr.Item("BoundingSizeHeightGameTwoPlayer") = CInt(txtBoundingSizeHeightGameTwoPlayer.Text)
-        dr.Item("BoundingSizeWidthGameTwoPlayer") = CInt(txtBoundingSizeWidthGameTwoPlayer.Text)
+        dr.Item("BoundingSizeHeightGameTwoPlayer") = txtBoundingSizeHeightGameTwoPlayer.Text
+        dr.Item("BoundingSizeWidthGameTwoPlayer") = txtBoundingSizeWidthGameTwoPlayer.Text
 
-        dr.Item("BoundingSizeHeightTimerTwoPlayer") = CInt(txtBoundingSizeHeightTimerTwoPlayer.Text)
-        dr.Item("BoundingSizeWidthTimerTwoPlayer") = CInt(txtBoundingSizeWidthTimerTwoPlayer.Text)
+        dr.Item("BoundingSizeHeightTimerTwoPlayer") = txtBoundingSizeHeightTimerTwoPlayer.Text
+        dr.Item("BoundingSizeWidthTimerTwoPlayer") = txtBoundingSizeWidthTimerTwoPlayer.Text
 
         _configInfo.Tables("ConfigInfo").Rows.Add(dr)
 
