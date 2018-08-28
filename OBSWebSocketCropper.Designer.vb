@@ -98,6 +98,7 @@ Partial Class ObsWebSocketCropper
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeUserSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeVLCSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConfigEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExpertModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PlayersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -217,9 +218,10 @@ Partial Class ObsWebSocketCropper
         Me.Label46 = New System.Windows.Forms.Label()
         Me.txtCropRightGame_Right_BR = New System.Windows.Forms.TextBox()
         Me.pnlFourPlayer = New System.Windows.Forms.Panel()
-        Me.ConfigEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cbConfigFiles = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.LoadConfigFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ofdOpenConfig = New System.Windows.Forms.OpenFileDialog()
         Me.gbRightGameWindow.SuspendLayout()
         Me.gbRightTimerWindow.SuspendLayout()
         Me.gbLeftTimerWindow.SuspendLayout()
@@ -920,7 +922,7 @@ Partial Class ObsWebSocketCropper
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ConfigEditorToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.PlayersToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeUserSettingsToolStripMenuItem, Me.ChangeVLCSettingsToolStripMenuItem, Me.ConfigEditorToolStripMenuItem, Me.LoadConfigFileToolStripMenuItem, Me.ExpertModeToolStripMenuItem, Me.PlayersToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -936,6 +938,12 @@ Partial Class ObsWebSocketCropper
         Me.ChangeVLCSettingsToolStripMenuItem.Name = "ChangeVLCSettingsToolStripMenuItem"
         Me.ChangeVLCSettingsToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ChangeVLCSettingsToolStripMenuItem.Text = "Change VLC Settings"
+        '
+        'ConfigEditorToolStripMenuItem
+        '
+        Me.ConfigEditorToolStripMenuItem.Name = "ConfigEditorToolStripMenuItem"
+        Me.ConfigEditorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ConfigEditorToolStripMenuItem.Text = "Config Editor"
         '
         'ExpertModeToolStripMenuItem
         '
@@ -2119,12 +2127,6 @@ Partial Class ObsWebSocketCropper
         Me.pnlFourPlayer.Size = New System.Drawing.Size(685, 435)
         Me.pnlFourPlayer.TabIndex = 119
         '
-        'ConfigEditorToolStripMenuItem
-        '
-        Me.ConfigEditorToolStripMenuItem.Name = "ConfigEditorToolStripMenuItem"
-        Me.ConfigEditorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-        Me.ConfigEditorToolStripMenuItem.Text = "Config Editor"
-        '
         'cbConfigFiles
         '
         Me.cbConfigFiles.FormattingEnabled = True
@@ -2141,6 +2143,16 @@ Partial Class ObsWebSocketCropper
         Me.Label5.Size = New System.Drawing.Size(56, 13)
         Me.Label5.TabIndex = 120
         Me.Label5.Text = "Config File"
+        '
+        'LoadConfigFileToolStripMenuItem
+        '
+        Me.LoadConfigFileToolStripMenuItem.Name = "LoadConfigFileToolStripMenuItem"
+        Me.LoadConfigFileToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.LoadConfigFileToolStripMenuItem.Text = "Load Config File"
+        '
+        'ofdOpenConfig
+        '
+        Me.ofdOpenConfig.FileName = "OpenFileDialog1"
         '
         'ObsWebSocketCropper
         '
@@ -2430,4 +2442,6 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents ConfigEditorToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents cbConfigFiles As ComboBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents LoadConfigFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ofdOpenConfig As OpenFileDialog
 End Class

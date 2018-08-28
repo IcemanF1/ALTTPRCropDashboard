@@ -817,6 +817,7 @@ Public Class ObsWebSocketCropper
 
         Dim leftVlc, rightVlc As String
 
+
         If Not String.IsNullOrWhiteSpace(cbRightVLCSource.Text) Then
             rightVlc = cbRightVLCSource.Text
         Else
@@ -1970,7 +1971,7 @@ Public Class ObsWebSocketCropper
             If cbConfigFiles.Text.Trim.ToLower = "default" Then
                 RefreshBoundingBoxFromDefault()
             Else
-                RefreshBoundingBoxFromConfigFile()
+                RefreshBoundingBoxFromConfigFile(cbConfigFiles.SelectedValue.ToString)
             End If
         Else
             RefreshBoundingBoxFromDefault()
@@ -2041,14 +2042,14 @@ Public Class ObsWebSocketCropper
             PositionYGame_BL = My.Settings.PositionYGameLeftTwoPlayer
         End If
     End Sub
-    Private Sub RefreshBoundingBoxFromConfigFile()
+    Private Sub RefreshBoundingBoxFromConfigFile(configPath As String)
         If _configInfo Is Nothing = False Then
             If _configInfo.Tables.Count > 0 Then
                 _configInfo.Reset()
             End If
         End If
 
-        _configInfo.ReadXml(cbConfigFiles.SelectedValue.ToString)
+        _configInfo.ReadXml(configPath)
 
         If _configInfo.Tables.Count > 0 Then
             If _configInfo.Tables("ConfigInfo").Rows.Count > 0 Then
@@ -2164,12 +2165,30 @@ Public Class ObsWebSocketCropper
                 If cbConfigFiles.Text.Trim.ToLower = "default" Then
                     RefreshBoundingBoxFromDefault()
                 Else
-                    RefreshBoundingBoxFromConfigFile()
+                    RefreshBoundingBoxFromConfigFile(cbConfigFiles.SelectedValue.ToString)
                 End If
             Else
                 RefreshBoundingBoxFromDefault()
             End If
         End If
+
+    End Sub
+    Private Sub LoadConfigFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadConfigFileToolStripMenuItem.Click
+        With ofdOpenConfig
+            .Reset()
+            .FileName = ""
+            .DefaultExt = ".xml"
+            .Filter = "XML Files|*.xml"
+            .RestoreDirectory = True
+            .InitialDirectory = GlobalParam.ConfigFilePath
+
+            Select Case .ShowDialog
+                Case DialogResult.OK
+                    RefreshBoundingBoxFromConfigFile(.FileName)
+                Case DialogResult.Cancel
+                    Exit Sub
+            End Select
+        End With
 
     End Sub
 
