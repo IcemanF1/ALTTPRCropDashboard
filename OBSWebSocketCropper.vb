@@ -41,7 +41,7 @@ Public Class ObsWebSocketCropper
     Private _vlcListRight As New DataSet
     Private _vlcListLeftBottom As New DataSet
     Private _vlcListRightBottom As New DataSet
-    Private ReadOnly _viewModel As New CropperViewModel
+    Public Shared _viewModel As New CropperViewModel
     Private ReadOnly _viewModelBottom As New CropperViewModel
     Private _check2NdObs As Boolean
     Private _lastUpdate As Integer
@@ -110,9 +110,9 @@ Public Class ObsWebSocketCropper
         ConnectToObs()
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) AndAlso Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text))
-        End If
+        'If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) AndAlso Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
+        '    DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text))
+        'End If
         If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) AndAlso Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
             DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text))
         End If
@@ -244,7 +244,7 @@ Public Class ObsWebSocketCropper
             timerSource = If(isRightWindow, My.Settings.RightTimerName_Bottom, My.Settings.LeftTimerName_Bottom)
             vmRunner = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
         Else
-            vlcSource = If(isRightWindow, cbRightVLCSource.Text, cbLeftVLCSource.Text)
+            vlcSource = If(isRightWindow, cbRightVLCSource.Text, "")
             gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
             timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
             vmRunner = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
@@ -276,7 +276,7 @@ Public Class ObsWebSocketCropper
         ConnectToObs2()
     End Sub
 
-    Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop.Click
+    Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs)
         Try
             If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
                 FillCurrentCropInfoFromObs(False, False)
@@ -313,7 +313,7 @@ Public Class ObsWebSocketCropper
         End Try
     End Sub
 
-    Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
+    Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs)
         Try
             If _viewModel.LeftRunner.MasterSize.Height = 0 OrElse _viewModel.LeftRunner.MasterSize.Width = 0 Then
                 _viewModel.LeftRunner.MasterSize.UpdateFromSize(GetMasterSize(False, False))
@@ -356,7 +356,7 @@ Public Class ObsWebSocketCropper
         End Try
     End Sub
 
-    Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
+    Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs)
         SaveRunnerCrop(False, False)
     End Sub
     Private Sub btnSaveRightCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRightCrop.Click
@@ -369,7 +369,7 @@ Public Class ObsWebSocketCropper
         SaveRunnerCrop(True, True)
     End Sub
 
-    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
+    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs)
         SetVlcWindows(False, False)
     End Sub
     Private Sub btnSetLeftVLC_Bottom_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC_Bottom.Click
@@ -383,7 +383,7 @@ Public Class ObsWebSocketCropper
         SetVlcWindows(True, True)
     End Sub
 
-    Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner.Click
+    Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs)
         AddNewRunner(False, False)
     End Sub
     Private Sub btnNewRightRunner_Click(sender As Object, e As EventArgs) Handles btnNewRightRunner.Click
@@ -396,11 +396,11 @@ Public Class ObsWebSocketCropper
         AddNewRunner(True, True)
     End Sub
 
-    Private Sub btnLeftTimerDB_Click(sender As Object, e As EventArgs) Handles btnLeftTimerDB.Click
+    Private Sub btnLeftTimerDB_Click(sender As Object, e As EventArgs)
         ClearTextBoxes(False, "Timer", False)
         RefreshCropFromData(False, "Timer", False)
     End Sub
-    Private Sub btnLeftGameDB_Click(sender As Object, e As EventArgs) Handles btnLeftGameDB.Click
+    Private Sub btnLeftGameDB_Click(sender As Object, e As EventArgs)
         ClearTextBoxes(False, "Game", False)
         RefreshCropFromData(False, "Game", False)
     End Sub
@@ -430,7 +430,7 @@ Public Class ObsWebSocketCropper
         RefreshCropFromData(True, "Game", True)
     End Sub
 
-    Private Sub btnLeftTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftTimerUncrop.Click
+    Private Sub btnLeftTimerUncrop_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
             Uncrop(My.Settings.LeftTimerName)
         End If
@@ -456,7 +456,7 @@ Public Class ObsWebSocketCropper
             Uncrop(My.Settings.RightGameName)
         End If
     End Sub
-    Private Sub btnLeftGameUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftGameUncrop.Click
+    Private Sub btnLeftGameUncrop_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
             Uncrop(My.Settings.LeftGameName)
         End If
@@ -678,7 +678,6 @@ Public Class ObsWebSocketCropper
 #End Region
 #Region " Refresh / Set User Info "
     Private Sub RefreshRunnerNames()
-        Dim tempLeftRunner As String = cbLeftRunnerName.Text
         Dim tempRightRunner As String = cbRightRunnerName.Text
         Dim tempLeftRunner_Bottom As String = cbLeftRunnerName_Bottom.Text
         Dim tempRightRunner_Bottom As String = cbRightRunnerName_Bottom.Text
@@ -686,13 +685,11 @@ Public Class ObsWebSocketCropper
 
         Using context As New CropDbContext
             Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.RunnerName}).Distinct().ToList().OrderBy(Function(r) r.RacerName, StringComparer.CurrentCultureIgnoreCase).ToList()
-            cbLeftRunnerName.DataSource = validNames
             cbRightRunnerName.DataSource = validNames.ToList()
             cbLeftRunnerName_Bottom.DataSource = validNames.ToList()
             cbRightRunnerName_Bottom.DataSource = validNames.ToList()
         End Using
 
-        cbLeftRunnerName.Text = tempLeftRunner
         cbRightRunnerName.Text = tempRightRunner
         cbLeftRunnerName_Bottom.Text = tempLeftRunner_Bottom
         cbRightRunnerName_Bottom.Text = tempRightRunner_Bottom
@@ -731,7 +728,7 @@ Public Class ObsWebSocketCropper
         If isBottomRunner Then
             runnerName = If(isRightWindow, cbRightRunnerName_Bottom.Text, cbLeftRunnerName_Bottom.Text)
         Else
-            runnerName = If(isRightWindow, cbRightRunnerName.Text, cbLeftRunnerName.Text)
+            runnerName = If(isRightWindow, cbRightRunnerName.Text, "")
         End If
 
         Using context As New CropDbContext
@@ -780,7 +777,7 @@ Public Class ObsWebSocketCropper
                 If isBottomRunner Then
                     lblLeftRunnerTwitch_Bottom.Text = "Twitch: " & runnerVm.Twitch
                 Else
-                    lblLeftRunnerTwitch.Text = "Twitch: " & runnerVm.Twitch
+
                 End If
             End If
 
@@ -824,22 +821,12 @@ Public Class ObsWebSocketCropper
             rightVlc = ""
         End If
 
-        If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
-            leftVlc = cbLeftVLCSource.Text
-        Else
-            leftVlc = ""
-        End If
-
         _vlcListLeft.Clear()
         _vlcListRight.Clear()
 
         Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
 
         _vlcListRight = _vlcListLeft.Copy
-
-        cbLeftVLCSource.DataSource = data
-        cbLeftVLCSource.DisplayMember = "VLCName"
-        cbLeftVLCSource.ValueMember = "VLCName"
 
         cbRightVLCSource.DataSource = data.ToList()
         cbRightVLCSource.DisplayMember = "VLCName"
@@ -854,19 +841,8 @@ Public Class ObsWebSocketCropper
         cbRightVLCSource_Bottom.ValueMember = "VLCName"
 
         cbRightVLCSource.Text = ""
-        cbLeftVLCSource.Text = ""
         cbRightVLCSource_Bottom.Text = ""
         cbLeftVLCSource_Bottom.Text = ""
-
-        If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch.Text) Then
-            Dim tempText = lblLeftRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbLeftVLCSource.Text = match.VLCName
-            End If
-        End If
-
 
         If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch.Text) Then
             Dim tempText = lblRightRunnerTwitch.Text.Remove(0, 8)
@@ -952,10 +928,6 @@ Public Class ObsWebSocketCropper
                 txtCropRightTimer_Left.KeyPress, txtCropRightTimer_Bottom.KeyPress,
                 txtCropRightGame_Top.KeyPress, txtCropRightGame_Right.KeyPress,
                 txtCropRightGame_Left.KeyPress, txtCropRightGame_Bottom.KeyPress,
-                txtCropLeftTimer_Top.KeyPress, txtCropLeftTimer_Right.KeyPress,
-                txtCropLeftTimer_Left.KeyPress, txtCropLeftTimer_Bottom.KeyPress,
-                txtCropLeftGame_Top.KeyPress, txtCropLeftGame_Right.KeyPress,
-                txtCropLeftGame_Left.KeyPress, txtCropLeftGame_Bottom.KeyPress,
                 txtCropRightTimer_Top_BR.KeyPress, txtCropRightTimer_Right_BR.KeyPress,
                 txtCropRightTimer_Left_BR.KeyPress, txtCropRightTimer_Bottom_BR.KeyPress,
                 txtCropRightGame_Top_BR.KeyPress, txtCropRightGame_Right_BR.KeyPress,
@@ -971,44 +943,6 @@ Public Class ObsWebSocketCropper
         Return Not ApprovedChars.Contains(keyChar) AndAlso keyChar <> vbBack
     End Function
 #Region " Runner Drop Downs "
-    Private Sub cbLeftRunner_KeyUp(sender As Object, e As KeyEventArgs) Handles cbLeftRunnerName.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
-
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbLeftRunnerName.Text
-
-        ' Find the first match for the typed value.
-        index = cbLeftRunnerName.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbLeftRunnerName.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbLeftRunnerName.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbLeftRunnerName.SelectionStart = actual.Length
-            cbLeftRunnerName.SelectionLength = found.Length
-        End If
-    End Sub
     Private Sub cbRightRunner_KeyUp(sender As Object, e As KeyEventArgs) Handles cbRightRunnerName.KeyUp
         Dim index As Integer
         Dim actual As String
@@ -1052,13 +986,6 @@ Public Class ObsWebSocketCropper
             _viewModel.RightRunner.Name = cbRightRunnerName.Text
             ClearTextBoxes(True, "Both", False)
             RefreshCropFromData(True, "Both", False)
-        End If
-    End Sub
-    Private Sub cbLeftRunner_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName.TextChanged
-        If ReuseInfo = True Then
-            _viewModel.LeftRunner.Name = cbLeftRunnerName.Text
-            ClearTextBoxes(False, "Both", False)
-            RefreshCropFromData(False, "Both", False)
         End If
     End Sub
     Private Sub cbLeftRunnerName_Bottom_KeyUp(sender As Object, e As KeyEventArgs) Handles cbLeftRunnerName_Bottom.KeyUp
@@ -1177,13 +1104,13 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub ConfigureDataBindings()
         ' Expert mode only features
-        RegisterExpertModeFeatures(lblLeftStreamlink, lblRightStreamlink)
-        RegisterExpertModeFeatures(lblLeftScaling, cbLeftScaling, lblRightScaling, cbRightScaling)
+        RegisterExpertModeFeatures(lblRightStreamlink)
+        RegisterExpertModeFeatures(lblRightScaling, cbRightScaling)
         RegisterExpertModeFeatures(chkAlwaysOnTop)
-        RegisterExpertModeFeatures(lblLeftVOD, lblRightVOD)
-        RegisterExpertModeFeatures(lblViewLeftOnTwitch, lblViewRightOnTwitch)
+        RegisterExpertModeFeatures(lblRightVOD)
+        RegisterExpertModeFeatures(lblViewRightOnTwitch)
         RegisterExpertModeFeatures(lblOBS2ConnectedStatus, btnConnectOBS2, btn2ndOBS)
-        RegisterExpertModeFeatures(btnLeftGameDB, btnLeftTimerDB, btnRightTimerDB, btnRightGameDB)
+        RegisterExpertModeFeatures(btnRightTimerDB, btnRightGameDB)
         RegisterExpertModeFeatures(lblViewLeftOnTwitch_Bottom, lblLeftVOD_Bottom, lblLeftStreamlink_Bottom)
         RegisterExpertModeFeatures(lblViewRightOnTwitch_Bottom, lblRightVOD_Bottom, lblRightStreamlink_Bottom)
         RegisterExpertModeFeatures(btnLeftTimerDB_Bottom, btnLeftGameDB_Bottom, cbLeftScaling_Bottom, lblLeftScaling_Bottom)
@@ -1195,17 +1122,17 @@ Public Class ObsWebSocketCropper
         DataBindings.Add("TopMost", My.Settings, NameOf(My.Settings.AlwaysOnTop), False, DataSourceUpdateMode.OnPropertyChanged)
 
         'All OBS dependencies
-        RegisterObsDependency(btnSetLeftCrop, btnSetRightCrop)
-        RegisterObsDependency(btnGetLeftCrop, btnGetRightCrop)
-        RegisterObsDependency(btnSaveLeftCrop, btnSaveRightCrop)
-        RegisterObsDependency(btnSetLeftVLC, btnSetRightVLC, btnGetProcesses, cbLeftVLCSource, cbRightVLCSource)
-        RegisterObsDependency(btnSetTrackCommNames, btnNewLeftRunner, btnNewRightRunner)
+        RegisterObsDependency(btnSetRightCrop)
+        RegisterObsDependency(btnGetRightCrop)
+        RegisterObsDependency(btnSaveRightCrop)
+        RegisterObsDependency(btnSetRightVLC, btnGetProcesses, cbRightVLCSource)
+        RegisterObsDependency(btnSetTrackCommNames, btnNewRightRunner)
         RegisterObsDependency(btnSyncWithServer, btn2ndOBS, btnConnectOBS2, btnResetDatabase, cbConfigFiles)
-        RegisterObsDependency(gbTrackerComms, gbLeftGameWindow, gbRightGameWindow, gbLeftTimerWindow, gbRightTimerWindow)
-        RegisterObsDependency(cbLeftRunnerName, cbRightRunnerName)
-        RegisterObsDependency(lblLeftVOD, lblRightVOD)
-        RegisterObsDependency(lblViewLeftOnTwitch, lblViewRightOnTwitch)
-        RegisterObsDependency(lblLeftStreamlink, lblRightStreamlink)
+        RegisterObsDependency(gbTrackerComms, gbRightGameWindow, gbRightTimerWindow)
+        RegisterObsDependency(cbRightRunnerName)
+        RegisterObsDependency(lblRightVOD)
+        RegisterObsDependency(lblViewRightOnTwitch)
+        RegisterObsDependency(lblRightStreamlink)
 
         RegisterObsDependency(btnSetLeftCrop_Bottom, btnSetRightCrop_Bottom)
         RegisterObsDependency(btnGetLeftCrop_Bottom, btnGetRightCrop_Bottom)
@@ -1219,16 +1146,6 @@ Public Class ObsWebSocketCropper
         RegisterObsDependency(lblLeftStreamlink_Bottom, lblRightStreamlink_Bottom)
 
         'Bind all crop info
-        RegisterCropBindings(_viewModel.LeftRunner.GameCrop,
-                             txtCropLeftGame_Left,
-                             txtCropLeftGame_Top,
-                             txtCropLeftGame_Bottom,
-                             txtCropLeftGame_Right)
-        RegisterCropBindings(_viewModel.LeftRunner.TimerCrop,
-                             txtCropLeftTimer_Left,
-                             txtCropLeftTimer_Top,
-                             txtCropLeftTimer_Bottom,
-                             txtCropLeftTimer_Right)
         RegisterCropBindings(_viewModel.RightRunner.GameCrop,
                              txtCropRightGame_Left,
                              txtCropRightGame_Top,
@@ -1563,12 +1480,6 @@ Public Class ObsWebSocketCropper
         txtGameSettings.Visible = visGameSettings
         lblGameSettings.Visible = visGameSettings
 
-        visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
-        cbLeftRunnerName.Visible = visLeftRunner
-        lblLeftRunner.Visible = visLeftRunner
-
         visRightRunner = Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) OrElse
             Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) OrElse
             Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
@@ -1590,12 +1501,6 @@ Public Class ObsWebSocketCropper
         visRightTrackerBottom = Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS_Bottom)
         txtRightTrackerURL_Bottom.Visible = visRightTrackerBottom
         lblRightTracker_Bottom.Visible = visRightTrackerBottom
-
-        visLeftTimer = Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
-        gbLeftTimerWindow.Visible = visLeftTimer
-
-        visLeftGame = Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName)
-        gbLeftGameWindow.Visible = visLeftGame
 
         visRightTimer = Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
         gbRightTimerWindow.Visible = visRightTimer
@@ -1619,21 +1524,6 @@ Public Class ObsWebSocketCropper
             cbRightVLCSource.Visible = True
         End If
 
-        If visLeftGame = False And visLeftTimer = False Then
-            btnSaveLeftCrop.Visible = False
-            btnGetLeftCrop.Visible = False
-            btnSetLeftCrop.Visible = False
-            btnSetLeftVLC.Visible = False
-            lblLeftVLC.Visible = False
-            cbLeftVLCSource.Visible = False
-        Else
-            btnSaveLeftCrop.Visible = True
-            btnGetLeftCrop.Visible = True
-            btnSetLeftCrop.Visible = True
-            btnSetLeftVLC.Visible = True
-            lblLeftVLC.Visible = True
-            cbLeftVLCSource.Visible = True
-        End If
     End Sub
     Private Sub OBSWebSocketCropper_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
@@ -1688,7 +1578,7 @@ Public Class ObsWebSocketCropper
         If isBottomRunner Then
             runnerNameField = If(isRightWindow, cbRightRunnerName_Bottom, cbLeftRunnerName_Bottom)
         Else
-            runnerNameField = If(isRightWindow, cbRightRunnerName, cbLeftRunnerName)
+            runnerNameField = If(isRightWindow, cbRightRunnerName, cbRightRunnerName)
         End If
 
         Dim runnerTwitchField As Label
@@ -1696,7 +1586,7 @@ Public Class ObsWebSocketCropper
         If isBottomRunner Then
             runnerTwitchField = If(isRightWindow, lblRightRunnerTwitch_Bottom, lblLeftRunnerTwitch_Bottom)
         Else
-            runnerTwitchField = If(isRightWindow, lblRightRunnerTwitch, lblLeftRunnerTwitch)
+            runnerTwitchField = If(isRightWindow, lblRightRunnerTwitch, lblRightRunnerTwitch)
         End If
 
 
@@ -1733,7 +1623,7 @@ Public Class ObsWebSocketCropper
         GetObsInfo = False
         ReuseInfo = True
     End Sub
-    Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
+    Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
             Process.Start("https://twitch.tv/" & _viewModel.LeftRunner.Twitch)
         End If
@@ -1753,7 +1643,7 @@ Public Class ObsWebSocketCropper
             Process.Start("https://twitch.tv/" & _viewModelBottom.RightRunner.Twitch)
         End If
     End Sub
-    Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs) Handles lblLeftVOD.Click
+    Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
             Process.Start("https://twitch.tv/" & _viewModel.LeftRunner.Twitch & "/videos/all")
         End If
@@ -1822,7 +1712,7 @@ Public Class ObsWebSocketCropper
 
         myProcess.Start()
     End Sub
-    Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink.Click
+    Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
             StartStreamlink(_viewModel.LeftRunner.Twitch, False, False)
         Else
@@ -1912,9 +1802,9 @@ Public Class ObsWebSocketCropper
         runnerVm.MasterSize.UpdateFromSize(newSize)
         runnerVm.Scale = newScale
     End Sub
-    Private Sub cbLeftScaling_TextChanged(sender As Object, e As EventArgs) Handles cbLeftScaling.TextChanged
-        AdjustScaling(_viewModel.LeftRunner, ParsePercent(cbLeftScaling.Text))
-    End Sub
+    'Private Sub cbLeftScaling_TextChanged(sender As Object, e As EventArgs)
+    '    AdjustScaling(_viewModel.LeftRunner, ParsePercent(cbLeftScaling.Text))
+    'End Sub
     Private Sub cbRightScaling_TextChanged(sender As Object, e As EventArgs) Handles cbRightScaling.TextChanged
         AdjustScaling(_viewModel.RightRunner, ParsePercent(cbRightScaling.Text))
     End Sub
@@ -2194,10 +2084,11 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub DynamicButtonTest()
-        'Dim rControl As New RunnerControls
-        'rControl.Location = New System.Drawing.Point(143, 153)
-
-        'Me.Controls.Add(rControl)
+        Dim rControl As New RunnerControls
+        rControl.Location = New System.Drawing.Point(153, 143)
+        rControl.Name = "Player1Controls"
+        Me.Controls.Add(rControl)
+        RegisterObsDependency(rControl)
         'Dim btn As New Button
 
         'Dim nLocation As New Point
