@@ -193,7 +193,7 @@ Partial Class RunnerControls
         Me.btnSetCrop.Name = "btnSetCrop"
         Me.btnSetCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSetCrop.TabIndex = 88
-        Me.btnSetCrop.Text = "Set Left Crop"
+        Me.btnSetCrop.Text = "Set Crop"
         Me.btnSetCrop.UseVisualStyleBackColor = False
         '
         'gbTimerWindow
@@ -216,7 +216,7 @@ Partial Class RunnerControls
         Me.gbTimerWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbTimerWindow.TabIndex = 86
         Me.gbTimerWindow.TabStop = False
-        Me.gbTimerWindow.Text = "Left Timer Window"
+        Me.gbTimerWindow.Text = "Timer Window"
         '
         'btnTimerUncrop
         '
@@ -338,7 +338,7 @@ Partial Class RunnerControls
         Me.gbGameWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbGameWindow.TabIndex = 87
         Me.gbGameWindow.TabStop = False
-        Me.gbGameWindow.Text = "Left Game Window"
+        Me.gbGameWindow.Text = "Game Window"
         '
         'btnGameUncrop
         '
