@@ -12,6 +12,11 @@ Public Class ObsWebSocketCropper
     Private isLoaded As Boolean
     Private _configInfo As New DataSet
 
+    Friend WithEvents rControl1 As New RunnerControls
+    Friend WithEvents rControl2 As New RunnerControls
+    Friend WithEvents rControl3 As New RunnerControls
+    Friend WithEvents rControl4 As New RunnerControls
+
     Private _vlcList As New DataSet
 
     Public WithEvents Obs As New ObsWebSocketPlus
@@ -837,37 +842,45 @@ Public Class ObsWebSocketCropper
 
         If Not String.IsNullOrWhiteSpace(rControl1.lblRunnerTwitch.Text) Then
             Dim tempText = rControl1.lblRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
+            If Not String.IsNullOrWhiteSpace(tempText) Then
+                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If match IsNot Nothing Then
-                rControl1.cbVLCSource.Text = match.VLCName
+                If match IsNot Nothing Then
+                    rControl1.cbVLCSource.Text = match.VLCName
+                End If
             End If
         End If
 
         If Not String.IsNullOrWhiteSpace(rControl2.lblRunnerTwitch.Text) Then
             Dim tempText = rControl2.lblRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
+            If Not String.IsNullOrWhiteSpace(tempText) Then
+                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If match IsNot Nothing Then
-                rControl2.cbVLCSource.Text = match.VLCName
+                If match IsNot Nothing Then
+                    rControl2.cbVLCSource.Text = match.VLCName
+                End If
             End If
         End If
 
         If Not String.IsNullOrWhiteSpace(rControl3.lblRunnerTwitch.Text) Then
             Dim tempText = rControl3.lblRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
+            If Not String.IsNullOrWhiteSpace(tempText) Then
+                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If match IsNot Nothing Then
-                rControl3.cbVLCSource.Text = match.VLCName
+                If match IsNot Nothing Then
+                    rControl3.cbVLCSource.Text = match.VLCName
+                End If
             End If
         End If
 
         If Not String.IsNullOrWhiteSpace(rControl4.lblRunnerTwitch.Text) Then
             Dim tempText = rControl4.lblRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
+            If Not String.IsNullOrWhiteSpace(tempText) Then
+                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
 
-            If match IsNot Nothing Then
-                rControl4.cbVLCSource.Text = match.VLCName
+                If match IsNot Nothing Then
+                    rControl4.cbVLCSource.Text = match.VLCName
+                End If
             End If
         End If
     End Sub
@@ -1544,21 +1557,23 @@ Public Class ObsWebSocketCropper
 
         rControl1.Location = New System.Drawing.Point(169, sHori)
         rControl1.lblRunnerNumber.Text = "1"
+        rControl1.Name = "rControl1"
+        Me.Controls.Add(rControl1)
 
         rControl2.Location = New System.Drawing.Point(521, sHori)
         rControl2.lblRunnerNumber.Text = "2"
-        'rControl2.Name = "Player2Controls"
-        'Me.Controls.Add(rControl2)
+        rControl2.Name = "rControl2"
+        Me.Controls.Add(rControl2)
 
         rControl3.Location = New System.Drawing.Point(873, sHori)
         rControl3.lblRunnerNumber.Text = "3"
-        'rControl3.Name = "Player3Controls"
-        'Me.Controls.Add(rControl3)
+        rControl3.Name = "rControl3"
+        Me.Controls.Add(rControl3)
 
         rControl4.Location = New System.Drawing.Point(1225, sHori)
         rControl4.lblRunnerNumber.Text = "4"
-        'rControl4.Name = "Player4Controls"
-        'Me.Controls.Add(rControl4)
+        rControl4.Name = "rControl4"
+        Me.Controls.Add(rControl4)
 
         RegisterObsDependency(rControl1)
         RegisterObsDependency(rControl2)

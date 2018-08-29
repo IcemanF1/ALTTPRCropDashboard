@@ -11,6 +11,11 @@ Public Class UserSettings
 
     Dim FourPlayer As Boolean
 
+    Friend WithEvents rSettings1 As New RunnerSettings
+    Friend WithEvents rSettings2 As New RunnerSettings
+    Friend WithEvents rSettings3 As New RunnerSettings
+    Friend WithEvents rSettings4 As New RunnerSettings
+
     Public Shared ShowVLCOption As Boolean
 
     Function VerifySettings() As Boolean
@@ -261,7 +266,28 @@ Public Class UserSettings
 
         End If
     End Sub
+    Private Sub AddUserControls()
+        Dim sHori, sVert As Integer
 
+        sHori = 19
+        sVert = 6
+
+        rSettings1.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings1.Name = "rSettings1"
+        gbRunner1.Controls.Add(rSettings1)
+
+        rSettings2.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings2.Name = "rSettings2"
+        gbRunner2.Controls.Add(rSettings2)
+
+        rSettings3.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings3.Name = "rSettings3"
+        gbRunner3.Controls.Add(rSettings3)
+
+        rSettings4.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings4.Name = "rSettings4"
+        gbRunner4.Controls.Add(rSettings4)
+    End Sub
     Private Sub btnRefreshScenes_Click(sender As Object, e As EventArgs) Handles btnRefreshScenes.Click
         RefreshScenes()
         SetUserSettings()
@@ -277,6 +303,8 @@ Public Class UserSettings
         txtConnectionString1.Text = My.Settings.ConnectionString1
         txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
         txtPassword1.Text = My.Settings.Password1
+
+        AddUserControls()
 
         panOBS.Visible = False
 

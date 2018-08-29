@@ -42,7 +42,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="TrackerOBS_Runner2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CommentaryOBS" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

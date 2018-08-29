@@ -41,6 +41,7 @@ Partial Class UserSettings
         Me.roCustom = New System.Windows.Forms.RadioButton()
         Me.btnSaveThenVLC = New System.Windows.Forms.Button()
         Me.panOBS = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.gbRunner4 = New System.Windows.Forms.GroupBox()
         Me.gbRunner3 = New System.Windows.Forms.GroupBox()
         Me.gbRunner2 = New System.Windows.Forms.GroupBox()
@@ -52,17 +53,8 @@ Partial Class UserSettings
         Me.cbCommentaryOBS = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.rSettings4 = New ALTTPRCropDashboard.RunnerSettings()
-        Me.rSettings3 = New ALTTPRCropDashboard.RunnerSettings()
-        Me.rSettings2 = New ALTTPRCropDashboard.RunnerSettings()
-        Me.rSettings1 = New ALTTPRCropDashboard.RunnerSettings()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
-        Me.gbRunner4.SuspendLayout()
-        Me.gbRunner3.SuspendLayout()
-        Me.gbRunner2.SuspendLayout()
-        Me.gbRunner1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -240,9 +232,18 @@ Partial Class UserSettings
         Me.panOBS.Size = New System.Drawing.Size(1008, 390)
         Me.panOBS.TabIndex = 94
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Location = New System.Drawing.Point(523, 349)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(65, 13)
+        Me.Label4.TabIndex = 107
+        Me.Label4.Text = "Commentary"
+        '
         'gbRunner4
         '
-        Me.gbRunner4.Controls.Add(Me.rSettings4)
         Me.gbRunner4.Location = New System.Drawing.Point(509, 176)
         Me.gbRunner4.Name = "gbRunner4"
         Me.gbRunner4.Size = New System.Drawing.Size(493, 167)
@@ -252,7 +253,6 @@ Partial Class UserSettings
         '
         'gbRunner3
         '
-        Me.gbRunner3.Controls.Add(Me.rSettings3)
         Me.gbRunner3.Location = New System.Drawing.Point(6, 176)
         Me.gbRunner3.Name = "gbRunner3"
         Me.gbRunner3.Size = New System.Drawing.Size(493, 167)
@@ -262,7 +262,6 @@ Partial Class UserSettings
         '
         'gbRunner2
         '
-        Me.gbRunner2.Controls.Add(Me.rSettings2)
         Me.gbRunner2.Location = New System.Drawing.Point(509, 3)
         Me.gbRunner2.Name = "gbRunner2"
         Me.gbRunner2.Size = New System.Drawing.Size(493, 167)
@@ -272,7 +271,6 @@ Partial Class UserSettings
         '
         'gbRunner1
         '
-        Me.gbRunner1.Controls.Add(Me.rSettings1)
         Me.gbRunner1.Location = New System.Drawing.Point(6, 3)
         Me.gbRunner1.Name = "gbRunner1"
         Me.gbRunner1.Size = New System.Drawing.Size(493, 167)
@@ -360,60 +358,6 @@ Partial Class UserSettings
         Me.Panel1.Size = New System.Drawing.Size(1014, 555)
         Me.Panel1.TabIndex = 101
         '
-        'rSettings4
-        '
-        Me.rSettings4.gameSource = ""
-        Me.rSettings4.Location = New System.Drawing.Point(6, 19)
-        Me.rSettings4.Name = "rSettings4"
-        Me.rSettings4.runnerNameSource = ""
-        Me.rSettings4.Size = New System.Drawing.Size(481, 142)
-        Me.rSettings4.TabIndex = 0
-        Me.rSettings4.timerSource = ""
-        Me.rSettings4.trackerSource = ""
-        '
-        'rSettings3
-        '
-        Me.rSettings3.gameSource = ""
-        Me.rSettings3.Location = New System.Drawing.Point(6, 19)
-        Me.rSettings3.Name = "rSettings3"
-        Me.rSettings3.runnerNameSource = ""
-        Me.rSettings3.Size = New System.Drawing.Size(481, 142)
-        Me.rSettings3.TabIndex = 0
-        Me.rSettings3.timerSource = ""
-        Me.rSettings3.trackerSource = ""
-        '
-        'rSettings2
-        '
-        Me.rSettings2.gameSource = ""
-        Me.rSettings2.Location = New System.Drawing.Point(6, 19)
-        Me.rSettings2.Name = "rSettings2"
-        Me.rSettings2.runnerNameSource = ""
-        Me.rSettings2.Size = New System.Drawing.Size(481, 142)
-        Me.rSettings2.TabIndex = 0
-        Me.rSettings2.timerSource = ""
-        Me.rSettings2.trackerSource = ""
-        '
-        'rSettings1
-        '
-        Me.rSettings1.gameSource = ""
-        Me.rSettings1.Location = New System.Drawing.Point(6, 19)
-        Me.rSettings1.Name = "rSettings1"
-        Me.rSettings1.runnerNameSource = ""
-        Me.rSettings1.Size = New System.Drawing.Size(481, 142)
-        Me.rSettings1.TabIndex = 0
-        Me.rSettings1.timerSource = ""
-        Me.rSettings1.trackerSource = ""
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Location = New System.Drawing.Point(523, 349)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(65, 13)
-        Me.Label4.TabIndex = 107
-        Me.Label4.Text = "Commentary"
-        '
         'UserSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -428,10 +372,6 @@ Partial Class UserSettings
         Me.gbConnection1.PerformLayout()
         Me.panOBS.ResumeLayout(False)
         Me.panOBS.PerformLayout()
-        Me.gbRunner4.ResumeLayout(False)
-        Me.gbRunner3.ResumeLayout(False)
-        Me.gbRunner2.ResumeLayout(False)
-        Me.gbRunner1.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
@@ -463,12 +403,8 @@ Partial Class UserSettings
     Friend WithEvents lblGameSettingsStatus As Label
     Friend WithEvents cbGameSettings As ComboBox
     Friend WithEvents gbRunner4 As GroupBox
-    Friend WithEvents rSettings4 As RunnerSettings
     Friend WithEvents gbRunner3 As GroupBox
-    Friend WithEvents rSettings3 As RunnerSettings
     Friend WithEvents gbRunner2 As GroupBox
-    Friend WithEvents rSettings2 As RunnerSettings
     Friend WithEvents gbRunner1 As GroupBox
-    Friend WithEvents rSettings1 As RunnerSettings
     Friend WithEvents Label4 As Label
 End Class
