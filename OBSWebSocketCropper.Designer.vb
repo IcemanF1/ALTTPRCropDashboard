@@ -59,6 +59,10 @@ Partial Class ObsWebSocketCropper
         Me.rb2Runner = New System.Windows.Forms.RadioButton()
         Me.rb1Runner = New System.Windows.Forms.RadioButton()
         Me.lblConfigFile = New System.Windows.Forms.Label()
+        Me.rControl4 = New ALTTPRCropDashboard.RunnerControls()
+        Me.rControl3 = New ALTTPRCropDashboard.RunnerControls()
+        Me.rControl2 = New ALTTPRCropDashboard.RunnerControls()
+        Me.rControl1 = New ALTTPRCropDashboard.RunnerControls()
         Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -108,7 +112,7 @@ Partial Class ObsWebSocketCropper
         Me.mnuMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.mnuMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMainMenu.Name = "mnuMainMenu"
-        Me.mnuMainMenu.Size = New System.Drawing.Size(626, 24)
+        Me.mnuMainMenu.Size = New System.Drawing.Size(1571, 24)
         Me.mnuMainMenu.TabIndex = 57
         Me.mnuMainMenu.Text = "MenuStrip1"
         '
@@ -166,7 +170,7 @@ Partial Class ObsWebSocketCropper
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'btnSyncWithServer
@@ -360,11 +364,44 @@ Partial Class ObsWebSocketCropper
         Me.lblConfigFile.Size = New System.Drawing.Size(0, 13)
         Me.lblConfigFile.TabIndex = 123
         '
+        'rControl4
+        '
+        Me.rControl4.Location = New System.Drawing.Point(1225, 110)
+        Me.rControl4.Name = "rControl4"
+        Me.rControl4.Size = New System.Drawing.Size(346, 480)
+        Me.rControl4.TabIndex = 127
+        '
+        'rControl3
+        '
+        Me.rControl3.Location = New System.Drawing.Point(873, 110)
+        Me.rControl3.Name = "rControl3"
+        Me.rControl3.Size = New System.Drawing.Size(346, 480)
+        Me.rControl3.TabIndex = 126
+        '
+        'rControl2
+        '
+        Me.rControl2.Location = New System.Drawing.Point(521, 110)
+        Me.rControl2.Name = "rControl2"
+        Me.rControl2.Size = New System.Drawing.Size(346, 480)
+        Me.rControl2.TabIndex = 125
+        '
+        'rControl1
+        '
+        Me.rControl1.Location = New System.Drawing.Point(169, 110)
+        Me.rControl1.Name = "rControl1"
+        Me.rControl1.Size = New System.Drawing.Size(346, 480)
+        Me.rControl1.TabIndex = 124
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(626, 604)
+        Me.AutoScroll = True
+        Me.ClientSize = New System.Drawing.Size(1284, 604)
+        Me.Controls.Add(Me.rControl4)
+        Me.Controls.Add(Me.rControl3)
+        Me.Controls.Add(Me.rControl2)
+        Me.Controls.Add(Me.rControl1)
         Me.Controls.Add(Me.lblConfigFile)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnResetDatabase)
@@ -430,4 +467,8 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents rb2Runner As RadioButton
     Friend WithEvents rb1Runner As RadioButton
     Friend WithEvents lblConfigFile As Label
+    Friend WithEvents rControl1 As RunnerControls
+    Friend WithEvents rControl2 As RunnerControls
+    Friend WithEvents rControl3 As RunnerControls
+    Friend WithEvents rControl4 As RunnerControls
 End Class

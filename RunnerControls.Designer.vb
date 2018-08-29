@@ -61,7 +61,7 @@ Partial Class RunnerControls
         Me.txtCropGame_Right = New System.Windows.Forms.TextBox()
         Me.txtTrackerURL = New System.Windows.Forms.TextBox()
         Me.lblTracker = New System.Windows.Forms.Label()
-        Me.lblGameSource = New System.Windows.Forms.Label()
+        Me.lblRunnerNumber = New System.Windows.Forms.Label()
         Me.gbTimerWindow.SuspendLayout()
         Me.gbGameWindow.SuspendLayout()
         Me.SuspendLayout()
@@ -439,21 +439,21 @@ Partial Class RunnerControls
         Me.lblTracker.TabIndex = 102
         Me.lblTracker.Text = "Tracker URL"
         '
-        'lblGameSource
+        'lblRunnerNumber
         '
-        Me.lblGameSource.AutoSize = True
-        Me.lblGameSource.Location = New System.Drawing.Point(18, 169)
-        Me.lblGameSource.Name = "lblGameSource"
-        Me.lblGameSource.Size = New System.Drawing.Size(77, 13)
-        Me.lblGameSource.TabIndex = 103
-        Me.lblGameSource.Text = "Runner Twitch"
-        Me.lblGameSource.Visible = False
+        Me.lblRunnerNumber.AutoSize = True
+        Me.lblRunnerNumber.Location = New System.Drawing.Point(18, 169)
+        Me.lblRunnerNumber.Name = "lblRunnerNumber"
+        Me.lblRunnerNumber.Size = New System.Drawing.Size(82, 13)
+        Me.lblRunnerNumber.TabIndex = 103
+        Me.lblRunnerNumber.Text = "Runner Number"
+        Me.lblRunnerNumber.Visible = False
         '
         'RunnerControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.lblGameSource)
+        Me.Controls.Add(Me.lblRunnerNumber)
         Me.Controls.Add(Me.txtTrackerURL)
         Me.Controls.Add(Me.lblTracker)
         Me.Controls.Add(Me.lblRunnerTwitch)
@@ -521,5 +521,5 @@ Partial Class RunnerControls
     Friend WithEvents txtCropGame_Right As TextBox
     Friend WithEvents txtTrackerURL As TextBox
     Friend WithEvents lblTracker As Label
-    Friend WithEvents lblGameSource As Label
+    Friend WithEvents lblRunnerNumber As Label
 End Class
