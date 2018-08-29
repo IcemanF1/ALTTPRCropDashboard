@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="LeftTimerName" Type="System.String" Scope="User">
+    <Setting Name="TimerName_Runner1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftGameName" Type="System.String" Scope="User">
+    <Setting Name="GameName_Runner1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultCropTop" Type="System.Int32" Scope="User">
@@ -14,10 +14,10 @@
     <Setting Name="DefaultCropBottom" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">53</Value>
     </Setting>
-    <Setting Name="RightGameName" Type="System.String" Scope="User">
+    <Setting Name="GameName_Runner2" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightTimerName" Type="System.String" Scope="User">
+    <Setting Name="TimerName_Runner2" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ConnectionString1" Type="System.String" Scope="User">
@@ -32,16 +32,16 @@
     <Setting Name="Password2" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftRunnerOBS" Type="System.String" Scope="User">
+    <Setting Name="RunnerOBS_Runner1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftTrackerOBS" Type="System.String" Scope="User">
+    <Setting Name="TrackerOBS_Runner1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightRunnerOBS" Type="System.String" Scope="User">
+    <Setting Name="RunnerOBS_Runner2" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightTrackerOBS" Type="System.String" Scope="User">
+    <Setting Name="TrackerOBS_Runner2" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="CommentaryOBS" Type="System.String" Scope="User">
@@ -122,34 +122,28 @@
     <Setting Name="FourPlayers" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="LeftTimerName_Bottom" Type="System.String" Scope="User">
+    <Setting Name="TimerName_Runner3" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftGameName_Bottom" Type="System.String" Scope="User">
+    <Setting Name="GameName_Runner3" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightGameName_Bottom" Type="System.String" Scope="User">
+    <Setting Name="GameName_Runner4" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightTimerName_Bottom" Type="System.String" Scope="User">
+    <Setting Name="TimerName_Runner4" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftRunnerOBS_Bottom" Type="System.String" Scope="User">
+    <Setting Name="RunnerOBS_Runner3" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightRunnerOBS_Bottom" Type="System.String" Scope="User">
+    <Setting Name="RunnerOBS_Runner4" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LeftTrackerOBS_Bottom" Type="System.String" Scope="User">
+    <Setting Name="TrackerOBS_Runner3" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RightTrackerOBS_Bottom" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="LeftStreamlinkVlcParams_Bottom" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="RightStreamlinkVlcParams_Bottom" Type="System.String" Scope="User">
+    <Setting Name="TrackerOBS_Runner4" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="BoundingSizeWidthGameTwoPlayer" Type="System.Int32" Scope="User">
@@ -176,83 +170,77 @@
     <Setting Name="BoundingSizeHeightTimerFourPlayer" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
-    <Setting Name="PositionXTimerTopRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerFourPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1116</Value>
     </Setting>
-    <Setting Name="PositionYTimerTopRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerFourPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">51</Value>
     </Setting>
-    <Setting Name="PositionXTimerBottomRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerFourPlayer_Runner4" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1116</Value>
     </Setting>
-    <Setting Name="PositionYTimerBottomRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerFourPlayer_Runner4" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">410</Value>
     </Setting>
-    <Setting Name="PositionXTimerTopLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerFourPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">45</Value>
     </Setting>
-    <Setting Name="PositionYTimerTopLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerFourPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">52</Value>
     </Setting>
-    <Setting Name="PositionXTimerBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerFourPlayer_Runner3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">45</Value>
     </Setting>
-    <Setting Name="PositionYTimerBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerFourPlayer_Runner3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">410</Value>
     </Setting>
-    <Setting Name="PositionXGameTopRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameFourPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">676</Value>
     </Setting>
-    <Setting Name="PositionYGameTopRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameFourPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
     </Setting>
-    <Setting Name="PositionXGameBottomRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameFourPlayer_Runner4" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">676</Value>
     </Setting>
-    <Setting Name="PositionYGameBottomRightFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameFourPlayer_Runner4" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">368</Value>
     </Setting>
-    <Setting Name="PositionXGameTopLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameFourPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">220</Value>
     </Setting>
-    <Setting Name="PositionYGameTopLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameFourPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
     </Setting>
-    <Setting Name="PositionXGameBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameFourPlayer_Runner3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">220</Value>
     </Setting>
-    <Setting Name="PositionYGameBottomLeftFourPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameFourPlayer_Runner3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">368</Value>
     </Setting>
-    <Setting Name="PositionXTimerRightTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerTwoPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1046</Value>
     </Setting>
-    <Setting Name="PositionYTimerRightTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerTwoPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
-    <Setting Name="PositionXTimerLeftTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXTimerTwoPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">56</Value>
     </Setting>
-    <Setting Name="PositionYTimerLeftTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYTimerTwoPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
-    <Setting Name="PositionXGameRightTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameTwoPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">674</Value>
     </Setting>
-    <Setting Name="PositionYGameRightTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameTwoPlayer_Runner2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">83</Value>
     </Setting>
-    <Setting Name="PositionXGameLeftTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionXGameTwoPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">48</Value>
     </Setting>
-    <Setting Name="PositionYGameLeftTwoPlayer" Type="System.Int32" Scope="User">
+    <Setting Name="PositionYGameTwoPlayer_Runner1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">83</Value>
-    </Setting>
-    <Setting Name="SelectedConfigName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="SelectedConfigPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

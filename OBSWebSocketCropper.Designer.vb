@@ -170,7 +170,7 @@ Partial Class ObsWebSocketCropper
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'btnSyncWithServer
@@ -368,29 +368,37 @@ Partial Class ObsWebSocketCropper
         '
         Me.rControl4.Location = New System.Drawing.Point(1225, 110)
         Me.rControl4.Name = "rControl4"
+        Me.rControl4.runnerName = ""
         Me.rControl4.Size = New System.Drawing.Size(346, 480)
         Me.rControl4.TabIndex = 127
+        Me.rControl4.twitchName = "Runner Twitch"
         '
         'rControl3
         '
         Me.rControl3.Location = New System.Drawing.Point(873, 110)
         Me.rControl3.Name = "rControl3"
+        Me.rControl3.runnerName = ""
         Me.rControl3.Size = New System.Drawing.Size(346, 480)
         Me.rControl3.TabIndex = 126
+        Me.rControl3.twitchName = "Runner Twitch"
         '
         'rControl2
         '
         Me.rControl2.Location = New System.Drawing.Point(521, 110)
         Me.rControl2.Name = "rControl2"
+        Me.rControl2.runnerName = ""
         Me.rControl2.Size = New System.Drawing.Size(346, 480)
         Me.rControl2.TabIndex = 125
+        Me.rControl2.twitchName = "Runner Twitch"
         '
         'rControl1
         '
         Me.rControl1.Location = New System.Drawing.Point(169, 110)
         Me.rControl1.Name = "rControl1"
+        Me.rControl1.runnerName = ""
         Me.rControl1.Size = New System.Drawing.Size(346, 480)
         Me.rControl1.TabIndex = 124
+        Me.rControl1.twitchName = "Runner Twitch"
         '
         'ObsWebSocketCropper
         '

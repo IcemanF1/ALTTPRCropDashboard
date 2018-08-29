@@ -28,23 +28,23 @@ Partial Class ConfigEditor
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.txtPositionYGameRightTwoPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameTwoPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.txtBoundingSizeHeightGameTwoPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXGameRightTwoPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameTwoPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.txtBoundingSizeWidthGameTwoPlayer = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.txtPositionXGameLeftTwoPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionYGameLeftTwoPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameTwoPlayer_Runner1 = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameTwoPlayer_Runner1 = New System.Windows.Forms.TextBox()
         Me.gbTimerTwoPlayer = New System.Windows.Forms.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label111 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerRightTwoPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerRightTwoPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerTwoPlayer_Runner2 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerTwoPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerLeftTwoPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerLeftTwoPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerTwoPlayer_Runner1 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerTwoPlayer_Runner1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtBoundingSizeWidthTimerTwoPlayer = New System.Windows.Forms.TextBox()
@@ -55,43 +55,43 @@ Partial Class ConfigEditor
         Me.gbGameFourPlayerBottom = New System.Windows.Forms.GroupBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
-        Me.txtPositionYGameBottomRightFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXGameBottomRightFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameFourPlayer_Runner4 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameFourPlayer_Runner4 = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.txtPositionXGameBottomLeftFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionYGameBottomLeftFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameFourPlayer_Runner3 = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameFourPlayer_Runner3 = New System.Windows.Forms.TextBox()
         Me.gbTimerFourPlayerBottom = New System.Windows.Forms.GroupBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerBottomRightFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerBottomRightFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerFourPlayer_Runner4 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerFourPlayer_Runner4 = New System.Windows.Forms.TextBox()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerBottomLeftFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerBottomLeftFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerFourPlayer_Runner3 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerFourPlayer_Runner3 = New System.Windows.Forms.TextBox()
         Me.gbGameFourPlayerTop = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.txtPositionYGameTopRightFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameFourPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.txtBoundingSizeHeightGameFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXGameTopRightFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameFourPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.txtBoundingSizeWidthGameFourPlayer = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.txtPositionXGameTopLeftFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionYGameTopLeftFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionXGameFourPlayer_Runner1 = New System.Windows.Forms.TextBox()
+        Me.txtPositionYGameFourPlayer_Runner1 = New System.Windows.Forms.TextBox()
         Me.gbTimerFourPlayerTop = New System.Windows.Forms.GroupBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerTopRightFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerTopRightFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerFourPlayer_Runner2 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerFourPlayer_Runner2 = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.txtPositionYTimerTopLeftFourPlayer = New System.Windows.Forms.TextBox()
-        Me.txtPositionXTimerTopLeftFourPlayer = New System.Windows.Forms.TextBox()
+        Me.txtPositionYTimerFourPlayer_Runner1 = New System.Windows.Forms.TextBox()
+        Me.txtPositionXTimerFourPlayer_Runner1 = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtBoundingSizeWidthTimerFourPlayer = New System.Windows.Forms.TextBox()
@@ -125,14 +125,14 @@ Partial Class ConfigEditor
         Me.gbGameTwoPlayer.Controls.Add(Me.Label4)
         Me.gbGameTwoPlayer.Controls.Add(Me.Label11)
         Me.gbGameTwoPlayer.Controls.Add(Me.Label5)
-        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionYGameRightTwoPlayer)
+        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionYGameTwoPlayer_Runner2)
         Me.gbGameTwoPlayer.Controls.Add(Me.txtBoundingSizeHeightGameTwoPlayer)
-        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionXGameRightTwoPlayer)
+        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionXGameTwoPlayer_Runner2)
         Me.gbGameTwoPlayer.Controls.Add(Me.txtBoundingSizeWidthGameTwoPlayer)
         Me.gbGameTwoPlayer.Controls.Add(Me.Label12)
         Me.gbGameTwoPlayer.Controls.Add(Me.Label13)
-        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionXGameLeftTwoPlayer)
-        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionYGameLeftTwoPlayer)
+        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionXGameTwoPlayer_Runner1)
+        Me.gbGameTwoPlayer.Controls.Add(Me.txtPositionYGameTwoPlayer_Runner1)
         Me.gbGameTwoPlayer.Location = New System.Drawing.Point(407, 19)
         Me.gbGameTwoPlayer.Name = "gbGameTwoPlayer"
         Me.gbGameTwoPlayer.Size = New System.Drawing.Size(409, 100)
@@ -145,9 +145,9 @@ Partial Class ConfigEditor
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(195, 69)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(120, 13)
+        Me.Label10.Size = New System.Drawing.Size(101, 13)
         Me.Label10.TabIndex = 22
-        Me.Label10.Text = "Position Y Right Runner"
+        Me.Label10.Text = "Position Y Runner 2"
         '
         'Label4
         '
@@ -163,9 +163,9 @@ Partial Class ConfigEditor
         Me.Label11.AutoSize = True
         Me.Label11.Location = New System.Drawing.Point(6, 69)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(120, 13)
+        Me.Label11.Size = New System.Drawing.Size(101, 13)
         Me.Label11.TabIndex = 20
-        Me.Label11.Text = "Position X Right Runner"
+        Me.Label11.Text = "Position X Runner 2"
         '
         'Label5
         '
@@ -176,12 +176,12 @@ Partial Class ConfigEditor
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Bounding Box Height"
         '
-        'txtPositionYGameRightTwoPlayer
+        'txtPositionYGameTwoPlayer_Runner2
         '
-        Me.txtPositionYGameRightTwoPlayer.Location = New System.Drawing.Point(318, 66)
-        Me.txtPositionYGameRightTwoPlayer.Name = "txtPositionYGameRightTwoPlayer"
-        Me.txtPositionYGameRightTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameRightTwoPlayer.TabIndex = 21
+        Me.txtPositionYGameTwoPlayer_Runner2.Location = New System.Drawing.Point(318, 66)
+        Me.txtPositionYGameTwoPlayer_Runner2.Name = "txtPositionYGameTwoPlayer_Runner2"
+        Me.txtPositionYGameTwoPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameTwoPlayer_Runner2.TabIndex = 21
         '
         'txtBoundingSizeHeightGameTwoPlayer
         '
@@ -190,12 +190,12 @@ Partial Class ConfigEditor
         Me.txtBoundingSizeHeightGameTwoPlayer.Size = New System.Drawing.Size(61, 20)
         Me.txtBoundingSizeHeightGameTwoPlayer.TabIndex = 7
         '
-        'txtPositionXGameRightTwoPlayer
+        'txtPositionXGameTwoPlayer_Runner2
         '
-        Me.txtPositionXGameRightTwoPlayer.Location = New System.Drawing.Point(128, 66)
-        Me.txtPositionXGameRightTwoPlayer.Name = "txtPositionXGameRightTwoPlayer"
-        Me.txtPositionXGameRightTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameRightTwoPlayer.TabIndex = 19
+        Me.txtPositionXGameTwoPlayer_Runner2.Location = New System.Drawing.Point(128, 66)
+        Me.txtPositionXGameTwoPlayer_Runner2.Name = "txtPositionXGameTwoPlayer_Runner2"
+        Me.txtPositionXGameTwoPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameTwoPlayer_Runner2.TabIndex = 19
         '
         'txtBoundingSizeWidthGameTwoPlayer
         '
@@ -209,43 +209,43 @@ Partial Class ConfigEditor
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(195, 43)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(113, 13)
+        Me.Label12.Size = New System.Drawing.Size(101, 13)
         Me.Label12.TabIndex = 18
-        Me.Label12.Text = "Position Y Left Runner"
+        Me.Label12.Text = "Position Y Runner 1"
         '
         'Label13
         '
         Me.Label13.AutoSize = True
         Me.Label13.Location = New System.Drawing.Point(6, 43)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(113, 13)
+        Me.Label13.Size = New System.Drawing.Size(101, 13)
         Me.Label13.TabIndex = 16
-        Me.Label13.Text = "Position X Left Runner"
+        Me.Label13.Text = "Position X Runner 1"
         '
-        'txtPositionXGameLeftTwoPlayer
+        'txtPositionXGameTwoPlayer_Runner1
         '
-        Me.txtPositionXGameLeftTwoPlayer.Location = New System.Drawing.Point(128, 40)
-        Me.txtPositionXGameLeftTwoPlayer.Name = "txtPositionXGameLeftTwoPlayer"
-        Me.txtPositionXGameLeftTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameLeftTwoPlayer.TabIndex = 15
+        Me.txtPositionXGameTwoPlayer_Runner1.Location = New System.Drawing.Point(128, 40)
+        Me.txtPositionXGameTwoPlayer_Runner1.Name = "txtPositionXGameTwoPlayer_Runner1"
+        Me.txtPositionXGameTwoPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameTwoPlayer_Runner1.TabIndex = 15
         '
-        'txtPositionYGameLeftTwoPlayer
+        'txtPositionYGameTwoPlayer_Runner1
         '
-        Me.txtPositionYGameLeftTwoPlayer.Location = New System.Drawing.Point(318, 40)
-        Me.txtPositionYGameLeftTwoPlayer.Name = "txtPositionYGameLeftTwoPlayer"
-        Me.txtPositionYGameLeftTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameLeftTwoPlayer.TabIndex = 17
+        Me.txtPositionYGameTwoPlayer_Runner1.Location = New System.Drawing.Point(318, 40)
+        Me.txtPositionYGameTwoPlayer_Runner1.Name = "txtPositionYGameTwoPlayer_Runner1"
+        Me.txtPositionYGameTwoPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameTwoPlayer_Runner1.TabIndex = 17
         '
         'gbTimerTwoPlayer
         '
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label8)
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label111)
-        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionYTimerRightTwoPlayer)
-        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionXTimerRightTwoPlayer)
+        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionYTimerTwoPlayer_Runner2)
+        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionXTimerTwoPlayer_Runner2)
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label6)
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label7)
-        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionYTimerLeftTwoPlayer)
-        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionXTimerLeftTwoPlayer)
+        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionYTimerTwoPlayer_Runner1)
+        Me.gbTimerTwoPlayer.Controls.Add(Me.txtPositionXTimerTwoPlayer_Runner1)
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label3)
         Me.gbTimerTwoPlayer.Controls.Add(Me.Label2)
         Me.gbTimerTwoPlayer.Controls.Add(Me.txtBoundingSizeWidthTimerTwoPlayer)
@@ -262,64 +262,64 @@ Partial Class ConfigEditor
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(195, 69)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(120, 13)
+        Me.Label8.Size = New System.Drawing.Size(101, 13)
         Me.Label8.TabIndex = 14
-        Me.Label8.Text = "Position Y Right Runner"
+        Me.Label8.Text = "Position Y Runner 2"
         '
         'Label111
         '
         Me.Label111.AutoSize = True
         Me.Label111.Location = New System.Drawing.Point(6, 69)
         Me.Label111.Name = "Label111"
-        Me.Label111.Size = New System.Drawing.Size(120, 13)
+        Me.Label111.Size = New System.Drawing.Size(101, 13)
         Me.Label111.TabIndex = 12
-        Me.Label111.Text = "Position X Right Runner"
+        Me.Label111.Text = "Position X Runner 2"
         '
-        'txtPositionYTimerRightTwoPlayer
+        'txtPositionYTimerTwoPlayer_Runner2
         '
-        Me.txtPositionYTimerRightTwoPlayer.Location = New System.Drawing.Point(318, 66)
-        Me.txtPositionYTimerRightTwoPlayer.Name = "txtPositionYTimerRightTwoPlayer"
-        Me.txtPositionYTimerRightTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerRightTwoPlayer.TabIndex = 13
+        Me.txtPositionYTimerTwoPlayer_Runner2.Location = New System.Drawing.Point(318, 66)
+        Me.txtPositionYTimerTwoPlayer_Runner2.Name = "txtPositionYTimerTwoPlayer_Runner2"
+        Me.txtPositionYTimerTwoPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerTwoPlayer_Runner2.TabIndex = 13
         '
-        'txtPositionXTimerRightTwoPlayer
+        'txtPositionXTimerTwoPlayer_Runner2
         '
-        Me.txtPositionXTimerRightTwoPlayer.Location = New System.Drawing.Point(128, 66)
-        Me.txtPositionXTimerRightTwoPlayer.Name = "txtPositionXTimerRightTwoPlayer"
-        Me.txtPositionXTimerRightTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerRightTwoPlayer.TabIndex = 11
+        Me.txtPositionXTimerTwoPlayer_Runner2.Location = New System.Drawing.Point(128, 66)
+        Me.txtPositionXTimerTwoPlayer_Runner2.Name = "txtPositionXTimerTwoPlayer_Runner2"
+        Me.txtPositionXTimerTwoPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerTwoPlayer_Runner2.TabIndex = 11
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(195, 43)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(113, 13)
+        Me.Label6.Size = New System.Drawing.Size(101, 13)
         Me.Label6.TabIndex = 10
-        Me.Label6.Text = "Position Y Left Runner"
+        Me.Label6.Text = "Position Y Runner 1"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(6, 43)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(113, 13)
+        Me.Label7.Size = New System.Drawing.Size(101, 13)
         Me.Label7.TabIndex = 8
-        Me.Label7.Text = "Position X Left Runner"
+        Me.Label7.Text = "Position X Runner 1"
         '
-        'txtPositionYTimerLeftTwoPlayer
+        'txtPositionYTimerTwoPlayer_Runner1
         '
-        Me.txtPositionYTimerLeftTwoPlayer.Location = New System.Drawing.Point(318, 40)
-        Me.txtPositionYTimerLeftTwoPlayer.Name = "txtPositionYTimerLeftTwoPlayer"
-        Me.txtPositionYTimerLeftTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerLeftTwoPlayer.TabIndex = 9
+        Me.txtPositionYTimerTwoPlayer_Runner1.Location = New System.Drawing.Point(318, 40)
+        Me.txtPositionYTimerTwoPlayer_Runner1.Name = "txtPositionYTimerTwoPlayer_Runner1"
+        Me.txtPositionYTimerTwoPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerTwoPlayer_Runner1.TabIndex = 9
         '
-        'txtPositionXTimerLeftTwoPlayer
+        'txtPositionXTimerTwoPlayer_Runner1
         '
-        Me.txtPositionXTimerLeftTwoPlayer.Location = New System.Drawing.Point(128, 40)
-        Me.txtPositionXTimerLeftTwoPlayer.Name = "txtPositionXTimerLeftTwoPlayer"
-        Me.txtPositionXTimerLeftTwoPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerLeftTwoPlayer.TabIndex = 7
+        Me.txtPositionXTimerTwoPlayer_Runner1.Location = New System.Drawing.Point(128, 40)
+        Me.txtPositionXTimerTwoPlayer_Runner1.Name = "txtPositionXTimerTwoPlayer_Runner1"
+        Me.txtPositionXTimerTwoPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerTwoPlayer_Runner1.TabIndex = 7
         '
         'Label3
         '
@@ -387,163 +387,163 @@ Partial Class ConfigEditor
         '
         Me.gbGameFourPlayerBottom.Controls.Add(Me.Label25)
         Me.gbGameFourPlayerBottom.Controls.Add(Me.Label27)
-        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionYGameBottomRightFourPlayer)
-        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionXGameBottomRightFourPlayer)
+        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionYGameFourPlayer_Runner4)
+        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionXGameFourPlayer_Runner4)
         Me.gbGameFourPlayerBottom.Controls.Add(Me.Label29)
         Me.gbGameFourPlayerBottom.Controls.Add(Me.Label30)
-        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionXGameBottomLeftFourPlayer)
-        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionYGameBottomLeftFourPlayer)
+        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionXGameFourPlayer_Runner3)
+        Me.gbGameFourPlayerBottom.Controls.Add(Me.txtPositionYGameFourPlayer_Runner3)
         Me.gbGameFourPlayerBottom.Location = New System.Drawing.Point(407, 125)
         Me.gbGameFourPlayerBottom.Name = "gbGameFourPlayerBottom"
         Me.gbGameFourPlayerBottom.Size = New System.Drawing.Size(409, 77)
         Me.gbGameFourPlayerBottom.TabIndex = 16
         Me.gbGameFourPlayerBottom.TabStop = False
-        Me.gbGameFourPlayerBottom.Text = "Game Info - Bottom"
+        Me.gbGameFourPlayerBottom.Text = "Game Info - Runner 3 and 4"
         '
         'Label25
         '
         Me.Label25.AutoSize = True
         Me.Label25.Location = New System.Drawing.Point(195, 48)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(120, 13)
+        Me.Label25.Size = New System.Drawing.Size(101, 13)
         Me.Label25.TabIndex = 22
-        Me.Label25.Text = "Position Y Right Runner"
+        Me.Label25.Text = "Position Y Runner 4"
         '
         'Label27
         '
         Me.Label27.AutoSize = True
         Me.Label27.Location = New System.Drawing.Point(6, 48)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(120, 13)
+        Me.Label27.Size = New System.Drawing.Size(101, 13)
         Me.Label27.TabIndex = 20
-        Me.Label27.Text = "Position X Right Runner"
+        Me.Label27.Text = "Position X Runner 4"
         '
-        'txtPositionYGameBottomRightFourPlayer
+        'txtPositionYGameFourPlayer_Runner4
         '
-        Me.txtPositionYGameBottomRightFourPlayer.Location = New System.Drawing.Point(318, 45)
-        Me.txtPositionYGameBottomRightFourPlayer.Name = "txtPositionYGameBottomRightFourPlayer"
-        Me.txtPositionYGameBottomRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameBottomRightFourPlayer.TabIndex = 21
+        Me.txtPositionYGameFourPlayer_Runner4.Location = New System.Drawing.Point(318, 45)
+        Me.txtPositionYGameFourPlayer_Runner4.Name = "txtPositionYGameFourPlayer_Runner4"
+        Me.txtPositionYGameFourPlayer_Runner4.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameFourPlayer_Runner4.TabIndex = 21
         '
-        'txtPositionXGameBottomRightFourPlayer
+        'txtPositionXGameFourPlayer_Runner4
         '
-        Me.txtPositionXGameBottomRightFourPlayer.Location = New System.Drawing.Point(128, 45)
-        Me.txtPositionXGameBottomRightFourPlayer.Name = "txtPositionXGameBottomRightFourPlayer"
-        Me.txtPositionXGameBottomRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameBottomRightFourPlayer.TabIndex = 19
+        Me.txtPositionXGameFourPlayer_Runner4.Location = New System.Drawing.Point(128, 45)
+        Me.txtPositionXGameFourPlayer_Runner4.Name = "txtPositionXGameFourPlayer_Runner4"
+        Me.txtPositionXGameFourPlayer_Runner4.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameFourPlayer_Runner4.TabIndex = 19
         '
         'Label29
         '
         Me.Label29.AutoSize = True
         Me.Label29.Location = New System.Drawing.Point(195, 22)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(113, 13)
+        Me.Label29.Size = New System.Drawing.Size(101, 13)
         Me.Label29.TabIndex = 18
-        Me.Label29.Text = "Position Y Left Runner"
+        Me.Label29.Text = "Position Y Runner 3"
         '
         'Label30
         '
         Me.Label30.AutoSize = True
         Me.Label30.Location = New System.Drawing.Point(6, 22)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(113, 13)
+        Me.Label30.Size = New System.Drawing.Size(101, 13)
         Me.Label30.TabIndex = 16
-        Me.Label30.Text = "Position X Left Runner"
+        Me.Label30.Text = "Position X Runner 3"
         '
-        'txtPositionXGameBottomLeftFourPlayer
+        'txtPositionXGameFourPlayer_Runner3
         '
-        Me.txtPositionXGameBottomLeftFourPlayer.Location = New System.Drawing.Point(128, 19)
-        Me.txtPositionXGameBottomLeftFourPlayer.Name = "txtPositionXGameBottomLeftFourPlayer"
-        Me.txtPositionXGameBottomLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameBottomLeftFourPlayer.TabIndex = 15
+        Me.txtPositionXGameFourPlayer_Runner3.Location = New System.Drawing.Point(128, 19)
+        Me.txtPositionXGameFourPlayer_Runner3.Name = "txtPositionXGameFourPlayer_Runner3"
+        Me.txtPositionXGameFourPlayer_Runner3.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameFourPlayer_Runner3.TabIndex = 15
         '
-        'txtPositionYGameBottomLeftFourPlayer
+        'txtPositionYGameFourPlayer_Runner3
         '
-        Me.txtPositionYGameBottomLeftFourPlayer.Location = New System.Drawing.Point(318, 19)
-        Me.txtPositionYGameBottomLeftFourPlayer.Name = "txtPositionYGameBottomLeftFourPlayer"
-        Me.txtPositionYGameBottomLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameBottomLeftFourPlayer.TabIndex = 17
+        Me.txtPositionYGameFourPlayer_Runner3.Location = New System.Drawing.Point(318, 19)
+        Me.txtPositionYGameFourPlayer_Runner3.Name = "txtPositionYGameFourPlayer_Runner3"
+        Me.txtPositionYGameFourPlayer_Runner3.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameFourPlayer_Runner3.TabIndex = 17
         '
         'gbTimerFourPlayerBottom
         '
         Me.gbTimerFourPlayerBottom.Controls.Add(Me.Label31)
         Me.gbTimerFourPlayerBottom.Controls.Add(Me.Label32)
-        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionYTimerBottomRightFourPlayer)
-        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionXTimerBottomRightFourPlayer)
+        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionYTimerFourPlayer_Runner4)
+        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionXTimerFourPlayer_Runner4)
         Me.gbTimerFourPlayerBottom.Controls.Add(Me.Label33)
         Me.gbTimerFourPlayerBottom.Controls.Add(Me.Label34)
-        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionYTimerBottomLeftFourPlayer)
-        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionXTimerBottomLeftFourPlayer)
+        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionYTimerFourPlayer_Runner3)
+        Me.gbTimerFourPlayerBottom.Controls.Add(Me.txtPositionXTimerFourPlayer_Runner3)
         Me.gbTimerFourPlayerBottom.Location = New System.Drawing.Point(6, 125)
         Me.gbTimerFourPlayerBottom.Name = "gbTimerFourPlayerBottom"
         Me.gbTimerFourPlayerBottom.Size = New System.Drawing.Size(395, 77)
         Me.gbTimerFourPlayerBottom.TabIndex = 15
         Me.gbTimerFourPlayerBottom.TabStop = False
-        Me.gbTimerFourPlayerBottom.Text = "Timer Info - Bottom"
+        Me.gbTimerFourPlayerBottom.Text = "Timer Info - Runner 3 and 4"
         '
         'Label31
         '
         Me.Label31.AutoSize = True
         Me.Label31.Location = New System.Drawing.Point(195, 48)
         Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(120, 13)
+        Me.Label31.Size = New System.Drawing.Size(101, 13)
         Me.Label31.TabIndex = 14
-        Me.Label31.Text = "Position Y Right Runner"
+        Me.Label31.Text = "Position Y Runner 4"
         '
         'Label32
         '
         Me.Label32.AutoSize = True
         Me.Label32.Location = New System.Drawing.Point(6, 48)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(120, 13)
+        Me.Label32.Size = New System.Drawing.Size(101, 13)
         Me.Label32.TabIndex = 12
-        Me.Label32.Text = "Position X Right Runner"
+        Me.Label32.Text = "Position X Runner 4"
         '
-        'txtPositionYTimerBottomRightFourPlayer
+        'txtPositionYTimerFourPlayer_Runner4
         '
-        Me.txtPositionYTimerBottomRightFourPlayer.Location = New System.Drawing.Point(318, 45)
-        Me.txtPositionYTimerBottomRightFourPlayer.Name = "txtPositionYTimerBottomRightFourPlayer"
-        Me.txtPositionYTimerBottomRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerBottomRightFourPlayer.TabIndex = 13
+        Me.txtPositionYTimerFourPlayer_Runner4.Location = New System.Drawing.Point(318, 45)
+        Me.txtPositionYTimerFourPlayer_Runner4.Name = "txtPositionYTimerFourPlayer_Runner4"
+        Me.txtPositionYTimerFourPlayer_Runner4.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerFourPlayer_Runner4.TabIndex = 13
         '
-        'txtPositionXTimerBottomRightFourPlayer
+        'txtPositionXTimerFourPlayer_Runner4
         '
-        Me.txtPositionXTimerBottomRightFourPlayer.Location = New System.Drawing.Point(128, 45)
-        Me.txtPositionXTimerBottomRightFourPlayer.Name = "txtPositionXTimerBottomRightFourPlayer"
-        Me.txtPositionXTimerBottomRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerBottomRightFourPlayer.TabIndex = 11
+        Me.txtPositionXTimerFourPlayer_Runner4.Location = New System.Drawing.Point(128, 45)
+        Me.txtPositionXTimerFourPlayer_Runner4.Name = "txtPositionXTimerFourPlayer_Runner4"
+        Me.txtPositionXTimerFourPlayer_Runner4.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerFourPlayer_Runner4.TabIndex = 11
         '
         'Label33
         '
         Me.Label33.AutoSize = True
         Me.Label33.Location = New System.Drawing.Point(195, 22)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(113, 13)
+        Me.Label33.Size = New System.Drawing.Size(101, 13)
         Me.Label33.TabIndex = 10
-        Me.Label33.Text = "Position Y Left Runner"
+        Me.Label33.Text = "Position Y Runner 3"
         '
         'Label34
         '
         Me.Label34.AutoSize = True
         Me.Label34.Location = New System.Drawing.Point(6, 22)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(113, 13)
+        Me.Label34.Size = New System.Drawing.Size(101, 13)
         Me.Label34.TabIndex = 8
-        Me.Label34.Text = "Position X Left Runner"
+        Me.Label34.Text = "Position X Runner 3"
         '
-        'txtPositionYTimerBottomLeftFourPlayer
+        'txtPositionYTimerFourPlayer_Runner3
         '
-        Me.txtPositionYTimerBottomLeftFourPlayer.Location = New System.Drawing.Point(318, 19)
-        Me.txtPositionYTimerBottomLeftFourPlayer.Name = "txtPositionYTimerBottomLeftFourPlayer"
-        Me.txtPositionYTimerBottomLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerBottomLeftFourPlayer.TabIndex = 9
+        Me.txtPositionYTimerFourPlayer_Runner3.Location = New System.Drawing.Point(318, 19)
+        Me.txtPositionYTimerFourPlayer_Runner3.Name = "txtPositionYTimerFourPlayer_Runner3"
+        Me.txtPositionYTimerFourPlayer_Runner3.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerFourPlayer_Runner3.TabIndex = 9
         '
-        'txtPositionXTimerBottomLeftFourPlayer
+        'txtPositionXTimerFourPlayer_Runner3
         '
-        Me.txtPositionXTimerBottomLeftFourPlayer.Location = New System.Drawing.Point(128, 19)
-        Me.txtPositionXTimerBottomLeftFourPlayer.Name = "txtPositionXTimerBottomLeftFourPlayer"
-        Me.txtPositionXTimerBottomLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerBottomLeftFourPlayer.TabIndex = 7
+        Me.txtPositionXTimerFourPlayer_Runner3.Location = New System.Drawing.Point(128, 19)
+        Me.txtPositionXTimerFourPlayer_Runner3.Name = "txtPositionXTimerFourPlayer_Runner3"
+        Me.txtPositionXTimerFourPlayer_Runner3.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerFourPlayer_Runner3.TabIndex = 7
         '
         'gbGameFourPlayerTop
         '
@@ -551,29 +551,29 @@ Partial Class ConfigEditor
         Me.gbGameFourPlayerTop.Controls.Add(Me.Label14)
         Me.gbGameFourPlayerTop.Controls.Add(Me.Label15)
         Me.gbGameFourPlayerTop.Controls.Add(Me.Label16)
-        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionYGameTopRightFourPlayer)
+        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionYGameFourPlayer_Runner2)
         Me.gbGameFourPlayerTop.Controls.Add(Me.txtBoundingSizeHeightGameFourPlayer)
-        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionXGameTopRightFourPlayer)
+        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionXGameFourPlayer_Runner2)
         Me.gbGameFourPlayerTop.Controls.Add(Me.txtBoundingSizeWidthGameFourPlayer)
         Me.gbGameFourPlayerTop.Controls.Add(Me.Label17)
         Me.gbGameFourPlayerTop.Controls.Add(Me.Label18)
-        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionXGameTopLeftFourPlayer)
-        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionYGameTopLeftFourPlayer)
+        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionXGameFourPlayer_Runner1)
+        Me.gbGameFourPlayerTop.Controls.Add(Me.txtPositionYGameFourPlayer_Runner1)
         Me.gbGameFourPlayerTop.Location = New System.Drawing.Point(407, 19)
         Me.gbGameFourPlayerTop.Name = "gbGameFourPlayerTop"
         Me.gbGameFourPlayerTop.Size = New System.Drawing.Size(409, 100)
         Me.gbGameFourPlayerTop.TabIndex = 1
         Me.gbGameFourPlayerTop.TabStop = False
-        Me.gbGameFourPlayerTop.Text = "Game Info - Top"
+        Me.gbGameFourPlayerTop.Text = "Game Info - Runner 1 and 2"
         '
         'Label9
         '
         Me.Label9.AutoSize = True
         Me.Label9.Location = New System.Drawing.Point(195, 69)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(120, 13)
+        Me.Label9.Size = New System.Drawing.Size(101, 13)
         Me.Label9.TabIndex = 22
-        Me.Label9.Text = "Position Y Right Runner"
+        Me.Label9.Text = "Position Y Runner 2"
         '
         'Label14
         '
@@ -589,9 +589,9 @@ Partial Class ConfigEditor
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(6, 69)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(120, 13)
+        Me.Label15.Size = New System.Drawing.Size(101, 13)
         Me.Label15.TabIndex = 20
-        Me.Label15.Text = "Position X Right Runner"
+        Me.Label15.Text = "Position X Runner 2"
         '
         'Label16
         '
@@ -602,12 +602,12 @@ Partial Class ConfigEditor
         Me.Label16.TabIndex = 8
         Me.Label16.Text = "Bounding Box Height"
         '
-        'txtPositionYGameTopRightFourPlayer
+        'txtPositionYGameFourPlayer_Runner2
         '
-        Me.txtPositionYGameTopRightFourPlayer.Location = New System.Drawing.Point(318, 66)
-        Me.txtPositionYGameTopRightFourPlayer.Name = "txtPositionYGameTopRightFourPlayer"
-        Me.txtPositionYGameTopRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameTopRightFourPlayer.TabIndex = 21
+        Me.txtPositionYGameFourPlayer_Runner2.Location = New System.Drawing.Point(318, 66)
+        Me.txtPositionYGameFourPlayer_Runner2.Name = "txtPositionYGameFourPlayer_Runner2"
+        Me.txtPositionYGameFourPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameFourPlayer_Runner2.TabIndex = 21
         '
         'txtBoundingSizeHeightGameFourPlayer
         '
@@ -616,12 +616,12 @@ Partial Class ConfigEditor
         Me.txtBoundingSizeHeightGameFourPlayer.Size = New System.Drawing.Size(61, 20)
         Me.txtBoundingSizeHeightGameFourPlayer.TabIndex = 7
         '
-        'txtPositionXGameTopRightFourPlayer
+        'txtPositionXGameFourPlayer_Runner2
         '
-        Me.txtPositionXGameTopRightFourPlayer.Location = New System.Drawing.Point(128, 66)
-        Me.txtPositionXGameTopRightFourPlayer.Name = "txtPositionXGameTopRightFourPlayer"
-        Me.txtPositionXGameTopRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameTopRightFourPlayer.TabIndex = 19
+        Me.txtPositionXGameFourPlayer_Runner2.Location = New System.Drawing.Point(128, 66)
+        Me.txtPositionXGameFourPlayer_Runner2.Name = "txtPositionXGameFourPlayer_Runner2"
+        Me.txtPositionXGameFourPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameFourPlayer_Runner2.TabIndex = 19
         '
         'txtBoundingSizeWidthGameFourPlayer
         '
@@ -635,43 +635,43 @@ Partial Class ConfigEditor
         Me.Label17.AutoSize = True
         Me.Label17.Location = New System.Drawing.Point(195, 43)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(113, 13)
+        Me.Label17.Size = New System.Drawing.Size(101, 13)
         Me.Label17.TabIndex = 18
-        Me.Label17.Text = "Position Y Left Runner"
+        Me.Label17.Text = "Position Y Runner 1"
         '
         'Label18
         '
         Me.Label18.AutoSize = True
         Me.Label18.Location = New System.Drawing.Point(6, 43)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(113, 13)
+        Me.Label18.Size = New System.Drawing.Size(101, 13)
         Me.Label18.TabIndex = 16
-        Me.Label18.Text = "Position X Left Runner"
+        Me.Label18.Text = "Position X Runner 1"
         '
-        'txtPositionXGameTopLeftFourPlayer
+        'txtPositionXGameFourPlayer_Runner1
         '
-        Me.txtPositionXGameTopLeftFourPlayer.Location = New System.Drawing.Point(128, 40)
-        Me.txtPositionXGameTopLeftFourPlayer.Name = "txtPositionXGameTopLeftFourPlayer"
-        Me.txtPositionXGameTopLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXGameTopLeftFourPlayer.TabIndex = 15
+        Me.txtPositionXGameFourPlayer_Runner1.Location = New System.Drawing.Point(128, 40)
+        Me.txtPositionXGameFourPlayer_Runner1.Name = "txtPositionXGameFourPlayer_Runner1"
+        Me.txtPositionXGameFourPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXGameFourPlayer_Runner1.TabIndex = 15
         '
-        'txtPositionYGameTopLeftFourPlayer
+        'txtPositionYGameFourPlayer_Runner1
         '
-        Me.txtPositionYGameTopLeftFourPlayer.Location = New System.Drawing.Point(318, 40)
-        Me.txtPositionYGameTopLeftFourPlayer.Name = "txtPositionYGameTopLeftFourPlayer"
-        Me.txtPositionYGameTopLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYGameTopLeftFourPlayer.TabIndex = 17
+        Me.txtPositionYGameFourPlayer_Runner1.Location = New System.Drawing.Point(318, 40)
+        Me.txtPositionYGameFourPlayer_Runner1.Name = "txtPositionYGameFourPlayer_Runner1"
+        Me.txtPositionYGameFourPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYGameFourPlayer_Runner1.TabIndex = 17
         '
         'gbTimerFourPlayerTop
         '
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label19)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label20)
-        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionYTimerTopRightFourPlayer)
-        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionXTimerTopRightFourPlayer)
+        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionYTimerFourPlayer_Runner2)
+        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionXTimerFourPlayer_Runner2)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label21)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label22)
-        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionYTimerTopLeftFourPlayer)
-        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionXTimerTopLeftFourPlayer)
+        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionYTimerFourPlayer_Runner1)
+        Me.gbTimerFourPlayerTop.Controls.Add(Me.txtPositionXTimerFourPlayer_Runner1)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label23)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.Label24)
         Me.gbTimerFourPlayerTop.Controls.Add(Me.txtBoundingSizeWidthTimerFourPlayer)
@@ -681,39 +681,39 @@ Partial Class ConfigEditor
         Me.gbTimerFourPlayerTop.Size = New System.Drawing.Size(395, 100)
         Me.gbTimerFourPlayerTop.TabIndex = 0
         Me.gbTimerFourPlayerTop.TabStop = False
-        Me.gbTimerFourPlayerTop.Text = "Timer Info - Top"
+        Me.gbTimerFourPlayerTop.Text = "Timer Info - Runner 1 and 2"
         '
         'Label19
         '
         Me.Label19.AutoSize = True
         Me.Label19.Location = New System.Drawing.Point(195, 69)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(120, 13)
+        Me.Label19.Size = New System.Drawing.Size(101, 13)
         Me.Label19.TabIndex = 14
-        Me.Label19.Text = "Position Y Right Runner"
+        Me.Label19.Text = "Position Y Runner 2"
         '
         'Label20
         '
         Me.Label20.AutoSize = True
         Me.Label20.Location = New System.Drawing.Point(6, 69)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(120, 13)
+        Me.Label20.Size = New System.Drawing.Size(101, 13)
         Me.Label20.TabIndex = 12
-        Me.Label20.Text = "Position X Right Runner"
+        Me.Label20.Text = "Position X Runner 2"
         '
-        'txtPositionYTimerTopRightFourPlayer
+        'txtPositionYTimerFourPlayer_Runner2
         '
-        Me.txtPositionYTimerTopRightFourPlayer.Location = New System.Drawing.Point(318, 66)
-        Me.txtPositionYTimerTopRightFourPlayer.Name = "txtPositionYTimerTopRightFourPlayer"
-        Me.txtPositionYTimerTopRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerTopRightFourPlayer.TabIndex = 13
+        Me.txtPositionYTimerFourPlayer_Runner2.Location = New System.Drawing.Point(318, 66)
+        Me.txtPositionYTimerFourPlayer_Runner2.Name = "txtPositionYTimerFourPlayer_Runner2"
+        Me.txtPositionYTimerFourPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerFourPlayer_Runner2.TabIndex = 13
         '
-        'txtPositionXTimerTopRightFourPlayer
+        'txtPositionXTimerFourPlayer_Runner2
         '
-        Me.txtPositionXTimerTopRightFourPlayer.Location = New System.Drawing.Point(128, 66)
-        Me.txtPositionXTimerTopRightFourPlayer.Name = "txtPositionXTimerTopRightFourPlayer"
-        Me.txtPositionXTimerTopRightFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerTopRightFourPlayer.TabIndex = 11
+        Me.txtPositionXTimerFourPlayer_Runner2.Location = New System.Drawing.Point(128, 66)
+        Me.txtPositionXTimerFourPlayer_Runner2.Name = "txtPositionXTimerFourPlayer_Runner2"
+        Me.txtPositionXTimerFourPlayer_Runner2.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerFourPlayer_Runner2.TabIndex = 11
         '
         'Label21
         '
@@ -729,23 +729,23 @@ Partial Class ConfigEditor
         Me.Label22.AutoSize = True
         Me.Label22.Location = New System.Drawing.Point(6, 43)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(113, 13)
+        Me.Label22.Size = New System.Drawing.Size(101, 13)
         Me.Label22.TabIndex = 8
-        Me.Label22.Text = "Position X Left Runner"
+        Me.Label22.Text = "Position X Runner 1"
         '
-        'txtPositionYTimerTopLeftFourPlayer
+        'txtPositionYTimerFourPlayer_Runner1
         '
-        Me.txtPositionYTimerTopLeftFourPlayer.Location = New System.Drawing.Point(318, 40)
-        Me.txtPositionYTimerTopLeftFourPlayer.Name = "txtPositionYTimerTopLeftFourPlayer"
-        Me.txtPositionYTimerTopLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionYTimerTopLeftFourPlayer.TabIndex = 9
+        Me.txtPositionYTimerFourPlayer_Runner1.Location = New System.Drawing.Point(318, 40)
+        Me.txtPositionYTimerFourPlayer_Runner1.Name = "txtPositionYTimerFourPlayer_Runner1"
+        Me.txtPositionYTimerFourPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionYTimerFourPlayer_Runner1.TabIndex = 9
         '
-        'txtPositionXTimerTopLeftFourPlayer
+        'txtPositionXTimerFourPlayer_Runner1
         '
-        Me.txtPositionXTimerTopLeftFourPlayer.Location = New System.Drawing.Point(128, 40)
-        Me.txtPositionXTimerTopLeftFourPlayer.Name = "txtPositionXTimerTopLeftFourPlayer"
-        Me.txtPositionXTimerTopLeftFourPlayer.Size = New System.Drawing.Size(61, 20)
-        Me.txtPositionXTimerTopLeftFourPlayer.TabIndex = 7
+        Me.txtPositionXTimerFourPlayer_Runner1.Location = New System.Drawing.Point(128, 40)
+        Me.txtPositionXTimerFourPlayer_Runner1.Name = "txtPositionXTimerFourPlayer_Runner1"
+        Me.txtPositionXTimerFourPlayer_Runner1.Size = New System.Drawing.Size(61, 20)
+        Me.txtPositionXTimerFourPlayer_Runner1.TabIndex = 7
         '
         'Label23
         '
@@ -834,61 +834,61 @@ Partial Class ConfigEditor
     Friend WithEvents txtBoundingSizeWidthGameTwoPlayer As TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents Label111 As Label
-    Friend WithEvents txtPositionYTimerRightTwoPlayer As TextBox
-    Friend WithEvents txtPositionXTimerRightTwoPlayer As TextBox
+    Friend WithEvents txtPositionYTimerTwoPlayer_Runner2 As TextBox
+    Friend WithEvents txtPositionXTimerTwoPlayer_Runner2 As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
-    Friend WithEvents txtPositionYTimerLeftTwoPlayer As TextBox
-    Friend WithEvents txtPositionXTimerLeftTwoPlayer As TextBox
+    Friend WithEvents txtPositionYTimerTwoPlayer_Runner1 As TextBox
+    Friend WithEvents txtPositionXTimerTwoPlayer_Runner1 As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
-    Friend WithEvents txtPositionYGameRightTwoPlayer As TextBox
-    Friend WithEvents txtPositionXGameRightTwoPlayer As TextBox
+    Friend WithEvents txtPositionYGameTwoPlayer_Runner2 As TextBox
+    Friend WithEvents txtPositionXGameTwoPlayer_Runner2 As TextBox
     Friend WithEvents Label12 As Label
     Friend WithEvents Label13 As Label
-    Friend WithEvents txtPositionXGameLeftTwoPlayer As TextBox
-    Friend WithEvents txtPositionYGameLeftTwoPlayer As TextBox
+    Friend WithEvents txtPositionXGameTwoPlayer_Runner1 As TextBox
+    Friend WithEvents txtPositionYGameTwoPlayer_Runner1 As TextBox
     Friend WithEvents gbFourRunners As GroupBox
     Friend WithEvents gbGameFourPlayerBottom As GroupBox
     Friend WithEvents Label25 As Label
     Friend WithEvents Label27 As Label
-    Friend WithEvents txtPositionYGameBottomRightFourPlayer As TextBox
-    Friend WithEvents txtPositionXGameBottomRightFourPlayer As TextBox
+    Friend WithEvents txtPositionYGameFourPlayer_Runner4 As TextBox
+    Friend WithEvents txtPositionXGameFourPlayer_Runner4 As TextBox
     Friend WithEvents Label29 As Label
     Friend WithEvents Label30 As Label
-    Friend WithEvents txtPositionXGameBottomLeftFourPlayer As TextBox
-    Friend WithEvents txtPositionYGameBottomLeftFourPlayer As TextBox
+    Friend WithEvents txtPositionXGameFourPlayer_Runner3 As TextBox
+    Friend WithEvents txtPositionYGameFourPlayer_Runner3 As TextBox
     Friend WithEvents gbTimerFourPlayerBottom As GroupBox
     Friend WithEvents Label31 As Label
     Friend WithEvents Label32 As Label
-    Friend WithEvents txtPositionYTimerBottomRightFourPlayer As TextBox
-    Friend WithEvents txtPositionXTimerBottomRightFourPlayer As TextBox
+    Friend WithEvents txtPositionYTimerFourPlayer_Runner4 As TextBox
+    Friend WithEvents txtPositionXTimerFourPlayer_Runner4 As TextBox
     Friend WithEvents Label33 As Label
     Friend WithEvents Label34 As Label
-    Friend WithEvents txtPositionYTimerBottomLeftFourPlayer As TextBox
-    Friend WithEvents txtPositionXTimerBottomLeftFourPlayer As TextBox
+    Friend WithEvents txtPositionYTimerFourPlayer_Runner3 As TextBox
+    Friend WithEvents txtPositionXTimerFourPlayer_Runner3 As TextBox
     Friend WithEvents gbGameFourPlayerTop As GroupBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents txtPositionYGameTopRightFourPlayer As TextBox
+    Friend WithEvents txtPositionYGameFourPlayer_Runner2 As TextBox
     Friend WithEvents txtBoundingSizeHeightGameFourPlayer As TextBox
-    Friend WithEvents txtPositionXGameTopRightFourPlayer As TextBox
+    Friend WithEvents txtPositionXGameFourPlayer_Runner2 As TextBox
     Friend WithEvents txtBoundingSizeWidthGameFourPlayer As TextBox
     Friend WithEvents Label17 As Label
     Friend WithEvents Label18 As Label
-    Friend WithEvents txtPositionXGameTopLeftFourPlayer As TextBox
-    Friend WithEvents txtPositionYGameTopLeftFourPlayer As TextBox
+    Friend WithEvents txtPositionXGameFourPlayer_Runner1 As TextBox
+    Friend WithEvents txtPositionYGameFourPlayer_Runner1 As TextBox
     Friend WithEvents gbTimerFourPlayerTop As GroupBox
     Friend WithEvents Label19 As Label
     Friend WithEvents Label20 As Label
-    Friend WithEvents txtPositionYTimerTopRightFourPlayer As TextBox
-    Friend WithEvents txtPositionXTimerTopRightFourPlayer As TextBox
+    Friend WithEvents txtPositionYTimerFourPlayer_Runner2 As TextBox
+    Friend WithEvents txtPositionXTimerFourPlayer_Runner2 As TextBox
     Friend WithEvents Label21 As Label
     Friend WithEvents Label22 As Label
-    Friend WithEvents txtPositionYTimerTopLeftFourPlayer As TextBox
-    Friend WithEvents txtPositionXTimerTopLeftFourPlayer As TextBox
+    Friend WithEvents txtPositionYTimerFourPlayer_Runner1 As TextBox
+    Friend WithEvents txtPositionXTimerFourPlayer_Runner1 As TextBox
     Friend WithEvents Label23 As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents txtBoundingSizeWidthTimerFourPlayer As TextBox

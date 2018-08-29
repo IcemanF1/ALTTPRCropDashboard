@@ -6,9 +6,6 @@ Imports System.Globalization
 Imports System.Configuration
 
 Public Class RunnerControls
-    Private _vlcList As New DataSet
-
-
 #Region " Button Clicks "
     'Private Sub btnGameUncrop_Click(sender As Object, e As EventArgs) Handles btnGameUncrop.Click
     '    If isRunnerNumValid() Then
@@ -80,7 +77,6 @@ Public Class RunnerControls
     '#End Region
 #Region " Misc Functions "
     Private Sub RunnerControls_Load(sender As Object, e As EventArgs) Handles Me.Load
-        CreateNewSourceTable()
         ConfigureDataBindings()
     End Sub
     Public Sub RefreshRunnerNames()
@@ -107,55 +103,6 @@ Public Class RunnerControls
         RegisterExpertModeFeatures(lblViewOnTwitch, lblVOD, lblStreamlink)
         RegisterExpertModeFeatures(btnTimerDB, btnGameDB)
         RegisterExpertModeFeatures(lblScaling, cbScaling)
-    End Sub
-    'Private Sub SetVlcWindows()
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.SetVlcWindows(CInt(lblRunnerNumber.Text), cbVLCSource.Text)
-    '    End If
-    'End Sub
-    Public Sub RefreshVlc()
-        Dim vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
-        If Not vlcProcesses.Any() Then
-            Exit Sub
-        End If
-
-        Dim Vlc As String
-
-
-        If Not String.IsNullOrWhiteSpace(cbVLCSource.Text) Then
-            Vlc = cbVLCSource.Text
-        Else
-            Vlc = ""
-        End If
-
-        _vlcList.Clear()
-
-        Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
-
-        cbVLCSource.DataSource = data.ToList()
-        cbVLCSource.DisplayMember = "VLCName"
-        cbVLCSource.ValueMember = "VLCName"
-
-        cbVLCSource.Text = ""
-
-
-        If Not String.IsNullOrWhiteSpace(lblRunnerTwitch.Text) Then
-            Dim tempText = lblRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbVLCSource.Text = match.VLCName
-            End If
-        End If
-
-    End Sub
-    Private Sub CreateNewSourceTable()
-        If _vlcList.Tables.Count = 0 Then
-            _vlcList.Tables.Add("Processes")
-            _vlcList.Tables("Processes").Columns.Add("VLCName")
-        Else
-            _vlcList.Tables("Processes").Clear()
-        End If
     End Sub
     Private Sub ValidateKeyPress(sender As Object, e As KeyPressEventArgs) _
     Handles txtCropTimer_Top.KeyPress, txtCropTimer_Right.KeyPress,

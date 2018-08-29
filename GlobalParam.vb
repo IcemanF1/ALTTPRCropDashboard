@@ -115,4 +115,33 @@ Public Class GlobalParam
 
         Return ""
     End Function
+    Public Shared Function GetNameSource(runnerNumber As Integer) As String
+        Select Case runnerNumber
+            Case 1
+                Return runnerNameSource_Runner1
+            Case 2
+                Return runnerNameSource_Runner2
+            Case 3
+                Return runnerNameSource_Runner3
+            Case 4
+                Return runnerNameSource_Runner4
+        End Select
+
+        Return ""
+    End Function
+    Public Shared Function GetTrackerSource(runnerNumber As Integer) As String
+        Select Case runnerNumber
+            Case 1
+                Return trackerSource_Runner1
+            Case 2
+                Return trackerSource_Runner2
+            Case 3
+                Return trackerSource_Runner3
+            Case 4
+                Return trackerSource_Runner4
+        End Select
+
+        Return ""
+    End Function
+
 End Class

@@ -1,14 +1,6 @@
 '﻿Imports System.Configuration
 
 Public Class UserSettings
-    ReadOnly _obsSourceListLeftGame As New DataSet
-    Dim _obsSourceListRightGame As New DataSet
-    Dim _obsSourceListLeftTimer As New DataSet
-    Dim _obsSourceListRightTimer As New DataSet
-    Dim _obsSourceListLeftRunner As New DataSet
-    Dim _obsSourceListRightRunner As New DataSet
-    Dim _obsSourceListLeftTracker As New DataSet
-    Dim _obsSourceListRightTracker As New DataSet
     Dim _obsCommentary As New DataSet
     Dim _obsGameSettings As New DataSet
     Dim CorrectMessage As String = "Correct Source Type"
@@ -29,28 +21,55 @@ Public Class UserSettings
 
         Dim match As Boolean = False
 
-        If String.IsNullOrWhiteSpace(cbLeftTimerWindow.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings1.gameSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbRightTimerWindow.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings1.timerSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbLeftGameWindow.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings1.trackerSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbRightGameWindow.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings1.runnerNameSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbLeftRunnerOBS.Text) And match = False Then
+
+        If String.IsNullOrWhiteSpace(rSettings2.gameSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbRightRunnerOBS.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings2.timerSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbLeftTrackerOBS.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings2.trackerSource) And match = False Then
             match = True
         End If
-        If String.IsNullOrWhiteSpace(cbRightTrackerOBS.Text) And match = False Then
+        If String.IsNullOrWhiteSpace(rSettings2.runnerNameSource) And match = False Then
+            match = True
+        End If
+
+        If String.IsNullOrWhiteSpace(rSettings3.gameSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings3.timerSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings3.trackerSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings3.runnerNameSource) And match = False Then
+            match = True
+        End If
+
+        If String.IsNullOrWhiteSpace(rSettings4.gameSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings4.timerSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings4.trackerSource) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(rSettings4.runnerNameSource) And match = False Then
             match = True
         End If
 
@@ -79,76 +98,84 @@ Public Class UserSettings
 
             Dim FullyValid As Boolean
 
-            FullyValid = CheckFullyValid("window_capture", cbLeftTimerWindow.Text)
+            FullyValid = CheckFullyValid("window_capture", rSettings1.timerSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.LeftTimerName_Bottom = cbLeftTimerWindow.Text
-                Else
-                    My.Settings.LeftTimerName = cbLeftTimerWindow.Text
-                End If
+                My.Settings.TimerName_Runner1 = rSettings1.timerSource
             End If
 
-            FullyValid = CheckFullyValid("window_capture", cbLeftGameWindow.Text)
+            FullyValid = CheckFullyValid("window_capture", rSettings1.gameSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.LeftGameName_Bottom = cbLeftGameWindow.Text
-                Else
-                    My.Settings.LeftGameName = cbLeftGameWindow.Text
-                End If
+                My.Settings.GameName_Runner1 = rSettings1.gameSource
             End If
 
-            FullyValid = CheckFullyValid("window_capture", cbRightTimerWindow.Text)
+            FullyValid = CheckFullyValid("text_gdiplus", rSettings1.runnerNameSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.RightTimerName_Bottom = cbRightTimerWindow.Text
-                Else
-                    My.Settings.RightTimerName = cbRightTimerWindow.Text
-                End If
+                My.Settings.RunnerOBS_Runner1 = rSettings1.runnerNameSource
             End If
 
-            FullyValid = CheckFullyValid("window_capture", cbRightGameWindow.Text)
+            FullyValid = CheckFullyValid("browser_source", rSettings1.trackerSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.RightGameName_Bottom = cbRightGameWindow.Text
-                Else
-                    My.Settings.RightGameName = cbRightGameWindow.Text
-                End If
+                My.Settings.TrackerOBS_Runner1 = rSettings1.trackerSource
             End If
 
-            FullyValid = CheckFullyValid("text_gdiplus", cbLeftRunnerOBS.Text)
+            FullyValid = CheckFullyValid("window_capture", rSettings2.timerSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.LeftRunnerOBS_Bottom = cbLeftRunnerOBS.Text
-                Else
-                    My.Settings.LeftRunnerOBS = cbLeftRunnerOBS.Text
-                End If
+                My.Settings.TimerName_Runner2 = rSettings2.timerSource
             End If
 
-            FullyValid = CheckFullyValid("text_gdiplus", cbRightRunnerOBS.Text)
+            FullyValid = CheckFullyValid("window_capture", rSettings2.gameSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.RightRunnerOBS_Bottom = cbRightRunnerOBS.Text
-                Else
-                    My.Settings.RightRunnerOBS = cbRightRunnerOBS.Text
-                End If
+                My.Settings.GameName_Runner2 = rSettings2.gameSource
             End If
 
-            FullyValid = CheckFullyValid("browser_source", cbLeftTrackerOBS.Text)
+            FullyValid = CheckFullyValid("text_gdiplus", rSettings2.runnerNameSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.LeftTrackerOBS_Bottom = cbLeftTrackerOBS.Text
-                Else
-                    My.Settings.LeftTrackerOBS = cbLeftTrackerOBS.Text
-                End If
+                My.Settings.RunnerOBS_Runner2 = rSettings2.runnerNameSource
             End If
 
-            FullyValid = CheckFullyValid("browser_source", cbRightTrackerOBS.Text)
+            FullyValid = CheckFullyValid("browser_source", rSettings2.trackerSource)
             If FullyValid = True Then
-                If FourPlayer Then
-                    My.Settings.RightTrackerOBS_Bottom = cbRightTrackerOBS.Text
-                Else
-                    My.Settings.RightTrackerOBS = cbRightTrackerOBS.Text
-                End If
+                My.Settings.TrackerOBS_Runner2 = rSettings2.trackerSource
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", rSettings3.timerSource)
+            If FullyValid = True Then
+                My.Settings.TimerName_Runner3 = rSettings3.timerSource
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", rSettings3.gameSource)
+            If FullyValid = True Then
+                My.Settings.GameName_Runner3 = rSettings3.gameSource
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", rSettings3.runnerNameSource)
+            If FullyValid = True Then
+                My.Settings.RunnerOBS_Runner3 = rSettings3.runnerNameSource
+            End If
+
+            FullyValid = CheckFullyValid("browser_source", rSettings3.trackerSource)
+            If FullyValid = True Then
+                My.Settings.TrackerOBS_Runner3 = rSettings3.trackerSource
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", rSettings4.timerSource)
+            If FullyValid = True Then
+                My.Settings.TimerName_Runner4 = rSettings4.timerSource
+            End If
+
+            FullyValid = CheckFullyValid("window_capture", rSettings4.gameSource)
+            If FullyValid = True Then
+                My.Settings.GameName_Runner4 = rSettings4.gameSource
+            End If
+
+            FullyValid = CheckFullyValid("text_gdiplus", rSettings4.runnerNameSource)
+            If FullyValid = True Then
+                My.Settings.RunnerOBS_Runner4 = rSettings4.runnerNameSource
+            End If
+
+            FullyValid = CheckFullyValid("browser_source", rSettings4.trackerSource)
+            If FullyValid = True Then
+                My.Settings.TrackerOBS_Runner4 = rSettings4.trackerSource
             End If
 
             FullyValid = CheckFullyValid("text_gdiplus", cbCommentaryOBS.Text)
@@ -190,62 +217,6 @@ Public Class UserSettings
         SaveSettings(False)
     End Sub
     Private Sub CreateNewSourceTable()
-        If _obsSourceListLeftGame.Tables.Count = 0 Then
-            _obsSourceListLeftGame.Tables.Add("Sources")
-            _obsSourceListLeftGame.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListLeftGame.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListRightGame.Tables.Count = 0 Then
-            _obsSourceListRightGame.Tables.Add("Sources")
-            _obsSourceListRightGame.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListRightGame.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListLeftTimer.Tables.Count = 0 Then
-            _obsSourceListLeftTimer.Tables.Add("Sources")
-            _obsSourceListLeftTimer.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListLeftTimer.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListRightTimer.Tables.Count = 0 Then
-            _obsSourceListRightTimer.Tables.Add("Sources")
-            _obsSourceListRightTimer.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListRightTimer.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListLeftRunner.Tables.Count = 0 Then
-            _obsSourceListLeftRunner.Tables.Add("Sources")
-            _obsSourceListLeftRunner.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListLeftRunner.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListRightRunner.Tables.Count = 0 Then
-            _obsSourceListRightRunner.Tables.Add("Sources")
-            _obsSourceListRightRunner.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListRightRunner.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListLeftTracker.Tables.Count = 0 Then
-            _obsSourceListLeftTracker.Tables.Add("Sources")
-            _obsSourceListLeftTracker.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListLeftTracker.Tables("Sources").Clear()
-        End If
-
-        If _obsSourceListRightTracker.Tables.Count = 0 Then
-            _obsSourceListRightTracker.Tables.Add("Sources")
-            _obsSourceListRightTracker.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsSourceListRightTracker.Tables("Sources").Clear()
-        End If
-
         If _obsCommentary.Tables.Count = 0 Then
             _obsCommentary.Tables.Add("Sources")
             _obsCommentary.Tables("Sources").Columns.Add("SourceName")
@@ -265,14 +236,26 @@ Public Class UserSettings
         If My.Settings.HasFinishedWelcome = False Then
 
         Else
-            cbLeftTimerWindow.Text = If(FourPlayer, My.Settings.LeftTimerName_Bottom, My.Settings.LeftTimerName)
-            cbLeftGameWindow.Text = If(FourPlayer, My.Settings.LeftGameName_Bottom, My.Settings.LeftGameName)
-            cbRightTimerWindow.Text = If(FourPlayer, My.Settings.RightTimerName_Bottom, My.Settings.RightTimerName)
-            cbRightGameWindow.Text = If(FourPlayer, My.Settings.RightGameName_Bottom, My.Settings.RightGameName)
-            cbLeftRunnerOBS.Text = If(FourPlayer, My.Settings.LeftRunnerOBS_Bottom, My.Settings.LeftRunnerOBS)
-            cbRightRunnerOBS.Text = If(FourPlayer, My.Settings.RightRunnerOBS_Bottom, My.Settings.RightRunnerOBS)
-            cbLeftTrackerOBS.Text = If(FourPlayer, My.Settings.LeftTrackerOBS_Bottom, My.Settings.LeftTrackerOBS)
-            cbRightTrackerOBS.Text = If(FourPlayer, My.Settings.RightTrackerOBS_Bottom, My.Settings.RightTrackerOBS)
+            rSettings1.runnerNameSource = My.Settings.RunnerOBS_Runner1
+            rSettings1.gameSource = My.Settings.GameName_Runner1
+            rSettings1.timerSource = My.Settings.TimerName_Runner1
+            rSettings1.trackerSource = My.Settings.TrackerOBS_Runner1
+
+            rSettings2.runnerNameSource = My.Settings.RunnerOBS_Runner2
+            rSettings2.gameSource = My.Settings.GameName_Runner2
+            rSettings2.timerSource = My.Settings.TimerName_Runner2
+            rSettings2.trackerSource = My.Settings.TrackerOBS_Runner2
+
+            rSettings3.runnerNameSource = My.Settings.RunnerOBS_Runner3
+            rSettings3.gameSource = My.Settings.GameName_Runner3
+            rSettings3.timerSource = My.Settings.TimerName_Runner3
+            rSettings3.trackerSource = My.Settings.TrackerOBS_Runner3
+
+            rSettings4.runnerNameSource = My.Settings.RunnerOBS_Runner4
+            rSettings4.gameSource = My.Settings.GameName_Runner4
+            rSettings4.timerSource = My.Settings.TimerName_Runner4
+            rSettings4.trackerSource = My.Settings.TrackerOBS_Runner4
+
             cbCommentaryOBS.Text = My.Settings.CommentaryOBS
             cbGameSettings.Text = My.Settings.GameSettings
 
@@ -295,8 +278,6 @@ Public Class UserSettings
         txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
         txtPassword1.Text = My.Settings.Password1
 
-        roTwoPlayer.Visible = False
-        roFourPlayerBottom.Visible = False
         panOBS.Visible = False
 
         txtTwitchChannel.Text = My.Settings.TwitchChannel
@@ -304,7 +285,6 @@ Public Class UserSettings
         gbConnection1.Visible = False
 
         roDefault.Checked = My.Settings.DefaultConnection
-        roTwoPlayer.Checked = True
 
         btnSaveThenVLC.Visible = ShowVLCOption
 
@@ -312,18 +292,11 @@ Public Class UserSettings
 
         CheckObsPort()
 
+        AddHandlers()
     End Sub
     Private Sub RefreshScenes()
         Dim scenes = OBSWebSocketCropper.Obs.ListScenes()
 
-        _obsSourceListLeftGame.Clear()
-        _obsSourceListLeftTimer.Clear()
-        _obsSourceListRightGame.Clear()
-        _obsSourceListRightTimer.Clear()
-        _obsSourceListLeftRunner.Clear()
-        _obsSourceListRightRunner.Clear()
-        _obsSourceListLeftTracker.Clear()
-        _obsSourceListRightTracker.Clear()
         _obsCommentary.Clear()
         _obsGameSettings.Clear()
 
@@ -333,53 +306,14 @@ Public Class UserSettings
 
             Dim y As Integer
             For y = 0 To scenes(x).Items.Count - 1
-                dr = _obsSourceListLeftGame.Tables("Sources").NewRow
+                dr = _obsCommentary.Tables("Sources").NewRow
                 dr.Item("SourceName") = scenes(x).Items(y).SourceName
-                _obsSourceListLeftGame.Tables("Sources").Rows.Add(dr)
+                _obsCommentary.Tables("Sources").Rows.Add(dr)
             Next
 
         Next
-        _obsSourceListRightGame = _obsSourceListLeftGame.Copy
-        _obsSourceListRightTimer = _obsSourceListLeftGame.Copy
-        _obsSourceListLeftTimer = _obsSourceListLeftGame.Copy
-        _obsSourceListLeftRunner = _obsSourceListLeftGame.Copy
-        _obsSourceListRightRunner = _obsSourceListLeftGame.Copy
-        _obsSourceListLeftTracker = _obsSourceListLeftGame.Copy
-        _obsSourceListRightTracker = _obsSourceListLeftGame.Copy
-        _obsCommentary = _obsSourceListLeftGame.Copy
-        _obsGameSettings = _obsSourceListLeftGame.Copy
 
-        cbRightGameWindow.DataSource = _obsSourceListRightGame.Tables("Sources")
-        cbRightGameWindow.DisplayMember = "SourceName"
-        cbRightGameWindow.ValueMember = "SourceName"
-
-        cbRightTimerWindow.DataSource = _obsSourceListRightTimer.Tables("Sources")
-        cbRightTimerWindow.DisplayMember = "SourceName"
-        cbRightTimerWindow.ValueMember = "SourceName"
-
-        cbLeftGameWindow.DataSource = _obsSourceListLeftGame.Tables("Sources")
-        cbLeftGameWindow.DisplayMember = "SourceName"
-        cbLeftGameWindow.ValueMember = "SourceName"
-
-        cbLeftTimerWindow.DataSource = _obsSourceListLeftTimer.Tables("Sources")
-        cbLeftTimerWindow.DisplayMember = "SourceName"
-        cbLeftTimerWindow.ValueMember = "SourceName"
-
-        cbLeftRunnerOBS.DataSource = _obsSourceListLeftRunner.Tables("Sources")
-        cbLeftRunnerOBS.DisplayMember = "SourceName"
-        cbLeftRunnerOBS.ValueMember = "SourceName"
-
-        cbRightRunnerOBS.DataSource = _obsSourceListRightRunner.Tables("Sources")
-        cbRightRunnerOBS.DisplayMember = "SourceName"
-        cbRightRunnerOBS.ValueMember = "SourceName"
-
-        cbLeftTrackerOBS.DataSource = _obsSourceListLeftTracker.Tables("Sources")
-        cbLeftTrackerOBS.DisplayMember = "SourceName"
-        cbLeftTrackerOBS.ValueMember = "SourceName"
-
-        cbRightTrackerOBS.DataSource = _obsSourceListRightTracker.Tables("Sources")
-        cbRightTrackerOBS.DisplayMember = "SourceName"
-        cbRightTrackerOBS.ValueMember = "SourceName"
+        _obsGameSettings = _obsCommentary.Copy
 
         cbCommentaryOBS.DataSource = _obsCommentary.Tables("Sources")
         cbCommentaryOBS.DisplayMember = "SourceName"
@@ -389,20 +323,100 @@ Public Class UserSettings
         cbGameSettings.DisplayMember = "SourceName"
         cbGameSettings.ValueMember = "SourceName"
 
+        RefreshUserControlDropdowns()
+
         SetBlankDropdowns()
     End Sub
+    Private Sub RefreshUserControlDropdowns()
+        rSettings1.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings1.cbGameWindow.DisplayMember = "SourceName"
+        rSettings1.cbGameWindow.ValueMember = "SourceName"
+
+        rSettings1.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings1.cbTimerWindow.DisplayMember = "SourceName"
+        rSettings1.cbTimerWindow.ValueMember = "SourceName"
+
+        rSettings1.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings1.cbTrackerOBS.DisplayMember = "SourceName"
+        rSettings1.cbTrackerOBS.ValueMember = "SourceName"
+
+        rSettings1.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings1.cbRunnerOBS.DisplayMember = "SourceName"
+        rSettings1.cbRunnerOBS.ValueMember = "SourceName"
+
+        rSettings2.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings2.cbGameWindow.DisplayMember = "SourceName"
+        rSettings2.cbGameWindow.ValueMember = "SourceName"
+
+        rSettings2.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings2.cbTimerWindow.DisplayMember = "SourceName"
+        rSettings2.cbTimerWindow.ValueMember = "SourceName"
+
+        rSettings2.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings2.cbTrackerOBS.DisplayMember = "SourceName"
+        rSettings2.cbTrackerOBS.ValueMember = "SourceName"
+
+        rSettings2.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings2.cbRunnerOBS.DisplayMember = "SourceName"
+        rSettings2.cbRunnerOBS.ValueMember = "SourceName"
+
+        rSettings3.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings3.cbRunnerOBS.DisplayMember = "SourceName"
+        rSettings3.cbRunnerOBS.ValueMember = "SourceName"
+
+        rSettings3.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings3.cbTimerWindow.DisplayMember = "SourceName"
+        rSettings3.cbTimerWindow.ValueMember = "SourceName"
+
+        rSettings3.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings3.cbTrackerOBS.DisplayMember = "SourceName"
+        rSettings3.cbTrackerOBS.ValueMember = "SourceName"
+
+        rSettings3.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings3.cbGameWindow.DisplayMember = "SourceName"
+        rSettings3.cbGameWindow.ValueMember = "SourceName"
+
+        rSettings4.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings4.cbGameWindow.DisplayMember = "SourceName"
+        rSettings4.cbGameWindow.ValueMember = "SourceName"
+
+        rSettings4.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings4.cbTimerWindow.DisplayMember = "SourceName"
+        rSettings4.cbTimerWindow.ValueMember = "SourceName"
+
+        rSettings4.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings4.cbTrackerOBS.DisplayMember = "SourceName"
+        rSettings4.cbTrackerOBS.ValueMember = "SourceName"
+
+        rSettings4.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
+        rSettings4.cbRunnerOBS.DisplayMember = "SourceName"
+        rSettings4.cbRunnerOBS.ValueMember = "SourceName"
+    End Sub
     Private Sub SetBlankDropdowns()
-        cbLeftTimerWindow.Text = ""
-        cbLeftGameWindow.Text = ""
-        cbRightTimerWindow.Text = ""
-        cbRightGameWindow.Text = ""
-        cbLeftRunnerOBS.Text = ""
-        cbRightRunnerOBS.Text = ""
-        cbLeftTrackerOBS.Text = ""
-        cbRightTrackerOBS.Text = ""
+        rSettings1.timerSource = ""
+        rSettings1.gameSource = ""
+        rSettings1.trackerSource = ""
+        rSettings1.runnerNameSource = ""
+
+        rSettings2.timerSource = ""
+        rSettings2.gameSource = ""
+        rSettings2.trackerSource = ""
+        rSettings2.runnerNameSource = ""
+
+        rSettings3.timerSource = ""
+        rSettings3.gameSource = ""
+        rSettings3.trackerSource = ""
+        rSettings3.runnerNameSource = ""
+
+        rSettings4.timerSource = ""
+        rSettings4.gameSource = ""
+        rSettings4.trackerSource = ""
+        rSettings4.runnerNameSource = ""
+
         cbCommentaryOBS.Text = ""
         cbGameSettings.Text = ""
     End Sub
+
     Private Sub CheckObsPort()
 
         Dim portOpen As Boolean = OBSWebSocketCropper.Obs.IsPortOpen(OBSWebSocketCropper.ConnectionString)
@@ -411,8 +425,6 @@ Public Class UserSettings
             MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
         Else
             If ObsWebSocketCropper.Obs.IsConnected Then
-                roTwoPlayer.Visible = True
-                roFourPlayerBottom.Visible = True
                 panOBS.Visible = True
                 RefreshScenes()
                 SetUserSettings()
@@ -436,8 +448,6 @@ Public Class UserSettings
 
         If ObsWebSocketCropper.Obs.IsConnected Then
             panOBS.Visible = True
-            roTwoPlayer.Visible = True
-            roFourPlayerBottom.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True
             RefreshScenes()
@@ -472,40 +482,8 @@ Public Class UserSettings
             roCustom.Checked = True
         End If
     End Sub
-    Private Sub roTwoPlayer_CheckedChanged(sender As Object, e As EventArgs) Handles roTwoPlayer.CheckedChanged
-        If roTwoPlayer.Checked = True Then
-            roFourPlayerBottom.Checked = False
-        Else
-            roFourPlayerBottom.Checked = True
-        End If
-
-        CheckFourPlayer()
-    End Sub
-    Private Sub roFourPlayerBottom_CheckedChanged(sender As Object, e As EventArgs) Handles roFourPlayerBottom.CheckedChanged
-        If roFourPlayerBottom.Checked = True Then
-            roTwoPlayer.Checked = False
-        Else
-            roTwoPlayer.Checked = True
-        End If
-    End Sub
-    Private Sub CheckFourPlayer()
-        FourPlayer = roFourPlayerBottom.Checked
-
-        If FourPlayer = True Then
-            lblGameSettings.Visible = False
-            cbGameSettings.Visible = False
-            cbCommentaryOBS.Visible = False
-        Else
-            lblGameSettings.Visible = True
-            cbGameSettings.Visible = True
-            cbCommentaryOBS.Visible = True
-        End If
-
-        SetBlankDropdowns()
-        SetUserSettings()
-    End Sub
     Private Sub txtConnectionPort_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtConnectionPort.KeyPress
-        e.Handled = OBSWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
+        e.Handled = ObsWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
     End Sub
     Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
         SaveSettings(True)
@@ -523,201 +501,149 @@ Public Class UserSettings
     Function CheckItemInList(ByVal ListValue As String) As Boolean
         Dim x As Integer
         Dim MatchedValue As Boolean
-        If _obsSourceListLeftGame.Tables.Count > 0 Then
-            For x = 0 To _obsSourceListLeftGame.Tables("Sources").Rows.Count - 1
-                If ListValue = _obsSourceListLeftGame.Tables("Sources").Rows(x)("SourceName")?.ToString() Then
+        If _obsCommentary.Tables.Count > 0 Then
+            For x = 0 To _obsCommentary.Tables("Sources").Rows.Count - 1
+                If ListValue = _obsCommentary.Tables("Sources").Rows(x)("SourceName")?.ToString() Then
                     MatchedValue = True
                     Exit For
                 End If
             Next
-
-
         End If
 
         Return MatchedValue
     End Function
-    Private Sub cbLeftRunnerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerOBS.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbLeftRunnerOBS.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbLeftRunnerOBS.Text)
+    Private Sub AddHandlers()
+        AddHandler rSettings1.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings1.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings1.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings1.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbLeftRunnerOBS.Text)
+        AddHandler rSettings2.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings2.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings2.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings2.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
-                lblLeftRunnerStatus.Visible = True
+        AddHandler rSettings3.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings3.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings3.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings3.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
-                If sSettings = True Then
-                    lblLeftRunnerStatus.Text = CorrectMessage
-                    lblLeftRunnerStatus.ForeColor = CorrectColour
-                Else
-                    lblLeftRunnerStatus.Text = IncorrectMessage
-                    lblLeftRunnerStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblLeftRunnerStatus.Visible = False
-            End If
-        Else
-            lblLeftRunnerStatus.Visible = False
-        End If
+        AddHandler rSettings4.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings4.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings4.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings4.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
     End Sub
-    Private Sub cbRightRunnerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerOBS.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbRightRunnerOBS.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbRightRunnerOBS.Text)
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbRightRunnerOBS.Text)
+    Function getParentControlName(sender As Object) As String
+        Dim ctl As Control = CType(sender, Control)
 
-                lblRightRunnerStatus.Visible = True
+        Return ctl.Parent.Name.ToString
+    End Function
+    Function getControlName(sender As Object) As String
+        Dim ctl As Control = CType(sender, Control)
 
-                If sSettings = True Then
-                    lblRightRunnerStatus.Text = CorrectMessage
-                    lblRightRunnerStatus.ForeColor = CorrectColour
-                Else
-                    lblRightRunnerStatus.Text = IncorrectMessage
-                    lblRightRunnerStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblRightRunnerStatus.Visible = False
-            End If
-        Else
-            lblRightRunnerStatus.Visible = False
-        End If
+        Return ctl.Name.ToString
+    End Function
+    Protected Sub textSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
+
+        checkUserControlField("text_gdiplus", senderName, senderParent)
     End Sub
-    Private Sub cbLeftTimerWindow_TextChanged(sender As Object, e As EventArgs) Handles cbLeftTimerWindow.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbLeftTimerWindow.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbLeftTimerWindow.Text)
+    Protected Sub browserSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbLeftTimerWindow.Text)
-
-                lblLeftTimerStatus.Visible = True
-
-                If sSettings = True Then
-                    lblLeftTimerStatus.Text = CorrectMessage
-                    lblLeftTimerStatus.ForeColor = CorrectColour
-                Else
-                    lblLeftTimerStatus.Text = IncorrectMessage
-                    lblLeftTimerStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblLeftTimerStatus.Visible = False
-            End If
-        Else
-            lblLeftTimerStatus.Visible = False
-        End If
+        checkUserControlField("browser_source", senderName, senderParent)
     End Sub
-    Private Sub cbRightTimerWindow_TextChanged(sender As Object, e As EventArgs) Handles cbRightTimerWindow.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbRightTimerWindow.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbRightTimerWindow.Text)
+    Protected Sub windowSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbRightTimerWindow.Text)
-
-                lblRightTimerStatus.Visible = True
-
-                If sSettings = True Then
-                    lblRightTimerStatus.Text = CorrectMessage
-                    lblRightTimerStatus.ForeColor = CorrectColour
-                Else
-                    lblRightTimerStatus.Text = IncorrectMessage
-                    lblRightTimerStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblRightTimerStatus.Visible = False
-            End If
-        Else
-            lblRightTimerStatus.Visible = False
-        End If
+        checkUserControlField("window_capture", senderName, senderParent)
     End Sub
-    Private Sub cbLeftGameWindow_TextChanged(sender As Object, e As EventArgs) Handles cbLeftGameWindow.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbLeftGameWindow.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbLeftGameWindow.Text)
+    Private Sub checkUserControlField(expectedSourceType As String, sourceName As String, senderParent As String)
+        Dim cbName As ComboBox
+        Dim statusLabel As Label
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbLeftGameWindow.Text)
-
-                lblLeftGameStatus.Visible = True
-
-                If sSettings = True Then
-                    lblLeftGameStatus.Text = CorrectMessage
-                    lblLeftGameStatus.ForeColor = CorrectColour
-                Else
-                    lblLeftGameStatus.Text = IncorrectMessage
-                    lblLeftGameStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblLeftGameStatus.Visible = False
+        If senderParent = "rSettings1" Then
+            If sourceName = "cbGameWindow" Then
+                cbName = rSettings1.cbGameWindow
+                statusLabel = rSettings1.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                cbName = rSettings1.cbRunnerOBS
+                statusLabel = rSettings1.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                cbName = rSettings1.cbTimerWindow
+                statusLabel = rSettings1.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                cbName = rSettings1.cbTrackerOBS
+                statusLabel = rSettings1.lblTrackerStatus
             End If
-        Else
-            lblLeftGameStatus.Visible = False
+        ElseIf senderParent = "rSettings2" Then
+            If sourceName = "cbGameWindow" Then
+                cbName = rSettings2.cbGameWindow
+                statusLabel = rSettings2.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                cbName = rSettings2.cbRunnerOBS
+                statusLabel = rSettings2.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                cbName = rSettings2.cbTimerWindow
+                statusLabel = rSettings2.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                cbName = rSettings2.cbTrackerOBS
+                statusLabel = rSettings2.lblTrackerStatus
+            End If
+        ElseIf senderParent = "rSettings3" Then
+            If sourceName = "cbGameWindow" Then
+                cbName = rSettings3.cbGameWindow
+                statusLabel = rSettings3.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                cbName = rSettings3.cbRunnerOBS
+                statusLabel = rSettings3.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                cbName = rSettings3.cbTimerWindow
+                statusLabel = rSettings3.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                cbName = rSettings3.cbTrackerOBS
+                statusLabel = rSettings3.lblTrackerStatus
+            End If
+        ElseIf senderParent = "rSettings4" Then
+            If sourceName = "cbGameWindow" Then
+                cbName = rSettings4.cbGameWindow
+                statusLabel = rSettings4.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                cbName = rSettings4.cbRunnerOBS
+                statusLabel = rSettings4.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                cbName = rSettings4.cbTimerWindow
+                statusLabel = rSettings4.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                cbName = rSettings4.cbTrackerOBS
+                statusLabel = rSettings4.lblTrackerStatus
+            End If
         End If
-    End Sub
-    Private Sub cbRightGameWindow_TextChanged(sender As Object, e As EventArgs) Handles cbRightGameWindow.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbRightGameWindow.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbRightGameWindow.Text)
+
+        If Not String.IsNullOrWhiteSpace(cbName.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbName.Text)
 
             If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("window_capture", cbRightGameWindow.Text)
+                Dim sSettings As Boolean = CheckForValidSourceTypes(expectedSourceType, cbName.Text)
 
-                lblRightGameStatus.Visible = True
-
-                If sSettings = True Then
-                    lblRightGameStatus.Text = CorrectMessage
-                    lblRightGameStatus.ForeColor = CorrectColour
-                Else
-                    lblRightGameStatus.Text = IncorrectMessage
-                    lblRightGameStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblRightGameStatus.Visible = False
-            End If
-        Else
-            lblRightGameStatus.Visible = False
-        End If
-    End Sub
-    Private Sub cbLeftTrackerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbLeftTrackerOBS.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbLeftTrackerOBS.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbLeftTrackerOBS.Text)
-
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("browser_source", cbLeftTrackerOBS.Text)
-
-                lblLeftTrackerStatus.Visible = True
+                statusLabel.Visible = True
 
                 If sSettings = True Then
-                    lblLeftTrackerStatus.Text = CorrectMessage
-                    lblLeftTrackerStatus.ForeColor = CorrectColour
+                    statusLabel.Text = CorrectMessage
+                    statusLabel.ForeColor = CorrectColour
                 Else
-                    lblLeftTrackerStatus.Text = IncorrectMessage
-                    lblLeftTrackerStatus.ForeColor = InCorrectColour
+                    statusLabel.Text = IncorrectMessage
+                    statusLabel.ForeColor = InCorrectColour
                 End If
             Else
-                lblLeftTrackerStatus.Visible = False
+                statusLabel.Visible = False
             End If
         Else
-            lblLeftTrackerStatus.Visible = False
-        End If
-    End Sub
-    Private Sub cbRightTrackerOBS_TextChanged(sender As Object, e As EventArgs) Handles cbRightTrackerOBS.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbRightTrackerOBS.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbRightTrackerOBS.Text)
-
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("browser_source", cbRightTrackerOBS.Text)
-
-                lblRightTrackerStatus.Visible = True
-
-                If sSettings = True Then
-                    lblRightTrackerStatus.Text = CorrectMessage
-                    lblRightTrackerStatus.ForeColor = CorrectColour
-                Else
-                    lblRightTrackerStatus.Text = IncorrectMessage
-                    lblRightTrackerStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblRightTrackerStatus.Visible = False
-            End If
-        Else
-            lblRightTrackerStatus.Visible = False
+            statusLabel.Visible = False
         End If
     End Sub
     Private Sub cbCommentaryOBS_TextChanged(sender As Object, e As EventArgs) Handles cbCommentaryOBS.TextChanged
@@ -792,3 +718,4 @@ Public Class UserSettings
         Return FullyValid
     End Function
 End Class
+

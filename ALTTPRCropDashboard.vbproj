@@ -282,6 +282,12 @@
     <Compile Include="RunnerControls.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="RunnerSettings.Designer.vb">
+      <DependentUpon>RunnerSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RunnerSettings.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserSettings.Designer.vb">
       <DependentUpon>UserSettings.vb</DependentUpon>
     </Compile>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RunnerControls.resx">
       <DependentUpon>RunnerControls.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunnerSettings.resx">
+      <DependentUpon>RunnerSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserSettings.resx">
       <DependentUpon>UserSettings.vb</DependentUpon>
