@@ -31,4 +31,9 @@
             cbGameWindow.Text = value
         End Set
     End Property
+    Public Sub SetComboBoxData(sourceData As DataSet, sourceName As ComboBox)
+        sourceName.DataSource = sourceData.Tables("Sources").Copy
+        sourceName.DisplayMember = "SourceName"
+        sourceName.ValueMember = "SourceName"
+    End Sub
 End Class

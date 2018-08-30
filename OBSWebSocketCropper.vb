@@ -786,59 +786,19 @@ Public Class ObsWebSocketCropper
             Exit Sub
         End If
 
-        Dim Vlc1, Vlc2, Vlc3, Vlc4 As String
-
-        If Not String.IsNullOrWhiteSpace(rControl1.cbVLCSource.Text) Then
-            Vlc1 = rControl1.cbVLCSource.Text
-        Else
-            Vlc1 = ""
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl2.cbVLCSource.Text) Then
-            Vlc2 = rControl2.cbVLCSource.Text
-        Else
-            Vlc2 = ""
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl3.cbVLCSource.Text) Then
-            Vlc3 = rControl3.cbVLCSource.Text
-        Else
-            Vlc3 = ""
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl4.cbVLCSource.Text) Then
-            Vlc4 = rControl4.cbVLCSource.Text
-        Else
-            Vlc4 = ""
-        End If
-
-        _vlcList.Clear()
-
         Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
 
         rControl1.cbVLCSource.DataSource = data.ToList()
-        rControl1.cbVLCSource.DisplayMember = "VLCName"
-        rControl1.cbVLCSource.ValueMember = "VLCName"
-
-        rControl1.cbVLCSource.Text = ""
+        rControl1.SetComboBoxMembers()
 
         rControl2.cbVLCSource.DataSource = data.ToList()
-        rControl2.cbVLCSource.DisplayMember = "VLCName"
-        rControl2.cbVLCSource.ValueMember = "VLCName"
-
-        rControl2.cbVLCSource.Text = ""
+        rControl2.SetComboBoxMembers()
 
         rControl3.cbVLCSource.DataSource = data.ToList()
-        rControl3.cbVLCSource.DisplayMember = "VLCName"
-        rControl3.cbVLCSource.ValueMember = "VLCName"
-
-        rControl3.cbVLCSource.Text = ""
+        rControl3.SetComboBoxMembers()
 
         rControl4.cbVLCSource.DataSource = data.ToList()
-        rControl4.cbVLCSource.DisplayMember = "VLCName"
-        rControl4.cbVLCSource.ValueMember = "VLCName"
-
-        rControl4.cbVLCSource.Text = ""
+        rControl4.SetComboBoxMembers()
 
         If Not String.IsNullOrWhiteSpace(rControl1.lblRunnerTwitch.Text) Then
             Dim tempText = rControl1.lblRunnerTwitch.Text.Remove(0, 8)

@@ -307,6 +307,7 @@ Public Class UserSettings
         AddUserControls()
 
         panOBS.Visible = False
+        btnRefreshScenes.Visible = False
 
         txtTwitchChannel.Text = My.Settings.TwitchChannel
 
@@ -356,69 +357,26 @@ Public Class UserSettings
         SetBlankDropdowns()
     End Sub
     Private Sub RefreshUserControlDropdowns()
-        rSettings1.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings1.cbGameWindow.DisplayMember = "SourceName"
-        rSettings1.cbGameWindow.ValueMember = "SourceName"
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbGameWindow)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTimerWindow)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTrackerOBS)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbRunnerOBS)
 
-        rSettings1.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings1.cbTimerWindow.DisplayMember = "SourceName"
-        rSettings1.cbTimerWindow.ValueMember = "SourceName"
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbGameWindow)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTimerWindow)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTrackerOBS)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbRunnerOBS)
 
-        rSettings1.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings1.cbTrackerOBS.DisplayMember = "SourceName"
-        rSettings1.cbTrackerOBS.ValueMember = "SourceName"
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbGameWindow)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTimerWindow)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTrackerOBS)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbRunnerOBS)
 
-        rSettings1.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings1.cbRunnerOBS.DisplayMember = "SourceName"
-        rSettings1.cbRunnerOBS.ValueMember = "SourceName"
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbGameWindow)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTimerWindow)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTrackerOBS)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbRunnerOBS)
 
-        rSettings2.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings2.cbGameWindow.DisplayMember = "SourceName"
-        rSettings2.cbGameWindow.ValueMember = "SourceName"
-
-        rSettings2.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings2.cbTimerWindow.DisplayMember = "SourceName"
-        rSettings2.cbTimerWindow.ValueMember = "SourceName"
-
-        rSettings2.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings2.cbTrackerOBS.DisplayMember = "SourceName"
-        rSettings2.cbTrackerOBS.ValueMember = "SourceName"
-
-        rSettings2.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings2.cbRunnerOBS.DisplayMember = "SourceName"
-        rSettings2.cbRunnerOBS.ValueMember = "SourceName"
-
-        rSettings3.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings3.cbRunnerOBS.DisplayMember = "SourceName"
-        rSettings3.cbRunnerOBS.ValueMember = "SourceName"
-
-        rSettings3.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings3.cbTimerWindow.DisplayMember = "SourceName"
-        rSettings3.cbTimerWindow.ValueMember = "SourceName"
-
-        rSettings3.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings3.cbTrackerOBS.DisplayMember = "SourceName"
-        rSettings3.cbTrackerOBS.ValueMember = "SourceName"
-
-        rSettings3.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings3.cbGameWindow.DisplayMember = "SourceName"
-        rSettings3.cbGameWindow.ValueMember = "SourceName"
-
-        rSettings4.cbGameWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings4.cbGameWindow.DisplayMember = "SourceName"
-        rSettings4.cbGameWindow.ValueMember = "SourceName"
-
-        rSettings4.cbTimerWindow.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings4.cbTimerWindow.DisplayMember = "SourceName"
-        rSettings4.cbTimerWindow.ValueMember = "SourceName"
-
-        rSettings4.cbTrackerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings4.cbTrackerOBS.DisplayMember = "SourceName"
-        rSettings4.cbTrackerOBS.ValueMember = "SourceName"
-
-        rSettings4.cbRunnerOBS.DataSource = _obsCommentary.Tables("Sources").Copy
-        rSettings4.cbRunnerOBS.DisplayMember = "SourceName"
-        rSettings4.cbRunnerOBS.ValueMember = "SourceName"
     End Sub
     Private Sub SetBlankDropdowns()
         rSettings1.timerSource = ""
@@ -454,6 +412,7 @@ Public Class UserSettings
         Else
             If ObsWebSocketCropper.Obs.IsConnected Then
                 panOBS.Visible = True
+                btnRefreshScenes.Visible = True
                 RefreshScenes()
                 SetUserSettings()
 
@@ -478,6 +437,7 @@ Public Class UserSettings
             panOBS.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True
+            btnRefreshScenes.Visible = True
             RefreshScenes()
             SetUserSettings()
         End If

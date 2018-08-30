@@ -142,6 +142,14 @@ Public Class RunnerControls
         End Set
     End Property
 
+    Public Sub SetComboBoxMembers()
+        cbVLCSource.DisplayMember = "VLCName"
+        cbVLCSource.ValueMember = "VLCName"
+        cbVLCSource.Text = ""
+    End Sub
+    'Public Sub CheckVLCForRunner(data As List(Of ))
+
+    'End Sub
 #End Region
 
 End Class
