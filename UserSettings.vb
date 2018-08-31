@@ -503,22 +503,22 @@ Public Class UserSettings
     Private Sub AddHandlers()
         AddHandler rSettings1.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
         AddHandler rSettings1.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings1.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings1.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
         AddHandler rSettings1.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
         AddHandler rSettings2.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
         AddHandler rSettings2.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings2.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings2.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
         AddHandler rSettings2.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
         AddHandler rSettings3.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
         AddHandler rSettings3.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings3.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings3.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
         AddHandler rSettings3.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
         AddHandler rSettings4.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
         AddHandler rSettings4.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings4.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings4.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
         AddHandler rSettings4.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
     End Sub
 
@@ -551,7 +551,7 @@ Public Class UserSettings
         checkUserControlField("window_capture", senderName, senderParent)
     End Sub
     Private Sub checkUserControlField(expectedSourceType As String, sourceName As String, senderParent As String)
-        Dim cbName As ComboBox
+        Dim cbName As ComboBox = rSettings1.cbGameWindow
         Dim statusLabel As Label
 
         If senderParent = "rSettings1" Then

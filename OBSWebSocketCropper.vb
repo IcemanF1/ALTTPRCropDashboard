@@ -17,8 +17,6 @@ Public Class ObsWebSocketCropper
     Friend WithEvents rControl3 As New RunnerControls
     Friend WithEvents rControl4 As New RunnerControls
 
-    Private _vlcList As New DataSet
-
     Public WithEvents Obs As New ObsWebSocketPlus
     Private WithEvents _obs2 As New ObsWebSocketPlus
 
@@ -26,6 +24,8 @@ Public Class ObsWebSocketCropper
 
     Public ObsConnectionStatus As String
     Public ObsConnectionStatus2 As String
+
+    Public ReadOnly TrackerRunnerColour As String = "Gold"
 
     Public ReadOnly Property ConnectionString As String
         Get
@@ -46,19 +46,12 @@ Public Class ObsWebSocketCropper
 
     Private _cropApi As CropApi
     Private ReadOnly _cropperMath As New CropperMath
-    Private _vlcListLeft As New DataSet
-    Private _vlcListRight As New DataSet
-    Private _vlcListLeftBottom As New DataSet
-    Private _vlcListRightBottom As New DataSet
     Private ReadOnly _viewModel As New CropperViewModel
-
-    'Public WithEvents RControl1 As New RunnerControls
-    'Public WithEvents RControl2 As New RunnerControls
-    'Public WithEvents RControl3 As New RunnerControls
-    'Public WithEvents RControl4 As New RunnerControls
 
     Private _check2NdObs As Boolean
     Private _lastUpdate As Integer
+
+    Public Shared vlcProcesses As List(Of Process)
 
 #Region " Button Clicks "
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
@@ -781,70 +774,16 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub RefreshVlc()
-        Dim vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
+        vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
+
         If Not vlcProcesses.Any() Then
             Exit Sub
         End If
 
-        Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
-
-        rControl1.cbVLCSource.DataSource = data.ToList()
-        rControl1.SetComboBoxMembers()
-
-        rControl2.cbVLCSource.DataSource = data.ToList()
-        rControl2.SetComboBoxMembers()
-
-        rControl3.cbVLCSource.DataSource = data.ToList()
-        rControl3.SetComboBoxMembers()
-
-        rControl4.cbVLCSource.DataSource = data.ToList()
-        rControl4.SetComboBoxMembers()
-
-        If Not String.IsNullOrWhiteSpace(rControl1.lblRunnerTwitch.Text) Then
-            Dim tempText = rControl1.lblRunnerTwitch.Text.Remove(0, 8)
-            If Not String.IsNullOrWhiteSpace(tempText) Then
-                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-                If match IsNot Nothing Then
-                    rControl1.cbVLCSource.Text = match.VLCName
-                End If
-            End If
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl2.lblRunnerTwitch.Text) Then
-            Dim tempText = rControl2.lblRunnerTwitch.Text.Remove(0, 8)
-            If Not String.IsNullOrWhiteSpace(tempText) Then
-                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-                If match IsNot Nothing Then
-                    rControl2.cbVLCSource.Text = match.VLCName
-                End If
-            End If
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl3.lblRunnerTwitch.Text) Then
-            Dim tempText = rControl3.lblRunnerTwitch.Text.Remove(0, 8)
-            If Not String.IsNullOrWhiteSpace(tempText) Then
-                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-                If match IsNot Nothing Then
-                    rControl3.cbVLCSource.Text = match.VLCName
-                End If
-            End If
-        End If
-
-        If Not String.IsNullOrWhiteSpace(rControl4.lblRunnerTwitch.Text) Then
-            Dim tempText = rControl4.lblRunnerTwitch.Text.Remove(0, 8)
-            If Not String.IsNullOrWhiteSpace(tempText) Then
-                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-                If match IsNot Nothing Then
-                    rControl4.cbVLCSource.Text = match.VLCName
-                End If
-            End If
-        End If
-    End Sub
-    Private Sub CheckVLCWithRunners()
+        rControl1.CheckVLCForRunner()
+        rControl2.CheckVLCForRunner()
+        rControl3.CheckVLCForRunner()
+        rControl4.CheckVLCForRunner()
 
     End Sub
     Private Sub RefreshRunnerNames()
@@ -1540,6 +1479,13 @@ Public Class ObsWebSocketCropper
         RegisterObsDependency(rControl3)
         RegisterObsDependency(rControl4)
 
+        rControl1.AdjustVisuals(1)
+        rControl2.AdjustVisuals(2)
+        rControl3.AdjustVisuals(3)
+        rControl4.AdjustVisuals(4)
+
+        gbTrackerComms.BackColor = Color.FromName(TrackerRunnerColour)
+        btnSetTrackCommNames.BackColor = Color.FromName(TrackerRunnerColour)
     End Sub
     Private Sub SetControlsVisible(numbPlayers As Integer)
         Dim fSize As Size

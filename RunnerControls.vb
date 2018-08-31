@@ -147,9 +147,62 @@ Public Class RunnerControls
         cbVLCSource.ValueMember = "VLCName"
         cbVLCSource.Text = ""
     End Sub
-    'Public Sub CheckVLCForRunner(data As List(Of ))
+    Public Sub CheckVLCForRunner()
+        Dim data = ObsWebSocketCropper.vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
 
-    'End Sub
+        cbVLCSource.DataSource = data.ToList()
+        SetComboBoxMembers()
+
+        If Not String.IsNullOrWhiteSpace(lblRunnerTwitch.Text) Then
+            Dim tempText = lblRunnerTwitch.Text.Remove(0, 8)
+            If Not String.IsNullOrWhiteSpace(tempText) Then
+                Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
+
+                If match IsNot Nothing Then
+                    cbVLCSource.Text = match.VLCName
+                End If
+            End If
+        End If
+    End Sub
+    Function backColourChoice(runnerNumber As Integer, isVLC As Boolean) As String
+        If isVLC Then
+            Select Case runnerNumber
+                Case 1
+                    backColourChoice = "GreenYellow"
+                Case 2
+                    backColourChoice = "LightSalmon"
+                Case 3
+                    backColourChoice = "LightSkyBlue"
+                Case 4
+                    backColourChoice = "Violet"
+            End Select
+        Else
+            Select Case runnerNumber
+                Case 1
+                    backColourChoice = "PaleGreen"
+                Case 2
+                    backColourChoice = "MistyRose"
+                Case 3
+                    backColourChoice = "PaleTurquoise"
+                Case 4
+                    backColourChoice = "Thistle"
+            End Select
+        End If
+
+    End Function
+    Public Sub AdjustVisuals(runnerNumber As Integer)
+        gbRunnerNumber.Text = "Runner " & runnerNumber
+
+        btnSetVLC.BackColor = Color.FromName(backColourChoice(runnerNumber, True))
+        lblVLC.BackColor = Color.FromName(backColourChoice(runnerNumber, True))
+
+        gbTimerWindow.BackColor = Color.FromName(backColourChoice(runnerNumber, False))
+        gbGameWindow.BackColor = Color.FromName(backColourChoice(runnerNumber, False))
+        btnSetCrop.BackColor = Color.FromName(backColourChoice(runnerNumber, False))
+
+        lblRunner.BackColor = Color.FromName(ObsWebSocketCropper.TrackerRunnerColour)
+        lblTracker.BackColor = Color.FromName(ObsWebSocketCropper.TrackerRunnerColour)
+    End Sub
 #End Region
 
 End Class

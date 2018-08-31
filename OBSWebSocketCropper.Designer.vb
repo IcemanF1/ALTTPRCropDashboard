@@ -78,7 +78,7 @@ Partial Class ObsWebSocketCropper
         'lblCommentary
         '
         Me.lblCommentary.AutoSize = True
-        Me.lblCommentary.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblCommentary.BackColor = System.Drawing.Color.Transparent
         Me.lblCommentary.Location = New System.Drawing.Point(8, 19)
         Me.lblCommentary.Name = "lblCommentary"
         Me.lblCommentary.Size = New System.Drawing.Size(101, 13)
@@ -94,7 +94,7 @@ Partial Class ObsWebSocketCropper
         '
         'btnSetTrackCommNames
         '
-        Me.btnSetTrackCommNames.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.btnSetTrackCommNames.BackColor = System.Drawing.SystemColors.Control
         Me.btnSetTrackCommNames.Location = New System.Drawing.Point(7, 101)
         Me.btnSetTrackCommNames.Name = "btnSetTrackCommNames"
         Me.btnSetTrackCommNames.Size = New System.Drawing.Size(142, 23)
@@ -223,7 +223,7 @@ Partial Class ObsWebSocketCropper
         '
         'gbTrackerComms
         '
-        Me.gbTrackerComms.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.gbTrackerComms.BackColor = System.Drawing.SystemColors.Control
         Me.gbTrackerComms.Controls.Add(Me.lblGameSettings)
         Me.gbTrackerComms.Controls.Add(Me.txtGameSettings)
         Me.gbTrackerComms.Controls.Add(Me.lblCommentary)
@@ -238,7 +238,7 @@ Partial Class ObsWebSocketCropper
         'lblGameSettings
         '
         Me.lblGameSettings.AutoSize = True
-        Me.lblGameSettings.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.lblGameSettings.BackColor = System.Drawing.Color.Transparent
         Me.lblGameSettings.Location = New System.Drawing.Point(8, 51)
         Me.lblGameSettings.Name = "lblGameSettings"
         Me.lblGameSettings.Size = New System.Drawing.Size(76, 13)

@@ -89,8 +89,6 @@ Public Module Program
         My.Settings.Reload()
     End Sub
 
-
-
     Private Sub CheckForUpdate(updatePath As String)
         Task.Run(Async Sub()
                      Try
