@@ -1361,9 +1361,21 @@ Public Class ObsWebSocketCropper
 
         _configInfo.ReadXml(configPath)
 
+        Dim numbPlayers As Integer = 1
+
+        If rb1Runner.Checked = True Then
+            numbPlayers = 1
+        ElseIf rb2Runner.Checked = True Then
+            numbPlayers = 2
+        ElseIf rb3Runner.Checked = True Then
+            numbPlayers = 3
+        ElseIf rb4Runner.Checked = True Then
+            numbPlayers = 4
+        End If
+
         If _configInfo.Tables.Count > 0 Then
             If _configInfo.Tables("ConfigInfo").Rows.Count > 0 Then
-                If rb3Runner.Checked = True Or rb4Runner.Checked = True Then
+                If numbPlayers > 2 Then
                     GlobalParam.BoundingSizeGame.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString), My.Settings.BoundingSizeHeightGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString))
                     GlobalParam.BoundingSizeGame.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString), My.Settings.BoundingSizeWidthGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString))
 

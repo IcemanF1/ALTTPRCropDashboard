@@ -588,8 +588,6 @@ Public Class UserSettings
             If MatchedValue = True Then
                 Dim sSettings As Boolean = CheckForValidSourceTypes(ExpectedSourceType, SourceName)
 
-                lblCommentaryStatus.Visible = True
-
                 FullyValid = sSettings
 
             End If
