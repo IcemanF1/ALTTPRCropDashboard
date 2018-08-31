@@ -36,4 +36,26 @@
         sourceName.DisplayMember = "SourceName"
         sourceName.ValueMember = "SourceName"
     End Sub
+    Public Function verifyDropdowns() As Boolean
+        If String.IsNullOrWhiteSpace(gameSource) Then
+            Return True
+        End If
+        If String.IsNullOrWhiteSpace(timerSource) Then
+            Return True
+        End If
+        If String.IsNullOrWhiteSpace(trackerSource) Then
+            Return True
+        End If
+        If String.IsNullOrWhiteSpace(runnerNameSource) Then
+            Return True
+        End If
+
+        Return False
+    End Function
+    Public Sub setBlankDropdowns()
+        timerSource = ""
+        gameSource = ""
+        trackerSource = ""
+        runnerNameSource = ""
+    End Sub
 End Class

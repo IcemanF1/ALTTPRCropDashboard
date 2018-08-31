@@ -43,7 +43,6 @@ Partial Class ObsWebSocketCropper
         Me.btnGetProcesses = New System.Windows.Forms.Button()
         Me.btn2ndOBS = New System.Windows.Forms.Button()
         Me.btnConnectOBS2 = New System.Windows.Forms.Button()
-        Me.btnTestSourceSettings = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
         Me.lblGameSettings = New System.Windows.Forms.Label()
         Me.txtGameSettings = New System.Windows.Forms.TextBox()
@@ -100,7 +99,7 @@ Partial Class ObsWebSocketCropper
         Me.btnSetTrackCommNames.Size = New System.Drawing.Size(142, 23)
         Me.btnSetTrackCommNames.TabIndex = 55
         Me.btnSetTrackCommNames.Text = "Set Track/Comms/Names"
-        Me.ttMainToolTip.SetToolTip(Me.btnSetTrackCommNames, "Sends the current text settings to OBS if there is text entered into the form." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Tracker URL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Runner Names" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Commentary Names")
+        Me.ttMainToolTip.SetToolTip(Me.btnSetTrackCommNames, "Sends the current text settings to OBS if there is text entered into the form." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Tracker URL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Runner Names" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Commentary Names" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Game Settings")
         Me.btnSetTrackCommNames.UseVisualStyleBackColor = False
         '
         'mnuMainMenu
@@ -210,17 +209,6 @@ Partial Class ObsWebSocketCropper
         "word")
         Me.btnConnectOBS2.UseVisualStyleBackColor = True
         '
-        'btnTestSourceSettings
-        '
-        Me.btnTestSourceSettings.Location = New System.Drawing.Point(12, 388)
-        Me.btnTestSourceSettings.Name = "btnTestSourceSettings"
-        Me.btnTestSourceSettings.Size = New System.Drawing.Size(137, 23)
-        Me.btnTestSourceSettings.TabIndex = 84
-        Me.btnTestSourceSettings.Text = "Test Source Settings"
-        Me.ttMainToolTip.SetToolTip(Me.btnTestSourceSettings, "Testing stuff.  Nothing to see here.")
-        Me.btnTestSourceSettings.UseVisualStyleBackColor = True
-        Me.btnTestSourceSettings.Visible = False
-        '
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.SystemColors.Control
@@ -291,6 +279,8 @@ Partial Class ObsWebSocketCropper
         Me.btnResetDatabase.Size = New System.Drawing.Size(112, 23)
         Me.btnResetDatabase.TabIndex = 87
         Me.btnResetDatabase.Text = "Reset Database"
+        Me.ttMainToolTip.SetToolTip(Me.btnResetDatabase, "Resets the local database to a blank state." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Should only be used if saving/syncin" &
+        "g is crashing.")
         Me.btnResetDatabase.UseVisualStyleBackColor = True
         '
         'ofdOpenConfig
@@ -369,7 +359,6 @@ Partial Class ObsWebSocketCropper
         Me.Controls.Add(Me.lblConfigFile)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnResetDatabase)
-        Me.Controls.Add(Me.btnTestSourceSettings)
         Me.Controls.Add(Me.chkAlwaysOnTop)
         Me.Controls.Add(Me.btnConnectOBS2)
         Me.Controls.Add(Me.lblOBS2ConnectedStatus)
@@ -418,7 +407,6 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents ChangeUserSettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ChangeVLCSettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExpertModeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents btnTestSourceSettings As Button
     Friend WithEvents lblGameSettings As Label
     Friend WithEvents txtGameSettings As TextBox
     Friend WithEvents btnResetDatabase As Button

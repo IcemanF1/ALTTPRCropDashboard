@@ -1,86 +1,17 @@
-﻿Imports ALTTPRCropDashboard.Data.ViewModels
-Imports ALTTPRCropDashboard.DB
-Imports System.IO
-Imports OBSWebsocketDotNet
+﻿Imports ALTTPRCropDashboard.DB
 Imports System.Globalization
-Imports System.Configuration
-
 Public Class RunnerControls
-#Region " Button Clicks "
-    'Private Sub btnGameUncrop_Click(sender As Object, e As EventArgs) Handles btnGameUncrop.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.UncropSource(CInt(lblRunnerNumber.Text), False)
-    '    End If
-    'End Sub
-    'Private Sub btnGameDB_Click(sender As Object, e As EventArgs) Handles btnGameDB.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.ClearTextBoxes("Game", CInt(lblRunnerNumber.Text))
-    '        ObsWebSocketCropper.RefreshCropFromData("Game", CInt(lblRunnerNumber.Text), cbRunnerName.Text)
-    '    End If
-    'End Sub
-    'Private Sub btnSaveCrop_Click(sender As Object, e As EventArgs) Handles btnSaveCrop.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.SaveRunnerCrop(CInt(lblRunnerNumber.Text))
-    '    End If
-    'End Sub
-    'Private Sub btnSetCrop_Click(sender As Object, e As EventArgs) Handles btnSetCrop.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.SetCrop(CInt(lblRunnerNumber.Text))
-    '    End If
-    'End Sub
-    'Private Sub btnGetCrop_Click(sender As Object, e As EventArgs) Handles btnGetCrop.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.GetCrop(CInt(lblRunnerNumber.Text))
-    '    End If
-
-    'End Sub
-    'Private Sub btnNewRunner_Click(sender As Object, e As EventArgs) Handles btnNewRunner.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.AddNewRunner(CInt(lblRunnerNumber.Text), cbRunnerName, lblRunnerTwitch)
-    '    End If
-    'End Sub
-    'Private Sub btnTimerDB_Click(sender As Object, e As EventArgs) Handles btnTimerDB.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.ClearTextBoxes("Timer", CInt(lblRunnerNumber.Text))
-    '        ObsWebSocketCropper.RefreshCropFromData("Timer", CInt(lblRunnerNumber.Text), cbRunnerName.Text)
-    '    End If
-    'End Sub
-    'Private Sub btnTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnTimerUncrop.Click
-    '    If isRunnerNumValid() Then
-    '        ObsWebSocketCropper.UncropSource(CInt(lblRunnerNumber.Text), True)
-    '    End If
-    'End Sub
-    'Private Sub btnSetVLC_Click(sender As Object, e As EventArgs) Handles btnSetVLC.Click
-    '    SetVlcWindows()
-    'End Sub
-#End Region
-    '#Region " Runner Drop Downs "
-
-    '#End Region
-    '#Region " Label Clicks "
-    '    Private Sub lblViewOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewOnTwitch.Click
-    '        If isRunnerNumValid() Then
-    '            ObsWebSocketCropper.OpenTwitch(CInt(lblRunnerNumber.Text), False)
-    '        End If
-    '    End Sub
-    '    Private Sub lblStreamlink_Click(sender As Object, e As EventArgs) Handles lblStreamlink.Click
-    '        If isRunnerNumValid() Then
-    '            ObsWebSocketCropper.StartStreamLink(CInt(lblRunnerNumber.Text))
-    '        End If
-    '    End Sub
-    '    Private Sub lblVOD_Click(sender As Object, e As EventArgs) Handles lblVOD.Click
-    '        If isRunnerNumValid() Then
-    '            ObsWebSocketCropper.OpenTwitch(CInt(lblRunnerNumber.Text), True)
-    '        End If
-    '    End Sub
-
-    '#End Region
-#Region " Misc Functions "
     Private Sub RunnerControls_Load(sender As Object, e As EventArgs) Handles Me.Load
         ConfigureDataBindings()
     End Sub
-    Public Sub RefreshRunnerNames()
+    Public Sub RefreshRunnerNames(isReset As Boolean)
         Dim tempRunner As String = cbRunnerName.Text
+
+        If isReset Then
+            tempRunner = ""
+        Else
+            tempRunner = cbRunnerName.Text
+        End If
 
         ObsWebSocketCropper.ReuseInfo = False
 
@@ -112,7 +43,6 @@ Public Class RunnerControls
 
         e.Handled = ObsWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
     End Sub
-
     Function isRunnerNumValid() As Boolean
         If Not String.IsNullOrWhiteSpace(lblRunnerNumber.Text) Then
             If IsNumeric(lblRunnerNumber.Text) Then
@@ -124,7 +54,6 @@ Public Class RunnerControls
 
         Return False
     End Function
-
     Public Property twitchName As String
         Get
             Return lblRunnerTwitch.Text
@@ -141,7 +70,6 @@ Public Class RunnerControls
             cbRunnerName.Text = value
         End Set
     End Property
-
     Public Sub SetComboBoxMembers()
         cbVLCSource.DisplayMember = "VLCName"
         cbVLCSource.ValueMember = "VLCName"
@@ -191,7 +119,7 @@ Public Class RunnerControls
 
     End Function
     Public Sub AdjustVisuals(runnerNumber As Integer)
-        gbRunnerNumber.Text = "Runner " & runnerNumber
+        lblRunnerControlNumber.Text = "Runner " & runnerNumber
 
         btnSetVLC.BackColor = Color.FromName(backColourChoice(runnerNumber, True))
         lblVLC.BackColor = Color.FromName(backColourChoice(runnerNumber, True))
@@ -203,6 +131,35 @@ Public Class RunnerControls
         lblRunner.BackColor = Color.FromName(ObsWebSocketCropper.TrackerRunnerColour)
         lblTracker.BackColor = Color.FromName(ObsWebSocketCropper.TrackerRunnerColour)
     End Sub
-#End Region
+    Public Sub SetToolTips(runnerNumber As Integer)
+        'Me.ttMainToolTip.SetToolTip(Me.btnConnectOBS1, 
+        ' "Attempt to connect to the OBS Websocket based off" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the connection string and pass" &
+        '"word")
+
+        ttMainToolTip.SetToolTip(txtTrackerURL, "The URL for the tracker for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(cbRunnerName, "The runner name for runner # " & runnerNumber & "." & ChrW(13) & ChrW(10) & "If runner you are looking for is not in the list you will need to add as a new runner.")
+        ttMainToolTip.SetToolTip(lblViewOnTwitch, "View the selected runner on twitch on your default browser")
+        ttMainToolTip.SetToolTip(lblVOD, "View the selected runner's VODs on twitch on your default browser")
+        ttMainToolTip.SetToolTip(lblStreamlink, "Attempt to view the selected runner's twtich on VLC using streamlink." & ChrW(13) & ChrW(10) & "If your streamlink settings weren not entered correctly this may crash.  Use at your own risk.")
+        ttMainToolTip.SetToolTip(btnNewRunner, "Add a new runner to the local DB to be able to enter crop info")
+        ttMainToolTip.SetToolTip(cbVLCSource, "The current list of running VLC processes")
+        ttMainToolTip.SetToolTip(btnSetVLC, "Set the currently selected VLC process to the timer & game windows in OBS for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(cbScaling, "The scaling percent that will be applied to the crop." & ChrW(13) & ChrW(10) & "This is only needed in extreme cases where windows scaling is affecting things.")
+        ttMainToolTip.SetToolTip(btnTimerDB, "Reset the current timer crop numbers to what was saved in the DB for runner # " & runnerNumber & "." & ChrW(13) & ChrW(10) & "You will still need to set the crop to apply the values.")
+        ttMainToolTip.SetToolTip(btnGameDB, "Reset the current game crop numbers to what was saved in the DB for runner # " & runnerNumber & "." & ChrW(13) & ChrW(10) & "You will still need to set the crop to apply the values.")
+        ttMainToolTip.SetToolTip(btnTimerUncrop, "Reset the current timer crop numbers to an uncropped state for runner # " & runnerNumber & "." & ChrW(13) & ChrW(10) & "This will automatically set it in OBS.")
+        ttMainToolTip.SetToolTip(btnGameUncrop, "Reset the current game crop numbers to an uncropped state for runner # " & runnerNumber & "." & ChrW(13) & ChrW(10) & "This will automatically set it in OBS.")
+        ttMainToolTip.SetToolTip(btnSetCrop, "Sets the current timer & game crops in OBS based on the current values for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(btnGetCrop, "Retrieves the current timer & game crop values in OBS for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(btnSaveCrop, "Saves the current timer & game crops values into the DB for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropGame_Left, "The LEFT crop value for the GAME window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropGame_Right, "The RIGHT crop value for the GAME window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropGame_Top, "The TOP crop value for the GAME window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropGame_Bottom, "The BOTTOM crop value for the GAME window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropTimer_Left, "The LEFT crop value for the TIMER window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropTimer_Right, "The RIGHT crop value for the TIMER window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropTimer_Top, "The TOP crop value for the TIMER window for runner # " & runnerNumber)
+        ttMainToolTip.SetToolTip(txtCropTimer_Bottom, "The BOTTOM crop value for the TIMER window for runner # " & runnerNumber)
+    End Sub
 
 End Class

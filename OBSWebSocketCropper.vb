@@ -123,7 +123,7 @@ Public Class ObsWebSocketCropper
     ''' Call the same code on all connected OBS instances
     ''' </summary>
     ''' <param name="callback">The code to execute</param>
-    Public Sub DispatchToObs(callback As Action(Of ObsWebSocketPlus))
+    Private Sub DispatchToObs(callback As Action(Of ObsWebSocketPlus))
         If callback Is Nothing Then
             Exit Sub
         End If
@@ -218,7 +218,7 @@ Public Class ObsWebSocketCropper
         End Using
 
         If needsRefresh Then
-            RefreshRunnerNames()
+            RefreshRunnerNames(False)
         End If
     End Sub
     Public Sub FillCurrentCropInfoFromObs(runnerNumber As Integer)
@@ -265,20 +265,6 @@ Public Class ObsWebSocketCropper
         If Not String.IsNullOrWhiteSpace(obsSourceName) Then
             Uncrop(obsSourceName)
         End If
-    End Sub
-    Public Sub SetRunner(runnerNumber As Integer, runnerName As String)
-        Select Case runnerNumber
-            Case 1
-                _viewModel.Runner1.Name = runnerName
-            Case 2
-                _viewModel.Runner2.Name = runnerName
-            Case 3
-                _viewModel.Runner3.Name = runnerName
-            Case 4
-                _viewModel.Runner4.Name = runnerName
-        End Select
-
-
     End Sub
     Public Sub ClearTextBoxes(refreshAction As String, runnerNumber As Integer)
         Dim runnerVm As RunnerViewModel
@@ -424,6 +410,21 @@ Public Class ObsWebSocketCropper
         runnerVm.MasterSize.UpdateFromSize(newSize)
         runnerVm.Scale = newScale
     End Sub
+    Public Sub SetRunner(runnerNumber As Integer, runnerName As String)
+        Select Case runnerNumber
+            Case 1
+                _viewModel.Runner1.Name = runnerName
+            Case 2
+                _viewModel.Runner2.Name = runnerName
+            Case 3
+                _viewModel.Runner3.Name = runnerName
+            Case 4
+                _viewModel.Runner4.Name = runnerName
+        End Select
+
+
+    End Sub
+
 #End Region
 #Region " UserControl Functions "
     Private Sub AddHandlers()
@@ -561,6 +562,7 @@ Public Class ObsWebSocketCropper
         Dim runnerName As String = getRunnerName(senderParent)
 
         If isRunnerNumValid(runnerNumber) Then
+            SetRunner(CInt(runnerNumber), runnerName)
             ClearTextBoxes("Both", CInt(runnerNumber))
             RefreshCropFromData("Both", CInt(runnerNumber), runnerName)
         End If
@@ -786,11 +788,11 @@ Public Class ObsWebSocketCropper
         rControl4.CheckVLCForRunner()
 
     End Sub
-    Private Sub RefreshRunnerNames()
-        rControl1.RefreshRunnerNames()
-        rControl2.RefreshRunnerNames()
-        rControl3.RefreshRunnerNames()
-        rControl4.RefreshRunnerNames()
+    Private Sub RefreshRunnerNames(isReset As Boolean)
+        rControl1.RefreshRunnerNames(isReset)
+        rControl2.RefreshRunnerNames(isReset)
+        rControl3.RefreshRunnerNames(isReset)
+        rControl4.RefreshRunnerNames(isReset)
     End Sub
     Public Sub RefreshCropperDefaultCrop()
         _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
@@ -951,9 +953,9 @@ Public Class ObsWebSocketCropper
             End If
 
 
-            RefreshRunnerNames()
+            RefreshRunnerNames(False)
         Else
-            RefreshRunnerNames()
+            RefreshRunnerNames(False)
 
             CheckUnusedFields()
         End If
@@ -995,7 +997,7 @@ Public Class ObsWebSocketCropper
 
         Else
             SetSourceNames()
-            RefreshRunnerNames()
+            RefreshRunnerNames(False)
             RefreshCropperDefaultCrop()
             CheckUnusedFields()
         End If
@@ -1068,7 +1070,7 @@ Public Class ObsWebSocketCropper
             context.SaveChanges()
         End Using
 
-        RefreshRunnerNames()
+        RefreshRunnerNames(False)
     End Sub
     Private Sub GetIniFile(python As Boolean, resetWebSocketPort As Boolean)
 
@@ -1248,7 +1250,7 @@ Public Class ObsWebSocketCropper
             End Try
         End If
     End Sub
-    Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs) Handles btnTestSourceSettings.Click
+    Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs)
         TestSourceSettings()
     End Sub
     Private Sub TestSourceSettings()
@@ -1296,24 +1298,11 @@ Public Class ObsWebSocketCropper
             Using context As New CropDbContext
                 context.Database.ExecuteSqlCommand("Delete from crops")
                 context.SaveChanges()
-                RefreshRunnerNames()
+                RefreshRunnerNames(True)
             End Using
         End If
 
     End Sub
-    'Private Sub RefreshBoundingBoxSize()
-    '    If Not String.IsNullOrWhiteSpace(cbConfigFiles.Text) Then
-    '        If cbConfigFiles.Text.Trim.ToLower = "default" Then
-    '            RefreshBoundingBoxFromDefault()
-    '        Else
-    '            RefreshBoundingBoxFromConfigFile(cbConfigFiles.SelectedValue.ToString)
-    '        End If
-    '    Else
-    '        RefreshBoundingBoxFromDefault()
-    '    End If
-
-    '    SetBoundingPositions()
-    'End Sub
     Private Sub RefreshBoundingBoxFromDefault()
         If rb3Runner.Checked = True Or rb4Runner.Checked = True Then
             GlobalParam.BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameFourPlayer
@@ -1483,6 +1472,8 @@ Public Class ObsWebSocketCropper
         rControl2.AdjustVisuals(2)
         rControl3.AdjustVisuals(3)
         rControl4.AdjustVisuals(4)
+
+        SetToolTips()
 
         gbTrackerComms.BackColor = Color.FromName(TrackerRunnerColour)
         btnSetTrackCommNames.BackColor = Color.FromName(TrackerRunnerColour)
@@ -1965,7 +1956,15 @@ Public Class ObsWebSocketCropper
         Return False
     End Function
 
+    Private Sub SetToolTips()
+        ttMainToolTip.SetToolTip(txtCommentaryNames, "The names of the commentators.")
+        ttMainToolTip.SetToolTip(txtGameSettings, "The game settings for the race (eg Ganon/Standard/Swordless/Normal/Enemizer)")
 
+        rControl1.SetToolTips(1)
+        rControl2.SetToolTips(2)
+        rControl3.SetToolTips(3)
+        rControl4.SetToolTips(4)
+    End Sub
 #End Region
 End Class
 

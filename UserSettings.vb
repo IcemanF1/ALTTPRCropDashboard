@@ -9,8 +9,6 @@ Public Class UserSettings
     Dim CorrectColour As Color = Color.Green
     Dim InCorrectColour As Color = Color.Red
 
-    Dim FourPlayer As Boolean
-
     Friend WithEvents rSettings1 As New RunnerSettings
     Friend WithEvents rSettings2 As New RunnerSettings
     Friend WithEvents rSettings3 As New RunnerSettings
@@ -18,84 +16,344 @@ Public Class UserSettings
 
     Public Shared ShowVLCOption As Boolean
 
-    Function VerifySettings() As Boolean
-        If String.IsNullOrWhiteSpace(txtTwitchChannel.Text) Then
-            MsgBox("You must enter a twitch channel.", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
-            Return False
+#Region " Button Clicks "
+    Private Sub btnSaveSettings_Click(sender As Object, e As EventArgs) Handles btnSaveSettings.Click
+        SaveSettings(False)
+    End Sub
+    Private Sub btnRefreshScenes_Click(sender As Object, e As EventArgs) Handles btnRefreshScenes.Click
+        RefreshScenes()
+        SetUserSettings()
+    End Sub
+    Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
+        SaveConnectionForTest()
+
+        ObsWebSocketCropper.ConnectToObs()
+
+        lblOBS1ConnectedStatus.Text = ObsWebSocketCropper.ObsConnectionStatus
+
+        If ObsWebSocketCropper.Obs.IsConnected Then
+            panOBS.Visible = True
+            btnSaveSettings.Enabled = True
+            btnSaveThenVLC.Enabled = True
+            btnRefreshScenes.Visible = True
+            RefreshScenes()
+            SetUserSettings()
+        End If
+    End Sub
+    Private Sub btnResetSettings_Click(sender As Object, e As EventArgs) Handles btnResetSettings.Click
+        If MsgBox("Are you sure you wish to reset your settings back to default?", MsgBoxStyle.YesNo, ObsWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
+            My.Settings.Reset()
+            My.Settings.UpgradeRequired = False
+            My.Settings.Save()
+            My.Settings.Reload()
+
+            SetBlankDropdowns()
+            SetUserSettings()
         End If
 
-        Dim match As Boolean = False
+    End Sub
+    Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
+        SaveSettings(True)
+    End Sub
 
-        If String.IsNullOrWhiteSpace(rSettings1.gameSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings1.timerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings1.trackerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings1.runnerNameSource) And match = False Then
-            match = True
-        End If
+#End Region
+#Region " User Controls "
+    Private Sub AddUserControls()
+        Dim sHori, sVert As Integer
 
-        If String.IsNullOrWhiteSpace(rSettings2.gameSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings2.timerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings2.trackerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings2.runnerNameSource) And match = False Then
-            match = True
-        End If
+        sHori = 19
+        sVert = 6
 
-        If String.IsNullOrWhiteSpace(rSettings3.gameSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings3.timerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings3.trackerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings3.runnerNameSource) And match = False Then
-            match = True
-        End If
+        rSettings1.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings1.Name = "rSettings1"
+        gbRunner1.Controls.Add(rSettings1)
 
-        If String.IsNullOrWhiteSpace(rSettings4.gameSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings4.timerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings4.trackerSource) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(rSettings4.runnerNameSource) And match = False Then
-            match = True
-        End If
+        rSettings2.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings2.Name = "rSettings2"
+        gbRunner2.Controls.Add(rSettings2)
 
-        If String.IsNullOrWhiteSpace(cbCommentaryOBS.Text) And match = False Then
-            match = True
-        End If
-        If String.IsNullOrWhiteSpace(cbGameSettings.Text) And match = False Then
-            match = True
-        End If
-        If match = True Then
-            If MsgBox("Some of the dropdowns are blank.  Are you sure you wish to continue saving?  This may lead to unexpected issues.", MsgBoxStyle.YesNo, OBSWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
+        rSettings3.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings3.Name = "rSettings3"
+        gbRunner3.Controls.Add(rSettings3)
 
-            Else
-                Return False
-            End If
-        Else
+        rSettings4.Location = New System.Drawing.Point(sVert, sHori)
+        rSettings4.Name = "rSettings4"
+        gbRunner4.Controls.Add(rSettings4)
+    End Sub
+    Protected Sub textSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
 
-        End If
+        checkUserControlField("text_gdiplus", senderName, senderParent)
+    End Sub
+    Protected Sub browserSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
 
-        Return True
+        checkUserControlField("browser_source", senderName, senderParent)
+    End Sub
+    Protected Sub windowSource_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim senderName As String = getControlName(sender)
+
+        checkUserControlField("window_capture", senderName, senderParent)
+    End Sub
+    Private Sub AddHandlers()
+        AddHandler rSettings1.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings1.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings1.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings1.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
+
+        AddHandler rSettings2.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings2.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings2.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings2.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
+
+        AddHandler rSettings3.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings3.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings3.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings3.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
+
+        AddHandler rSettings4.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings4.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
+        AddHandler rSettings4.cbTrackerOBS.TextChanged, AddressOf browserSource_TextChanged
+        AddHandler rSettings4.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
+    End Sub
+    Function getParentControlName(sender As Object) As String
+        Dim ctl As Control = CType(sender, Control)
+
+        Return ctl.Parent.Name.ToString
     End Function
+    Function getControlName(sender As Object) As String
+        Dim ctl As Control = CType(sender, Control)
+
+        Return ctl.Name.ToString
+    End Function
+    Function getSourceLabel(senderParent As String, sourceName As String) As Label
+        If senderParent = "rSettings1" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings1.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings1.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings1.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings1.lblTrackerStatus
+            End If
+        ElseIf senderParent = "rSettings2" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings2.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings2.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings2.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings2.lblTrackerStatus
+            End If
+        ElseIf senderParent = "rSettings3" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings3.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings3.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings3.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings3.lblTrackerStatus
+            End If
+        ElseIf senderParent = "rSettings4" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings4.lblGameStatus
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings4.lblRunnerNameStatus
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings4.lblTimerStatus
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings4.lblTrackerStatus
+            End If
+        End If
+    End Function
+    Function getSourceComboBox(senderParent As String, sourceName As String) As ComboBox
+        If senderParent = "rSettings1" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings1.cbGameWindow
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings1.cbRunnerOBS
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings1.cbTimerWindow
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings1.cbTrackerOBS
+            End If
+        ElseIf senderParent = "rSettings2" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings2.cbGameWindow
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings2.cbRunnerOBS
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings2.cbTimerWindow
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings2.cbTrackerOBS
+            End If
+        ElseIf senderParent = "rSettings3" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings3.cbGameWindow
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings3.cbRunnerOBS
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings3.cbTimerWindow
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings3.cbTrackerOBS
+            End If
+        ElseIf senderParent = "rSettings4" Then
+            If sourceName = "cbGameWindow" Then
+                Return rSettings4.cbGameWindow
+            ElseIf sourceName = "cbRunnerOBS" Then
+                Return rSettings4.cbRunnerOBS
+            ElseIf sourceName = "cbTimerWindow" Then
+                Return rSettings4.cbTimerWindow
+            ElseIf sourceName = "cbTrackerOBS" Then
+                Return rSettings4.cbTrackerOBS
+            End If
+        End If
+    End Function
+    Private Sub checkUserControlField(expectedSourceType As String, sourceName As String, senderParent As String)
+        Dim cbName As ComboBox
+        Dim statusLabel As Label
+
+        cbName = getSourceComboBox(senderParent, sourceName)
+        statusLabel = getSourceLabel(senderParent, sourceName)
+
+        VerifyProperSource(expectedSourceType, cbName, statusLabel)
+    End Sub
+
+#End Region
+#Region " Misc Functions "
+    Private Sub UserSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
+        txtConnectionString1.Text = My.Settings.ConnectionString1
+        txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
+        txtPassword1.Text = My.Settings.Password1
+
+        AddUserControls()
+        AddHandlers()
+
+        panOBS.Visible = False
+        btnRefreshScenes.Visible = False
+
+        txtTwitchChannel.Text = My.Settings.TwitchChannel
+
+        gbConnection1.Visible = False
+
+        roDefault.Checked = My.Settings.DefaultConnection
+
+        btnSaveThenVLC.Visible = ShowVLCOption
+
+        CreateNewSourceTable()
+
+        CheckObsPort()
+
+
+    End Sub
+    Private Sub CreateNewSourceTable()
+        If _obsCommentary.Tables.Count = 0 Then
+            _obsCommentary.Tables.Add("Sources")
+            _obsCommentary.Tables("Sources").Columns.Add("SourceName")
+        Else
+            _obsCommentary.Tables("Sources").Clear()
+        End If
+
+        If _obsGameSettings.Tables.Count = 0 Then
+            _obsGameSettings.Tables.Add("Sources")
+            _obsGameSettings.Tables("Sources").Columns.Add("SourceName")
+        Else
+            _obsGameSettings.Tables("Sources").Clear()
+        End If
+    End Sub
+    Private Sub RefreshScenes()
+        Dim scenes = ObsWebSocketCropper.Obs.ListScenes()
+
+        _obsCommentary.Clear()
+        _obsGameSettings.Clear()
+
+        Dim x As Integer
+        For x = 0 To scenes.Count - 1
+            Dim dr As DataRow
+
+            Dim y As Integer
+            For y = 0 To scenes(x).Items.Count - 1
+                dr = _obsCommentary.Tables("Sources").NewRow
+                dr.Item("SourceName") = scenes(x).Items(y).SourceName
+                _obsCommentary.Tables("Sources").Rows.Add(dr)
+            Next
+
+        Next
+
+        _obsGameSettings = _obsCommentary.Copy
+
+        cbCommentaryOBS.DataSource = _obsCommentary.Tables("Sources")
+        cbCommentaryOBS.DisplayMember = "SourceName"
+        cbCommentaryOBS.ValueMember = "SourceName"
+
+        cbGameSettings.DataSource = _obsGameSettings.Tables("Sources")
+        cbGameSettings.DisplayMember = "SourceName"
+        cbGameSettings.ValueMember = "SourceName"
+
+        RefreshUserControlDropdowns()
+
+        SetBlankDropdowns()
+    End Sub
+    Private Sub RefreshUserControlDropdowns()
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbGameWindow)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTimerWindow)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTrackerOBS)
+        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbRunnerOBS)
+
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbGameWindow)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTimerWindow)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTrackerOBS)
+        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbRunnerOBS)
+
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbGameWindow)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTimerWindow)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTrackerOBS)
+        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbRunnerOBS)
+
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbGameWindow)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTimerWindow)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTrackerOBS)
+        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbRunnerOBS)
+
+    End Sub
+    Private Sub SetBlankDropdowns()
+        rSettings1.setBlankDropdowns()
+        rSettings2.setBlankDropdowns()
+        rSettings3.setBlankDropdowns()
+        rSettings4.setBlankDropdowns()
+
+        cbCommentaryOBS.Text = ""
+        cbGameSettings.Text = ""
+    End Sub
+    Private Sub CheckObsPort()
+
+        Dim portOpen As Boolean = ObsWebSocketCropper.Obs.IsPortOpen(ObsWebSocketCropper.ConnectionString)
+
+        If portOpen = False Then
+            MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, ObsWebSocketCropper.ProgramName)
+        Else
+            If ObsWebSocketCropper.Obs.IsConnected Then
+                panOBS.Visible = True
+                btnRefreshScenes.Visible = True
+                RefreshScenes()
+                SetUserSettings()
+
+                btnSaveSettings.Enabled = True
+                btnSaveThenVLC.Enabled = True
+
+                btnSaveThenVLC.Visible = ShowVLCOption
+            Else
+                btnSaveSettings.Enabled = False
+                btnSaveThenVLC.Enabled = False
+            End If
+        End If
+    End Sub
     Private Sub SaveSettings(continueToVlc As Boolean)
         Dim settingsVerified As Boolean = VerifySettings()
 
@@ -218,25 +476,6 @@ Public Class UserSettings
             Close()
         End If
     End Sub
-    Private Sub btnSaveSettings_Click(sender As Object, e As EventArgs) Handles btnSaveSettings.Click
-        SaveSettings(False)
-    End Sub
-    Private Sub CreateNewSourceTable()
-        If _obsCommentary.Tables.Count = 0 Then
-            _obsCommentary.Tables.Add("Sources")
-            _obsCommentary.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsCommentary.Tables("Sources").Clear()
-        End If
-
-        If _obsGameSettings.Tables.Count = 0 Then
-            _obsGameSettings.Tables.Add("Sources")
-            _obsGameSettings.Tables("Sources").Columns.Add("SourceName")
-        Else
-            _obsGameSettings.Tables("Sources").Clear()
-        End If
-    End Sub
-
     Private Sub SetUserSettings()
         If My.Settings.HasFinishedWelcome = False Then
 
@@ -266,32 +505,6 @@ Public Class UserSettings
 
         End If
     End Sub
-    Private Sub AddUserControls()
-        Dim sHori, sVert As Integer
-
-        sHori = 19
-        sVert = 6
-
-        rSettings1.Location = New System.Drawing.Point(sVert, sHori)
-        rSettings1.Name = "rSettings1"
-        gbRunner1.Controls.Add(rSettings1)
-
-        rSettings2.Location = New System.Drawing.Point(sVert, sHori)
-        rSettings2.Name = "rSettings2"
-        gbRunner2.Controls.Add(rSettings2)
-
-        rSettings3.Location = New System.Drawing.Point(sVert, sHori)
-        rSettings3.Name = "rSettings3"
-        gbRunner3.Controls.Add(rSettings3)
-
-        rSettings4.Location = New System.Drawing.Point(sVert, sHori)
-        rSettings4.Name = "rSettings4"
-        gbRunner4.Controls.Add(rSettings4)
-    End Sub
-    Private Sub btnRefreshScenes_Click(sender As Object, e As EventArgs) Handles btnRefreshScenes.Click
-        RefreshScenes()
-        SetUserSettings()
-    End Sub
     Private Sub SaveConnectionForTest()
         My.Settings.ConnectionString1 = txtConnectionString1.Text
         My.Settings.Password1 = txtPassword1.Text
@@ -299,183 +512,93 @@ Public Class UserSettings
 
         My.Settings.Save()
     End Sub
-    Private Sub UserSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
-        txtConnectionString1.Text = My.Settings.ConnectionString1
-        txtConnectionPort.Text = My.Settings.ConnectionPort1.ToString
-        txtPassword1.Text = My.Settings.Password1
+#End Region
+#Region " Verify "
+    Function VerifySettings() As Boolean
+        If String.IsNullOrWhiteSpace(txtTwitchChannel.Text) Then
+            MsgBox("You must enter a twitch channel.", MsgBoxStyle.OkOnly, ObsWebSocketCropper.ProgramName)
+            Return False
+        End If
 
-        AddUserControls()
+        Dim match As Boolean = False
 
-        panOBS.Visible = False
-        btnRefreshScenes.Visible = False
+        If match = False Then
+            match = rSettings1.verifyDropdowns
+        End If
 
-        txtTwitchChannel.Text = My.Settings.TwitchChannel
+        If match = False Then
+            match = rSettings2.verifyDropdowns
+        End If
 
-        gbConnection1.Visible = False
+        If match = False Then
+            match = rSettings3.verifyDropdowns
+        End If
 
-        roDefault.Checked = My.Settings.DefaultConnection
+        If match = False Then
+            match = rSettings4.verifyDropdowns
+        End If
 
-        btnSaveThenVLC.Visible = ShowVLCOption
+        If String.IsNullOrWhiteSpace(cbCommentaryOBS.Text) And match = False Then
+            match = True
+        End If
+        If String.IsNullOrWhiteSpace(cbGameSettings.Text) And match = False Then
+            match = True
+        End If
+        If match = True Then
+            If MsgBox("Some of the dropdowns are blank.  Are you sure you wish to continue saving?  This may lead to unexpected issues.", MsgBoxStyle.YesNo, ObsWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
 
-        CreateNewSourceTable()
-
-        CheckObsPort()
-
-        AddHandlers()
-    End Sub
-    Private Sub RefreshScenes()
-        Dim scenes = OBSWebSocketCropper.Obs.ListScenes()
-
-        _obsCommentary.Clear()
-        _obsGameSettings.Clear()
-
-        Dim x As Integer
-        For x = 0 To scenes.Count - 1
-            Dim dr As DataRow
-
-            Dim y As Integer
-            For y = 0 To scenes(x).Items.Count - 1
-                dr = _obsCommentary.Tables("Sources").NewRow
-                dr.Item("SourceName") = scenes(x).Items(y).SourceName
-                _obsCommentary.Tables("Sources").Rows.Add(dr)
-            Next
-
-        Next
-
-        _obsGameSettings = _obsCommentary.Copy
-
-        cbCommentaryOBS.DataSource = _obsCommentary.Tables("Sources")
-        cbCommentaryOBS.DisplayMember = "SourceName"
-        cbCommentaryOBS.ValueMember = "SourceName"
-
-        cbGameSettings.DataSource = _obsGameSettings.Tables("Sources")
-        cbGameSettings.DisplayMember = "SourceName"
-        cbGameSettings.ValueMember = "SourceName"
-
-        RefreshUserControlDropdowns()
-
-        SetBlankDropdowns()
-    End Sub
-    Private Sub RefreshUserControlDropdowns()
-        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbGameWindow)
-        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTimerWindow)
-        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbTrackerOBS)
-        rSettings1.SetComboBoxData(_obsCommentary, rSettings1.cbRunnerOBS)
-
-        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbGameWindow)
-        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTimerWindow)
-        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbTrackerOBS)
-        rSettings2.SetComboBoxData(_obsCommentary, rSettings2.cbRunnerOBS)
-
-        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbGameWindow)
-        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTimerWindow)
-        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbTrackerOBS)
-        rSettings3.SetComboBoxData(_obsCommentary, rSettings3.cbRunnerOBS)
-
-        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbGameWindow)
-        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTimerWindow)
-        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbTrackerOBS)
-        rSettings4.SetComboBoxData(_obsCommentary, rSettings4.cbRunnerOBS)
-
-    End Sub
-    Private Sub SetBlankDropdowns()
-        rSettings1.timerSource = ""
-        rSettings1.gameSource = ""
-        rSettings1.trackerSource = ""
-        rSettings1.runnerNameSource = ""
-
-        rSettings2.timerSource = ""
-        rSettings2.gameSource = ""
-        rSettings2.trackerSource = ""
-        rSettings2.runnerNameSource = ""
-
-        rSettings3.timerSource = ""
-        rSettings3.gameSource = ""
-        rSettings3.trackerSource = ""
-        rSettings3.runnerNameSource = ""
-
-        rSettings4.timerSource = ""
-        rSettings4.gameSource = ""
-        rSettings4.trackerSource = ""
-        rSettings4.runnerNameSource = ""
-
-        cbCommentaryOBS.Text = ""
-        cbGameSettings.Text = ""
-    End Sub
-
-    Private Sub CheckObsPort()
-
-        Dim portOpen As Boolean = OBSWebSocketCropper.Obs.IsPortOpen(OBSWebSocketCropper.ConnectionString)
-
-        If PortOpen = False Then
-            MsgBox("The OBS connection is not open.  Please connect to OBS before doing anything else!", MsgBoxStyle.OkOnly, OBSWebSocketCropper.ProgramName)
-        Else
-            If ObsWebSocketCropper.Obs.IsConnected Then
-                panOBS.Visible = True
-                btnRefreshScenes.Visible = True
-                RefreshScenes()
-                SetUserSettings()
-
-                btnSaveSettings.Enabled = True
-                btnSaveThenVLC.Enabled = True
-
-                btnSaveThenVLC.Visible = ShowVLCOption
             Else
-                btnSaveSettings.Enabled = False
-                btnSaveThenVLC.Enabled = False
+                Return False
             End If
-        End If
-    End Sub
-    Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
-        SaveConnectionForTest()
-
-        OBSWebSocketCropper.ConnectToOBS()
-
-        lblOBS1ConnectedStatus.Text = OBSWebSocketCropper.ObsConnectionStatus
-
-        If ObsWebSocketCropper.Obs.IsConnected Then
-            panOBS.Visible = True
-            btnSaveSettings.Enabled = True
-            btnSaveThenVLC.Enabled = True
-            btnRefreshScenes.Visible = True
-            RefreshScenes()
-            SetUserSettings()
-        End If
-    End Sub
-    Private Sub btnResetSettings_Click(sender As Object, e As EventArgs) Handles btnResetSettings.Click
-        If MsgBox("Are you sure you wish to reset your settings back to default?", MsgBoxStyle.YesNo, OBSWebSocketCropper.ProgramName) = MsgBoxResult.Yes Then
-            My.Settings.Reset()
-            My.Settings.UpgradeRequired = False
-            My.Settings.Save()
-            My.Settings.Reload()
-
-            SetBlankDropdowns()
-            SetUserSettings()
-        End If
-
-    End Sub
-    Private Sub roCustom_CheckedChanged(sender As Object, e As EventArgs) Handles roCustom.CheckedChanged
-        If roCustom.Checked = True Then
-            gbConnection1.Visible = True
-            roDefault.Checked = False
         Else
-            gbConnection1.Visible = False
-            roDefault.Checked = True
+
         End If
-    End Sub
-    Private Sub roDefault_CheckedChanged(sender As Object, e As EventArgs) Handles roDefault.CheckedChanged
-        If roDefault.Checked = True Then
-            roCustom.Checked = False
+
+        Return True
+    End Function
+    Private Sub VerifyProperSource(expectedSourceType As String, cbName As ComboBox, statusLabel As Label)
+        If Not String.IsNullOrWhiteSpace(cbName.Text) Then
+            Dim MatchedValue As Boolean = CheckItemInList(cbName.Text)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes(expectedSourceType, cbName.Text)
+
+                statusLabel.Visible = True
+
+                If sSettings = True Then
+                    statusLabel.Text = CorrectMessage
+                    statusLabel.ForeColor = CorrectColour
+                Else
+                    statusLabel.Text = IncorrectMessage
+                    statusLabel.ForeColor = InCorrectColour
+                End If
+            Else
+                statusLabel.Visible = False
+            End If
         Else
-            roCustom.Checked = True
+            statusLabel.Visible = False
         End If
     End Sub
-    Private Sub txtConnectionPort_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtConnectionPort.KeyPress
-        e.Handled = ObsWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
-    End Sub
-    Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
-        SaveSettings(True)
-    End Sub
+    Function CheckFullyValid(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
+        Dim FullyValid As Boolean = False
+
+        If Not String.IsNullOrWhiteSpace(SourceName) Then
+            Dim MatchedValue As Boolean = CheckItemInList(SourceName)
+
+            If MatchedValue = True Then
+                Dim sSettings As Boolean = CheckForValidSourceTypes(ExpectedSourceType, SourceName)
+
+                lblCommentaryStatus.Visible = True
+
+                FullyValid = sSettings
+
+            End If
+        Else
+            FullyValid = True
+        End If
+
+        Return FullyValid
+    End Function
     Function CheckForValidSourceTypes(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
         Dim sSettings As Boolean
 
@@ -500,210 +623,36 @@ Public Class UserSettings
 
         Return MatchedValue
     End Function
-    Private Sub AddHandlers()
-        AddHandler rSettings1.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings1.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings1.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
-        AddHandler rSettings1.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
 
-        AddHandler rSettings2.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings2.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings2.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
-        AddHandler rSettings2.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
-
-        AddHandler rSettings3.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings3.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings3.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
-        AddHandler rSettings3.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
-
-        AddHandler rSettings4.cbGameWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings4.cbTimerWindow.TextChanged, AddressOf windowSource_TextChanged
-        AddHandler rSettings4.cbTrackerOBS.TextChanged, AddressOf BrowserSource_TextChanged
-        AddHandler rSettings4.cbRunnerOBS.TextChanged, AddressOf textSource_TextChanged
-    End Sub
-
-    Function getParentControlName(sender As Object) As String
-        Dim ctl As Control = CType(sender, Control)
-
-        Return ctl.Parent.Name.ToString
-    End Function
-    Function getControlName(sender As Object) As String
-        Dim ctl As Control = CType(sender, Control)
-
-        Return ctl.Name.ToString
-    End Function
-    Protected Sub textSource_TextChanged(sender As Object, e As System.EventArgs)
-        Dim senderParent As String = getParentControlName(sender)
-        Dim senderName As String = getControlName(sender)
-
-        checkUserControlField("text_gdiplus", senderName, senderParent)
-    End Sub
-    Protected Sub browserSource_TextChanged(sender As Object, e As System.EventArgs)
-        Dim senderParent As String = getParentControlName(sender)
-        Dim senderName As String = getControlName(sender)
-
-        checkUserControlField("browser_source", senderName, senderParent)
-    End Sub
-    Protected Sub windowSource_TextChanged(sender As Object, e As System.EventArgs)
-        Dim senderParent As String = getParentControlName(sender)
-        Dim senderName As String = getControlName(sender)
-
-        checkUserControlField("window_capture", senderName, senderParent)
-    End Sub
-    Private Sub checkUserControlField(expectedSourceType As String, sourceName As String, senderParent As String)
-        Dim cbName As ComboBox = rSettings1.cbGameWindow
-        Dim statusLabel As Label
-
-        If senderParent = "rSettings1" Then
-            If sourceName = "cbGameWindow" Then
-                cbName = rSettings1.cbGameWindow
-                statusLabel = rSettings1.lblGameStatus
-            ElseIf sourceName = "cbRunnerOBS" Then
-                cbName = rSettings1.cbRunnerOBS
-                statusLabel = rSettings1.lblRunnerNameStatus
-            ElseIf sourceName = "cbTimerWindow" Then
-                cbName = rSettings1.cbTimerWindow
-                statusLabel = rSettings1.lblTimerStatus
-            ElseIf sourceName = "cbTrackerOBS" Then
-                cbName = rSettings1.cbTrackerOBS
-                statusLabel = rSettings1.lblTrackerStatus
-            End If
-        ElseIf senderParent = "rSettings2" Then
-            If sourceName = "cbGameWindow" Then
-                cbName = rSettings2.cbGameWindow
-                statusLabel = rSettings2.lblGameStatus
-            ElseIf sourceName = "cbRunnerOBS" Then
-                cbName = rSettings2.cbRunnerOBS
-                statusLabel = rSettings2.lblRunnerNameStatus
-            ElseIf sourceName = "cbTimerWindow" Then
-                cbName = rSettings2.cbTimerWindow
-                statusLabel = rSettings2.lblTimerStatus
-            ElseIf sourceName = "cbTrackerOBS" Then
-                cbName = rSettings2.cbTrackerOBS
-                statusLabel = rSettings2.lblTrackerStatus
-            End If
-        ElseIf senderParent = "rSettings3" Then
-            If sourceName = "cbGameWindow" Then
-                cbName = rSettings3.cbGameWindow
-                statusLabel = rSettings3.lblGameStatus
-            ElseIf sourceName = "cbRunnerOBS" Then
-                cbName = rSettings3.cbRunnerOBS
-                statusLabel = rSettings3.lblRunnerNameStatus
-            ElseIf sourceName = "cbTimerWindow" Then
-                cbName = rSettings3.cbTimerWindow
-                statusLabel = rSettings3.lblTimerStatus
-            ElseIf sourceName = "cbTrackerOBS" Then
-                cbName = rSettings3.cbTrackerOBS
-                statusLabel = rSettings3.lblTrackerStatus
-            End If
-        ElseIf senderParent = "rSettings4" Then
-            If sourceName = "cbGameWindow" Then
-                cbName = rSettings4.cbGameWindow
-                statusLabel = rSettings4.lblGameStatus
-            ElseIf sourceName = "cbRunnerOBS" Then
-                cbName = rSettings4.cbRunnerOBS
-                statusLabel = rSettings4.lblRunnerNameStatus
-            ElseIf sourceName = "cbTimerWindow" Then
-                cbName = rSettings4.cbTimerWindow
-                statusLabel = rSettings4.lblTimerStatus
-            ElseIf sourceName = "cbTrackerOBS" Then
-                cbName = rSettings4.cbTrackerOBS
-                statusLabel = rSettings4.lblTrackerStatus
-            End If
-        End If
-
-        If Not String.IsNullOrWhiteSpace(cbName.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbName.Text)
-
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes(expectedSourceType, cbName.Text)
-
-                statusLabel.Visible = True
-
-                If sSettings = True Then
-                    statusLabel.Text = CorrectMessage
-                    statusLabel.ForeColor = CorrectColour
-                Else
-                    statusLabel.Text = IncorrectMessage
-                    statusLabel.ForeColor = InCorrectColour
-                End If
-            Else
-                statusLabel.Visible = False
-            End If
+#End Region
+#Region " Misc Control Actions "
+    Private Sub roCustom_CheckedChanged(sender As Object, e As EventArgs) Handles roCustom.CheckedChanged
+        If roCustom.Checked = True Then
+            gbConnection1.Visible = True
+            roDefault.Checked = False
         Else
-            statusLabel.Visible = False
+            gbConnection1.Visible = False
+            roDefault.Checked = True
         End If
+    End Sub
+    Private Sub roDefault_CheckedChanged(sender As Object, e As EventArgs) Handles roDefault.CheckedChanged
+        If roDefault.Checked = True Then
+            roCustom.Checked = False
+        Else
+            roCustom.Checked = True
+        End If
+    End Sub
+    Private Sub txtConnectionPort_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtConnectionPort.KeyPress
+        e.Handled = ObsWebSocketCropper.CheckIfKeyAllowed(e.KeyChar)
     End Sub
     Private Sub cbCommentaryOBS_TextChanged(sender As Object, e As EventArgs) Handles cbCommentaryOBS.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbCommentaryOBS.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbCommentaryOBS.Text)
-
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbCommentaryOBS.Text)
-
-                lblCommentaryStatus.Visible = True
-
-                If sSettings = True Then
-                    lblCommentaryStatus.Text = CorrectMessage
-                    lblCommentaryStatus.ForeColor = CorrectColour
-                Else
-                    lblCommentaryStatus.Text = IncorrectMessage
-                    lblCommentaryStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblCommentaryStatus.Visible = False
-            End If
-        Else
-            lblCommentaryStatus.Visible = False
-        End If
+        VerifyProperSource("text_gdiplus", cbCommentaryOBS, lblCommentaryStatus)
     End Sub
     Private Sub cbGameSettings_TextChanged(sender As Object, e As EventArgs) Handles cbGameSettings.TextChanged
-        If Not String.IsNullOrWhiteSpace(cbGameSettings.Text) Then
-            Dim MatchedValue As Boolean = CheckItemInList(cbGameSettings.Text)
-
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes("text_gdiplus", cbGameSettings.Text)
-
-                If FourPlayer Then
-                    lblGameSettingsStatus.Visible = False
-                Else
-                    lblGameSettingsStatus.Visible = True
-                End If
-
-
-                If sSettings = True Then
-                    lblGameSettingsStatus.Text = CorrectMessage
-                    lblGameSettingsStatus.ForeColor = CorrectColour
-                Else
-                    lblGameSettingsStatus.Text = IncorrectMessage
-                    lblGameSettingsStatus.ForeColor = InCorrectColour
-                End If
-            Else
-                lblGameSettingsStatus.Visible = False
-            End If
-        Else
-            lblGameSettingsStatus.Visible = False
-        End If
+        VerifyProperSource("text_gdiplus", cbGameSettings, lblGameSettingsStatus)
     End Sub
-    Function CheckFullyValid(ByVal ExpectedSourceType As String, ByVal SourceName As String) As Boolean
-        Dim FullyValid As Boolean = False
+#End Region
 
-        If Not String.IsNullOrWhiteSpace(SourceName) Then
-            Dim MatchedValue As Boolean = CheckItemInList(SourceName)
 
-            If MatchedValue = True Then
-                Dim sSettings As Boolean = CheckForValidSourceTypes(ExpectedSourceType, SourceName)
-
-                lblCommentaryStatus.Visible = True
-
-                FullyValid = sSettings
-
-            End If
-        Else
-            FullyValid = True
-        End If
-
-        Return FullyValid
-    End Function
 End Class
 

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class RunnerControls
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,8 +20,9 @@ Partial Class RunnerControls
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.lblRunnerTwitch = New System.Windows.Forms.Label()
         Me.lblStreamlink = New System.Windows.Forms.Label()
         Me.lblVOD = New System.Windows.Forms.Label()
@@ -62,16 +63,16 @@ Partial Class RunnerControls
         Me.txtTrackerURL = New System.Windows.Forms.TextBox()
         Me.lblTracker = New System.Windows.Forms.Label()
         Me.lblRunnerNumber = New System.Windows.Forms.Label()
-        Me.gbRunnerNumber = New System.Windows.Forms.GroupBox()
+        Me.lblRunnerControlNumber = New System.Windows.Forms.Label()
+        Me.ttMainToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.gbTimerWindow.SuspendLayout()
         Me.gbGameWindow.SuspendLayout()
-        Me.gbRunnerNumber.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblRunnerTwitch
         '
         Me.lblRunnerTwitch.AutoSize = True
-        Me.lblRunnerTwitch.Location = New System.Drawing.Point(4, 66)
+        Me.lblRunnerTwitch.Location = New System.Drawing.Point(10, 84)
         Me.lblRunnerTwitch.Name = "lblRunnerTwitch"
         Me.lblRunnerTwitch.Size = New System.Drawing.Size(77, 13)
         Me.lblRunnerTwitch.TabIndex = 100
@@ -83,7 +84,7 @@ Partial Class RunnerControls
         Me.lblStreamlink.BackColor = System.Drawing.Color.Transparent
         Me.lblStreamlink.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblStreamlink.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblStreamlink.Location = New System.Drawing.Point(147, 86)
+        Me.lblStreamlink.Location = New System.Drawing.Point(153, 104)
         Me.lblStreamlink.Name = "lblStreamlink"
         Me.lblStreamlink.Size = New System.Drawing.Size(56, 13)
         Me.lblStreamlink.TabIndex = 99
@@ -95,7 +96,7 @@ Partial Class RunnerControls
         Me.lblVOD.BackColor = System.Drawing.Color.Transparent
         Me.lblVOD.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblVOD.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblVOD.Location = New System.Drawing.Point(84, 86)
+        Me.lblVOD.Location = New System.Drawing.Point(90, 104)
         Me.lblVOD.Name = "lblVOD"
         Me.lblVOD.Size = New System.Drawing.Size(61, 13)
         Me.lblVOD.TabIndex = 98
@@ -107,7 +108,7 @@ Partial Class RunnerControls
         Me.lblViewOnTwitch.BackColor = System.Drawing.Color.Transparent
         Me.lblViewOnTwitch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblViewOnTwitch.ForeColor = System.Drawing.SystemColors.Highlight
-        Me.lblViewOnTwitch.Location = New System.Drawing.Point(2, 86)
+        Me.lblViewOnTwitch.Location = New System.Drawing.Point(8, 104)
         Me.lblViewOnTwitch.Name = "lblViewOnTwitch"
         Me.lblViewOnTwitch.Size = New System.Drawing.Size(76, 13)
         Me.lblViewOnTwitch.TabIndex = 97
@@ -115,7 +116,7 @@ Partial Class RunnerControls
         '
         'btnNewRunner
         '
-        Me.btnNewRunner.Location = New System.Drawing.Point(211, 80)
+        Me.btnNewRunner.Location = New System.Drawing.Point(217, 98)
         Me.btnNewRunner.Name = "btnNewRunner"
         Me.btnNewRunner.Size = New System.Drawing.Size(114, 23)
         Me.btnNewRunner.TabIndex = 96
@@ -124,7 +125,7 @@ Partial Class RunnerControls
         '
         'btnSetVLC
         '
-        Me.btnSetVLC.Location = New System.Drawing.Point(11, 149)
+        Me.btnSetVLC.Location = New System.Drawing.Point(17, 162)
         Me.btnSetVLC.Name = "btnSetVLC"
         Me.btnSetVLC.Size = New System.Drawing.Size(116, 23)
         Me.btnSetVLC.TabIndex = 95
@@ -134,7 +135,7 @@ Partial Class RunnerControls
         'cbVLCSource
         '
         Me.cbVLCSource.FormattingEnabled = True
-        Me.cbVLCSource.Location = New System.Drawing.Point(90, 115)
+        Me.cbVLCSource.Location = New System.Drawing.Point(96, 128)
         Me.cbVLCSource.Name = "cbVLCSource"
         Me.cbVLCSource.Size = New System.Drawing.Size(228, 21)
         Me.cbVLCSource.TabIndex = 93
@@ -143,7 +144,7 @@ Partial Class RunnerControls
         '
         Me.lblVLC.AutoSize = True
         Me.lblVLC.BackColor = System.Drawing.SystemColors.Control
-        Me.lblVLC.Location = New System.Drawing.Point(14, 118)
+        Me.lblVLC.Location = New System.Drawing.Point(20, 131)
         Me.lblVLC.Name = "lblVLC"
         Me.lblVLC.Size = New System.Drawing.Size(64, 13)
         Me.lblVLC.TabIndex = 94
@@ -151,7 +152,7 @@ Partial Class RunnerControls
         '
         'btnSaveCrop
         '
-        Me.btnSaveCrop.Location = New System.Drawing.Point(222, 435)
+        Me.btnSaveCrop.Location = New System.Drawing.Point(228, 448)
         Me.btnSaveCrop.Name = "btnSaveCrop"
         Me.btnSaveCrop.Size = New System.Drawing.Size(96, 23)
         Me.btnSaveCrop.TabIndex = 92
@@ -160,7 +161,7 @@ Partial Class RunnerControls
         '
         'btnGetCrop
         '
-        Me.btnGetCrop.Location = New System.Drawing.Point(137, 435)
+        Me.btnGetCrop.Location = New System.Drawing.Point(143, 448)
         Me.btnGetCrop.Name = "btnGetCrop"
         Me.btnGetCrop.Size = New System.Drawing.Size(79, 23)
         Me.btnGetCrop.TabIndex = 91
@@ -171,7 +172,7 @@ Partial Class RunnerControls
         '
         Me.cbRunnerName.DisplayMember = "RacerName"
         Me.cbRunnerName.FormattingEnabled = True
-        Me.cbRunnerName.Location = New System.Drawing.Point(90, 39)
+        Me.cbRunnerName.Location = New System.Drawing.Point(96, 57)
         Me.cbRunnerName.Name = "cbRunnerName"
         Me.cbRunnerName.Size = New System.Drawing.Size(228, 21)
         Me.cbRunnerName.TabIndex = 89
@@ -181,7 +182,7 @@ Partial Class RunnerControls
         '
         Me.lblRunner.AutoSize = True
         Me.lblRunner.BackColor = System.Drawing.SystemColors.Control
-        Me.lblRunner.Location = New System.Drawing.Point(5, 42)
+        Me.lblRunner.Location = New System.Drawing.Point(11, 60)
         Me.lblRunner.Name = "lblRunner"
         Me.lblRunner.Size = New System.Drawing.Size(73, 13)
         Me.lblRunner.TabIndex = 90
@@ -189,7 +190,7 @@ Partial Class RunnerControls
         '
         'btnSetCrop
         '
-        Me.btnSetCrop.Location = New System.Drawing.Point(11, 435)
+        Me.btnSetCrop.Location = New System.Drawing.Point(17, 448)
         Me.btnSetCrop.Name = "btnSetCrop"
         Me.btnSetCrop.Size = New System.Drawing.Size(116, 23)
         Me.btnSetCrop.TabIndex = 88
@@ -210,7 +211,7 @@ Partial Class RunnerControls
         Me.gbTimerWindow.Controls.Add(Me.Label14)
         Me.gbTimerWindow.Controls.Add(Me.Label15)
         Me.gbTimerWindow.Controls.Add(Me.txtCropTimer_Right)
-        Me.gbTimerWindow.Location = New System.Drawing.Point(11, 178)
+        Me.gbTimerWindow.Location = New System.Drawing.Point(17, 191)
         Me.gbTimerWindow.Name = "gbTimerWindow"
         Me.gbTimerWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbTimerWindow.TabIndex = 86
@@ -331,7 +332,7 @@ Partial Class RunnerControls
         Me.gbGameWindow.Controls.Add(Me.Label19)
         Me.gbGameWindow.Controls.Add(Me.Label20)
         Me.gbGameWindow.Controls.Add(Me.txtCropGame_Right)
-        Me.gbGameWindow.Location = New System.Drawing.Point(11, 302)
+        Me.gbGameWindow.Location = New System.Drawing.Point(17, 315)
         Me.gbGameWindow.Name = "gbGameWindow"
         Me.gbGameWindow.Size = New System.Drawing.Size(307, 118)
         Me.gbGameWindow.TabIndex = 87
@@ -422,7 +423,7 @@ Partial Class RunnerControls
         '
         'txtTrackerURL
         '
-        Me.txtTrackerURL.Location = New System.Drawing.Point(90, 13)
+        Me.txtTrackerURL.Location = New System.Drawing.Point(96, 31)
         Me.txtTrackerURL.Name = "txtTrackerURL"
         Me.txtTrackerURL.Size = New System.Drawing.Size(190, 20)
         Me.txtTrackerURL.TabIndex = 101
@@ -431,7 +432,7 @@ Partial Class RunnerControls
         '
         Me.lblTracker.AutoSize = True
         Me.lblTracker.BackColor = System.Drawing.SystemColors.Control
-        Me.lblTracker.Location = New System.Drawing.Point(9, 16)
+        Me.lblTracker.Location = New System.Drawing.Point(15, 34)
         Me.lblTracker.Name = "lblTracker"
         Me.lblTracker.Size = New System.Drawing.Size(69, 13)
         Me.lblTracker.TabIndex = 102
@@ -440,55 +441,55 @@ Partial Class RunnerControls
         'lblRunnerNumber
         '
         Me.lblRunnerNumber.AutoSize = True
-        Me.lblRunnerNumber.Location = New System.Drawing.Point(236, 144)
+        Me.lblRunnerNumber.Location = New System.Drawing.Point(242, 157)
         Me.lblRunnerNumber.Name = "lblRunnerNumber"
         Me.lblRunnerNumber.Size = New System.Drawing.Size(82, 13)
         Me.lblRunnerNumber.TabIndex = 103
         Me.lblRunnerNumber.Text = "Runner Number"
         Me.lblRunnerNumber.Visible = False
         '
-        'gbRunnerNumber
+        'lblRunnerControlNumber
         '
-        Me.gbRunnerNumber.Controls.Add(Me.lblTracker)
-        Me.gbRunnerNumber.Controls.Add(Me.btnSaveCrop)
-        Me.gbRunnerNumber.Controls.Add(Me.lblRunnerNumber)
-        Me.gbRunnerNumber.Controls.Add(Me.btnGetCrop)
-        Me.gbRunnerNumber.Controls.Add(Me.lblRunner)
-        Me.gbRunnerNumber.Controls.Add(Me.btnSetCrop)
-        Me.gbRunnerNumber.Controls.Add(Me.btnSetVLC)
-        Me.gbRunnerNumber.Controls.Add(Me.gbGameWindow)
-        Me.gbRunnerNumber.Controls.Add(Me.gbTimerWindow)
-        Me.gbRunnerNumber.Controls.Add(Me.txtTrackerURL)
-        Me.gbRunnerNumber.Controls.Add(Me.cbRunnerName)
-        Me.gbRunnerNumber.Controls.Add(Me.lblVLC)
-        Me.gbRunnerNumber.Controls.Add(Me.lblRunnerTwitch)
-        Me.gbRunnerNumber.Controls.Add(Me.cbVLCSource)
-        Me.gbRunnerNumber.Controls.Add(Me.lblStreamlink)
-        Me.gbRunnerNumber.Controls.Add(Me.btnNewRunner)
-        Me.gbRunnerNumber.Controls.Add(Me.lblVOD)
-        Me.gbRunnerNumber.Controls.Add(Me.lblViewOnTwitch)
-        Me.gbRunnerNumber.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.gbRunnerNumber.Location = New System.Drawing.Point(0, 0)
-        Me.gbRunnerNumber.Name = "gbRunnerNumber"
-        Me.gbRunnerNumber.Size = New System.Drawing.Size(346, 480)
-        Me.gbRunnerNumber.TabIndex = 104
-        Me.gbRunnerNumber.TabStop = False
-        Me.gbRunnerNumber.Text = "Runner"
+        Me.lblRunnerControlNumber.AutoSize = True
+        Me.lblRunnerControlNumber.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRunnerControlNumber.Location = New System.Drawing.Point(5, 5)
+        Me.lblRunnerControlNumber.Name = "lblRunnerControlNumber"
+        Me.lblRunnerControlNumber.Size = New System.Drawing.Size(95, 13)
+        Me.lblRunnerControlNumber.TabIndex = 104
+        Me.lblRunnerControlNumber.Text = "Runner Number"
         '
         'RunnerControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.gbRunnerNumber)
+        Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Controls.Add(Me.lblRunnerControlNumber)
+        Me.Controls.Add(Me.btnSaveCrop)
+        Me.Controls.Add(Me.lblTracker)
+        Me.Controls.Add(Me.btnGetCrop)
+        Me.Controls.Add(Me.btnSetCrop)
+        Me.Controls.Add(Me.txtTrackerURL)
+        Me.Controls.Add(Me.gbGameWindow)
+        Me.Controls.Add(Me.lblRunnerNumber)
+        Me.Controls.Add(Me.gbTimerWindow)
+        Me.Controls.Add(Me.lblViewOnTwitch)
+        Me.Controls.Add(Me.lblVOD)
+        Me.Controls.Add(Me.lblRunner)
+        Me.Controls.Add(Me.btnNewRunner)
+        Me.Controls.Add(Me.lblStreamlink)
+        Me.Controls.Add(Me.btnSetVLC)
+        Me.Controls.Add(Me.cbVLCSource)
+        Me.Controls.Add(Me.lblRunnerTwitch)
+        Me.Controls.Add(Me.lblVLC)
+        Me.Controls.Add(Me.cbRunnerName)
         Me.Name = "RunnerControls"
-        Me.Size = New System.Drawing.Size(346, 480)
+        Me.Size = New System.Drawing.Size(344, 478)
         Me.gbTimerWindow.ResumeLayout(False)
         Me.gbTimerWindow.PerformLayout()
         Me.gbGameWindow.ResumeLayout(False)
         Me.gbGameWindow.PerformLayout()
-        Me.gbRunnerNumber.ResumeLayout(False)
-        Me.gbRunnerNumber.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -532,5 +533,6 @@ Partial Class RunnerControls
     Friend WithEvents txtTrackerURL As TextBox
     Friend WithEvents lblTracker As Label
     Friend WithEvents lblRunnerNumber As Label
-    Friend WithEvents gbRunnerNumber As GroupBox
+    Friend WithEvents lblRunnerControlNumber As Label
+    Friend WithEvents ttMainToolTip As ToolTip
 End Class
