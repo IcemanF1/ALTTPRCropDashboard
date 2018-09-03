@@ -35,6 +35,7 @@ Public Class UserSettings
             panOBS.Visible = True
             btnSaveSettings.Enabled = True
             btnSaveThenVLC.Enabled = True
+            btnDefaultOBS.Enabled = True
             btnRefreshScenes.Visible = True
             RefreshScenes()
             SetUserSettings()
@@ -55,7 +56,9 @@ Public Class UserSettings
     Private Sub btnSaveThenVLC_Click(sender As Object, e As EventArgs) Handles btnSaveThenVLC.Click
         SaveSettings(True)
     End Sub
-
+    Private Sub btnDefaultOBS_Click(sender As Object, e As EventArgs) Handles btnDefaultOBS.Click
+        UseDefaultSettings()
+    End Sub
 #End Region
 #Region " User Controls "
     Private Sub AddUserControls()
@@ -346,11 +349,13 @@ Public Class UserSettings
 
                 btnSaveSettings.Enabled = True
                 btnSaveThenVLC.Enabled = True
+                btnDefaultOBS.Enabled = True
 
                 btnSaveThenVLC.Visible = ShowVLCOption
             Else
                 btnSaveSettings.Enabled = False
                 btnSaveThenVLC.Enabled = False
+                btnDefaultOBS.Enabled = False
             End If
         End If
     End Sub
@@ -512,6 +517,79 @@ Public Class UserSettings
 
         My.Settings.Save()
     End Sub
+    Private Sub UseDefaultSettings()
+        If CheckItemInList("Commentary") = True Then
+            cbCommentaryOBS.Text = "Commentary"
+        End If
+
+        If CheckItemInList("GameSettings") = True Then
+            cbGameSettings.Text = "GameSettings"
+        End If
+
+        If CheckItemInList("Name_Runner1") = True Then
+            rSettings1.cbRunnerOBS.Text = "Name_Runner1"
+        End If
+
+        If CheckItemInList("Tracker_Runner1") = True Then
+            rSettings1.cbTrackerOBS.Text = "Tracker_Runner1"
+        End If
+
+        If CheckItemInList("Timer_Runner1") = True Then
+            rSettings1.cbTimerWindow.Text = "Timer_Runner1"
+        End If
+
+        If CheckItemInList("Game_Runner1") = True Then
+            rSettings1.cbGameWindow.Text = "Game_Runner1"
+        End If
+
+        If CheckItemInList("Name_Runner2") = True Then
+            rSettings2.cbRunnerOBS.Text = "Name_Runner2"
+        End If
+
+        If CheckItemInList("Tracker_Runner2") = True Then
+            rSettings2.cbTrackerOBS.Text = "Tracker_Runner2"
+        End If
+
+        If CheckItemInList("Timer_Runner2") = True Then
+            rSettings2.cbTimerWindow.Text = "Timer_Runner2"
+        End If
+
+        If CheckItemInList("Game_Runner2") = True Then
+            rSettings2.cbGameWindow.Text = "Game_Runner2"
+        End If
+
+        If CheckItemInList("Name_Runner3") = True Then
+            rSettings3.cbRunnerOBS.Text = "Name_Runner3"
+        End If
+
+        If CheckItemInList("Tracker_Runner3") = True Then
+            rSettings3.cbTrackerOBS.Text = "Tracker_Runner3"
+        End If
+
+        If CheckItemInList("Timer_Runner3") = True Then
+            rSettings3.cbTimerWindow.Text = "Timer_Runner3"
+        End If
+
+        If CheckItemInList("Game_Runner3") = True Then
+            rSettings3.cbGameWindow.Text = "Game_Runner3"
+        End If
+
+        If CheckItemInList("Name_Runner4") = True Then
+            rSettings4.cbRunnerOBS.Text = "Name_Runner4"
+        End If
+
+        If CheckItemInList("Tracker_Runner4") = True Then
+            rSettings4.cbTrackerOBS.Text = "Tracker_Runner4"
+        End If
+
+        If CheckItemInList("Timer_Runner4") = True Then
+            rSettings4.cbTimerWindow.Text = "Timer_Runner4"
+        End If
+
+        If CheckItemInList("Game_Runner4") = True Then
+            rSettings4.cbGameWindow.Text = "Game_Runner4"
+        End If
+    End Sub
 #End Region
 #Region " Verify "
     Function VerifySettings() As Boolean
@@ -649,6 +727,8 @@ Public Class UserSettings
     Private Sub cbGameSettings_TextChanged(sender As Object, e As EventArgs) Handles cbGameSettings.TextChanged
         VerifyProperSource("text_gdiplus", cbGameSettings, lblGameSettingsStatus)
     End Sub
+
+
 #End Region
 
 

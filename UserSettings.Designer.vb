@@ -53,6 +53,7 @@ Partial Class UserSettings
         Me.cbCommentaryOBS = New System.Windows.Forms.ComboBox()
         Me.btnRefreshScenes = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btnDefaultOBS = New System.Windows.Forms.Button()
         Me.gbConnection1.SuspendLayout()
         Me.panOBS.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -339,6 +340,7 @@ Partial Class UserSettings
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.btnDefaultOBS)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.btnSaveThenVLC)
         Me.Panel1.Controls.Add(Me.lblOBS1ConnectedStatus)
@@ -357,6 +359,15 @@ Partial Class UserSettings
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1014, 555)
         Me.Panel1.TabIndex = 101
+        '
+        'btnDefaultOBS
+        '
+        Me.btnDefaultOBS.Location = New System.Drawing.Point(457, 494)
+        Me.btnDefaultOBS.Name = "btnDefaultOBS"
+        Me.btnDefaultOBS.Size = New System.Drawing.Size(137, 39)
+        Me.btnDefaultOBS.TabIndex = 101
+        Me.btnDefaultOBS.Text = "Use Default OBS Settings"
+        Me.btnDefaultOBS.UseVisualStyleBackColor = True
         '
         'UserSettings
         '
@@ -407,4 +418,5 @@ Partial Class UserSettings
     Friend WithEvents gbRunner2 As GroupBox
     Friend WithEvents gbRunner1 As GroupBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents btnDefaultOBS As Button
 End Class
