@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -57,24 +57,24 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftTimerName() As String
+        Public Property TimerName_Runner1() As String
             Get
-                Return CType(Me("LeftTimerName"),String)
+                Return CType(Me("TimerName_Runner1"),String)
             End Get
             Set
-                Me("LeftTimerName") = value
+                Me("TimerName_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftGameName() As String
+        Public Property GameName_Runner1() As String
             Get
-                Return CType(Me("LeftGameName"),String)
+                Return CType(Me("GameName_Runner1"),String)
             End Get
             Set
-                Me("LeftGameName") = value
+                Me("GameName_Runner1") = value
             End Set
         End Property
         
@@ -105,24 +105,24 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightGameName() As String
+        Public Property GameName_Runner2() As String
             Get
-                Return CType(Me("RightGameName"),String)
+                Return CType(Me("GameName_Runner2"),String)
             End Get
             Set
-                Me("RightGameName") = value
+                Me("GameName_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightTimerName() As String
+        Public Property TimerName_Runner2() As String
             Get
-                Return CType(Me("RightTimerName"),String)
+                Return CType(Me("TimerName_Runner2"),String)
             End Get
             Set
-                Me("RightTimerName") = value
+                Me("TimerName_Runner2") = value
             End Set
         End Property
         
@@ -177,48 +177,48 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftRunnerOBS() As String
+        Public Property RunnerOBS_Runner1() As String
             Get
-                Return CType(Me("LeftRunnerOBS"),String)
+                Return CType(Me("RunnerOBS_Runner1"),String)
             End Get
             Set
-                Me("LeftRunnerOBS") = value
+                Me("RunnerOBS_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftTrackerOBS() As String
+        Public Property TrackerOBS_Runner1() As String
             Get
-                Return CType(Me("LeftTrackerOBS"),String)
+                Return CType(Me("TrackerOBS_Runner1"),String)
             End Get
             Set
-                Me("LeftTrackerOBS") = value
+                Me("TrackerOBS_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightRunnerOBS() As String
+        Public Property RunnerOBS_Runner2() As String
             Get
-                Return CType(Me("RightRunnerOBS"),String)
+                Return CType(Me("RunnerOBS_Runner2"),String)
             End Get
             Set
-                Me("RightRunnerOBS") = value
+                Me("RunnerOBS_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property RightTrackerOBS() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property TrackerOBS_Runner2() As String
             Get
-                Return CType(Me("RightTrackerOBS"),String)
+                Return CType(Me("TrackerOBS_Runner2"),String)
             End Get
             Set
-                Me("RightTrackerOBS") = value
+                Me("TrackerOBS_Runner2") = value
             End Set
         End Property
         
@@ -537,120 +537,96 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftTimerName_Bottom() As String
+        Public Property TimerName_Runner3() As String
             Get
-                Return CType(Me("LeftTimerName_Bottom"),String)
+                Return CType(Me("TimerName_Runner3"),String)
             End Get
             Set
-                Me("LeftTimerName_Bottom") = value
+                Me("TimerName_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftGameName_Bottom() As String
+        Public Property GameName_Runner3() As String
             Get
-                Return CType(Me("LeftGameName_Bottom"),String)
+                Return CType(Me("GameName_Runner3"),String)
             End Get
             Set
-                Me("LeftGameName_Bottom") = value
+                Me("GameName_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightGameName_Bottom() As String
+        Public Property GameName_Runner4() As String
             Get
-                Return CType(Me("RightGameName_Bottom"),String)
+                Return CType(Me("GameName_Runner4"),String)
             End Get
             Set
-                Me("RightGameName_Bottom") = value
+                Me("GameName_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightTimerName_Bottom() As String
+        Public Property TimerName_Runner4() As String
             Get
-                Return CType(Me("RightTimerName_Bottom"),String)
+                Return CType(Me("TimerName_Runner4"),String)
             End Get
             Set
-                Me("RightTimerName_Bottom") = value
+                Me("TimerName_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftRunnerOBS_Bottom() As String
+        Public Property RunnerOBS_Runner3() As String
             Get
-                Return CType(Me("LeftRunnerOBS_Bottom"),String)
+                Return CType(Me("RunnerOBS_Runner3"),String)
             End Get
             Set
-                Me("LeftRunnerOBS_Bottom") = value
+                Me("RunnerOBS_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightRunnerOBS_Bottom() As String
+        Public Property RunnerOBS_Runner4() As String
             Get
-                Return CType(Me("RightRunnerOBS_Bottom"),String)
+                Return CType(Me("RunnerOBS_Runner4"),String)
             End Get
             Set
-                Me("RightRunnerOBS_Bottom") = value
+                Me("RunnerOBS_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftTrackerOBS_Bottom() As String
+        Public Property TrackerOBS_Runner3() As String
             Get
-                Return CType(Me("LeftTrackerOBS_Bottom"),String)
+                Return CType(Me("TrackerOBS_Runner3"),String)
             End Get
             Set
-                Me("LeftTrackerOBS_Bottom") = value
+                Me("TrackerOBS_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightTrackerOBS_Bottom() As String
+        Public Property TrackerOBS_Runner4() As String
             Get
-                Return CType(Me("RightTrackerOBS_Bottom"),String)
+                Return CType(Me("TrackerOBS_Runner4"),String)
             End Get
             Set
-                Me("RightTrackerOBS_Bottom") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LeftStreamlinkVlcParams_Bottom() As String
-            Get
-                Return CType(Me("LeftStreamlinkVlcParams_Bottom"),String)
-            End Get
-            Set
-                Me("LeftStreamlinkVlcParams_Bottom") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property RightStreamlinkVlcParams_Bottom() As String
-            Get
-                Return CType(Me("RightStreamlinkVlcParams_Bottom"),String)
-            End Get
-            Set
-                Me("RightStreamlinkVlcParams_Bottom") = value
+                Me("TrackerOBS_Runner4") = value
             End Set
         End Property
         
@@ -753,312 +729,288 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("1116")>  _
-        Public Property PositionXTimerTopRightFourPlayer() As Integer
+        Public Property PositionXTimerFourPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionXTimerTopRightFourPlayer"),Integer)
+                Return CType(Me("PositionXTimerFourPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionXTimerTopRightFourPlayer") = value
+                Me("PositionXTimerFourPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("51")>  _
-        Public Property PositionYTimerTopRightFourPlayer() As Integer
+        Public Property PositionYTimerFourPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionYTimerTopRightFourPlayer"),Integer)
+                Return CType(Me("PositionYTimerFourPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionYTimerTopRightFourPlayer") = value
+                Me("PositionYTimerFourPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("1116")>  _
-        Public Property PositionXTimerBottomRightFourPlayer() As Integer
+        Public Property PositionXTimerFourPlayer_Runner4() As Integer
             Get
-                Return CType(Me("PositionXTimerBottomRightFourPlayer"),Integer)
+                Return CType(Me("PositionXTimerFourPlayer_Runner4"),Integer)
             End Get
             Set
-                Me("PositionXTimerBottomRightFourPlayer") = value
+                Me("PositionXTimerFourPlayer_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("410")>  _
-        Public Property PositionYTimerBottomRightFourPlayer() As Integer
+        Public Property PositionYTimerFourPlayer_Runner4() As Integer
             Get
-                Return CType(Me("PositionYTimerBottomRightFourPlayer"),Integer)
+                Return CType(Me("PositionYTimerFourPlayer_Runner4"),Integer)
             End Get
             Set
-                Me("PositionYTimerBottomRightFourPlayer") = value
+                Me("PositionYTimerFourPlayer_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("45")>  _
-        Public Property PositionXTimerTopLeftFourPlayer() As Integer
+        Public Property PositionXTimerFourPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionXTimerTopLeftFourPlayer"),Integer)
+                Return CType(Me("PositionXTimerFourPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionXTimerTopLeftFourPlayer") = value
+                Me("PositionXTimerFourPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("52")>  _
-        Public Property PositionYTimerTopLeftFourPlayer() As Integer
+        Public Property PositionYTimerFourPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionYTimerTopLeftFourPlayer"),Integer)
+                Return CType(Me("PositionYTimerFourPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionYTimerTopLeftFourPlayer") = value
+                Me("PositionYTimerFourPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("45")>  _
-        Public Property PositionXTimerBottomLeftFourPlayer() As Integer
+        Public Property PositionXTimerFourPlayer_Runner3() As Integer
             Get
-                Return CType(Me("PositionXTimerBottomLeftFourPlayer"),Integer)
+                Return CType(Me("PositionXTimerFourPlayer_Runner3"),Integer)
             End Get
             Set
-                Me("PositionXTimerBottomLeftFourPlayer") = value
+                Me("PositionXTimerFourPlayer_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("410")>  _
-        Public Property PositionYTimerBottomLeftFourPlayer() As Integer
+        Public Property PositionYTimerFourPlayer_Runner3() As Integer
             Get
-                Return CType(Me("PositionYTimerBottomLeftFourPlayer"),Integer)
+                Return CType(Me("PositionYTimerFourPlayer_Runner3"),Integer)
             End Get
             Set
-                Me("PositionYTimerBottomLeftFourPlayer") = value
+                Me("PositionYTimerFourPlayer_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("676")>  _
-        Public Property PositionXGameTopRightFourPlayer() As Integer
+        Public Property PositionXGameFourPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionXGameTopRightFourPlayer"),Integer)
+                Return CType(Me("PositionXGameFourPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionXGameTopRightFourPlayer") = value
+                Me("PositionXGameFourPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
-        Public Property PositionYGameTopRightFourPlayer() As Integer
+        Public Property PositionYGameFourPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionYGameTopRightFourPlayer"),Integer)
+                Return CType(Me("PositionYGameFourPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionYGameTopRightFourPlayer") = value
+                Me("PositionYGameFourPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("676")>  _
-        Public Property PositionXGameBottomRightFourPlayer() As Integer
+        Public Property PositionXGameFourPlayer_Runner4() As Integer
             Get
-                Return CType(Me("PositionXGameBottomRightFourPlayer"),Integer)
+                Return CType(Me("PositionXGameFourPlayer_Runner4"),Integer)
             End Get
             Set
-                Me("PositionXGameBottomRightFourPlayer") = value
+                Me("PositionXGameFourPlayer_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("368")>  _
-        Public Property PositionYGameBottomRightFourPlayer() As Integer
+        Public Property PositionYGameFourPlayer_Runner4() As Integer
             Get
-                Return CType(Me("PositionYGameBottomRightFourPlayer"),Integer)
+                Return CType(Me("PositionYGameFourPlayer_Runner4"),Integer)
             End Get
             Set
-                Me("PositionYGameBottomRightFourPlayer") = value
+                Me("PositionYGameFourPlayer_Runner4") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("220")>  _
-        Public Property PositionXGameTopLeftFourPlayer() As Integer
+        Public Property PositionXGameFourPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionXGameTopLeftFourPlayer"),Integer)
+                Return CType(Me("PositionXGameFourPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionXGameTopLeftFourPlayer") = value
+                Me("PositionXGameFourPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
-        Public Property PositionYGameTopLeftFourPlayer() As Integer
+        Public Property PositionYGameFourPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionYGameTopLeftFourPlayer"),Integer)
+                Return CType(Me("PositionYGameFourPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionYGameTopLeftFourPlayer") = value
+                Me("PositionYGameFourPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("220")>  _
-        Public Property PositionXGameBottomLeftFourPlayer() As Integer
+        Public Property PositionXGameFourPlayer_Runner3() As Integer
             Get
-                Return CType(Me("PositionXGameBottomLeftFourPlayer"),Integer)
+                Return CType(Me("PositionXGameFourPlayer_Runner3"),Integer)
             End Get
             Set
-                Me("PositionXGameBottomLeftFourPlayer") = value
+                Me("PositionXGameFourPlayer_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("368")>  _
-        Public Property PositionYGameBottomLeftFourPlayer() As Integer
+        Public Property PositionYGameFourPlayer_Runner3() As Integer
             Get
-                Return CType(Me("PositionYGameBottomLeftFourPlayer"),Integer)
+                Return CType(Me("PositionYGameFourPlayer_Runner3"),Integer)
             End Get
             Set
-                Me("PositionYGameBottomLeftFourPlayer") = value
+                Me("PositionYGameFourPlayer_Runner3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("1046")>  _
-        Public Property PositionXTimerRightTwoPlayer() As Integer
+        Public Property PositionXTimerTwoPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionXTimerRightTwoPlayer"),Integer)
+                Return CType(Me("PositionXTimerTwoPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionXTimerRightTwoPlayer") = value
+                Me("PositionXTimerTwoPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("24")>  _
-        Public Property PositionYTimerRightTwoPlayer() As Integer
+        Public Property PositionYTimerTwoPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionYTimerRightTwoPlayer"),Integer)
+                Return CType(Me("PositionYTimerTwoPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionYTimerRightTwoPlayer") = value
+                Me("PositionYTimerTwoPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("56")>  _
-        Public Property PositionXTimerLeftTwoPlayer() As Integer
+        Public Property PositionXTimerTwoPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionXTimerLeftTwoPlayer"),Integer)
+                Return CType(Me("PositionXTimerTwoPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionXTimerLeftTwoPlayer") = value
+                Me("PositionXTimerTwoPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("24")>  _
-        Public Property PositionYTimerLeftTwoPlayer() As Integer
+        Public Property PositionYTimerTwoPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionYTimerLeftTwoPlayer"),Integer)
+                Return CType(Me("PositionYTimerTwoPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionYTimerLeftTwoPlayer") = value
+                Me("PositionYTimerTwoPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("674")>  _
-        Public Property PositionXGameRightTwoPlayer() As Integer
+        Public Property PositionXGameTwoPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionXGameRightTwoPlayer"),Integer)
+                Return CType(Me("PositionXGameTwoPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionXGameRightTwoPlayer") = value
+                Me("PositionXGameTwoPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("83")>  _
-        Public Property PositionYGameRightTwoPlayer() As Integer
+        Public Property PositionYGameTwoPlayer_Runner2() As Integer
             Get
-                Return CType(Me("PositionYGameRightTwoPlayer"),Integer)
+                Return CType(Me("PositionYGameTwoPlayer_Runner2"),Integer)
             End Get
             Set
-                Me("PositionYGameRightTwoPlayer") = value
+                Me("PositionYGameTwoPlayer_Runner2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("48")>  _
-        Public Property PositionXGameLeftTwoPlayer() As Integer
+        Public Property PositionXGameTwoPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionXGameLeftTwoPlayer"),Integer)
+                Return CType(Me("PositionXGameTwoPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionXGameLeftTwoPlayer") = value
+                Me("PositionXGameTwoPlayer_Runner1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("83")>  _
-        Public Property PositionYGameLeftTwoPlayer() As Integer
+        Public Property PositionYGameTwoPlayer_Runner1() As Integer
             Get
-                Return CType(Me("PositionYGameLeftTwoPlayer"),Integer)
+                Return CType(Me("PositionYGameTwoPlayer_Runner1"),Integer)
             End Get
             Set
-                Me("PositionYGameLeftTwoPlayer") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property SelectedConfigName() As String
-            Get
-                Return CType(Me("SelectedConfigName"),String)
-            End Get
-            Set
-                Me("SelectedConfigName") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property SelectedConfigPath() As String
-            Get
-                Return CType(Me("SelectedConfigPath"),String)
-            End Get
-            Set
-                Me("SelectedConfigPath") = value
+                Me("PositionYGameTwoPlayer_Runner1") = value
             End Set
         End Property
     End Class

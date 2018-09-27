@@ -6,16 +6,27 @@ Imports System.IO
 Imports ALTTPRCropDashboard.Data.ViewModels
 Imports System.Globalization
 
+
 Public Class ObsWebSocketCropper
     Public ProgramName As String = "OBS WebSocket Cropper"
     Private isLoaded As Boolean
     Private _configInfo As New DataSet
 
+    Friend WithEvents rControl1 As New RunnerControls
+    Friend WithEvents rControl2 As New RunnerControls
+    Friend WithEvents rControl3 As New RunnerControls
+    Friend WithEvents rControl4 As New RunnerControls
+
     Public WithEvents Obs As New ObsWebSocketPlus
+    Private WithEvents _obs2 As New ObsWebSocketPlus
+
+    Private Const ApprovedChars As String = "0123456789"
+
     Public ObsConnectionStatus As String
     Public ObsConnectionStatus2 As String
 
-    Private WithEvents _obs2 As New ObsWebSocketPlus
+    Public ReadOnly TrackerRunnerColour As String = "Gold"
+
     Public ReadOnly Property ConnectionString As String
         Get
             Return My.Settings.ConnectionString1 & ":" & My.Settings.ConnectionPort1
@@ -33,153 +44,47 @@ Public Class ObsWebSocketCropper
     Public Shared GetObsInfo As Boolean
     Public Shared ReuseInfo As Boolean
 
-    Private Const ApprovedChars As String = "0123456789"
-
     Private _cropApi As CropApi
     Private ReadOnly _cropperMath As New CropperMath
-    Private _vlcListLeft As New DataSet
-    Private _vlcListRight As New DataSet
-    Private _vlcListLeftBottom As New DataSet
-    Private _vlcListRightBottom As New DataSet
     Private ReadOnly _viewModel As New CropperViewModel
-    Private ReadOnly _viewModelBottom As New CropperViewModel
+
     Private _check2NdObs As Boolean
     Private _lastUpdate As Integer
-    Private BoundingSizeGame As Rectangle
-    Private BoundingSizeTimer As Rectangle
 
-    Private PositionXTimer_TR As Integer
-    Private PositionXTimer_TL As Integer
+    Public Shared vlcProcesses As List(Of Process)
 
-    Private PositionYTimer_TR As Integer
-    Private PositionYTimer_TL As Integer
-
-    Private PositionYGame_TL As Integer
-    Private PositionYGame_TR As Integer
-
-    Private positionXGame_TR As Integer
-    Private positionXGame_TL As Integer
-
-    Private PositionXTimer_BR As Integer
-    Private PositionXTimer_BL As Integer
-
-    Private PositionYTimer_BR As Integer
-    Private PositionYTimer_BL As Integer
-
-    Private PositionYGame_BL As Integer
-    Private PositionYGame_BR As Integer
-
-    Private positionXGame_BR As Integer
-    Private positionXGame_BL As Integer
-
-
-#Region " Create New Tables "
-    Private Sub CreateNewSourceTable()
-        If _vlcListLeft.Tables.Count = 0 Then
-            _vlcListLeft.Tables.Add("Processes")
-            _vlcListLeft.Tables("Processes").Columns.Add("VLCName")
-        Else
-            _vlcListLeft.Tables("Processes").Clear()
-        End If
-
-        If _vlcListRight.Tables.Count = 0 Then
-            _vlcListRight.Tables.Add("Processes")
-            _vlcListRight.Tables("Processes").Columns.Add("VLCName")
-        Else
-            _vlcListRight.Tables("Processes").Clear()
-        End If
-
-        If _vlcListLeftBottom.Tables.Count = 0 Then
-            _vlcListLeftBottom.Tables.Add("Processes")
-            _vlcListLeftBottom.Tables("Processes").Columns.Add("VLCName")
-        Else
-            _vlcListLeftBottom.Tables("Processes").Clear()
-        End If
-
-        If _vlcListRightBottom.Tables.Count = 0 Then
-            _vlcListRightBottom.Tables.Add("Processes")
-            _vlcListRightBottom.Tables("Processes").Columns.Add("VLCName")
-        Else
-            _vlcListRightBottom.Tables("Processes").Clear()
-        End If
-    End Sub
-
-#End Region
 #Region " Button Clicks "
     Private Sub btnConnectOBS1_Click(sender As Object, e As EventArgs) Handles btnConnectOBS1.Click
         ConnectToObs()
     End Sub
     Private Sub btnSetTrackCommNames_Click(sender As Object, e As EventArgs) Handles btnSetTrackCommNames.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) AndAlso Not String.IsNullOrWhiteSpace(cbLeftRunnerName.Text) Then
-            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.LeftRunnerOBS, cbLeftRunnerName.Text))
+        If Not String.IsNullOrWhiteSpace(My.Settings.RunnerOBS_Runner1) AndAlso Not String.IsNullOrWhiteSpace(rControl1.cbRunnerName.Text) Then
+            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RunnerOBS_Runner1, rControl1.cbRunnerName.Text))
         End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) AndAlso Not String.IsNullOrWhiteSpace(cbRightRunnerName.Text) Then
-            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RightRunnerOBS, cbRightRunnerName.Text))
+        If Not String.IsNullOrWhiteSpace(My.Settings.RunnerOBS_Runner2) AndAlso Not String.IsNullOrWhiteSpace(rControl2.cbRunnerName.Text) Then
+            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RunnerOBS_Runner2, rControl2.cbRunnerName.Text))
         End If
+        If Not String.IsNullOrWhiteSpace(My.Settings.RunnerOBS_Runner3) AndAlso Not String.IsNullOrWhiteSpace(rControl3.cbRunnerName.Text) Then
+            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RunnerOBS_Runner3, rControl3.cbRunnerName.Text))
+        End If
+        If Not String.IsNullOrWhiteSpace(My.Settings.RunnerOBS_Runner4) AndAlso Not String.IsNullOrWhiteSpace(rControl4.cbRunnerName.Text) Then
+            DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RunnerOBS_Runner4, rControl4.cbRunnerName.Text))
+        End If
+
         If Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS) AndAlso Not String.IsNullOrWhiteSpace(txtCommentaryNames.Text) Then
             DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.CommentaryOBS, txtCommentaryNames.Text))
         End If
         If Not String.IsNullOrWhiteSpace(My.Settings.GameSettings) AndAlso Not String.IsNullOrWhiteSpace(txtGameSettings.Text) Then
             DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.GameSettings, txtGameSettings.Text))
         End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtLeftTrackerURL.Text) Then
-            Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
-            Dim trackerString As String
-            If txtLeftTrackerURL.Text.ToLower.StartsWith("http") Then
-                trackerString = txtLeftTrackerURL.Text
-            Else
-                trackerString = TrackerURL & txtLeftTrackerURL.Text
-            End If
 
-            DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.LeftTrackerOBS, trackerString))
-        End If
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL.Text) Then
-            Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
-            Dim trackerString As String
-            If txtRightTrackerURL.Text.ToLower.StartsWith("http") Then
-                trackerString = txtRightTrackerURL.Text
-            Else
-                trackerString = TrackerURL & txtRightTrackerURL.Text
-            End If
-
-            DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.RightTrackerOBS, trackerString))
-        End If
-
-        If PlayersToolStripMenuItem.Checked Then
-            If Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS_Bottom) AndAlso Not String.IsNullOrWhiteSpace(cbLeftRunnerName_Bottom.Text) Then
-                DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.LeftRunnerOBS_Bottom, cbLeftRunnerName_Bottom.Text))
-            End If
-            If Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS_Bottom) AndAlso Not String.IsNullOrWhiteSpace(cbRightRunnerName_Bottom.Text) Then
-                DispatchToObs(Sub(o) o.SetTextGdi(My.Settings.RightRunnerOBS_Bottom, cbRightRunnerName_Bottom.Text))
-            End If
-            If Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS_Bottom) AndAlso Not String.IsNullOrWhiteSpace(txtLeftTrackerURL_Bottom.Text) Then
-                Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
-                Dim trackerString As String
-                If txtLeftTrackerURL_Bottom.Text.ToLower.StartsWith("http") Then
-                    trackerString = txtLeftTrackerURL_Bottom.Text
-                Else
-                    trackerString = TrackerURL & txtLeftTrackerURL_Bottom.Text
-                End If
-
-                DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.LeftTrackerOBS_Bottom, trackerString))
-            End If
-            If Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS_Bottom) AndAlso Not String.IsNullOrWhiteSpace(txtRightTrackerURL_Bottom.Text) Then
-                Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
-                Dim trackerString As String
-                If txtRightTrackerURL_Bottom.Text.ToLower.StartsWith("http") Then
-                    trackerString = txtRightTrackerURL_Bottom.Text
-                Else
-                    trackerString = TrackerURL & txtRightTrackerURL_Bottom.Text
-                End If
-
-                DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.RightTrackerOBS_Bottom, trackerString))
-            End If
-        End If
-
+        SetTracker(1)
+        SetTracker(2)
+        SetTracker(3)
+        SetTracker(4)
     End Sub
-
     Private Sub ObsConnectionChanged(sender As Object, e As EventArgs) Handles Obs.Connected, Obs.Disconnected
-        RefreshVlc()
+        'RefreshVlc()
         ObsConnectionStatus = If(Obs.IsConnected, "Connected", "Not Connected")
         _viewModel.ObsConnected = Obs.IsConnected
         lblOBS1ConnectedStatus.Text = ObsConnectionStatus
@@ -231,39 +136,6 @@ Public Class ObsWebSocketCropper
         End If
 
     End Sub
-    Private Sub SetVlcWindows(isRightWindow As Boolean, isBottomRunner As Boolean)
-
-        Dim vlcSource As String
-        Dim gameSource As String
-        Dim timerSource As String
-        Dim vmRunner As RunnerViewModel
-
-        If isBottomRunner Then
-            vlcSource = If(isRightWindow, cbRightVLCSource_Bottom.Text, cbLeftVLCSource_Bottom.Text)
-            gameSource = If(isRightWindow, My.Settings.RightGameName_Bottom, My.Settings.LeftGameName_Bottom)
-            timerSource = If(isRightWindow, My.Settings.RightTimerName_Bottom, My.Settings.LeftTimerName_Bottom)
-            vmRunner = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            vlcSource = If(isRightWindow, cbRightVLCSource.Text, cbLeftVLCSource.Text)
-            gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
-            timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
-            vmRunner = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
-
-        If Not String.IsNullOrWhiteSpace(vlcSource) Then
-            vlcSource = vlcSource.Replace(":", "#3A") & ":QWidget:vlc.exe"
-            If Not String.IsNullOrWhiteSpace(gameSource) Then
-                DispatchToObs(Sub(o) o.SetSourceSettings(gameSource, False, vlcSource, 1))
-            End If
-            If Not String.IsNullOrWhiteSpace(timerSource) Then
-                DispatchToObs(Sub(o) o.SetSourceSettings(timerSource, False, vlcSource, 1))
-            End If
-
-            GetCurrentCropSettings(isRightWindow, isBottomRunner)
-
-        End If
-
-    End Sub
     Private Sub btn2ndOBS_Click(sender As Object, e As EventArgs) Handles btn2ndOBS.Click
         GetIniFile(False, False)
 
@@ -276,230 +148,38 @@ Public Class ObsWebSocketCropper
         ConnectToObs2()
     End Sub
 
-    Private Sub btnGetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop.Click
-        Try
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(False, False)
-            End If
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnGetRightCrop_Click(sender As Object, e As EventArgs) Handles btnGetRightCrop.Click
-        Try
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(True, False)
-            End If
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnGetLeftCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnGetLeftCrop_Bottom.Click
-        Try
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(False, True)
-            End If
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnGetRightCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnGetRightCrop_Bottom.Click
-        Try
-            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
-                FillCurrentCropInfoFromObs(True, True)
-            End If
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-
-    Private Sub btnSetLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop.Click
-        Try
-            If _viewModel.LeftRunner.MasterSize.Height = 0 OrElse _viewModel.LeftRunner.MasterSize.Width = 0 Then
-                _viewModel.LeftRunner.MasterSize.UpdateFromSize(GetMasterSize(False, False))
-            End If
-
-            SetNewNewMath(False, False)
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnSetRightCrop_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop.Click
-        If _viewModel.RightRunner.MasterSize.Height = 0 OrElse _viewModel.RightRunner.MasterSize.Width = 0 Then
-            _viewModel.RightRunner.MasterSize.UpdateFromSize(GetMasterSize(True, False))
-        End If
-        Try
-            SetNewNewMath(True, False)
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnSetLeftCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnSetLeftCrop_Bottom.Click
-        Try
-            If _viewModelBottom.LeftRunner.MasterSize.Height = 0 OrElse _viewModelBottom.LeftRunner.MasterSize.Width = 0 Then
-                _viewModelBottom.LeftRunner.MasterSize.UpdateFromSize(GetMasterSize(False, True))
-            End If
-
-            SetNewNewMath(False, True)
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-    Private Sub btnSetRightCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnSetRightCrop_Bottom.Click
-        If _viewModelBottom.RightRunner.MasterSize.Height = 0 OrElse _viewModelBottom.RightRunner.MasterSize.Width = 0 Then
-            _viewModelBottom.RightRunner.MasterSize.UpdateFromSize(GetMasterSize(True, True))
-        End If
-        Try
-            SetNewNewMath(True, True)
-        Catch ex As ErrorResponseException
-            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-        End Try
-    End Sub
-
-    Private Sub btnSaveLeftCrop_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop.Click
-        SaveRunnerCrop(False, False)
-    End Sub
-    Private Sub btnSaveRightCrop_Click(sender As Object, e As EventArgs) Handles btnSaveRightCrop.Click
-        SaveRunnerCrop(True, False)
-    End Sub
-    Private Sub btnSaveLeftCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnSaveLeftCrop_Bottom.Click
-        SaveRunnerCrop(False, True)
-    End Sub
-    Private Sub btnSaveRightCrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnSaveRightCrop_Bottom.Click
-        SaveRunnerCrop(True, True)
-    End Sub
-
-    Private Sub btnSetLeftVLC_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC.Click
-        SetVlcWindows(False, False)
-    End Sub
-    Private Sub btnSetLeftVLC_Bottom_Click(sender As Object, e As EventArgs) Handles btnSetLeftVLC_Bottom.Click
-        SetVlcWindows(False, True)
-    End Sub
-
-    Private Sub btnSetRightVLC_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC.Click
-        SetVlcWindows(True, False)
-    End Sub
-    Private Sub btnSetRightVLC_Bottom_Click(sender As Object, e As EventArgs) Handles btnSetRightVLC_Bottom.Click
-        SetVlcWindows(True, True)
-    End Sub
-
-    Private Sub btnNewLeftRunner_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner.Click
-        AddNewRunner(False, False)
-    End Sub
-    Private Sub btnNewRightRunner_Click(sender As Object, e As EventArgs) Handles btnNewRightRunner.Click
-        AddNewRunner(True, False)
-    End Sub
-    Private Sub btnNewLeftRunner_Bottom_Click(sender As Object, e As EventArgs) Handles btnNewLeftRunner_Bottom.Click
-        AddNewRunner(False, True)
-    End Sub
-    Private Sub btnNewRightRunner_Bottom_Click(sender As Object, e As EventArgs) Handles btnNewRightRunner_Bottom.Click
-        AddNewRunner(True, True)
-    End Sub
-
-    Private Sub btnLeftTimerDB_Click(sender As Object, e As EventArgs) Handles btnLeftTimerDB.Click
-        ClearTextBoxes(False, "Timer", False)
-        RefreshCropFromData(False, "Timer", False)
-    End Sub
-    Private Sub btnLeftGameDB_Click(sender As Object, e As EventArgs) Handles btnLeftGameDB.Click
-        ClearTextBoxes(False, "Game", False)
-        RefreshCropFromData(False, "Game", False)
-    End Sub
-    Private Sub btnLeftTimerDB_Bottom_Click(sender As Object, e As EventArgs) Handles btnLeftTimerDB_Bottom.Click
-        ClearTextBoxes(False, "Timer", True)
-        RefreshCropFromData(False, "Timer", True)
-    End Sub
-    Private Sub btnLeftGameDB_Bottom_Click(sender As Object, e As EventArgs) Handles btnLeftGameDB_Bottom.Click
-        ClearTextBoxes(False, "Game", True)
-        RefreshCropFromData(False, "Game", True)
-    End Sub
-
-    Private Sub btnRightTimerDB_Click(sender As Object, e As EventArgs) Handles btnRightTimerDB.Click
-        ClearTextBoxes(True, "Timer", False)
-        RefreshCropFromData(True, "Timer", False)
-    End Sub
-    Private Sub btnRightGameDB_Click(sender As Object, e As EventArgs) Handles btnRightGameDB.Click
-        ClearTextBoxes(True, "Game", False)
-        RefreshCropFromData(True, "Game", False)
-    End Sub
-    Private Sub btnRightTimerDB_Bottom_Click(sender As Object, e As EventArgs) Handles btnRightTimerDB_Bottom.Click
-        ClearTextBoxes(True, "Timer", True)
-        RefreshCropFromData(True, "Timer", True)
-    End Sub
-    Private Sub btnRightGameDB_Bottom_Click(sender As Object, e As EventArgs) Handles btnRightGameDB_Bottom.Click
-        ClearTextBoxes(True, "Game", True)
-        RefreshCropFromData(True, "Game", True)
-    End Sub
-
-    Private Sub btnLeftTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftTimerUncrop.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName) Then
-            Uncrop(My.Settings.LeftTimerName)
-        End If
-    End Sub
-    Private Sub btnRightTimerUncrop_Click(sender As Object, e As EventArgs) Handles btnRightTimerUncrop.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName) Then
-            Uncrop(My.Settings.RightTimerName)
-        End If
-    End Sub
-    Private Sub btnLeftTimerUncrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnLeftTimerUncrop_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName_Bottom) Then
-            Uncrop(My.Settings.LeftTimerName_Bottom)
-        End If
-    End Sub
-    Private Sub btnRightTimerUncrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnRightTimerUncrop_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName_Bottom) Then
-            Uncrop(My.Settings.RightTimerName_Bottom)
-        End If
-    End Sub
-
-    Private Sub btnRightGameUncrop_Click(sender As Object, e As EventArgs) Handles btnRightGameUncrop.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-            Uncrop(My.Settings.RightGameName)
-        End If
-    End Sub
-    Private Sub btnLeftGameUncrop_Click(sender As Object, e As EventArgs) Handles btnLeftGameUncrop.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-            Uncrop(My.Settings.LeftGameName)
-        End If
-    End Sub
-    Private Sub btnRightGameUncrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnRightGameUncrop_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.RightGameName_Bottom) Then
-            Uncrop(My.Settings.RightGameName_Bottom)
-        End If
-    End Sub
-    Private Sub btnLeftGameUncrop_Bottom_Click(sender As Object, e As EventArgs) Handles btnLeftGameUncrop_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName_Bottom) Then
-            Uncrop(My.Settings.LeftGameName_Bottom)
-        End If
-    End Sub
 #End Region
 #Region " Crop Math / Crop Settings "
-    Private Sub GetCurrentCropSettings(isRightWindow As Boolean, isBottomRunner As Boolean)
-        Dim runnerVm As RunnerViewModel
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
-        runnerVm.CurrentSize.UpdateFromSize(GetMasterSize(isRightWindow, isBottomRunner))
-
-        SetHeightLabels()
+    Public Sub GetCrop(runnerNumber As Integer)
+        Try
+            If MsgBox("This action will overwrite the current crop info for all game/timer windows!  Are you sure you wish to continue?", MsgBoxStyle.YesNo, ProgramName) = MsgBoxResult.Yes Then
+                FillCurrentCropInfoFromObs(runnerNumber)
+            End If
+        Catch ex As ErrorResponseException
+            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+        End Try
     End Sub
-    Private Sub SaveRunnerCrop(isRightWindow As Boolean, isBottomRunner As Boolean)
+    Public Sub SaveRunnerCrop(runnerNumber As Integer)
 
         Dim needsRefresh = False
         Dim submitterName = My.Settings.TwitchChannel
         Dim runnerVm As RunnerViewModel
 
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
 
         Dim runnerTwitch = runnerVm.Twitch
         Dim runnerName = runnerVm.Name
 
-        GetCurrentCropSettings(isRightWindow, isBottomRunner)
+        'GetCurrentCropSettings() 
 
         Dim savedMasterSize = runnerVm.MasterSize.AsSize()
         Dim masterSizeWithoutDefaultRight As Size = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, runnerVm.Scale))
@@ -538,176 +218,76 @@ Public Class ObsWebSocketCropper
         End Using
 
         If needsRefresh Then
-            RefreshRunnerNames()
+            RefreshRunnerNames(False)
         End If
     End Sub
-    Private Function GetMasterSize(isRight As Boolean, isBottomRunner As Boolean) As Size
+    Public Sub FillCurrentCropInfoFromObs(runnerNumber As Integer)
 
-        If isBottomRunner Then
-            If isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.RightGameName_Bottom) Then
-                Return Size.Empty
-            End If
-            If Not isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.LeftGameName_Bottom) Then
-                Return Size.Empty
-            End If
-        Else
-            If isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.RightGameName) Then
-                Return Size.Empty
-            End If
-            If Not isRight AndAlso String.IsNullOrWhiteSpace(My.Settings.LeftGameName) Then
-                Return Size.Empty
-            End If
-        End If
-
-
-        Dim currentScene = If(Obs.StudioModeEnabled, Obs.GetPreviewScene(), Obs.GetCurrentScene())
-
-        Dim target As String
-
-        If isBottomRunner Then
-            target = If(isRight, My.Settings.RightGameName_Bottom, My.Settings.LeftGameName_Bottom).ToLower
-        Else
-            target = If(isRight, My.Settings.RightGameName, My.Settings.LeftGameName).ToLower
-        End If
-
-        Dim adequateSource = currentScene.Items.FirstOrDefault(Function(scene) scene.SourceName.ToLower = target)
-
-        If adequateSource.SourceName Is Nothing OrElse String.IsNullOrWhiteSpace(adequateSource.SourceName) Then
-            MessageBox.Show(Me, $"Cannot find source {target} in the current scene. Are you on the right scene?")
-        End If
-
-        Return New Size(adequateSource.SourceWidth, adequateSource.SourceHeight)
-
-    End Function
-    Private Sub ResetHeightWidthLabels()
-        lblLMasterHeight.Text = "Master Height:  0"
-        lblLMasterWidth.Text = "Master Width: 0"
-        lblLSourceHeight.Text = "Source Height: 0"
-        lblLSourceWidth.Text = "Master Width: 0"
-
-        lblRMasterHeight.Text = "Master Height: 0"
-        lblRMasterWidth.Text = "Master Width: 0"
-        lblRSourceHeight.Text = "Source Height: 0"
-        lblRSourceWidth.Text = "Master Width: 0"
-    End Sub
-    Private Sub SetHeightLabels()
-        lblLMasterHeight.Text = "Master Height: " & _viewModel.LeftRunner.MasterSize.Height
-        lblLMasterWidth.Text = "Master Width: " & _viewModel.LeftRunner.MasterSize.Width
-        lblLSourceHeight.Text = "Source Height: " & _viewModel.LeftRunner.CurrentSize.Height
-        lblLSourceWidth.Text = "Source Width: " & _viewModel.LeftRunner.CurrentSize.Width
-
-        lblRMasterHeight.Text = "Master Height: " & _viewModel.RightRunner.MasterSize.Height
-        lblRMasterWidth.Text = "Master Width: " & _viewModel.RightRunner.MasterSize.Width
-        lblRSourceHeight.Text = "Source Height: " & _viewModel.RightRunner.CurrentSize.Height
-        lblRSourceWidth.Text = "Source Width: " & _viewModel.RightRunner.CurrentSize.Width
-    End Sub
-    Private Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String, scaling As Double,
-                            boundingSize As Rectangle, positionX As Integer, positionY As Integer)
-        Dim resultingCrop = _cropperMath.AdjustCrop(New CropInfo With {
-                                                      .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, scaling)),
-                                                      .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, savedMasterSize, scaling))
-                                                      }, _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(currentMasterSize, scaling)))
-
-
-        Dim realCrop = _cropperMath.AddScaling(_cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault), _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(resultingCrop.MasterSizeWithoutDefault), scaling), scaling)
-
-        Obs.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
-        If ObsConnectionStatus2 = "Connected" Then
-            _obs2.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
-        End If
-    End Sub
-    Private Sub SetNewNewMath(isRightWindow As Boolean, isBottomRunner As Boolean)
-
-        GetCurrentCropSettings(isRightWindow, isBottomRunner)
-
-        RefreshCropperDefaultCrop()
+        Dim sceneName As String = If(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
 
         Dim runnerVm As RunnerViewModel
-        Dim gameSource As String
-        Dim timerSource As String
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+        Dim timerSource = GlobalParam.GetTimerSource(runnerNumber)
 
-        Dim PositionYTimer, PositionYGame, positionXTimer, positionXGame As Integer
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
 
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-            gameSource = If(isRightWindow, My.Settings.RightGameName_Bottom, My.Settings.LeftGameName_Bottom)
-            timerSource = If(isRightWindow, My.Settings.RightTimerName_Bottom, My.Settings.LeftTimerName_Bottom)
-            positionXTimer = If(isRightWindow, PositionXTimer_BR, PositionXTimer_BL)
-            positionXGame = If(isRightWindow, positionXGame_BR, positionXGame_BL)
-            PositionYTimer = If(isRightWindow, PositionYTimer_BR, PositionYTimer_BL)
-            PositionYGame = If(isRightWindow, PositionYGame_BR, PositionYGame_BL)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-            gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
-            timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
-            positionXTimer = If(isRightWindow, PositionXTimer_TR, PositionXTimer_TL)
-            positionXGame = If(isRightWindow, positionXGame_TR, positionXGame_TL)
-            PositionYTimer = If(isRightWindow, PositionYTimer_TR, PositionYTimer_TL)
-            PositionYGame = If(isRightWindow, PositionYGame_TR, PositionYGame_TL)
+        runnerVm.MasterSize.UpdateFromSize(GetMasterSize(gameSource))
+
+        If Not String.IsNullOrWhiteSpace(timerSource) Then
+            runnerVm.TimerCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, timerSource).Crop)
         End If
-
-        If runnerVm.MasterSize.Height > 0 And runnerVm.MasterSize.Width > 0 Then
-            If Not String.IsNullOrWhiteSpace(gameSource) Then
-                ProcessCrop(runnerVm.GameCrop.AsRectangle(),
-                            runnerVm.MasterSize.AsSize(),
-                            runnerVm.CurrentSize.AsSize(),
-                            gameSource,
-                            runnerVm.Scale,
-                            BoundingSizeGame,
-                            positionXGame,
-                            PositionYGame
-)
-            End If
-
-            If Not String.IsNullOrWhiteSpace(timerSource) Then
-                ProcessCrop(runnerVm.TimerCrop.AsRectangle(),
-                            runnerVm.MasterSize.AsSize(),
-                            runnerVm.CurrentSize.AsSize(),
-                            timerSource,
-                            runnerVm.Scale,
-                            BoundingSizeTimer,
-                            positionXTimer,
-                            PositionYTimer
-)
-            End If
-
-        Else
-            MsgBox("Master Height/Width is 0.  Can't crop yet.", MsgBoxStyle.OkOnly, ProgramName)
+        If Not String.IsNullOrWhiteSpace(gameSource) Then
+            runnerVm.GameCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, gameSource).Crop)
         End If
-    End Sub
-#End Region
-#Region " Refresh / Set User Info "
-    Private Sub RefreshRunnerNames()
-        Dim tempLeftRunner As String = cbLeftRunnerName.Text
-        Dim tempRightRunner As String = cbRightRunnerName.Text
-        Dim tempLeftRunner_Bottom As String = cbLeftRunnerName_Bottom.Text
-        Dim tempRightRunner_Bottom As String = cbRightRunnerName_Bottom.Text
-        ReuseInfo = False
-
-        Using context As New CropDbContext
-            Dim validNames = context.Crops.OrderBy(Function(r) r.Runner).Select(Function(r) New With {.RacerName = r.RunnerName}).Distinct().ToList().OrderBy(Function(r) r.RacerName, StringComparer.CurrentCultureIgnoreCase).ToList()
-            cbLeftRunnerName.DataSource = validNames
-            cbRightRunnerName.DataSource = validNames.ToList()
-            cbLeftRunnerName_Bottom.DataSource = validNames.ToList()
-            cbRightRunnerName_Bottom.DataSource = validNames.ToList()
-        End Using
-
-        cbLeftRunnerName.Text = tempLeftRunner
-        cbRightRunnerName.Text = tempRightRunner
-        cbLeftRunnerName_Bottom.Text = tempLeftRunner_Bottom
-        cbRightRunnerName_Bottom.Text = tempRightRunner_Bottom
-
-        ReuseInfo = True
 
     End Sub
-    Private Function ParsePercent(percent As String) As Double
-        If (String.IsNullOrWhiteSpace(percent)) Then
-            Return 1
+    Private Sub Uncrop(ByVal sourceName As String)
+        DispatchToObs(Sub(o) o.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0, 0, 0, 0, 0))
+    End Sub
+    Public Sub UncropSource(runnerNumber As Integer, isTimer As Boolean)
+        Dim obsSourceName As String
+
+        If isTimer Then
+            obsSourceName = GlobalParam.GetTimerSource(runnerNumber)
+        Else
+            obsSourceName = GlobalParam.GetGameSource(runnerNumber)
         End If
 
-        Return Double.Parse(percent.Replace("%", "")) / 100.0
-    End Function
-    Private Sub RefreshCropFromData(isRightWindow As Boolean, ByVal refreshAction As String, isBottomRunner As Boolean)
+        If Not String.IsNullOrWhiteSpace(obsSourceName) Then
+            Uncrop(obsSourceName)
+        End If
+    End Sub
+    Public Sub ClearTextBoxes(refreshAction As String, runnerNumber As Integer)
+        Dim runnerVm As RunnerViewModel
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
+
+        If refreshAction = "Both" OrElse refreshAction = "Game" Then
+            runnerVm.GameCrop.UpdateFromRectangle(Rectangle.Empty)
+        End If
+        If refreshAction = "Both" OrElse refreshAction = "Timer" Then
+            runnerVm.TimerCrop.UpdateFromRectangle(Rectangle.Empty)
+        End If
+    End Sub
+    Public Sub RefreshCropFromData(ByVal refreshAction As String, runnerNumber As Integer, runnerName As String)
         If Not Obs.IsConnected Then
             Return
         End If
@@ -719,20 +299,18 @@ Public Class ObsWebSocketCropper
         Dim realCrop As Rectangle
 
         Dim runnerVm As RunnerViewModel
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
 
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
-
-        Dim runnerName As String
-
-        If isBottomRunner Then
-            runnerName = If(isRightWindow, cbRightRunnerName_Bottom.Text, cbLeftRunnerName_Bottom.Text)
-        Else
-            runnerName = If(isRightWindow, cbRightRunnerName.Text, cbLeftRunnerName.Text)
-        End If
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
 
         Using context As New CropDbContext
             Dim runnerInfo As Crop
@@ -744,7 +322,7 @@ Public Class ObsWebSocketCropper
             End If
             If runnerInfo Is Nothing Then
                 runnerInfo = New Crop
-                Dim initialSize = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(GetMasterSize(isRightWindow, isBottomRunner), scaling))
+                Dim initialSize = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(GetMasterSize(gameSource), scaling))
                 runnerInfo.SizeWidth = initialSize.Width
                 runnerInfo.SizeHeight = initialSize.Height
 
@@ -770,26 +348,415 @@ Public Class ObsWebSocketCropper
                 runnerVm.Twitch = runnerInfo.Runner
             End If
 
-            If isRightWindow Then
-                If isBottomRunner Then
-                    lblRightRunnerTwitch_Bottom.Text = "Twitch: " & runnerVm.Twitch
-                Else
-                    lblRightRunnerTwitch.Text = "Twitch: " & runnerVm.Twitch
-                End If
-            Else
-                If isBottomRunner Then
-                    lblLeftRunnerTwitch_Bottom.Text = "Twitch: " & runnerVm.Twitch
-                Else
-                    lblLeftRunnerTwitch.Text = "Twitch: " & runnerVm.Twitch
-                End If
-            End If
+            Select Case runnerNumber
+                Case 1
+                    rControl1.twitchName = "Twitch: " & runnerVm.Twitch
+                Case 2
+                    rControl2.twitchName = "Twitch: " & runnerVm.Twitch
+                Case 3
+                    rControl3.twitchName = "Twitch: " & runnerVm.Twitch
+                Case 4
+                    rControl4.twitchName = "Twitch: " & runnerVm.Twitch
+            End Select
 
             runnerVm.MasterSize.UpdateFromSize(realMasterSize)
             runnerVm.Scale = scaling
         End Using
 
-        SetHeightLabels()
+        'SetHeightLabels()
     End Sub
+    Private Function ParsePercent(percent As String) As Double
+        If (String.IsNullOrWhiteSpace(percent)) Then
+            Return 1
+        End If
+
+        Return Double.Parse(percent.Replace("%", "")) / 100.0
+    End Function
+    Private Function TransScale(rect As Rectangle, originalSize As Size, originalScaling As Double, newSize As Size, newScaling As Double) As Rectangle
+        Return _cropperMath.AddScaling(_cropperMath.RemoveScaling(rect, originalSize, originalScaling), newSize, newScaling)
+    End Function
+    Public Sub AdjustScalingTrigger(runnerNumber As Integer, scalingPercent As String)
+        Dim runnerVm As RunnerViewModel
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
+
+        AdjustScaling(_viewModel.RightRunner, ParsePercent(scalingPercent))
+    End Sub
+    Private Sub AdjustScaling(runnerVm As RunnerViewModel, newScale As Double)
+        If Math.Abs(newScale - runnerVm.Scale) < 0.0001 OrElse Math.Abs(runnerVm.Scale) < 0.0001 Then
+            Exit Sub
+        End If
+
+        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(runnerVm.MasterSize.AsSize(), runnerVm.Scale), newScale)
+        runnerVm.GameCrop.UpdateFromRectangle(TransScale(runnerVm.GameCrop.AsRectangle(),
+                                                         runnerVm.MasterSize.AsSize(),
+                                                         runnerVm.Scale,
+                                                         newSize,
+                                                         newScale))
+        runnerVm.TimerCrop.UpdateFromRectangle(TransScale(runnerVm.TimerCrop.AsRectangle(),
+                                                          runnerVm.MasterSize.AsSize(),
+                                                          runnerVm.Scale,
+                                                          newSize,
+                                                          newScale))
+        runnerVm.MasterSize.UpdateFromSize(newSize)
+        runnerVm.Scale = newScale
+    End Sub
+    Public Sub SetRunner(runnerNumber As Integer, runnerName As String)
+        Select Case runnerNumber
+            Case 1
+                _viewModel.Runner1.Name = runnerName
+            Case 2
+                _viewModel.Runner2.Name = runnerName
+            Case 3
+                _viewModel.Runner3.Name = runnerName
+            Case 4
+                _viewModel.Runner4.Name = runnerName
+        End Select
+
+
+    End Sub
+
+#End Region
+#Region " UserControl Functions "
+    Private Sub AddHandlers()
+        AddHandler rControl1.cbRunnerName.TextChanged, AddressOf cbRunnerName_TextChanged
+        AddHandler rControl2.cbRunnerName.TextChanged, AddressOf cbRunnerName_TextChanged
+        AddHandler rControl3.cbRunnerName.TextChanged, AddressOf cbRunnerName_TextChanged
+        AddHandler rControl4.cbRunnerName.TextChanged, AddressOf cbRunnerName_TextChanged
+
+        AddHandler rControl1.cbScaling.TextChanged, AddressOf cbScaling_TextChanged
+        AddHandler rControl2.cbScaling.TextChanged, AddressOf cbScaling_TextChanged
+        AddHandler rControl3.cbScaling.TextChanged, AddressOf cbScaling_TextChanged
+        AddHandler rControl4.cbScaling.TextChanged, AddressOf cbScaling_TextChanged
+
+        AddHandler rControl1.cbRunnerName.KeyUp, AddressOf cbRunnerName_KeyUp
+        AddHandler rControl2.cbRunnerName.KeyUp, AddressOf cbRunnerName_KeyUp
+        AddHandler rControl3.cbRunnerName.KeyUp, AddressOf cbRunnerName_KeyUp
+        AddHandler rControl4.cbRunnerName.KeyUp, AddressOf cbRunnerName_KeyUp
+
+        AddHandler rControl1.lblVOD.Click, AddressOf lblVOD_Click
+        AddHandler rControl2.lblVOD.Click, AddressOf lblVOD_Click
+        AddHandler rControl3.lblVOD.Click, AddressOf lblVOD_Click
+        AddHandler rControl4.lblVOD.Click, AddressOf lblVOD_Click
+
+        AddHandler rControl1.lblStreamlink.Click, AddressOf lblStreamlink_Click
+        AddHandler rControl2.lblStreamlink.Click, AddressOf lblStreamlink_Click
+        AddHandler rControl3.lblStreamlink.Click, AddressOf lblStreamlink_Click
+        AddHandler rControl4.lblStreamlink.Click, AddressOf lblStreamlink_Click
+
+        AddHandler rControl1.lblViewOnTwitch.Click, AddressOf lblViewOnTwitch_Click
+        AddHandler rControl2.lblViewOnTwitch.Click, AddressOf lblViewOnTwitch_Click
+        AddHandler rControl3.lblViewOnTwitch.Click, AddressOf lblViewOnTwitch_Click
+        AddHandler rControl4.lblViewOnTwitch.Click, AddressOf lblViewOnTwitch_Click
+
+        AddHandler rControl1.btnGameUncrop.Click, AddressOf btnGameUncrop_Click
+        AddHandler rControl2.btnGameUncrop.Click, AddressOf btnGameUncrop_Click
+        AddHandler rControl3.btnGameUncrop.Click, AddressOf btnGameUncrop_Click
+        AddHandler rControl4.btnGameUncrop.Click, AddressOf btnGameUncrop_Click
+
+        AddHandler rControl1.btnGameDB.Click, AddressOf btnGameDB_Click
+        AddHandler rControl2.btnGameDB.Click, AddressOf btnGameDB_Click
+        AddHandler rControl3.btnGameDB.Click, AddressOf btnGameDB_Click
+        AddHandler rControl4.btnGameDB.Click, AddressOf btnGameDB_Click
+
+        AddHandler rControl1.btnSaveCrop.Click, AddressOf btnSaveCrop_Click
+        AddHandler rControl2.btnSaveCrop.Click, AddressOf btnSaveCrop_Click
+        AddHandler rControl3.btnSaveCrop.Click, AddressOf btnSaveCrop_Click
+        AddHandler rControl4.btnSaveCrop.Click, AddressOf btnSaveCrop_Click
+
+        AddHandler rControl1.btnSetCrop.Click, AddressOf btnSetCrop_Click
+        AddHandler rControl2.btnSetCrop.Click, AddressOf btnSetCrop_Click
+        AddHandler rControl3.btnSetCrop.Click, AddressOf btnSetCrop_Click
+        AddHandler rControl4.btnSetCrop.Click, AddressOf btnSetCrop_Click
+
+        AddHandler rControl1.btnGetCrop.Click, AddressOf btnGetCrop_Click
+        AddHandler rControl2.btnGetCrop.Click, AddressOf btnGetCrop_Click
+        AddHandler rControl3.btnGetCrop.Click, AddressOf btnGetCrop_Click
+        AddHandler rControl4.btnGetCrop.Click, AddressOf btnGetCrop_Click
+
+        AddHandler rControl1.btnNewRunner.Click, AddressOf btnNewRunner_Click
+        AddHandler rControl2.btnNewRunner.Click, AddressOf btnNewRunner_Click
+        AddHandler rControl3.btnNewRunner.Click, AddressOf btnNewRunner_Click
+        AddHandler rControl4.btnNewRunner.Click, AddressOf btnNewRunner_Click
+
+        AddHandler rControl1.btnTimerDB.Click, AddressOf btnTimerDB_Click
+        AddHandler rControl2.btnTimerDB.Click, AddressOf btnTimerDB_Click
+        AddHandler rControl3.btnTimerDB.Click, AddressOf btnTimerDB_Click
+        AddHandler rControl4.btnTimerDB.Click, AddressOf btnTimerDB_Click
+
+        AddHandler rControl1.btnTimerUncrop.Click, AddressOf btnTimerUncrop_Click
+        AddHandler rControl2.btnTimerUncrop.Click, AddressOf btnTimerUncrop_Click
+        AddHandler rControl3.btnTimerUncrop.Click, AddressOf btnTimerUncrop_Click
+        AddHandler rControl4.btnTimerUncrop.Click, AddressOf btnTimerUncrop_Click
+
+        AddHandler rControl1.btnSetVLC.Click, AddressOf btnSetVLC_Click
+        AddHandler rControl2.btnSetVLC.Click, AddressOf btnSetVLC_Click
+        AddHandler rControl3.btnSetVLC.Click, AddressOf btnSetVLC_Click
+        AddHandler rControl4.btnSetVLC.Click, AddressOf btnSetVLC_Click
+    End Sub
+    Function getParentControlName(sender As Object) As String
+        Dim ctl As Control = CType(sender, Control)
+
+        Return ctl.Parent.Name.ToString
+    End Function
+    Function getRunnerNumber(senderParent As String) As String
+        Select Case senderParent
+            Case "rControl1"
+                Return rControl1.lblRunnerNumber.Text
+            Case "rControl2"
+                Return rControl2.lblRunnerNumber.Text
+            Case "rControl3"
+                Return rControl3.lblRunnerNumber.Text
+            Case "rControl4"
+                Return rControl4.lblRunnerNumber.Text
+        End Select
+    End Function
+    Function getRunnerName(senderParent As String) As String
+        Select Case senderParent
+            Case "rControl1"
+                Return rControl1.cbRunnerName.Text
+            Case "rControl2"
+                Return rControl2.cbRunnerName.Text
+            Case "rControl3"
+                Return rControl3.cbRunnerName.Text
+            Case "rControl4"
+                Return rControl4.cbRunnerName.Text
+        End Select
+    End Function
+    Function getVLCText(senderParent As String) As String
+        Select Case senderParent
+            Case "rControl1"
+                Return rControl1.cbVLCSource.Text
+            Case "rControl2"
+                Return rControl2.cbVLCSource.Text
+            Case "rControl3"
+                Return rControl3.cbVLCSource.Text
+            Case "rControl4"
+                Return rControl4.cbVLCSource.Text
+        End Select
+    End Function
+    Function getScalingPercent(senderParent As String) As String
+        Select Case senderParent
+            Case "rControl1"
+                Return rControl1.cbScaling.Text
+            Case "rControl2"
+                Return rControl2.cbScaling.Text
+            Case "rControl3"
+                Return rControl3.cbScaling.Text
+            Case "rControl4"
+                Return rControl4.cbScaling.Text
+        End Select
+    End Function
+    Protected Sub cbRunnerName_TextChanged(sender As Object, e As System.EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim runnerName As String = getRunnerName(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            SetRunner(CInt(runnerNumber), runnerName)
+            ClearTextBoxes("Both", CInt(runnerNumber))
+            RefreshCropFromData("Both", CInt(runnerNumber), runnerName)
+        End If
+    End Sub
+    Protected Sub cbRunnerName_KeyUp(sender As Object, e As KeyEventArgs)
+
+        Dim cbRunnerName As ComboBox
+        Dim senderParent As String = getParentControlName(sender)
+
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim runnerName As String = getRunnerName(senderParent)
+
+        Select Case senderParent
+            Case "rControl1"
+                cbRunnerName = rControl1.cbRunnerName
+            Case "rControl2"
+                cbRunnerName = rControl2.cbRunnerName
+            Case "rControl3"
+                cbRunnerName = rControl3.cbRunnerName
+            Case "rControl4"
+                cbRunnerName = rControl4.cbRunnerName
+        End Select
+
+        Dim index As Integer
+        Dim actual As String
+        Dim found As String
+
+        If ((e.KeyCode = Keys.Back) Or
+    (e.KeyCode = Keys.Left) Or
+    (e.KeyCode = Keys.Right) Or
+    (e.KeyCode = Keys.Up) Or
+    (e.KeyCode = Keys.Delete) Or
+    (e.KeyCode = Keys.Down) Or
+    (e.KeyCode = Keys.PageUp) Or
+    (e.KeyCode = Keys.PageDown) Or
+    (e.KeyCode = Keys.Home) Or
+    (e.KeyCode = Keys.End)) Then
+
+            Return
+        End If
+
+        ' Store the actual text that has been typed.
+        actual = cbRunnerName.Text
+
+        ' Find the first match for the typed value.
+        index = cbRunnerName.FindString(actual)
+
+        ' Get the text of the first match.
+        If (index > -1) Then
+            found = cbRunnerName.Items(index).ToString()
+
+            ' Select this item from the list.
+
+            cbRunnerName.SelectedIndex = index
+
+            ' Select the portion of the text that was automatically
+            ' added so that additional typing will replace it.
+            cbRunnerName.SelectionStart = actual.Length
+            cbRunnerName.SelectionLength = found.Length
+        End If
+    End Sub
+    Protected Sub lblViewOnTwitch_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            OpenTwitch(CInt(runnerNumber), False)
+        End If
+    End Sub
+    Protected Sub lblStreamlink_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            StartStreamLink(CInt(runnerNumber))
+        End If
+    End Sub
+    Protected Sub lblVOD_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            OpenTwitch(CInt(runnerNumber), True)
+        End If
+    End Sub
+    Protected Sub cbScaling_TextChanged(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim scalingPercent As String = getScalingPercent(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            AdjustScalingTrigger(CInt(runnerNumber), scalingPercent)
+        End If
+    End Sub
+    Protected Sub btnGameUncrop_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            UncropSource(CInt(runnerNumber), False)
+        End If
+    End Sub
+    Protected Sub btnGameDB_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim runnerName As String = getRunnerName(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            ClearTextBoxes("Game", CInt(runnerNumber))
+            RefreshCropFromData("Game", CInt(runnerNumber), runnerName)
+        End If
+    End Sub
+    Protected Sub btnSaveCrop_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            SaveRunnerCrop(CInt(runnerNumber))
+        End If
+    End Sub
+    Protected Sub btnSetCrop_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            SetCrop(CInt(runnerNumber))
+        End If
+    End Sub
+    Protected Sub btnGetCrop_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            GetCrop(CInt(runnerNumber))
+        End If
+
+    End Sub
+    Protected Sub btnNewRunner_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim runnerName As String = getRunnerName(senderParent)
+
+        Dim cbRunnerName As ComboBox
+        Dim lblRunnerTwitch As Label
+
+        Select Case senderParent
+            Case "rControl1"
+                cbRunnerName = rControl1.cbRunnerName
+                lblRunnerTwitch = rControl1.lblRunnerTwitch
+            Case "rControl2"
+                cbRunnerName = rControl2.cbRunnerName
+                lblRunnerTwitch = rControl2.lblRunnerTwitch
+            Case "rControl3"
+                cbRunnerName = rControl3.cbRunnerName
+                lblRunnerTwitch = rControl3.lblRunnerTwitch
+            Case "rControl4"
+                cbRunnerName = rControl4.cbRunnerName
+                lblRunnerTwitch = rControl4.lblRunnerTwitch
+        End Select
+
+        If isRunnerNumValid(runnerNumber) Then
+            AddNewRunner(CInt(runnerNumber), cbRunnerName, lblRunnerTwitch)
+        End If
+    End Sub
+    Protected Sub btnTimerDB_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim runnerName As String = getRunnerName(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            ClearTextBoxes("Timer", CInt(runnerNumber))
+            RefreshCropFromData("Timer", CInt(runnerNumber), runnerName)
+        End If
+    End Sub
+    Protected Sub btnTimerUncrop_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            UncropSource(CInt(runnerNumber), True)
+        End If
+    End Sub
+    Protected Sub btnSetVLC_Click(sender As Object, e As EventArgs)
+        Dim senderParent As String = getParentControlName(sender)
+        Dim runnerNumber As String = getRunnerNumber(senderParent)
+        Dim vlcSource As String = getVLCText(senderParent)
+
+        If isRunnerNumValid(runnerNumber) Then
+            SetVlcWindows(CInt(runnerNumber), vlcSource)
+        End If
+    End Sub
+
+#End Region
+#Region " Refresh / Set User Info "
     Private Sub RefreshObs()
         Dim lObs = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
@@ -809,350 +776,66 @@ Public Class ObsWebSocketCropper
         End If
     End Sub
     Private Sub RefreshVlc()
+        vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
-        Dim vlcProcesses = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("vlc", True, Globalization.CultureInfo.InvariantCulture)).ToList()
         If Not vlcProcesses.Any() Then
             Exit Sub
         End If
 
-        Dim leftVlc, rightVlc As String
-
-
-        If Not String.IsNullOrWhiteSpace(cbRightVLCSource.Text) Then
-            rightVlc = cbRightVLCSource.Text
-        Else
-            rightVlc = ""
-        End If
-
-        If Not String.IsNullOrWhiteSpace(cbLeftVLCSource.Text) Then
-            leftVlc = cbLeftVLCSource.Text
-        Else
-            leftVlc = ""
-        End If
-
-        _vlcListLeft.Clear()
-        _vlcListRight.Clear()
-
-        Dim data = vlcProcesses.Select(Function(v) New With {.VLCName = v.MainWindowTitle}).ToList()
-
-        _vlcListRight = _vlcListLeft.Copy
-
-        cbLeftVLCSource.DataSource = data
-        cbLeftVLCSource.DisplayMember = "VLCName"
-        cbLeftVLCSource.ValueMember = "VLCName"
-
-        cbRightVLCSource.DataSource = data.ToList()
-        cbRightVLCSource.DisplayMember = "VLCName"
-        cbRightVLCSource.ValueMember = "VLCName"
-
-        cbLeftVLCSource_Bottom.DataSource = data.ToList()
-        cbLeftVLCSource_Bottom.DisplayMember = "VLCName"
-        cbLeftVLCSource_Bottom.ValueMember = "VLCName"
-
-        cbRightVLCSource_Bottom.DataSource = data.ToList()
-        cbRightVLCSource_Bottom.DisplayMember = "VLCName"
-        cbRightVLCSource_Bottom.ValueMember = "VLCName"
-
-        cbRightVLCSource.Text = ""
-        cbLeftVLCSource.Text = ""
-        cbRightVLCSource_Bottom.Text = ""
-        cbLeftVLCSource_Bottom.Text = ""
-
-        If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch.Text) Then
-            Dim tempText = lblLeftRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbLeftVLCSource.Text = match.VLCName
-            End If
-        End If
-
-
-        If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch.Text) Then
-            Dim tempText = lblRightRunnerTwitch.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbRightVLCSource.Text = match.VLCName
-            End If
-        End If
-
-        If Not String.IsNullOrWhiteSpace(lblLeftRunnerTwitch_Bottom.Text) Then
-            Dim tempText = lblLeftRunnerTwitch_Bottom.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbLeftVLCSource_Bottom.Text = match.VLCName
-            End If
-        End If
-
-
-        If Not String.IsNullOrWhiteSpace(lblRightRunnerTwitch_Bottom.Text) Then
-            Dim tempText = lblRightRunnerTwitch_Bottom.Text.Remove(0, 8)
-            Dim match = data.FirstOrDefault(Function(d) d.VLCName.StartsWith(tempText, True, CultureInfo.InvariantCulture))
-
-            If match IsNot Nothing Then
-                cbRightVLCSource_Bottom.Text = match.VLCName
-            End If
-        End If
+        rControl1.CheckVLCForRunner()
+        rControl2.CheckVLCForRunner()
+        rControl3.CheckVLCForRunner()
+        rControl4.CheckVLCForRunner()
 
     End Sub
-    Private Sub ClearTextBoxes(isRightWindow As Boolean, refreshAction As String, isBottomRunner As Boolean)
-        Dim runnerVm As RunnerViewModel
-
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
-
-
-        If refreshAction = "Both" OrElse refreshAction = "Game" Then
-            runnerVm.GameCrop.UpdateFromRectangle(Rectangle.Empty)
-        End If
-        If refreshAction = "Both" OrElse refreshAction = "Timer" Then
-            runnerVm.TimerCrop.UpdateFromRectangle(Rectangle.Empty)
-        End If
+    Private Sub RefreshRunnerNames(isReset As Boolean)
+        rControl1.RefreshRunnerNames(isReset)
+        rControl2.RefreshRunnerNames(isReset)
+        rControl3.RefreshRunnerNames(isReset)
+        rControl4.RefreshRunnerNames(isReset)
     End Sub
-    Private Sub FillCurrentCropInfoFromObs(isRightWindow As Boolean, isBottomRunner As Boolean)
-
-        Dim sceneName As String = If(Obs.StudioModeEnabled, Obs.GetPreviewScene().Name, Obs.GetCurrentScene().Name)
-
-        Dim runnerVm As RunnerViewModel
-
-        If isBottomRunner Then
-            runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-        Else
-            runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-        End If
-
-        runnerVm.MasterSize.UpdateFromSize(GetMasterSize(isRightWindow, isBottomRunner))
-
-        Dim timerSource, gameSource As String
-
-        If isBottomRunner Then
-            timerSource = If(isRightWindow, My.Settings.RightTimerName_Bottom, My.Settings.LeftTimerName_Bottom)
-            gameSource = If(isRightWindow, My.Settings.RightGameName_Bottom, My.Settings.LeftGameName_Bottom)
-        Else
-            timerSource = If(isRightWindow, My.Settings.RightTimerName, My.Settings.LeftTimerName)
-            gameSource = If(isRightWindow, My.Settings.RightGameName, My.Settings.LeftGameName)
-        End If
-
-        If Not String.IsNullOrWhiteSpace(timerSource) Then
-            runnerVm.TimerCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, timerSource).Crop)
-        End If
-        If Not String.IsNullOrWhiteSpace(gameSource) Then
-            runnerVm.GameCrop.UpdateFromRectangle(Obs.GetSceneItemProperties(sceneName, gameSource).Crop)
-        End If
-
+    Public Sub RefreshCropperDefaultCrop()
+        _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
     End Sub
 #End Region
-    Private Sub ValidateKeyPress(sender As Object, e As KeyPressEventArgs) _
-        Handles txtCropRightTimer_Top.KeyPress, txtCropRightTimer_Right.KeyPress,
-                txtCropRightTimer_Left.KeyPress, txtCropRightTimer_Bottom.KeyPress,
-                txtCropRightGame_Top.KeyPress, txtCropRightGame_Right.KeyPress,
-                txtCropRightGame_Left.KeyPress, txtCropRightGame_Bottom.KeyPress,
-                txtCropLeftTimer_Top.KeyPress, txtCropLeftTimer_Right.KeyPress,
-                txtCropLeftTimer_Left.KeyPress, txtCropLeftTimer_Bottom.KeyPress,
-                txtCropLeftGame_Top.KeyPress, txtCropLeftGame_Right.KeyPress,
-                txtCropLeftGame_Left.KeyPress, txtCropLeftGame_Bottom.KeyPress,
-                txtCropRightTimer_Top_BR.KeyPress, txtCropRightTimer_Right_BR.KeyPress,
-                txtCropRightTimer_Left_BR.KeyPress, txtCropRightTimer_Bottom_BR.KeyPress,
-                txtCropRightGame_Top_BR.KeyPress, txtCropRightGame_Right_BR.KeyPress,
-                txtCropRightGame_Left_BR.KeyPress, txtCropRightGame_Bottom_BR.KeyPress,
-                txtCropLeftTimer_Top_BR.KeyPress, txtCropLeftTimer_Right_BR.KeyPress,
-                txtCropLeftTimer_Left_BR.KeyPress, txtCropLeftTimer_Bottom_BR.KeyPress,
-                txtCropLeftGame_Top_BR.KeyPress, txtCropLeftGame_Right_BR.KeyPress,
-                txtCropLeftGame_Left_BR.KeyPress, txtCropLeftGame_Bottom_BR.KeyPress
+#Region " Radio Buttons "
+    Private Sub rb1Runner_CheckedChanged(sender As Object, e As EventArgs) Handles rb1Runner.CheckedChanged
+        If rb1Runner.Checked = True Then
+            rb2Runner.Checked = False
+            rb3Runner.Checked = False
+            rb4Runner.Checked = False
 
-        e.Handled = CheckIfKeyAllowed(e.KeyChar)
-    End Sub
-    Public Shared Function CheckIfKeyAllowed(keyChar As String) As Boolean
-        Return Not ApprovedChars.Contains(keyChar) AndAlso keyChar <> vbBack
-    End Function
-#Region " Runner Drop Downs "
-    Private Sub cbLeftRunner_KeyUp(sender As Object, e As KeyEventArgs) Handles cbLeftRunnerName.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
-
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbLeftRunnerName.Text
-
-        ' Find the first match for the typed value.
-        index = cbLeftRunnerName.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbLeftRunnerName.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbLeftRunnerName.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbLeftRunnerName.SelectionStart = actual.Length
-            cbLeftRunnerName.SelectionLength = found.Length
+            SetControlsVisible(1)
         End If
     End Sub
-    Private Sub cbRightRunner_KeyUp(sender As Object, e As KeyEventArgs) Handles cbRightRunnerName.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
+    Private Sub rb2Runner_CheckedChanged(sender As Object, e As EventArgs) Handles rb2Runner.CheckedChanged
+        If rb2Runner.Checked = True Then
+            rb1Runner.Checked = False
+            rb3Runner.Checked = False
+            rb4Runner.Checked = False
 
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbRightRunnerName.Text
-
-        ' Find the first match for the typed value.
-        index = cbRightRunnerName.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbRightRunnerName.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbRightRunnerName.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbRightRunnerName.SelectionStart = actual.Length
-            cbRightRunnerName.SelectionLength = found.Length
+            SetControlsVisible(2)
         End If
     End Sub
-    Private Sub cbRightRunner_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName.TextChanged
-        If ReuseInfo = True Then
-            _viewModel.RightRunner.Name = cbRightRunnerName.Text
-            ClearTextBoxes(True, "Both", False)
-            RefreshCropFromData(True, "Both", False)
+    Private Sub rb3Runner_CheckedChanged(sender As Object, e As EventArgs) Handles rb3Runner.CheckedChanged
+        If rb3Runner.Checked = True Then
+            rb2Runner.Checked = False
+            rb1Runner.Checked = False
+            rb4Runner.Checked = False
+
+            SetControlsVisible(3)
         End If
     End Sub
-    Private Sub cbLeftRunner_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName.TextChanged
-        If ReuseInfo = True Then
-            _viewModel.LeftRunner.Name = cbLeftRunnerName.Text
-            ClearTextBoxes(False, "Both", False)
-            RefreshCropFromData(False, "Both", False)
-        End If
-    End Sub
-    Private Sub cbLeftRunnerName_Bottom_KeyUp(sender As Object, e As KeyEventArgs) Handles cbLeftRunnerName_Bottom.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
+    Private Sub rb4Runner_CheckedChanged(sender As Object, e As EventArgs) Handles rb4Runner.CheckedChanged
+        If rb4Runner.Checked = True Then
+            rb2Runner.Checked = False
+            rb3Runner.Checked = False
+            rb1Runner.Checked = False
 
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbLeftRunnerName_Bottom.Text
-
-        ' Find the first match for the typed value.
-        index = cbLeftRunnerName_Bottom.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbLeftRunnerName_Bottom.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbLeftRunnerName_Bottom.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbLeftRunnerName_Bottom.SelectionStart = actual.Length
-            cbLeftRunnerName_Bottom.SelectionLength = found.Length
-        End If
-    End Sub
-    Private Sub cbRightRunnerName_Bottom_KeyUp(sender As Object, e As KeyEventArgs) Handles cbRightRunnerName_Bottom.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
-
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbRightRunnerName_Bottom.Text
-
-        ' Find the first match for the typed value.
-        index = cbRightRunnerName_Bottom.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbRightRunnerName_Bottom.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbRightRunnerName_Bottom.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbRightRunnerName_Bottom.SelectionStart = actual.Length
-            cbRightRunnerName_Bottom.SelectionLength = found.Length
-        End If
-    End Sub
-    Private Sub cbRightRunnerName_Bottom_TextChanged(sender As Object, e As EventArgs) Handles cbRightRunnerName_Bottom.TextChanged
-        If ReuseInfo = True Then
-            _viewModelBottom.RightRunner.Name = cbRightRunnerName_Bottom.Text
-            ClearTextBoxes(True, "Both", True)
-            RefreshCropFromData(True, "Both", True)
-        End If
-    End Sub
-    Private Sub cbLeftRunnerName_Bottom_TextChanged(sender As Object, e As EventArgs) Handles cbLeftRunnerName_Bottom.TextChanged
-        If ReuseInfo = True Then
-            _viewModelBottom.LeftRunner.Name = cbLeftRunnerName_Bottom.Text
-            ClearTextBoxes(False, "Both", True)
-            RefreshCropFromData(False, "Both", True)
+            SetControlsVisible(4)
         End If
     End Sub
 #End Region
-
 #Region " Misc Functions "
     Private Sub RegisterExpertModeFeatures(ParamArray features() As Control)
         For Each control In features
@@ -1177,100 +860,79 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub ConfigureDataBindings()
         ' Expert mode only features
-        RegisterExpertModeFeatures(lblLeftStreamlink, lblRightStreamlink)
-        RegisterExpertModeFeatures(lblLeftScaling, cbLeftScaling, lblRightScaling, cbRightScaling)
         RegisterExpertModeFeatures(chkAlwaysOnTop)
-        RegisterExpertModeFeatures(lblLeftVOD, lblRightVOD)
-        RegisterExpertModeFeatures(lblViewLeftOnTwitch, lblViewRightOnTwitch)
         RegisterExpertModeFeatures(lblOBS2ConnectedStatus, btnConnectOBS2, btn2ndOBS)
-        RegisterExpertModeFeatures(btnLeftGameDB, btnLeftTimerDB, btnRightTimerDB, btnRightGameDB)
-        RegisterExpertModeFeatures(lblViewLeftOnTwitch_Bottom, lblLeftVOD_Bottom, lblLeftStreamlink_Bottom)
-        RegisterExpertModeFeatures(lblViewRightOnTwitch_Bottom, lblRightVOD_Bottom, lblRightStreamlink_Bottom)
-        RegisterExpertModeFeatures(btnLeftTimerDB_Bottom, btnLeftGameDB_Bottom, cbLeftScaling_Bottom, lblLeftScaling_Bottom)
-        RegisterExpertModeFeatures(btnRightTimerDB_Bottom, btnRightGameDB_Bottom, cbRightScaling_Bottom, lblRightScaling_Bottom)
-
-        RegisterFourPlayerMode(pnlFourPlayer, pnlFourPlayerTracker)
 
         chkAlwaysOnTop.DataBindings.Add("Checked", My.Settings, NameOf(My.Settings.AlwaysOnTop), False, DataSourceUpdateMode.OnPropertyChanged)
         DataBindings.Add("TopMost", My.Settings, NameOf(My.Settings.AlwaysOnTop), False, DataSourceUpdateMode.OnPropertyChanged)
 
         'All OBS dependencies
-        RegisterObsDependency(btnSetLeftCrop, btnSetRightCrop)
-        RegisterObsDependency(btnGetLeftCrop, btnGetRightCrop)
-        RegisterObsDependency(btnSaveLeftCrop, btnSaveRightCrop)
-        RegisterObsDependency(btnSetLeftVLC, btnSetRightVLC, btnGetProcesses, cbLeftVLCSource, cbRightVLCSource)
-        RegisterObsDependency(btnSetTrackCommNames, btnNewLeftRunner, btnNewRightRunner)
-        RegisterObsDependency(btnSyncWithServer, btn2ndOBS, btnConnectOBS2, btnResetDatabase, cbConfigFiles)
-        RegisterObsDependency(gbTrackerComms, gbLeftGameWindow, gbRightGameWindow, gbLeftTimerWindow, gbRightTimerWindow)
-        RegisterObsDependency(cbLeftRunnerName, cbRightRunnerName)
-        RegisterObsDependency(lblLeftVOD, lblRightVOD)
-        RegisterObsDependency(lblViewLeftOnTwitch, lblViewRightOnTwitch)
-        RegisterObsDependency(lblLeftStreamlink, lblRightStreamlink)
 
-        RegisterObsDependency(btnSetLeftCrop_Bottom, btnSetRightCrop_Bottom)
-        RegisterObsDependency(btnGetLeftCrop_Bottom, btnGetRightCrop_Bottom)
-        RegisterObsDependency(btnSaveLeftCrop_Bottom, btnSaveRightCrop_Bottom)
-        RegisterObsDependency(btnSetLeftVLC_Bottom, btnSetRightVLC_Bottom, cbLeftVLCSource_Bottom, cbRightVLCSource_Bottom)
-        RegisterObsDependency(btnNewLeftRunner_Bottom, btnNewRightRunner_Bottom)
-        RegisterObsDependency(gbLeftGameWindow_Bottom, gbRightGameWindow_Bottom, gbLeftTimerWindow_Bottom, gbRightTimerWindow_Bottom)
-        RegisterObsDependency(cbLeftRunnerName_Bottom, cbRightRunnerName_Bottom)
-        RegisterObsDependency(lblLeftVOD_Bottom, lblRightVOD_Bottom)
-        RegisterObsDependency(lblViewLeftOnTwitch_Bottom, lblViewRightOnTwitch_Bottom)
-        RegisterObsDependency(lblLeftStreamlink_Bottom, lblRightStreamlink_Bottom)
+        RegisterObsDependency(btnGetProcesses)
+        RegisterObsDependency(btnSetTrackCommNames)
+        RegisterObsDependency(btnSyncWithServer, btn2ndOBS, btnConnectOBS2, btnResetDatabase)
+        RegisterObsDependency(gbTrackerComms)
 
-        'Bind all crop info
-        RegisterCropBindings(_viewModel.LeftRunner.GameCrop,
-                             txtCropLeftGame_Left,
-                             txtCropLeftGame_Top,
-                             txtCropLeftGame_Bottom,
-                             txtCropLeftGame_Right)
-        RegisterCropBindings(_viewModel.LeftRunner.TimerCrop,
-                             txtCropLeftTimer_Left,
-                             txtCropLeftTimer_Top,
-                             txtCropLeftTimer_Bottom,
-                             txtCropLeftTimer_Right)
-        RegisterCropBindings(_viewModel.RightRunner.GameCrop,
-                             txtCropRightGame_Left,
-                             txtCropRightGame_Top,
-                             txtCropRightGame_Bottom,
-                             txtCropRightGame_Right)
-        RegisterCropBindings(_viewModel.RightRunner.TimerCrop,
-                             txtCropRightTimer_Left,
-                             txtCropRightTimer_Top,
-                             txtCropRightTimer_Bottom,
-                             txtCropRightTimer_Right)
-        RegisterCropBindings(_viewModelBottom.LeftRunner.GameCrop,
-                     txtCropLeftGame_Left_BR,
-                     txtCropLeftGame_Top_BR,
-                     txtCropLeftGame_Bottom_BR,
-                     txtCropLeftGame_Right_BR)
-        RegisterCropBindings(_viewModelBottom.LeftRunner.TimerCrop,
-                             txtCropLeftTimer_Left_BR,
-                             txtCropLeftTimer_Top_BR,
-                             txtCropLeftTimer_Bottom_BR,
-                             txtCropLeftTimer_Right_BR)
-        RegisterCropBindings(_viewModelBottom.RightRunner.GameCrop,
-                             txtCropRightGame_Left_BR,
-                             txtCropRightGame_Top_BR,
-                             txtCropRightGame_Bottom_BR,
-                             txtCropRightGame_Right_BR)
-        RegisterCropBindings(_viewModelBottom.RightRunner.TimerCrop,
-                             txtCropRightTimer_Left_BR,
-                             txtCropRightTimer_Top_BR,
-                             txtCropRightTimer_Bottom_BR,
-                             txtCropRightTimer_Right_BR)
+        RegisterCropBindings(_viewModel.Runner1.GameCrop,
+            rControl1.txtCropGame_Left,
+            rControl1.txtCropGame_Top,
+            rControl1.txtCropGame_Bottom,
+            rControl1.txtCropGame_Right)
 
+        RegisterCropBindings(_viewModel.Runner1.TimerCrop,
+             rControl1.txtCropTimer_Left,
+             rControl1.txtCropTimer_Top,
+             rControl1.txtCropTimer_Bottom,
+             rControl1.txtCropTimer_Right)
+
+        RegisterCropBindings(_viewModel.Runner2.GameCrop,
+    rControl2.txtCropGame_Left,
+    rControl2.txtCropGame_Top,
+    rControl2.txtCropGame_Bottom,
+    rControl2.txtCropGame_Right)
+
+        RegisterCropBindings(_viewModel.Runner2.TimerCrop,
+             rControl2.txtCropTimer_Left,
+             rControl2.txtCropTimer_Top,
+             rControl2.txtCropTimer_Bottom,
+             rControl2.txtCropTimer_Right)
+
+        RegisterCropBindings(_viewModel.Runner3.GameCrop,
+    rControl3.txtCropGame_Left,
+    rControl3.txtCropGame_Top,
+    rControl3.txtCropGame_Bottom,
+    rControl3.txtCropGame_Right)
+
+        RegisterCropBindings(_viewModel.Runner3.TimerCrop,
+             rControl3.txtCropTimer_Left,
+             rControl3.txtCropTimer_Top,
+             rControl3.txtCropTimer_Bottom,
+             rControl3.txtCropTimer_Right)
+
+        RegisterCropBindings(_viewModel.Runner4.GameCrop,
+    rControl4.txtCropGame_Left,
+    rControl4.txtCropGame_Top,
+    rControl4.txtCropGame_Bottom,
+    rControl4.txtCropGame_Right)
+
+        RegisterCropBindings(_viewModel.Runner4.TimerCrop,
+             rControl4.txtCropTimer_Left,
+             rControl4.txtCropTimer_Top,
+             rControl4.txtCropTimer_Bottom,
+             rControl4.txtCropTimer_Right)
     End Sub
     Private Sub OBSWebScocketCropper_Load(sender As Object, e As EventArgs) Handles Me.Load
         isLoaded = False
 
-        RefreshCropperDefaultCrop()
-
         ReuseInfo = True
         lblOBS1ConnectedStatus.Text = "Not Connected"
         lblOBS2ConnectedStatus.Text = "Not Connected"
+
+        AddUserControls()
+
+        AddHandlers()
+
         ConfigureDataBindings()
-        CreateNewSourceTable()
 
         If My.Settings.HasFinishedWelcome = False Then
             Dim uSettings As New UserSettings
@@ -1290,30 +952,21 @@ Public Class ObsWebSocketCropper
 
             End If
 
-            RefreshRunnerNames()
+
+            RefreshRunnerNames(False)
         Else
-            ResetHeightWidthLabels()
-
-            RefreshRunnerNames()
-
-            RefreshCropperDefaultCrop()
+            RefreshRunnerNames(False)
 
             CheckUnusedFields()
         End If
 
         ExpertModeToolStripMenuItem.Checked = My.Settings.ExpertMode
-        PlayersToolStripMenuItem.Checked = My.Settings.FourPlayers
-
-        CheckFourPlayerMode()
+        SetSourceNames()
 
         GlobalParam.RefreshConfigList()
 
-        cbConfigFiles.DataSource = GlobalParam._configList.Tables(0)
 
-        cbConfigFiles.DisplayMember = "ConfigName"
-        cbConfigFiles.ValueMember = "ConfigPath"
-
-        cbConfigFiles.Text = "Default"
+        rb2Runner.Checked = True
 
         isLoaded = True
     End Sub
@@ -1331,7 +984,6 @@ Public Class ObsWebSocketCropper
     Private Sub ExpertModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExpertModeToolStripMenuItem.Click
         My.Settings.ExpertMode = ExpertModeToolStripMenuItem.Checked
         My.Settings.Save()
-
     End Sub
     Private Sub ChangeUserSettingsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ChangeUserSettingsToolStripMenuItem.Click
         Dim uSettings As New UserSettings
@@ -1344,7 +996,8 @@ Public Class ObsWebSocketCropper
             Close()
 
         Else
-            RefreshRunnerNames()
+            SetSourceNames()
+            RefreshRunnerNames(False)
             RefreshCropperDefaultCrop()
             CheckUnusedFields()
         End If
@@ -1417,7 +1070,7 @@ Public Class ObsWebSocketCropper
             context.SaveChanges()
         End Using
 
-        RefreshRunnerNames()
+        RefreshRunnerNames(False)
     End Sub
     Private Sub GetIniFile(python As Boolean, resetWebSocketPort As Boolean)
 
@@ -1491,10 +1144,7 @@ Public Class ObsWebSocketCropper
         End Using
 
     End Sub
-    Private Sub RefreshCropperDefaultCrop()
-        _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
-    End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs)
         _lastUpdate = _lastUpdate + 1
 
         If _lastUpdate > 5 Then
@@ -1548,10 +1198,7 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub CheckUnusedFields()
-        Dim visComms, visLeftRunner, visRightRunner,
-        visLeftTracker, visRightTracker, visLeftTimer, visLeftGame,
-        visRightTimer, visRightGame, visGameSettings, visLeftTrackerBottom,
-        visRightTrackerBottom As Boolean
+        Dim visComms, visGameSettings As Boolean
 
         visComms = Not String.IsNullOrWhiteSpace(My.Settings.CommentaryOBS)
         txtCommentaryNames.Visible = visComms
@@ -1561,294 +1208,49 @@ Public Class ObsWebSocketCropper
         txtGameSettings.Visible = visGameSettings
         lblGameSettings.Visible = visGameSettings
 
-        visLeftRunner = Not String.IsNullOrWhiteSpace(My.Settings.LeftRunnerOBS) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
-        cbLeftRunnerName.Visible = visLeftRunner
-        lblLeftRunner.Visible = visLeftRunner
-
-        visRightRunner = Not String.IsNullOrWhiteSpace(My.Settings.RightRunnerOBS) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.RightGameName) OrElse
-            Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
-        cbRightRunnerName.Visible = visRightRunner
-        lblRightRunner.Visible = visRightRunner
-
-        visLeftTracker = Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS)
-        txtLeftTrackerURL.Visible = visLeftTracker
-        lblLeftTracker.Visible = visLeftTracker
-
-        visRightTracker = Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS)
-        txtRightTrackerURL.Visible = visRightTracker
-        lblRightTracker.Visible = visRightTracker
-
-        visLeftTrackerBottom = Not String.IsNullOrWhiteSpace(My.Settings.LeftTrackerOBS_Bottom)
-        txtLeftTrackerURL_Bottom.Visible = visLeftTrackerBottom
-        lblLeftTracker_Bottom.Visible = visLeftTrackerBottom
-
-        visRightTrackerBottom = Not String.IsNullOrWhiteSpace(My.Settings.RightTrackerOBS_Bottom)
-        txtRightTrackerURL_Bottom.Visible = visRightTrackerBottom
-        lblRightTracker_Bottom.Visible = visRightTrackerBottom
-
-        visLeftTimer = Not String.IsNullOrWhiteSpace(My.Settings.LeftTimerName)
-        gbLeftTimerWindow.Visible = visLeftTimer
-
-        visLeftGame = Not String.IsNullOrWhiteSpace(My.Settings.LeftGameName)
-        gbLeftGameWindow.Visible = visLeftGame
-
-        visRightTimer = Not String.IsNullOrWhiteSpace(My.Settings.RightTimerName)
-        gbRightTimerWindow.Visible = visRightTimer
-
-        visRightGame = Not String.IsNullOrWhiteSpace(My.Settings.RightGameName)
-        gbRightGameWindow.Visible = visRightGame
-
-        If visRightGame = False And visRightTimer = False Then
-            btnSaveRightCrop.Visible = False
-            btnGetRightCrop.Visible = False
-            btnSetRightCrop.Visible = False
-            btnSetRightVLC.Visible = False
-            lblRightVLC.Visible = False
-            cbRightVLCSource.Visible = False
-        Else
-            btnSaveRightCrop.Visible = True
-            btnGetRightCrop.Visible = True
-            btnSetRightCrop.Visible = True
-            btnSetRightVLC.Visible = True
-            lblRightVLC.Visible = True
-            cbRightVLCSource.Visible = True
-        End If
-
-        If visLeftGame = False And visLeftTimer = False Then
-            btnSaveLeftCrop.Visible = False
-            btnGetLeftCrop.Visible = False
-            btnSetLeftCrop.Visible = False
-            btnSetLeftVLC.Visible = False
-            lblLeftVLC.Visible = False
-            cbLeftVLCSource.Visible = False
-        Else
-            btnSaveLeftCrop.Visible = True
-            btnGetLeftCrop.Visible = True
-            btnSetLeftCrop.Visible = True
-            btnSetLeftVLC.Visible = True
-            lblLeftVLC.Visible = True
-            cbLeftVLCSource.Visible = True
-        End If
     End Sub
-    Private Sub OBSWebSocketCropper_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub OBSWebSocketCropper_KeyDown(sender As Object, e As KeyEventArgs)
         If (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
             SyncWithServer()
         ElseIf (e.KeyCode = Keys.Q AndAlso e.Modifiers = Keys.Control) Then
             Try
-                SetNewNewMath(False, False)
+                SetMath(1)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
             Try
-                FillCurrentCropInfoFromObs(False, False)
+                FillCurrentCropInfoFromObs(1)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
             Try
-                SaveRunnerCrop(False, False)
+                SaveRunnerCrop(1)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         ElseIf (e.KeyCode = Keys.R AndAlso e.Modifiers = Keys.Control) Then
             Try
-                SetNewNewMath(True, False)
+                SetMath(2)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         ElseIf (e.KeyCode = Keys.T AndAlso e.Modifiers = Keys.Control) Then
             Try
-                FillCurrentCropInfoFromObs(True, False)
+                FillCurrentCropInfoFromObs(2)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         ElseIf (e.KeyCode = Keys.Y AndAlso e.Modifiers = Keys.Control) Then
             Try
-                SaveRunnerCrop(True, False)
+                SaveRunnerCrop(2)
             Catch ex As ErrorResponseException
                 MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
             End Try
         End If
     End Sub
-    Private Sub AddNewRunner(isRightWindow As Boolean, isBottomRunner As Boolean)
-        NewRunnerName = ""
-        NewRunnerTwitch = ""
-        GetObsInfo = False
-        ReuseInfo = True
-
-        Dim dResult = NewRunner.ShowDialog(Me)
-        Dim runnerNameField As ComboBox
-
-        If isBottomRunner Then
-            runnerNameField = If(isRightWindow, cbRightRunnerName_Bottom, cbLeftRunnerName_Bottom)
-        Else
-            runnerNameField = If(isRightWindow, cbRightRunnerName, cbLeftRunnerName)
-        End If
-
-        Dim runnerTwitchField As Label
-
-        If isBottomRunner Then
-            runnerTwitchField = If(isRightWindow, lblRightRunnerTwitch_Bottom, lblLeftRunnerTwitch_Bottom)
-        Else
-            runnerTwitchField = If(isRightWindow, lblRightRunnerTwitch, lblLeftRunnerTwitch)
-        End If
-
-
-        If dResult = DialogResult.OK Then
-            Dim runnerVm As RunnerViewModel
-
-            If isBottomRunner Then
-                runnerVm = If(isRightWindow, _viewModelBottom.RightRunner, _viewModelBottom.LeftRunner)
-            Else
-                runnerVm = If(isRightWindow, _viewModel.RightRunner, _viewModel.LeftRunner)
-            End If
-
-            If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
-                runnerVm.Name = NewRunnerName
-                runnerNameField.Text = NewRunnerName
-            End If
-
-            runnerVm.Twitch = If(String.IsNullOrWhiteSpace(NewRunnerTwitch), NewRunnerName, NewRunnerTwitch)
-            runnerTwitchField.Text = "Twitch: " & runnerVm.Twitch
-
-            If GetObsInfo = True Then
-                If runnerVm.MasterSize.Height = 0 OrElse runnerVm.MasterSize.Width = 0 Then
-                    runnerVm.MasterSize.UpdateFromSize(GetMasterSize(isRightWindow, isBottomRunner))
-                End If
-
-                Try
-                    SetNewNewMath(isRightWindow, isBottomRunner)
-                Catch ex As ErrorResponseException
-                    MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
-                End Try
-            End If
-        End If
-
-        GetObsInfo = False
-        ReuseInfo = True
-    End Sub
-    Private Sub lblViewLeftOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModel.LeftRunner.Twitch)
-        End If
-    End Sub
-    Private Sub lblViewRightOnTwitch_Click(sender As Object, e As EventArgs) Handles lblViewRightOnTwitch.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.RightRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModel.RightRunner.Twitch)
-        End If
-    End Sub
-    Private Sub lblViewLeftOnTwitch_Bottom_Click(sender As Object, e As EventArgs) Handles lblViewLeftOnTwitch_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.LeftRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModelBottom.LeftRunner.Twitch)
-        End If
-    End Sub
-    Private Sub lblViewRightOnTwitch_Bottom_Click(sender As Object, e As EventArgs) Handles lblViewRightOnTwitch_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.RightRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModelBottom.RightRunner.Twitch)
-        End If
-    End Sub
-    Private Sub lblLeftVOD_Click(sender As Object, e As EventArgs) Handles lblLeftVOD.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModel.LeftRunner.Twitch & "/videos/all")
-        End If
-    End Sub
-    Private Sub lblRightVOD_Click(sender As Object, e As EventArgs) Handles lblRightVOD.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.RightRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModel.RightRunner.Twitch & "/videos/all")
-        End If
-    End Sub
-    Private Sub lblLeftVOD_Bottom_Click(sender As Object, e As EventArgs) Handles lblLeftVOD_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.LeftRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModelBottom.LeftRunner.Twitch & "/videos/all")
-        End If
-    End Sub
-    Private Sub lblRightVOD_Bottom_Click(sender As Object, e As EventArgs) Handles lblRightVOD_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.RightRunner.Twitch) Then
-            Process.Start("https://twitch.tv/" & _viewModelBottom.RightRunner.Twitch & "/videos/all")
-        End If
-    End Sub
-    Private Sub StartStreamlink(twitch As String, isRightWindow As Boolean, isBottomRunner As Boolean)
-        Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
-        If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
-            Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Streamlink", "bin")
-            Dim fsDialog As New OpenFileDialog
-            fsDialog.FileName = "streamlink.exe"
-            fsDialog.Title = "Please provide the path to streamlink.exe"
-            fsDialog.Filter = "Exe files |*.exe"
-            fsDialog.InitialDirectory = initialPath
-            fsDialog.CheckFileExists = True
-
-            Dim result = fsDialog.ShowDialog(Me)
-
-            If result <> DialogResult.OK OrElse Not File.Exists(fsDialog.FileName) Then
-                Exit Sub
-            End If
-
-            My.Settings.StreamlinkPath = fsDialog.FileName
-            My.Settings.Save()
-
-            replacedPath = fsDialog.FileName
-        End If
-
-        Dim streamLinkArguments As String = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close"
-
-        Dim customArgs As String
-        If isBottomRunner Then
-            customArgs = If(isRightWindow, My.Settings.RightStreamlinkVlcParams_Bottom, My.Settings.LeftStreamlinkVlcParams_Bottom)
-        Else
-            customArgs = If(isRightWindow, My.Settings.RightStreamlinkVlcParams, My.Settings.LeftStreamlinkVlcParams)
-        End If
-        If Not String.IsNullOrWhiteSpace(customArgs) Then
-            streamLinkArguments = customArgs
-        End If
-
-
-        Dim myProcess = New Process
-        myProcess.StartInfo = New ProcessStartInfo With {
-            .UseShellExecute = False,
-            .CreateNoWindow = True,
-            .WindowStyle = ProcessWindowStyle.Hidden,
-            .FileName = replacedPath,
-            .Arguments = streamLinkArguments,
-        .RedirectStandardError = False,
-            .RedirectStandardOutput = True
-                        }
-
-        myProcess.Start()
-    End Sub
-    Private Sub lblLeftStreamlink_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.LeftRunner.Twitch) Then
-            StartStreamlink(_viewModel.LeftRunner.Twitch, False, False)
-        Else
-            MsgBox("No Runner selected, cannot continue.")
-        End If
-    End Sub
-    Private Sub lblRightStreamlink_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink.Click
-        If Not String.IsNullOrWhiteSpace(_viewModel.RightRunner.Twitch) Then
-            StartStreamlink(_viewModel.RightRunner.Twitch, True, False)
-        Else
-            MsgBox("No Runner selected, cannot continue.")
-        End If
-    End Sub
-    Private Sub lblLeftStreamlink_Bottom_Click(sender As Object, e As EventArgs) Handles lblLeftStreamlink_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.LeftRunner.Twitch) Then
-            StartStreamlink(_viewModelBottom.LeftRunner.Twitch, False, True)
-        Else
-            MsgBox("No Runner selected, cannot continue.")
-        End If
-    End Sub
-    Private Sub lblRightStreamlink_Bottom_Click(sender As Object, e As EventArgs) Handles lblRightStreamlink_Bottom.Click
-        If Not String.IsNullOrWhiteSpace(_viewModelBottom.RightRunner.Twitch) Then
-            StartStreamlink(_viewModelBottom.RightRunner.Twitch, True, True)
-        Else
-            MsgBox("No Runner selected, cannot continue.")
-        End If
-    End Sub
-    Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs) Handles btnTestSourceSettings.Click
+    Private Sub btnTestSourceSettings_Click(sender As Object, e As EventArgs)
         TestSourceSettings()
     End Sub
     Private Sub TestSourceSettings()
@@ -1859,7 +1261,7 @@ Public Class ObsWebSocketCropper
 
 
         'micIconInfo = Obs.GetSceneItemProperties("", "MicIcon")
-        commentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.LeftGameName)
+        commentarySizeInfo = Obs.GetSceneItemProperties("", My.Settings.GameName_Runner1)
         rightGameSourceInfo = Obs.GetSourceSettings(My.Settings.CommentaryOBS)
         commentaryFontInfo = Obs.GetTextGDIProperties(My.Settings.CommentaryOBS)
 
@@ -1888,44 +1290,7 @@ Public Class ObsWebSocketCropper
 
         End If
     End Sub
-    Private Function TransScale(rect As Rectangle, originalSize As Size, originalScaling As Double, newSize As Size, newScaling As Double) As Rectangle
-        Return _cropperMath.AddScaling(_cropperMath.RemoveScaling(rect, originalSize, originalScaling), newSize, newScaling)
-    End Function
-    Private Sub AdjustScaling(runnerVm As RunnerViewModel, newScale As Double)
-        If Math.Abs(newScale - runnerVm.Scale) < 0.0001 OrElse Math.Abs(runnerVm.Scale) < 0.0001 Then
-            Exit Sub
-        End If
-
-        Dim newSize = _cropperMath.AddScaling(_cropperMath.RemoveScaling(runnerVm.MasterSize.AsSize(), runnerVm.Scale), newScale)
-        runnerVm.GameCrop.UpdateFromRectangle(TransScale(runnerVm.GameCrop.AsRectangle(),
-                                                         runnerVm.MasterSize.AsSize(),
-                                                         runnerVm.Scale,
-                                                         newSize,
-                                                         newScale))
-        runnerVm.TimerCrop.UpdateFromRectangle(TransScale(runnerVm.TimerCrop.AsRectangle(),
-                                                          runnerVm.MasterSize.AsSize(),
-                                                          runnerVm.Scale,
-                                                          newSize,
-                                                          newScale))
-        runnerVm.MasterSize.UpdateFromSize(newSize)
-        runnerVm.Scale = newScale
-    End Sub
-    Private Sub cbLeftScaling_TextChanged(sender As Object, e As EventArgs) Handles cbLeftScaling.TextChanged
-        AdjustScaling(_viewModel.LeftRunner, ParsePercent(cbLeftScaling.Text))
-    End Sub
-    Private Sub cbRightScaling_TextChanged(sender As Object, e As EventArgs) Handles cbRightScaling.TextChanged
-        AdjustScaling(_viewModel.RightRunner, ParsePercent(cbRightScaling.Text))
-    End Sub
-    Private Sub cbLeftScaling_Bottom_TextChanged(sender As Object, e As EventArgs) Handles cbLeftScaling_Bottom.TextChanged
-        AdjustScaling(_viewModelBottom.LeftRunner, ParsePercent(cbLeftScaling_Bottom.Text))
-    End Sub
-    Private Sub ccbRightScaling_Bottom_TextChanged(sender As Object, e As EventArgs) Handles cbRightScaling_Bottom.TextChanged
-        AdjustScaling(_viewModelBottom.RightRunner, ParsePercent(cbRightScaling_Bottom.Text))
-    End Sub
-    Private Sub Uncrop(ByVal sourceName As String)
-        DispatchToObs(Sub(o) o.SetSceneItemProperties(sourceName, 0 + My.Settings.DefaultCropTop, 0 + My.Settings.DefaultCropBottom, 0, 0, 0, 0, 0, 0))
-    End Sub
-    Private Sub ObsWebSocketCropper_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub ObsWebSocketCropper_FormClosing(sender As Object, e As FormClosingEventArgs)
         My.Settings.Save()
     End Sub
     Private Sub btnResetDatabase_Click(sender As Object, e As EventArgs) Handles btnResetDatabase.Click
@@ -1933,113 +1298,58 @@ Public Class ObsWebSocketCropper
             Using context As New CropDbContext
                 context.Database.ExecuteSqlCommand("Delete from crops")
                 context.SaveChanges()
-                RefreshRunnerNames()
+                RefreshRunnerNames(True)
             End Using
         End If
 
     End Sub
-    Private Sub PlayersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PlayersToolStripMenuItem.Click
-        My.Settings.FourPlayers = PlayersToolStripMenuItem.Checked
-        My.Settings.Save()
-
-        CheckFourPlayerMode()
-    End Sub
-    Private Sub CheckFourPlayerMode()
-
-        Dim fSize As Size
-
-        If My.Settings.FourPlayers = True Then
-            fSize.Width = My.Settings.FourRacerWidth
-            fSize.Height = My.Settings.FourRacerHeight
-
-            gbTrackerComms.Width = My.Settings.FourRacerGBWidth
-            gbTrackerComms.Height = My.Settings.FourRacerGBHeight
-        Else
-            fSize.Width = My.Settings.DefaultWidth
-            fSize.Height = My.Settings.DefaultHeight
-
-            gbTrackerComms.Width = My.Settings.DefaultGBWidth
-            gbTrackerComms.Height = My.Settings.DefaultGBHeight
-        End If
-
-        Me.Size = fSize
-
-        RefreshBoundingBoxSize()
-    End Sub
-    Private Sub RefreshBoundingBoxSize()
-        If Not String.IsNullOrWhiteSpace(cbConfigFiles.Text) Then
-            If cbConfigFiles.Text.Trim.ToLower = "default" Then
-                RefreshBoundingBoxFromDefault()
-            Else
-                RefreshBoundingBoxFromConfigFile(cbConfigFiles.SelectedValue.ToString)
-            End If
-        Else
-            RefreshBoundingBoxFromDefault()
-        End If
-
-
-    End Sub
     Private Sub RefreshBoundingBoxFromDefault()
-        If PlayersToolStripMenuItem.Checked = True Then
-            BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameFourPlayer
-            BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameFourPlayer
+        If rb3Runner.Checked = True Or rb4Runner.Checked = True Then
+            GlobalParam.BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameFourPlayer
+            GlobalParam.BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameFourPlayer
 
-            BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerFourPlayer
-            BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerFourPlayer
+            GlobalParam.BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerFourPlayer
+            GlobalParam.BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerFourPlayer
 
-            PositionXTimer_TR = My.Settings.PositionXTimerTopRightFourPlayer
-            PositionXTimer_TL = My.Settings.PositionXTimerTopLeftFourPlayer
+            GlobalParam.PositionXTimer_Runner1 = My.Settings.PositionXTimerFourPlayer_Runner1
+            GlobalParam.PositionXTimer_Runner2 = My.Settings.PositionXTimerFourPlayer_Runner2
+            GlobalParam.PositionXTimer_Runner3 = My.Settings.PositionXTimerFourPlayer_Runner3
+            GlobalParam.PositionXTimer_Runner4 = My.Settings.PositionXTimerFourPlayer_Runner4
 
-            positionXGame_TR = My.Settings.PositionXGameTopRightFourPlayer
-            positionXGame_TL = My.Settings.PositionXGameTopLeftFourPlayer
+            GlobalParam.positionXGame_Runner1 = My.Settings.PositionXGameFourPlayer_Runner1
+            GlobalParam.positionXGame_Runner2 = My.Settings.PositionXGameFourPlayer_Runner2
+            GlobalParam.positionXGame_Runner3 = My.Settings.PositionXGameFourPlayer_Runner3
+            GlobalParam.positionXGame_Runner4 = My.Settings.PositionXGameFourPlayer_Runner4
 
-            PositionYTimer_TR = My.Settings.PositionYTimerTopRightFourPlayer
-            PositionYTimer_TL = My.Settings.PositionYTimerTopLeftFourPlayer
+            GlobalParam.PositionYTimer_Runner1 = My.Settings.PositionYTimerFourPlayer_Runner1
+            GlobalParam.PositionYTimer_Runner2 = My.Settings.PositionYTimerFourPlayer_Runner2
+            GlobalParam.PositionYTimer_Runner3 = My.Settings.PositionYTimerFourPlayer_Runner3
+            GlobalParam.PositionYTimer_Runner4 = My.Settings.PositionYTimerFourPlayer_Runner4
 
-            PositionYGame_TR = My.Settings.PositionYGameTopRightFourPlayer
-            PositionYGame_TL = My.Settings.PositionYGameTopLeftFourPlayer
+            GlobalParam.PositionYGame_Runner1 = My.Settings.PositionYGameFourPlayer_Runner1
+            GlobalParam.PositionYGame_Runner2 = My.Settings.PositionYGameFourPlayer_Runner2
+            GlobalParam.PositionYGame_Runner3 = My.Settings.PositionYGameFourPlayer_Runner3
+            GlobalParam.PositionYGame_Runner4 = My.Settings.PositionYGameFourPlayer_Runner4
 
-            PositionXTimer_BR = My.Settings.PositionXTimerBottomRightFourPlayer
-            PositionXTimer_BL = My.Settings.PositionXTimerBottomLeftFourPlayer
-
-            positionXGame_BR = My.Settings.PositionXGameBottomRightFourPlayer
-            positionXGame_BL = My.Settings.PositionXGameBottomLeftFourPlayer
-
-            PositionYTimer_BR = My.Settings.PositionYTimerBottomRightFourPlayer
-            PositionYTimer_BL = My.Settings.PositionYTimerBottomLeftFourPlayer
-
-            PositionYGame_BR = My.Settings.PositionYGameBottomRightFourPlayer
-            PositionYGame_BL = My.Settings.PositionYGameBottomLeftFourPlayer
         Else
-            BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameTwoPlayer
-            BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameTwoPlayer
+            GlobalParam.BoundingSizeGame.Width = My.Settings.BoundingSizeWidthGameTwoPlayer
+            GlobalParam.BoundingSizeGame.Height = My.Settings.BoundingSizeHeightGameTwoPlayer
 
-            BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerTwoPlayer
-            BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerTwoPlayer
+            GlobalParam.BoundingSizeTimer.Width = My.Settings.BoundingSizeWidthTimerTwoPlayer
+            GlobalParam.BoundingSizeTimer.Height = My.Settings.BoundingSizeHeightTimerTwoPlayer
 
-            PositionXTimer_TR = My.Settings.PositionXTimerRightTwoPlayer
-            PositionXTimer_TL = My.Settings.PositionXTimerLeftTwoPlayer
+            GlobalParam.PositionXTimer_Runner1 = My.Settings.PositionXTimerTwoPlayer_Runner1
+            GlobalParam.PositionXTimer_Runner2 = My.Settings.PositionXTimerTwoPlayer_Runner2
 
-            positionXGame_TR = My.Settings.PositionXGameRightTwoPlayer
-            positionXGame_TL = My.Settings.PositionXGameLeftTwoPlayer
+            GlobalParam.positionXGame_Runner1 = My.Settings.PositionXGameTwoPlayer_Runner1
+            GlobalParam.positionXGame_Runner2 = My.Settings.PositionXGameTwoPlayer_Runner2
 
-            PositionYTimer_TR = My.Settings.PositionYTimerRightTwoPlayer
-            PositionYTimer_TL = My.Settings.PositionYTimerLeftTwoPlayer
+            GlobalParam.PositionYTimer_Runner1 = My.Settings.PositionYTimerTwoPlayer_Runner1
+            GlobalParam.PositionYTimer_Runner2 = My.Settings.PositionYTimerTwoPlayer_Runner2
 
-            PositionYGame_TR = My.Settings.PositionYGameRightTwoPlayer
-            PositionYGame_TL = My.Settings.PositionYGameLeftTwoPlayer
+            GlobalParam.PositionYGame_Runner1 = My.Settings.PositionYGameTwoPlayer_Runner1
+            GlobalParam.PositionYGame_Runner2 = My.Settings.PositionYGameTwoPlayer_Runner2
 
-            PositionXTimer_BR = My.Settings.PositionXTimerRightTwoPlayer
-            PositionXTimer_BL = My.Settings.PositionXTimerLeftTwoPlayer
-
-            positionXGame_BR = My.Settings.PositionXGameRightTwoPlayer
-            positionXGame_BL = My.Settings.PositionXGameLeftTwoPlayer
-
-            PositionYTimer_BR = My.Settings.PositionYTimerRightTwoPlayer
-            PositionYTimer_BL = My.Settings.PositionYTimerLeftTwoPlayer
-
-            PositionYGame_BR = My.Settings.PositionYGameRightTwoPlayer
-            PositionYGame_BL = My.Settings.PositionYGameLeftTwoPlayer
         End If
     End Sub
     Private Sub RefreshBoundingBoxFromConfigFile(configPath As String)
@@ -2051,68 +1361,66 @@ Public Class ObsWebSocketCropper
 
         _configInfo.ReadXml(configPath)
 
+        Dim numbPlayers As Integer = 1
+
+        If rb1Runner.Checked = True Then
+            numbPlayers = 1
+        ElseIf rb2Runner.Checked = True Then
+            numbPlayers = 2
+        ElseIf rb3Runner.Checked = True Then
+            numbPlayers = 3
+        ElseIf rb4Runner.Checked = True Then
+            numbPlayers = 4
+        End If
+
         If _configInfo.Tables.Count > 0 Then
             If _configInfo.Tables("ConfigInfo").Rows.Count > 0 Then
-                If PlayersToolStripMenuItem.Checked = True Then
-                    BoundingSizeGame.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString), My.Settings.BoundingSizeHeightGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString))
-                    BoundingSizeGame.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString), My.Settings.BoundingSizeWidthGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString))
+                If numbPlayers > 2 Then
+                    GlobalParam.BoundingSizeGame.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString), My.Settings.BoundingSizeHeightGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString))
+                    GlobalParam.BoundingSizeGame.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString), My.Settings.BoundingSizeWidthGameFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString))
 
-                    BoundingSizeTimer.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString), My.Settings.BoundingSizeHeightTimerFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString))
-                    BoundingSizeTimer.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString), My.Settings.BoundingSizeWidthTimerFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString))
+                    GlobalParam.BoundingSizeTimer.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString), My.Settings.BoundingSizeHeightTimerFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString))
+                    GlobalParam.BoundingSizeTimer.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString), My.Settings.BoundingSizeWidthTimerFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString))
 
-                    PositionXTimer_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString), My.Settings.PositionXTimerTopRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString))
-                    PositionXTimer_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString), My.Settings.PositionXTimerTopLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString), My.Settings.PositionXTimerFourPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString), My.Settings.PositionXTimerFourPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner3 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString), My.Settings.PositionXTimerFourPlayer_Runner3, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner4 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString), My.Settings.PositionXTimerFourPlayer_Runner4, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString))
 
-                    positionXGame_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString), My.Settings.PositionXGameTopRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString))
-                    positionXGame_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString), My.Settings.PositionXGameTopLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString))
+                    GlobalParam.positionXGame_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString), My.Settings.PositionXGameFourPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString))
+                    GlobalParam.positionXGame_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString), My.Settings.PositionXGameFourPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString))
+                    GlobalParam.positionXGame_Runner3 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString), My.Settings.PositionXGameFourPlayer_Runner3, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString))
+                    GlobalParam.positionXGame_Runner4 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString), My.Settings.PositionXGameFourPlayer_Runner4, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString))
 
-                    PositionYTimer_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString), My.Settings.PositionYTimerTopRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString))
-                    PositionYTimer_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString), My.Settings.PositionYTimerTopLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString), My.Settings.PositionYTimerFourPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString), My.Settings.PositionYTimerFourPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner3 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString), My.Settings.PositionYTimerFourPlayer_Runner3, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner4 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString), My.Settings.PositionYTimerFourPlayer_Runner4, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString))
 
-                    PositionYGame_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString), My.Settings.PositionYGameTopRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString))
-                    PositionYGame_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString), My.Settings.PositionYGameTopLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString), My.Settings.PositionYGameFourPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString), My.Settings.PositionYGameFourPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner3 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString), My.Settings.PositionYGameFourPlayer_Runner3, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner4 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString), My.Settings.PositionYGameFourPlayer_Runner4, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString))
 
-                    PositionXTimer_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString), My.Settings.PositionXTimerBottomRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString))
-                    PositionXTimer_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString), My.Settings.PositionXTimerBottomLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString))
-
-                    positionXGame_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString), My.Settings.PositionXGameBottomRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString))
-                    positionXGame_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString), My.Settings.PositionXGameBottomLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString))
-
-                    PositionYTimer_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString), My.Settings.PositionYTimerBottomRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString))
-                    PositionYTimer_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString), My.Settings.PositionYTimerBottomLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString))
-
-                    PositionYGame_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString), My.Settings.PositionYGameBottomRightFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString))
-                    PositionYGame_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString), My.Settings.PositionYGameBottomLeftFourPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString))
                 Else
-                    BoundingSizeGame.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString), My.Settings.BoundingSizeHeightGameTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString))
-                    BoundingSizeGame.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString), My.Settings.BoundingSizeWidthGameTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString))
+                    GlobalParam.BoundingSizeGame.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString), My.Settings.BoundingSizeHeightGameTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString))
+                    GlobalParam.BoundingSizeGame.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString), My.Settings.BoundingSizeWidthGameTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString))
 
-                    BoundingSizeTimer.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerTwoPlayer").ToString), My.Settings.BoundingSizeHeightTimerTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerTwoPlayer").ToString))
-                    BoundingSizeTimer.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerTwoPlayer").ToString), My.Settings.BoundingSizeWidthTimerTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerTwoPlayer").ToString))
+                    GlobalParam.BoundingSizeTimer.Height = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerTwoPlayer").ToString), My.Settings.BoundingSizeHeightTimerTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerTwoPlayer").ToString))
+                    GlobalParam.BoundingSizeTimer.Width = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerTwoPlayer").ToString), My.Settings.BoundingSizeWidthTimerTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerTwoPlayer").ToString))
 
-                    PositionXTimer_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString), My.Settings.PositionXTimerRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString))
-                    PositionXTimer_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString), My.Settings.PositionXTimerLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString), My.Settings.PositionXTimerTwoPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString))
+                    GlobalParam.PositionXTimer_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString), My.Settings.PositionXTimerTwoPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString))
 
-                    positionXGame_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString), My.Settings.PositionXGameRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString))
-                    positionXGame_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString), My.Settings.PositionXGameLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString))
+                    GlobalParam.positionXGame_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString), My.Settings.PositionXGameTwoPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString))
+                    GlobalParam.positionXGame_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString), My.Settings.PositionXGameTwoPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString))
 
-                    PositionYTimer_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString), My.Settings.PositionYTimerRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString))
-                    PositionYTimer_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString), My.Settings.PositionYTimerLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString), My.Settings.PositionYTimerTwoPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString))
+                    GlobalParam.PositionYTimer_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString), My.Settings.PositionYTimerTwoPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString))
 
-                    PositionYGame_TR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString), My.Settings.PositionYGameRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString))
-                    PositionYGame_TL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString), My.Settings.PositionYGameLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner1 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString), My.Settings.PositionYGameTwoPlayer_Runner1, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString))
+                    GlobalParam.PositionYGame_Runner2 = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString), My.Settings.PositionYGameTwoPlayer_Runner2, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString))
 
-                    PositionXTimer_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString), My.Settings.PositionXTimerRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString))
-                    PositionXTimer_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString), My.Settings.PositionXTimerLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString))
-
-                    positionXGame_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString), My.Settings.PositionXGameRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString))
-                    positionXGame_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString), My.Settings.PositionXGameLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString))
-
-                    PositionYTimer_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString), My.Settings.PositionYTimerRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString))
-                    PositionYTimer_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString), My.Settings.PositionYTimerLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString))
-
-                    PositionYGame_BR = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString), My.Settings.PositionYGameRightTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString))
-                    PositionYGame_BL = If(String.IsNullOrWhiteSpace(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString), My.Settings.PositionYGameLeftTwoPlayer, CInt(_configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString))
                 End If
 
             End If
@@ -2120,58 +1428,6 @@ Public Class ObsWebSocketCropper
     End Sub
     Private Sub ConfigEditorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigEditorToolStripMenuItem.Click
         ConfigEditor.ShowDialog()
-    End Sub
-    Private Sub cbConfigFiles_KeyUp(sender As Object, e As KeyEventArgs) Handles cbConfigFiles.KeyUp
-        Dim index As Integer
-        Dim actual As String
-        Dim found As String
-
-        If ((e.KeyCode = Keys.Back) Or
-    (e.KeyCode = Keys.Left) Or
-    (e.KeyCode = Keys.Right) Or
-    (e.KeyCode = Keys.Up) Or
-    (e.KeyCode = Keys.Delete) Or
-    (e.KeyCode = Keys.Down) Or
-    (e.KeyCode = Keys.PageUp) Or
-    (e.KeyCode = Keys.PageDown) Or
-    (e.KeyCode = Keys.Home) Or
-    (e.KeyCode = Keys.End)) Then
-
-            Return
-        End If
-
-        ' Store the actual text that has been typed.
-        actual = cbConfigFiles.Text
-
-        ' Find the first match for the typed value.
-        index = cbConfigFiles.FindString(actual)
-
-        ' Get the text of the first match.
-        If (index > -1) Then
-            found = cbConfigFiles.Items(index).ToString()
-
-            ' Select this item from the list.
-            cbConfigFiles.SelectedIndex = index
-
-            ' Select the portion of the text that was automatically
-            ' added so that additional typing will replace it.
-            cbConfigFiles.SelectionStart = actual.Length
-            cbConfigFiles.SelectionLength = found.Length
-        End If
-    End Sub
-    Private Sub cbConfigFiles_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbConfigFiles.SelectedValueChanged
-        If isLoaded = True Then
-            If Not String.IsNullOrWhiteSpace(cbConfigFiles.Text) Then
-                If cbConfigFiles.Text.Trim.ToLower = "default" Then
-                    RefreshBoundingBoxFromDefault()
-                Else
-                    RefreshBoundingBoxFromConfigFile(cbConfigFiles.SelectedValue.ToString)
-                End If
-            Else
-                RefreshBoundingBoxFromDefault()
-            End If
-        End If
-
     End Sub
     Private Sub LoadConfigFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadConfigFileToolStripMenuItem.Click
         With ofdOpenConfig
@@ -2184,6 +1440,7 @@ Public Class ObsWebSocketCropper
 
             Select Case .ShowDialog
                 Case DialogResult.OK
+                    lblConfigFile.Text = .FileName
                     RefreshBoundingBoxFromConfigFile(.FileName)
                 Case DialogResult.Cancel
                     Exit Sub
@@ -2191,6 +1448,536 @@ Public Class ObsWebSocketCropper
         End With
 
     End Sub
+    Private Sub AddUserControls()
+        Dim sVert, sHori, uWidth As Integer
 
+        sHori = 110
+        sVert = 153
+        uWidth = 436
+
+        rControl1.Location = New System.Drawing.Point(169, sHori)
+        rControl1.lblRunnerNumber.Text = "1"
+        rControl1.Name = "rControl1"
+        Me.Controls.Add(rControl1)
+
+        rControl2.Location = New System.Drawing.Point(521, sHori)
+        rControl2.lblRunnerNumber.Text = "2"
+        rControl2.Name = "rControl2"
+        Me.Controls.Add(rControl2)
+
+        rControl3.Location = New System.Drawing.Point(873, sHori)
+        rControl3.lblRunnerNumber.Text = "3"
+        rControl3.Name = "rControl3"
+        Me.Controls.Add(rControl3)
+
+        rControl4.Location = New System.Drawing.Point(1225, sHori)
+        rControl4.lblRunnerNumber.Text = "4"
+        rControl4.Name = "rControl4"
+        Me.Controls.Add(rControl4)
+
+        RegisterObsDependency(rControl1)
+        RegisterObsDependency(rControl2)
+        RegisterObsDependency(rControl3)
+        RegisterObsDependency(rControl4)
+
+        rControl1.AdjustVisuals(1)
+        rControl2.AdjustVisuals(2)
+        rControl3.AdjustVisuals(3)
+        rControl4.AdjustVisuals(4)
+
+        SetToolTips()
+
+        gbTrackerComms.BackColor = Color.FromName(TrackerRunnerColour)
+        btnSetTrackCommNames.BackColor = Color.FromName(TrackerRunnerColour)
+    End Sub
+    Private Sub SetControlsVisible(numbPlayers As Integer)
+        Dim fSize As Size
+
+        Dim mFormHeight As Integer = 643
+
+        Select Case numbPlayers
+            Case 1
+                fSize.Width = 618
+                fSize.Height = mFormHeight
+
+                rControl1.Visible = True
+                rControl2.Visible = False
+                rControl3.Visible = False
+                rControl4.Visible = False
+            Case 2
+                fSize.Width = 891
+                fSize.Height = mFormHeight
+
+                rControl1.Visible = True
+                rControl2.Visible = True
+                rControl3.Visible = False
+                rControl4.Visible = False
+            Case 3
+                fSize.Width = 1244
+                fSize.Height = mFormHeight
+
+                rControl1.Visible = True
+                rControl2.Visible = True
+                rControl3.Visible = True
+                rControl4.Visible = False
+            Case 4
+                fSize.Width = 1600
+                fSize.Height = mFormHeight
+
+                rControl1.Visible = True
+                rControl2.Visible = True
+                rControl3.Visible = True
+                rControl4.Visible = True
+        End Select
+
+        If Not String.IsNullOrWhiteSpace(lblConfigFile.Text) Then
+            RefreshBoundingBoxFromConfigFile(lblConfigFile.Text)
+        Else
+            RefreshBoundingBoxFromDefault()
+        End If
+
+
+        Me.Size = fSize
+    End Sub
+    Public Shared Function CheckIfKeyAllowed(keyChar As String) As Boolean
+        Return Not ApprovedChars.Contains(keyChar) AndAlso keyChar <> vbBack
+    End Function
+    Private Sub SetSourceNames()
+        GlobalParam.gameSource_Runner1 = My.Settings.GameName_Runner1
+        GlobalParam.timerSource_Runner1 = My.Settings.TimerName_Runner1
+        GlobalParam.runnerNameSource_Runner1 = My.Settings.RunnerOBS_Runner1
+        GlobalParam.streamLinkParams_Runner1 = My.Settings.LeftStreamlinkVlcParams
+        GlobalParam.trackerSource_Runner1 = My.Settings.TrackerOBS_Runner1
+
+        GlobalParam.gameSource_Runner2 = My.Settings.GameName_Runner2
+        GlobalParam.timerSource_Runner2 = My.Settings.TimerName_Runner2
+        GlobalParam.runnerNameSource_Runner2 = My.Settings.RunnerOBS_Runner2
+        GlobalParam.streamLinkParams_Runner2 = My.Settings.RightStreamlinkVlcParams
+        GlobalParam.trackerSource_Runner2 = My.Settings.TrackerOBS_Runner2
+
+        GlobalParam.gameSource_Runner3 = My.Settings.GameName_Runner3
+        GlobalParam.timerSource_Runner3 = My.Settings.TimerName_Runner3
+        GlobalParam.runnerNameSource_Runner3 = My.Settings.RunnerOBS_Runner3
+        GlobalParam.streamLinkParams_Runner3 = My.Settings.LeftStreamlinkVlcParams
+        GlobalParam.trackerSource_Runner3 = My.Settings.TrackerOBS_Runner3
+
+        GlobalParam.gameSource_Runner4 = My.Settings.GameName_Runner4
+        GlobalParam.timerSource_Runner4 = My.Settings.TimerName_Runner4
+        GlobalParam.runnerNameSource_Runner4 = My.Settings.RunnerOBS_Runner4
+        GlobalParam.streamLinkParams_Runner4 = My.Settings.RightStreamlinkVlcParams
+        GlobalParam.trackerSource_Runner4 = My.Settings.TrackerOBS_Runner4
+    End Sub
+    Private Sub SetBoundingPositions()
+        'rControl1.BoundingSizeGame = BoundingSizeGame
+        'rControl1.BoundingSizeTimer = BoundingSizeTimer
+        'rControl1.PositionYTimer = PositionYTimer_TL
+        'rControl1.PositionYGame = PositionYGame_TL
+        'rControl1.positionXTimer = PositionXTimer_TL
+        'rControl1.positionXGame = positionXGame_TL
+
+        'rControl2.BoundingSizeGame = BoundingSizeGame
+        'rControl2.BoundingSizeTimer = BoundingSizeTimer
+        'rControl2.PositionYTimer = PositionYTimer_TR
+        'rControl2.PositionYGame = PositionYGame_TR
+        'rControl2.positionXTimer = PositionXTimer_TR
+        'rControl2.positionXGame = positionXGame_TR
+
+        'rControl3.BoundingSizeGame = BoundingSizeGame
+        'rControl3.BoundingSizeTimer = BoundingSizeTimer
+        'rControl3.PositionYTimer = PositionYTimer_BL
+        'rControl3.PositionYGame = PositionYGame_BL
+        'rControl3.positionXTimer = PositionXTimer_BL
+        'rControl3.positionXGame = positionXGame_BL
+
+        'rControl4.BoundingSizeGame = BoundingSizeGame
+        'rControl4.BoundingSizeTimer = BoundingSizeTimer
+        'rControl4.PositionYTimer = PositionYTimer_BR
+        'rControl4.PositionYGame = PositionYGame_BR
+        'rControl4.positionXTimer = PositionXTimer_BR
+        'rControl4.positionXGame = positionXGame_BR
+    End Sub
+    Private Sub lblConfigFile_DoubleClick(sender As Object, e As EventArgs) Handles lblConfigFile.DoubleClick
+        lblConfigFile.Text = ""
+    End Sub
+    Public Function GetMasterSize(sourceName As String) As Size
+
+        If String.IsNullOrWhiteSpace(sourceName) Then
+            Return Size.Empty
+        End If
+
+
+        Dim currentScene = If(Obs.StudioModeEnabled, Obs.GetPreviewScene(), Obs.GetCurrentScene())
+
+        Dim target As String
+
+        target = sourceName.ToLower
+
+        Dim adequateSource = currentScene.Items.FirstOrDefault(Function(scene) scene.SourceName.ToLower = target)
+
+        If adequateSource.SourceName Is Nothing OrElse String.IsNullOrWhiteSpace(adequateSource.SourceName) Then
+            MessageBox.Show(Me, $"Cannot find source {target} in the current scene. Are you on the right scene?")
+        End If
+
+        Return New Size(adequateSource.SourceWidth, adequateSource.SourceHeight)
+
+    End Function
+    Public Sub ProcessCrop(cropWithDefault As Rectangle, savedMasterSize As Size, currentMasterSize As Size, sourceName As String, scaling As Double,
+                        boundingSize As Rectangle, positionX As Integer, positionY As Integer)
+
+        Dim resultingCrop = _cropperMath.AdjustCrop(New CropInfo With {
+                                                          .MasterSizeWithoutDefault = _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(savedMasterSize, scaling)),
+                                                          .CropWithoutDefault = _cropperMath.RemoveDefaultCrop(_cropperMath.RemoveScaling(cropWithDefault, savedMasterSize, scaling))
+                                                          }, _cropperMath.RemoveDefaultCropSize(_cropperMath.RemoveScaling(currentMasterSize, scaling)))
+
+        Dim realCrop = _cropperMath.AddScaling(_cropperMath.AddDefaultCrop(resultingCrop.CropWithBlackBarsWithoutDefault), _cropperMath.AddScaling(_cropperMath.AddDefaultCropSize(resultingCrop.MasterSizeWithoutDefault), scaling), scaling)
+
+        Obs.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
+        If ObsConnectionStatus2 = "Connected" Then
+            _obs2.SetSceneItemProperties(sourceName, realCrop.Top, realCrop.Bottom, realCrop.Left, realCrop.Right, boundingSize.Width, boundingSize.Height, positionX, positionY)
+        End If
+
+    End Sub
+    Public Sub SetCrop(runnerNumber As Integer)
+        Dim runnerVm As RunnerViewModel
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+        Dim timerSource = GlobalParam.GetTimerSource(runnerNumber)
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
+
+        If runnerVm.MasterSize.Height = 0 OrElse runnerVm.MasterSize.Width = 0 Then
+            runnerVm.MasterSize.UpdateFromSize(GetMasterSize(gameSource))
+        End If
+        Try
+            SetMath(runnerNumber)
+        Catch ex As ErrorResponseException
+            MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+        End Try
+    End Sub
+    Public Sub SetMath(runnerNumber As Integer)
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+        Dim timerSource = GlobalParam.GetTimerSource(runnerNumber)
+
+        GetCurrentCropSettings(runnerNumber)
+
+        RefreshCropperDefaultCrop()
+
+        Dim runnerVm As RunnerViewModel
+
+        Dim PositionYTimer, PositionYGame, positionXTimer, positionXGame As Integer
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+                PositionYTimer = GlobalParam.PositionYTimer_Runner1
+                PositionYGame = GlobalParam.PositionYGame_Runner1
+                positionXTimer = GlobalParam.PositionXTimer_Runner1
+                positionXGame = GlobalParam.positionXGame_Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+                PositionYTimer = GlobalParam.PositionYTimer_Runner2
+                PositionYGame = GlobalParam.PositionYGame_Runner2
+                positionXTimer = GlobalParam.PositionXTimer_Runner2
+                positionXGame = GlobalParam.positionXGame_Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+                PositionYTimer = GlobalParam.PositionYTimer_Runner3
+                PositionYGame = GlobalParam.PositionYGame_Runner3
+                positionXTimer = GlobalParam.PositionXTimer_Runner3
+                positionXGame = GlobalParam.positionXGame_Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+                PositionYTimer = GlobalParam.PositionYTimer_Runner4
+                PositionYGame = GlobalParam.PositionYGame_Runner4
+                positionXTimer = GlobalParam.PositionXTimer_Runner4
+                positionXGame = GlobalParam.positionXGame_Runner4
+        End Select
+
+        If runnerVm.MasterSize.Height > 0 And runnerVm.MasterSize.Width > 0 Then
+            If Not String.IsNullOrWhiteSpace(gameSource) Then
+                ProcessCrop(runnerVm.GameCrop.AsRectangle(),
+                            runnerVm.MasterSize.AsSize(),
+                            runnerVm.CurrentSize.AsSize(),
+                            gameSource,
+                            runnerVm.Scale,
+                            GlobalParam.BoundingSizeGame,
+                            positionXGame,
+                            PositionYGame
+)
+            End If
+
+            If Not String.IsNullOrWhiteSpace(timerSource) Then
+                ProcessCrop(runnerVm.TimerCrop.AsRectangle(),
+                            runnerVm.MasterSize.AsSize(),
+                            runnerVm.CurrentSize.AsSize(),
+                            timerSource,
+                            runnerVm.Scale,
+                            GlobalParam.BoundingSizeTimer,
+                            positionXTimer,
+                            PositionYTimer
+)
+            End If
+
+        Else
+            MsgBox("Master Height/Width is 0.  Can't crop yet.", MsgBoxStyle.OkOnly, ProgramName)
+        End If
+    End Sub
+    Private Sub GetCurrentCropSettings(runnerNumber As Integer)
+        Dim runnerVm As RunnerViewModel
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
+
+        runnerVm.CurrentSize.UpdateFromSize(GetMasterSize(gameSource))
+    End Sub
+
+    Public Sub SetVlcWindows(runnerNumber As Integer, vlcSource As String)
+
+        Dim runnerVm As RunnerViewModel
+
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+        Dim timerSource = GlobalParam.GetTimerSource(runnerNumber)
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+        End Select
+
+        If Not String.IsNullOrWhiteSpace(vlcSource) Then
+            vlcSource = vlcSource.Replace(":", "#3A") & ":QWidget:vlc.exe"
+            If Not String.IsNullOrWhiteSpace(gameSource) Then
+                DispatchToObs(Sub(o) o.SetSourceSettings(gameSource, False, vlcSource, 1))
+            End If
+            If Not String.IsNullOrWhiteSpace(timerSource) Then
+                DispatchToObs(Sub(o) o.SetSourceSettings(timerSource, False, vlcSource, 1))
+            End If
+
+            'GetCurrentCropSettings()
+
+        End If
+
+    End Sub
+    Private Sub StartStreamlink(twitch As String, streamLinkParams As String)
+        Dim replacedPath = My.Settings.StreamlinkPath?.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
+        If replacedPath Is Nothing OrElse Not File.Exists(replacedPath) Then
+            Dim initialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Streamlink", "bin")
+            Dim fsDialog As New OpenFileDialog
+            fsDialog.FileName = "streamlink.exe"
+            fsDialog.Title = "Please provide the path to streamlink.exe"
+            fsDialog.Filter = "Exe files |*.exe"
+            fsDialog.InitialDirectory = initialPath
+            fsDialog.CheckFileExists = True
+
+            Dim result = fsDialog.ShowDialog(Me)
+
+            If result <> DialogResult.OK OrElse Not File.Exists(fsDialog.FileName) Then
+                Exit Sub
+            End If
+
+            My.Settings.StreamlinkPath = fsDialog.FileName
+            My.Settings.Save()
+
+            replacedPath = fsDialog.FileName
+        End If
+
+        Dim streamLinkArguments As String = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close"
+
+        Dim customArgs As String
+
+        customArgs = streamLinkParams
+
+        If Not String.IsNullOrWhiteSpace(customArgs) Then
+            streamLinkArguments = customArgs
+        End If
+
+        Dim myProcess = New Process
+        myProcess.StartInfo = New ProcessStartInfo With {
+            .UseShellExecute = False,
+            .CreateNoWindow = True,
+            .WindowStyle = ProcessWindowStyle.Hidden,
+            .FileName = replacedPath,
+            .Arguments = streamLinkArguments,
+        .RedirectStandardError = False,
+            .RedirectStandardOutput = True
+                        }
+
+        myProcess.Start()
+    End Sub
+    Public Sub StartStreamLink(runnerNumber As Integer)
+        Dim runnerVm As RunnerViewModel
+        Dim streamLinkParams As String
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+                streamLinkParams = GlobalParam.streamLinkParams_Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+                streamLinkParams = GlobalParam.streamLinkParams_Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+                streamLinkParams = GlobalParam.streamLinkParams_Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+                streamLinkParams = GlobalParam.streamLinkParams_Runner4
+        End Select
+        If Not String.IsNullOrWhiteSpace(runnerVm.Twitch) Then
+            StartStreamlink(runnerVm.Twitch, streamLinkParams)
+        Else
+            MsgBox("No Runner selected, cannot continue.")
+        End If
+    End Sub
+    Public Sub OpenTwitch(runnerNumber As Integer, isVOD As Boolean)
+        Dim runnerVm As RunnerViewModel
+        Dim streamLinkParams As String
+
+        Select Case runnerNumber
+            Case 1
+                runnerVm = _viewModel.Runner1
+                streamLinkParams = GlobalParam.streamLinkParams_Runner1
+            Case 2
+                runnerVm = _viewModel.Runner2
+                streamLinkParams = GlobalParam.streamLinkParams_Runner2
+            Case 3
+                runnerVm = _viewModel.Runner3
+                streamLinkParams = GlobalParam.streamLinkParams_Runner3
+            Case 4
+                runnerVm = _viewModel.Runner4
+                streamLinkParams = GlobalParam.streamLinkParams_Runner4
+        End Select
+
+        If Not String.IsNullOrWhiteSpace(runnerVm.Twitch) Then
+            If isVOD Then
+                Process.Start("https://twitch.tv/" & runnerVm.Twitch & "/videos/all")
+            Else
+                Process.Start("https://twitch.tv/" & runnerVm.Twitch)
+            End If
+        End If
+
+    End Sub
+    Public Sub AddNewRunner(runnerNumber As Integer, runnerNameField As ComboBox, runnerTwitchField As Label)
+        NewRunnerName = ""
+        NewRunnerTwitch = ""
+        GetObsInfo = False
+        ReuseInfo = True
+
+        Dim gameSource = GlobalParam.GetGameSource(runnerNumber)
+
+        Dim dResult = NewRunner.ShowDialog(Me)
+
+        If dResult = DialogResult.OK Then
+            Dim runnerVm As RunnerViewModel
+
+            Select Case runnerNumber
+                Case 1
+                    runnerVm = _viewModel.Runner1
+                Case 2
+                    runnerVm = _viewModel.Runner2
+                Case 3
+                    runnerVm = _viewModel.Runner3
+                Case 4
+                    runnerVm = _viewModel.Runner4
+            End Select
+
+            If Not String.IsNullOrWhiteSpace(NewRunnerName) Then
+                runnerVm.Name = NewRunnerName
+                runnerNameField.Text = NewRunnerName
+            End If
+
+            runnerVm.Twitch = If(String.IsNullOrWhiteSpace(NewRunnerTwitch), NewRunnerName, NewRunnerTwitch)
+            runnerTwitchField.Text = "Twitch: " & runnerVm.Twitch
+
+            If GetObsInfo = True Then
+                If runnerVm.MasterSize.Height = 0 OrElse runnerVm.MasterSize.Width = 0 Then
+                    runnerVm.MasterSize.UpdateFromSize(GetMasterSize(gameSource))
+                End If
+
+                Try
+                    'SetMath()
+                Catch ex As ErrorResponseException
+                    MessageBox.Show(Me, "Error while getting information from OBS. Are you sure you are on the correct scene?")
+                End Try
+            End If
+        End If
+
+        ObsWebSocketCropper.GetObsInfo = False
+        ReuseInfo = True
+    End Sub
+    Public Sub SetTracker(runnerNumber As Integer)
+        Dim trackerSource As String = GlobalParam.GetTrackerSource(runnerNumber)
+
+        Dim trackerTextBox As String
+
+        Select Case runnerNumber
+            Case 1
+                trackerTextBox = rControl1.txtTrackerURL.Text
+            Case 2
+                trackerTextBox = rControl2.txtTrackerURL.Text
+            Case 3
+                trackerTextBox = rControl3.txtTrackerURL.Text
+            Case 4
+                trackerTextBox = rControl4.txtTrackerURL.Text
+        End Select
+
+
+        If Not String.IsNullOrWhiteSpace(trackerSource) AndAlso Not String.IsNullOrWhiteSpace(trackerTextBox) Then
+            Dim TrackerURL = If(ConfigurationManager.AppSettings("TrackerURL"), "")
+            Dim trackerString As String
+            If trackerTextBox.ToLower.StartsWith("http") Then
+                trackerString = trackerTextBox
+            Else
+                trackerString = TrackerURL & trackerTextBox
+            End If
+
+            DispatchToObs(Sub(o) o.SetBrowserSource(My.Settings.TrackerOBS_Runner1, trackerString))
+        End If
+    End Sub
+
+    Function isRunnerNumValid(runnerNumber As String) As Boolean
+        If Not String.IsNullOrWhiteSpace(runnerNumber) Then
+            If IsNumeric(runnerNumber) Then
+                If CInt(runnerNumber) > 0 Then
+                    Return True
+                End If
+            End If
+        End If
+
+        Return False
+    End Function
+
+    Private Sub SetToolTips()
+        ttMainToolTip.SetToolTip(txtCommentaryNames, "The names of the commentators.")
+        ttMainToolTip.SetToolTip(txtGameSettings, "The game settings for the race (eg Ganon/Standard/Swordless/Normal/Enemizer)")
+
+        rControl1.SetToolTips(1)
+        rControl2.SetToolTips(2)
+        rControl3.SetToolTips(3)
+        rControl4.SetToolTips(4)
+    End Sub
 #End Region
 End Class
+
+

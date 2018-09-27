@@ -6,6 +6,12 @@
 
         Public ReadOnly Property LeftRunner As RunnerViewModel = New RunnerViewModel
         Public ReadOnly Property RightRunner As RunnerViewModel = New RunnerViewModel
+        Public ReadOnly Property Runner As RunnerViewModel = New RunnerViewModel
+
+        Public ReadOnly Property Runner1 As RunnerViewModel = New RunnerViewModel
+        Public ReadOnly Property Runner2 As RunnerViewModel = New RunnerViewModel
+        Public ReadOnly Property Runner3 As RunnerViewModel = New RunnerViewModel
+        Public ReadOnly Property Runner4 As RunnerViewModel = New RunnerViewModel
 
         Public Property ObsConnected As Boolean
             Get

@@ -8,20 +8,20 @@
     Private Sub ValidateKeyPress(sender As Object, e As KeyPressEventArgs) _
         Handles txtBoundingSizeHeightTimerTwoPlayer.KeyPress, txtBoundingSizeWidthTimerTwoPlayer.KeyPress,
                 txtBoundingSizeHeightGameTwoPlayer.KeyPress, txtBoundingSizeWidthGameTwoPlayer.KeyPress,
-                txtPositionXTimerRightTwoPlayer.KeyPress, txtPositionYTimerRightTwoPlayer.KeyPress,
-                txtPositionXTimerLeftTwoPlayer.KeyPress, txtPositionYTimerLeftTwoPlayer.KeyPress,
-                txtPositionXGameRightTwoPlayer.KeyPress, txtPositionYGameRightTwoPlayer.KeyPress,
-                txtPositionXGameLeftTwoPlayer.KeyPress, txtPositionYGameLeftTwoPlayer.KeyPress,
+                txtPositionXTimerTwoPlayer_Runner2.KeyPress, txtPositionYTimerTwoPlayer_Runner2.KeyPress,
+                txtPositionXTimerTwoPlayer_Runner1.KeyPress, txtPositionYTimerTwoPlayer_Runner1.KeyPress,
+                txtPositionXGameTwoPlayer_Runner2.KeyPress, txtPositionYGameTwoPlayer_Runner2.KeyPress,
+                txtPositionXGameTwoPlayer_Runner1.KeyPress, txtPositionYGameTwoPlayer_Runner1.KeyPress,
                 txtBoundingSizeHeightTimerFourPlayer.KeyPress, txtBoundingSizeWidthTimerFourPlayer.KeyPress,
                 txtBoundingSizeHeightGameFourPlayer.KeyPress, txtBoundingSizeWidthGameFourPlayer.KeyPress,
-                txtPositionXTimerTopLeftFourPlayer.KeyPress, txtPositionYTimerTopLeftFourPlayer.KeyPress,
-                txtPositionXTimerTopRightFourPlayer.KeyPress, txtPositionYTimerTopRightFourPlayer.KeyPress,
-                txtPositionXTimerBottomLeftFourPlayer.KeyPress, txtPositionYTimerBottomLeftFourPlayer.KeyPress,
-                txtPositionXTimerBottomRightFourPlayer.KeyPress, txtPositionYTimerBottomRightFourPlayer.KeyPress,
-                txtPositionXGameTopLeftFourPlayer.KeyPress, txtPositionYGameTopLeftFourPlayer.KeyPress,
-                txtPositionXGameTopRightFourPlayer.KeyPress, txtPositionYGameTopRightFourPlayer.KeyPress,
-                txtPositionXGameBottomLeftFourPlayer.KeyPress, txtPositionYGameBottomLeftFourPlayer.KeyPress,
-                txtPositionXGameBottomRightFourPlayer.KeyPress, txtPositionYGameBottomRightFourPlayer.KeyPress
+                txtPositionXTimerFourPlayer_Runner1.KeyPress, txtPositionYTimerFourPlayer_Runner1.KeyPress,
+                txtPositionXTimerFourPlayer_Runner2.KeyPress, txtPositionYTimerFourPlayer_Runner2.KeyPress,
+                txtPositionXTimerFourPlayer_Runner3.KeyPress, txtPositionYTimerFourPlayer_Runner3.KeyPress,
+                txtPositionXTimerFourPlayer_Runner4.KeyPress, txtPositionYTimerFourPlayer_Runner4.KeyPress,
+                txtPositionXGameFourPlayer_Runner1.KeyPress, txtPositionYGameFourPlayer_Runner1.KeyPress,
+                txtPositionXGameFourPlayer_Runner2.KeyPress, txtPositionYGameFourPlayer_Runner2.KeyPress,
+                txtPositionXGameFourPlayer_Runner3.KeyPress, txtPositionYGameFourPlayer_Runner3.KeyPress,
+                txtPositionXGameFourPlayer_Runner4.KeyPress, txtPositionYGameFourPlayer_Runner4.KeyPress
 
         e.Handled = CheckIfKeyAllowed(e.KeyChar)
     End Sub
@@ -79,47 +79,49 @@
 
     End Sub
     Private Sub SaveToDefault()
-        My.Settings.PositionYGameBottomLeftFourPlayer = CInt(txtPositionYGameBottomLeftFourPlayer.Text)
-        My.Settings.PositionXGameBottomLeftFourPlayer = CInt(txtPositionXGameBottomLeftFourPlayer.Text)
+        My.Settings.PositionYGameFourPlayer_Runner1 = CInt(txtPositionYGameFourPlayer_Runner1.Text)
+        My.Settings.PositionXGameFourPlayer_Runner1 = CInt(txtPositionXGameFourPlayer_Runner1.Text)
 
-        My.Settings.PositionYGameTopLeftFourPlayer = CInt(txtPositionYGameTopLeftFourPlayer.Text)
-        My.Settings.PositionXGameTopLeftFourPlayer = CInt(txtPositionXGameTopLeftFourPlayer.Text)
+        My.Settings.PositionYGameFourPlayer_Runner2 = CInt(txtPositionYGameFourPlayer_Runner2.Text)
+        My.Settings.PositionXGameFourPlayer_Runner2 = CInt(txtPositionXGameFourPlayer_Runner2.Text)
 
-        My.Settings.PositionYGameBottomRightFourPlayer = CInt(txtPositionYGameBottomRightFourPlayer.Text)
-        My.Settings.PositionXGameBottomRightFourPlayer = CInt(txtPositionXGameBottomRightFourPlayer.Text)
+        My.Settings.PositionYGameFourPlayer_Runner3 = CInt(txtPositionYGameFourPlayer_Runner3.Text)
+        My.Settings.PositionXGameFourPlayer_Runner3 = CInt(txtPositionXGameFourPlayer_Runner3.Text)
 
-        My.Settings.PositionYGameTopRightFourPlayer = CInt(txtPositionYGameTopRightFourPlayer.Text)
-        My.Settings.PositionXGameTopRightFourPlayer = CInt(txtPositionXGameTopRightFourPlayer.Text)
-
-        My.Settings.PositionYTimerBottomLeftFourPlayer = CInt(txtPositionYTimerBottomLeftFourPlayer.Text)
-        My.Settings.PositionXTimerBottomLeftFourPlayer = CInt(txtPositionXTimerBottomLeftFourPlayer.Text)
-
-        My.Settings.PositionYTimerTopLeftFourPlayer = CInt(txtPositionYTimerTopLeftFourPlayer.Text)
-        My.Settings.PositionXTimerTopLeftFourPlayer = CInt(txtPositionXTimerTopLeftFourPlayer.Text)
-
-        My.Settings.PositionYTimerBottomRightFourPlayer = CInt(txtPositionYTimerBottomRightFourPlayer.Text)
-        My.Settings.PositionXTimerBottomRightFourPlayer = CInt(txtPositionXTimerBottomRightFourPlayer.Text)
-
-        My.Settings.PositionYTimerTopRightFourPlayer = CInt(txtPositionYTimerTopRightFourPlayer.Text)
-        My.Settings.PositionXTimerTopRightFourPlayer = CInt(txtPositionXTimerTopRightFourPlayer.Text)
-
-        My.Settings.PositionYTimerRightTwoPlayer = CInt(txtPositionYTimerRightTwoPlayer.Text)
-        My.Settings.PositionXTimerRightTwoPlayer = CInt(txtPositionXTimerRightTwoPlayer.Text)
-
-        My.Settings.PositionYTimerLeftTwoPlayer = CInt(txtPositionYTimerLeftTwoPlayer.Text)
-        My.Settings.PositionXTimerLeftTwoPlayer = CInt(txtPositionXTimerLeftTwoPlayer.Text)
-
-        My.Settings.PositionYGameRightTwoPlayer = CInt(txtPositionYGameRightTwoPlayer.Text)
-        My.Settings.PositionXGameRightTwoPlayer = CInt(txtPositionXGameRightTwoPlayer.Text)
-
-        My.Settings.PositionYGameLeftTwoPlayer = CInt(txtPositionYGameLeftTwoPlayer.Text)
-        My.Settings.PositionXGameLeftTwoPlayer = CInt(txtPositionXGameLeftTwoPlayer.Text)
+        My.Settings.PositionYGameFourPlayer_Runner4 = CInt(txtPositionYGameFourPlayer_Runner4.Text)
+        My.Settings.PositionXGameFourPlayer_Runner4 = CInt(txtPositionXGameFourPlayer_Runner4.Text)
 
         My.Settings.BoundingSizeHeightGameFourPlayer = CInt(txtBoundingSizeHeightGameFourPlayer.Text)
         My.Settings.BoundingSizeWidthGameFourPlayer = CInt(txtBoundingSizeWidthGameFourPlayer.Text)
 
         My.Settings.BoundingSizeHeightTimerFourPlayer = CInt(txtBoundingSizeHeightTimerFourPlayer.Text)
         My.Settings.BoundingSizeWidthTimerFourPlayer = CInt(txtBoundingSizeWidthTimerFourPlayer.Text)
+
+
+        My.Settings.PositionYTimerFourPlayer_Runner1 = CInt(txtPositionYTimerFourPlayer_Runner1.Text)
+        My.Settings.PositionXTimerFourPlayer_Runner1 = CInt(txtPositionXTimerFourPlayer_Runner1.Text)
+
+        My.Settings.PositionYTimerFourPlayer_Runner2 = CInt(txtPositionYTimerFourPlayer_Runner2.Text)
+        My.Settings.PositionXTimerFourPlayer_Runner2 = CInt(txtPositionXTimerFourPlayer_Runner2.Text)
+
+        My.Settings.PositionYTimerFourPlayer_Runner3 = CInt(txtPositionYTimerFourPlayer_Runner3.Text)
+        My.Settings.PositionXTimerFourPlayer_Runner3 = CInt(txtPositionXTimerFourPlayer_Runner3.Text)
+
+        My.Settings.PositionYTimerFourPlayer_Runner4 = CInt(txtPositionYTimerFourPlayer_Runner4.Text)
+        My.Settings.PositionXTimerFourPlayer_Runner4 = CInt(txtPositionXTimerFourPlayer_Runner4.Text)
+
+        My.Settings.PositionYTimerTwoPlayer_Runner1 = CInt(txtPositionYTimerTwoPlayer_Runner1.Text)
+        My.Settings.PositionXTimerTwoPlayer_Runner1 = CInt(txtPositionXTimerTwoPlayer_Runner1.Text)
+
+        My.Settings.PositionYTimerTwoPlayer_Runner2 = CInt(txtPositionYTimerTwoPlayer_Runner2.Text)
+        My.Settings.PositionXTimerTwoPlayer_Runner2 = CInt(txtPositionXTimerTwoPlayer_Runner2.Text)
+
+        My.Settings.PositionYGameTwoPlayer_Runner1 = CInt(txtPositionYGameTwoPlayer_Runner1.Text)
+        My.Settings.PositionXGameTwoPlayer_Runner1 = CInt(txtPositionXGameTwoPlayer_Runner1.Text)
+
+        My.Settings.PositionYGameTwoPlayer_Runner2 = CInt(txtPositionYGameTwoPlayer_Runner2.Text)
+        My.Settings.PositionXGameTwoPlayer_Runner2 = CInt(txtPositionXGameTwoPlayer_Runner2.Text)
+
 
         My.Settings.BoundingSizeHeightGameTwoPlayer = CInt(txtBoundingSizeHeightGameTwoPlayer.Text)
         My.Settings.BoundingSizeWidthGameTwoPlayer = CInt(txtBoundingSizeWidthGameTwoPlayer.Text)
@@ -136,47 +138,48 @@
 
         dr = _configInfo.Tables("ConfigInfo").NewRow
 
-        dr.Item("PositionYGameBottomLeftFourPlayer") = txtPositionYGameBottomLeftFourPlayer.Text
-        dr.Item("PositionXGameBottomLeftFourPlayer") = txtPositionXGameBottomLeftFourPlayer.Text
+        dr.Item("PositionYGameFourPlayer_Runner1") = txtPositionYGameFourPlayer_Runner1.Text
+        dr.Item("PositionXGameFourPlayer_Runner1") = txtPositionXGameFourPlayer_Runner1.Text
 
-        dr.Item("PositionYGameTopLeftFourPlayer") = txtPositionYGameTopLeftFourPlayer.Text
-        dr.Item("PositionXGameTopLeftFourPlayer") = txtPositionXGameTopLeftFourPlayer.Text
+        dr.Item("PositionYGameFourPlayer_Runner2") = txtPositionYGameFourPlayer_Runner2.Text
+        dr.Item("PositionXGameFourPlayer_Runner2") = txtPositionXGameFourPlayer_Runner2.Text
 
-        dr.Item("PositionYGameBottomRightFourPlayer") = txtPositionYGameBottomRightFourPlayer.Text
-        dr.Item("PositionXGameBottomRightFourPlayer") = txtPositionXGameBottomRightFourPlayer.Text
+        dr.Item("PositionYGameFourPlayer_Runner3") = txtPositionYGameFourPlayer_Runner3.Text
+        dr.Item("PositionXGameFourPlayer_Runner3") = txtPositionXGameFourPlayer_Runner3.Text
 
-        dr.Item("PositionYGameTopRightFourPlayer") = txtPositionYGameTopRightFourPlayer.Text
-        dr.Item("PositionXGameTopRightFourPlayer") = txtPositionXGameTopRightFourPlayer.Text
+        dr.Item("PositionYGameFourPlayer_Runner4") = txtPositionYGameFourPlayer_Runner4.Text
+        dr.Item("PositionXGameFourPlayer_Runner4") = txtPositionXGameFourPlayer_Runner4.Text
 
-        dr.Item("PositionYTimerBottomLeftFourPlayer") = txtPositionYTimerBottomLeftFourPlayer.Text
-        dr.Item("PositionXTimerBottomLeftFourPlayer") = txtPositionXTimerBottomLeftFourPlayer.Text
+        dr.Item("PositionYTimerFourPlayer_Runner1") = txtPositionYTimerFourPlayer_Runner1.Text
+        dr.Item("PositionXTimerFourPlayer_Runner1") = txtPositionXTimerFourPlayer_Runner1.Text
 
-        dr.Item("PositionYTimerTopLeftFourPlayer") = txtPositionYTimerTopLeftFourPlayer.Text
-        dr.Item("PositionXTimerTopLeftFourPlayer") = txtPositionXTimerTopLeftFourPlayer.Text
+        dr.Item("PositionYTimerFourPlayer_Runner2") = txtPositionYTimerFourPlayer_Runner2.Text
+        dr.Item("PositionXTimerFourPlayer_Runner2") = txtPositionXTimerFourPlayer_Runner2.Text
 
-        dr.Item("PositionYTimerBottomRightFourPlayer") = txtPositionYTimerBottomRightFourPlayer.Text
-        dr.Item("PositionXTimerBottomRightFourPlayer") = txtPositionXTimerBottomRightFourPlayer.Text
+        dr.Item("PositionYTimerFourPlayer_Runner3") = txtPositionYTimerFourPlayer_Runner3.Text
+        dr.Item("PositionXTimerFourPlayer_Runner3") = txtPositionXTimerFourPlayer_Runner3.Text
 
-        dr.Item("PositionYTimerTopRightFourPlayer") = txtPositionYTimerTopRightFourPlayer.Text
-        dr.Item("PositionXTimerTopRightFourPlayer") = txtPositionXTimerTopRightFourPlayer.Text
-
-        dr.Item("PositionYTimerRightTwoPlayer") = txtPositionYTimerRightTwoPlayer.Text
-        dr.Item("PositionXTimerRightTwoPlayer") = txtPositionXTimerRightTwoPlayer.Text
-
-        dr.Item("PositionYTimerLeftTwoPlayer") = txtPositionYTimerLeftTwoPlayer.Text
-        dr.Item("PositionXTimerLeftTwoPlayer") = txtPositionXTimerLeftTwoPlayer.Text
-
-        dr.Item("PositionYGameRightTwoPlayer") = txtPositionYGameRightTwoPlayer.Text
-        dr.Item("PositionXGameRightTwoPlayer") = txtPositionXGameRightTwoPlayer.Text
-
-        dr.Item("PositionYGameLeftTwoPlayer") = txtPositionYGameLeftTwoPlayer.Text
-        dr.Item("PositionXGameLeftTwoPlayer") = txtPositionXGameLeftTwoPlayer.Text
+        dr.Item("PositionYTimerFourPlayer_Runner4") = txtPositionYTimerFourPlayer_Runner4.Text
+        dr.Item("PositionXTimerFourPlayer_Runner4") = txtPositionXTimerFourPlayer_Runner4.Text
 
         dr.Item("BoundingSizeHeightGameFourPlayer") = txtBoundingSizeHeightGameFourPlayer.Text
         dr.Item("BoundingSizeWidthGameFourPlayer") = txtBoundingSizeWidthGameFourPlayer.Text
 
         dr.Item("BoundingSizeHeightTimerFourPlayer") = txtBoundingSizeHeightTimerFourPlayer.Text
         dr.Item("BoundingSizeWidthTimerFourPlayer") = txtBoundingSizeWidthTimerFourPlayer.Text
+
+
+        dr.Item("PositionYTimerTwoPlayer_Runner1") = txtPositionYTimerTwoPlayer_Runner1.Text
+        dr.Item("PositionXTimerTwoPlayer_Runner1") = txtPositionXTimerTwoPlayer_Runner1.Text
+
+        dr.Item("PositionYTimerTwoPlayer_Runner2") = txtPositionYTimerTwoPlayer_Runner2.Text
+        dr.Item("PositionXTimerTwoPlayer_Runner2") = txtPositionXTimerTwoPlayer_Runner2.Text
+
+        dr.Item("PositionYGameTwoPlayer_Runner1") = txtPositionYGameTwoPlayer_Runner1.Text
+        dr.Item("PositionXGameTwoPlayer_Runner1") = txtPositionXGameTwoPlayer_Runner1.Text
+
+        dr.Item("PositionYGameTwoPlayer_Runner2") = txtPositionYGameTwoPlayer_Runner2.Text
+        dr.Item("PositionXGameTwoPlayer_Runner2") = txtPositionXGameTwoPlayer_Runner2.Text
 
         dr.Item("BoundingSizeHeightGameTwoPlayer") = txtBoundingSizeHeightGameTwoPlayer.Text
         dr.Item("BoundingSizeWidthGameTwoPlayer") = txtBoundingSizeWidthGameTwoPlayer.Text
@@ -217,41 +220,41 @@
     End Sub
     Private Sub RefreshConfigInfo(isDefault As Boolean)
         If isDefault Then
-            txtPositionYGameBottomLeftFourPlayer.Text = My.Settings.PositionYGameBottomLeftFourPlayer.ToString
-            txtPositionXGameBottomLeftFourPlayer.Text = My.Settings.PositionXGameBottomLeftFourPlayer.ToString
+            txtPositionYGameFourPlayer_Runner3.Text = My.Settings.PositionYGameFourPlayer_Runner3.ToString
+            txtPositionXGameFourPlayer_Runner3.Text = My.Settings.PositionXGameFourPlayer_Runner3.ToString
 
-            txtPositionYGameTopLeftFourPlayer.Text = My.Settings.PositionYGameTopLeftFourPlayer.ToString
-            txtPositionXGameTopLeftFourPlayer.Text = My.Settings.PositionXGameTopLeftFourPlayer.ToString
+            txtPositionYGameFourPlayer_Runner1.Text = My.Settings.PositionYGameFourPlayer_Runner1.ToString
+            txtPositionXGameFourPlayer_Runner1.Text = My.Settings.PositionXGameFourPlayer_Runner1.ToString
 
-            txtPositionYGameBottomRightFourPlayer.Text = My.Settings.PositionYGameBottomRightFourPlayer.ToString
-            txtPositionXGameBottomRightFourPlayer.Text = My.Settings.PositionXGameBottomRightFourPlayer.ToString
+            txtPositionYGameFourPlayer_Runner4.Text = My.Settings.PositionYGameFourPlayer_Runner4.ToString
+            txtPositionXGameFourPlayer_Runner4.Text = My.Settings.PositionXGameFourPlayer_Runner4.ToString
 
-            txtPositionYGameTopRightFourPlayer.Text = My.Settings.PositionYGameTopRightFourPlayer.ToString
-            txtPositionXGameTopRightFourPlayer.Text = My.Settings.PositionXGameTopRightFourPlayer.ToString
+            txtPositionYGameFourPlayer_Runner2.Text = My.Settings.PositionYGameFourPlayer_Runner2.ToString
+            txtPositionXGameFourPlayer_Runner2.Text = My.Settings.PositionXGameFourPlayer_Runner2.ToString
 
-            txtPositionYTimerBottomLeftFourPlayer.Text = My.Settings.PositionYTimerBottomLeftFourPlayer.ToString
-            txtPositionXTimerBottomLeftFourPlayer.Text = My.Settings.PositionXTimerBottomLeftFourPlayer.ToString
+            txtPositionYTimerFourPlayer_Runner3.Text = My.Settings.PositionYTimerFourPlayer_Runner3.ToString
+            txtPositionXTimerFourPlayer_Runner3.Text = My.Settings.PositionXTimerFourPlayer_Runner3.ToString
 
-            txtPositionYTimerTopLeftFourPlayer.Text = My.Settings.PositionYTimerTopLeftFourPlayer.ToString
-            txtPositionXTimerTopLeftFourPlayer.Text = My.Settings.PositionXTimerTopLeftFourPlayer.ToString
+            txtPositionYTimerFourPlayer_Runner1.Text = My.Settings.PositionYTimerFourPlayer_Runner1.ToString
+            txtPositionXTimerFourPlayer_Runner1.Text = My.Settings.PositionXTimerFourPlayer_Runner1.ToString
 
-            txtPositionYTimerBottomRightFourPlayer.Text = My.Settings.PositionYTimerBottomRightFourPlayer.ToString
-            txtPositionXTimerBottomRightFourPlayer.Text = My.Settings.PositionXTimerBottomRightFourPlayer.ToString
+            txtPositionYTimerFourPlayer_Runner4.Text = My.Settings.PositionYTimerFourPlayer_Runner4.ToString
+            txtPositionXTimerFourPlayer_Runner4.Text = My.Settings.PositionXTimerFourPlayer_Runner4.ToString
 
-            txtPositionYTimerTopRightFourPlayer.Text = My.Settings.PositionYTimerTopRightFourPlayer.ToString
-            txtPositionXTimerTopRightFourPlayer.Text = My.Settings.PositionXTimerTopRightFourPlayer.ToString
+            txtPositionYTimerFourPlayer_Runner2.Text = My.Settings.PositionYTimerFourPlayer_Runner2.ToString
+            txtPositionXTimerFourPlayer_Runner2.Text = My.Settings.PositionXTimerFourPlayer_Runner2.ToString
 
-            txtPositionYTimerRightTwoPlayer.Text = My.Settings.PositionYTimerRightTwoPlayer.ToString
-            txtPositionXTimerRightTwoPlayer.Text = My.Settings.PositionXTimerRightTwoPlayer.ToString
+            txtPositionYTimerTwoPlayer_Runner2.Text = My.Settings.PositionYTimerTwoPlayer_Runner2.ToString
+            txtPositionXTimerTwoPlayer_Runner2.Text = My.Settings.PositionXTimerTwoPlayer_Runner2.ToString
 
-            txtPositionYTimerLeftTwoPlayer.Text = My.Settings.PositionYTimerLeftTwoPlayer.ToString
-            txtPositionXTimerLeftTwoPlayer.Text = My.Settings.PositionXTimerLeftTwoPlayer.ToString
+            txtPositionYTimerTwoPlayer_Runner1.Text = My.Settings.PositionYTimerTwoPlayer_Runner1.ToString
+            txtPositionXTimerTwoPlayer_Runner1.Text = My.Settings.PositionXTimerTwoPlayer_Runner1.ToString
 
-            txtPositionYGameRightTwoPlayer.Text = My.Settings.PositionYGameRightTwoPlayer.ToString
-            txtPositionXGameRightTwoPlayer.Text = My.Settings.PositionXGameRightTwoPlayer.ToString
+            txtPositionYGameTwoPlayer_Runner2.Text = My.Settings.PositionYGameTwoPlayer_Runner2.ToString
+            txtPositionXGameTwoPlayer_Runner2.Text = My.Settings.PositionXGameTwoPlayer_Runner2.ToString
 
-            txtPositionYGameLeftTwoPlayer.Text = My.Settings.PositionYGameLeftTwoPlayer.ToString
-            txtPositionXGameLeftTwoPlayer.Text = My.Settings.PositionXGameLeftTwoPlayer.ToString
+            txtPositionYGameTwoPlayer_Runner1.Text = My.Settings.PositionYGameTwoPlayer_Runner1.ToString
+            txtPositionXGameTwoPlayer_Runner1.Text = My.Settings.PositionXGameTwoPlayer_Runner1.ToString
 
             txtBoundingSizeHeightGameFourPlayer.Text = My.Settings.BoundingSizeHeightGameFourPlayer.ToString
             txtBoundingSizeWidthGameFourPlayer.Text = My.Settings.BoundingSizeWidthGameFourPlayer.ToString
@@ -270,47 +273,47 @@
 
                 If _configInfo.Tables.Count > 0 Then
                     If _configInfo.Tables("ConfigInfo").Rows.Count > 0 Then
-                        txtPositionYGameBottomLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomLeftFourPlayer").ToString
-                        txtPositionXGameBottomLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomLeftFourPlayer").ToString
+                        txtPositionYGameFourPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameFourPlayer_Runner1").ToString
+                        txtPositionXGameFourPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameFourPlayer_Runner1").ToString
 
-                        txtPositionYGameTopLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopLeftFourPlayer").ToString
-                        txtPositionXGameTopLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopLeftFourPlayer").ToString
+                        txtPositionYGameFourPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameFourPlayer_Runner2").ToString
+                        txtPositionXGameFourPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameFourPlayer_Runner2").ToString
 
-                        txtPositionYGameBottomRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameBottomRightFourPlayer").ToString
-                        txtPositionXGameBottomRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameBottomRightFourPlayer").ToString
+                        txtPositionYGameFourPlayer_Runner3.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameFourPlayer_Runner3").ToString
+                        txtPositionXGameFourPlayer_Runner3.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameFourPlayer_Runner3").ToString
 
-                        txtPositionYGameTopRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTopRightFourPlayer").ToString
-                        txtPositionXGameTopRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTopRightFourPlayer").ToString
+                        txtPositionYGameFourPlayer_Runner4.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameFourPlayer_Runner4").ToString
+                        txtPositionXGameFourPlayer_Runner4.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameFourPlayer_Runner4").ToString
 
-                        txtPositionYTimerBottomLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomLeftFourPlayer").ToString
-                        txtPositionXTimerBottomLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomLeftFourPlayer").ToString
+                        txtPositionYTimerFourPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerFourPlayer_Runner1").ToString
+                        txtPositionXTimerFourPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerFourPlayer_Runner1").ToString
 
-                        txtPositionYTimerTopLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopLeftFourPlayer").ToString
-                        txtPositionXTimerTopLeftFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopLeftFourPlayer").ToString
+                        txtPositionYTimerFourPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerFourPlayer_Runner2").ToString
+                        txtPositionXTimerFourPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerFourPlayer_Runner2").ToString
 
-                        txtPositionYTimerBottomRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerBottomRightFourPlayer").ToString
-                        txtPositionXTimerBottomRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerBottomRightFourPlayer").ToString
+                        txtPositionYTimerFourPlayer_Runner3.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerFourPlayer_Runner3").ToString
+                        txtPositionXTimerFourPlayer_Runner3.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerFourPlayer_Runner3").ToString
 
-                        txtPositionYTimerTopRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTopRightFourPlayer").ToString
-                        txtPositionXTimerTopRightFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTopRightFourPlayer").ToString
-
-                        txtPositionYTimerRightTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerRightTwoPlayer").ToString
-                        txtPositionXTimerRightTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerRightTwoPlayer").ToString
-
-                        txtPositionYTimerLeftTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerLeftTwoPlayer").ToString
-                        txtPositionXTimerLeftTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerLeftTwoPlayer").ToString
-
-                        txtPositionYGameRightTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameRightTwoPlayer").ToString
-                        txtPositionXGameRightTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameRightTwoPlayer").ToString
-
-                        txtPositionYGameLeftTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameLeftTwoPlayer").ToString
-                        txtPositionXGameLeftTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameLeftTwoPlayer").ToString
+                        txtPositionYTimerFourPlayer_Runner4.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerFourPlayer_Runner4").ToString
+                        txtPositionXTimerFourPlayer_Runner4.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerFourPlayer_Runner4").ToString
 
                         txtBoundingSizeHeightGameFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameFourPlayer").ToString
                         txtBoundingSizeWidthGameFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameFourPlayer").ToString
 
                         txtBoundingSizeHeightTimerFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightTimerFourPlayer").ToString
                         txtBoundingSizeWidthTimerFourPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthTimerFourPlayer").ToString
+
+                        txtPositionYTimerTwoPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTwoPlayer_Runner1").ToString
+                        txtPositionXTimerTwoPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTwoPlayer_Runner1").ToString
+
+                        txtPositionYTimerTwoPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYTimerTwoPlayer_Runner2").ToString
+                        txtPositionXTimerTwoPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXTimerTwoPlayer_Runner2").ToString
+
+                        txtPositionYGameTwoPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTwoPlayer_Runner1").ToString
+                        txtPositionXGameTwoPlayer_Runner1.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTwoPlayer_Runner1").ToString
+
+                        txtPositionYGameTwoPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionYGameTwoPlayer_Runner2").ToString
+                        txtPositionXGameTwoPlayer_Runner2.Text = _configInfo.Tables("ConfigInfo").Rows(0)("PositionXGameTwoPlayer_Runner2").ToString
 
                         txtBoundingSizeHeightGameTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeHeightGameTwoPlayer").ToString
                         txtBoundingSizeWidthGameTwoPlayer.Text = _configInfo.Tables("ConfigInfo").Rows(0)("BoundingSizeWidthGameTwoPlayer").ToString
@@ -328,34 +331,34 @@
     Private Sub LoadNewConfigInfoTable()
         If _configInfo.Tables.Count = 0 Then
             _configInfo.Tables.Add("ConfigInfo")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameBottomLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameBottomLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameTopLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameTopLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameBottomRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameBottomRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameTopRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameTopRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerBottomLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerBottomLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerTopLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerTopLeftFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerBottomRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerBottomRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerTopRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerTopRightFourPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerRightTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerRightTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerLeftTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerLeftTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameRightTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameRightTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameLeftTwoPlayer")
-            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameLeftTwoPlayer")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameFourPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameFourPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameFourPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameFourPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameFourPlayer_Runner3")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameFourPlayer_Runner3")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameFourPlayer_Runner4")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameFourPlayer_Runner4")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerFourPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerFourPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerFourPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerFourPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerFourPlayer_Runner3")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerFourPlayer_Runner3")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerFourPlayer_Runner4")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerFourPlayer_Runner4")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeHeightGameFourPlayer")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeWidthGameFourPlayer")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeHeightTimerFourPlayer")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeWidthTimerFourPlayer")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerTwoPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerTwoPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYTimerTwoPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXTimerTwoPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameTwoPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameTwoPlayer_Runner1")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionYGameTwoPlayer_Runner2")
+            _configInfo.Tables("ConfigInfo").Columns.Add("PositionXGameTwoPlayer_Runner2")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeHeightGameTwoPlayer")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeWidthGameTwoPlayer")
             _configInfo.Tables("ConfigInfo").Columns.Add("BoundingSizeHeightTimerTwoPlayer")
