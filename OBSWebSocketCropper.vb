@@ -1144,7 +1144,7 @@ Public Class ObsWebSocketCropper
         End Using
 
     End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs)
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         _lastUpdate = _lastUpdate + 1
 
         If _lastUpdate > 5 Then
