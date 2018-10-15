@@ -8,7 +8,7 @@ Below are some screenshots along with what the various portions of those screens
 
 ## Main User Settings:
 
-![Main User Settings](https://i.imgur.com/75bnDWm.png)
+![Main User Settings](https://i.imgur.com/z2tddz4.png)
 
 This should be the first screen you come across.  It’s a way of setting what each section of the program will control.
 
@@ -22,6 +22,8 @@ This should be the first screen you come across.  It’s a way of setting what e
 The various drop downs - These are where you’re going to set which source name in OBS matches which area of the screen.  There is some type checking to make sure you use the correct source type.  An example of this is if you are trying to set a text source when the program expects a browser source.  It will warn you and will not save that field.
 
 **Reset Settings** - This will reset your default settings
+
+**Use Default OBS Settings** - This will attempt to fill in the names that were used in a provided OBS scene collection to make it a bit easier to fill in the values
 
 **Save and Continue** - You have 2 options depending when in the process you access the settings screen.  The first time you load the program you will have the option to continue to the VLC settings page or just go right to the program.  After saving the first time you just have a save and continue to the program.
 
@@ -47,17 +49,17 @@ If you need to use the override, to get the values for your system, open VLC and
 
 One thing to note, the sections are basically colour coded with the button that affects them.
 
-![Main Screen](https://i.imgur.com/pF4pdzs.png)
+![Main Screen](https://i.imgur.com/KPGIIiJ.png)
 
 **Connect OBS 1** - This is to connect to OBS with the saved connection settings.  Before anything is allowed to be done in the program you have to connect to OBS.  There is currently a way being tested to connect to multiple OBS instances at a time but nothing fully finished yet.
 
-**Set Track/Comms/Names** - This will set the text boxes of OBS to match the commentary text box and the runner name drop downs as well as the tracker URL from the text boxes.  If any of them are left blank, or there was no setting saved, it just does nothing for that area.
+**Set Track/Comms/Names** - This will set the text boxes of OBS to match the commentary text box and the runner name drop downs, game settings (if applicable) as well as the tracker URL from the text boxes.  If any of them are left blank, or there was no setting saved, it just does nothing for that area.
 
 For the runners, just pick from the drop down, if it exists, or click the “New Runner” button.  For the tracker URL and the commentary names, just copy and paste.
 
 **New Runner** - This will open a new form (shown later) that will allow you to type in the runner name as well as the twitch name.  If it exists, it will select it from the list otherwise fills in the info to save.
 
-**Get Processes** - This will check the current running processes to see what VLC windows are running.  This will make it easier to set the game/timer windows to the proper runner.  If you have a runner name selected from the drop down, it will also attempt to set the VLC window to the correct side if the VLC window title contains the same twitch name as the runner.
+**Get Processes** - This will check the current running processes to see what VLC windows are running.  This will make it easier to set the game/timer windows to the proper runner.  If you have a runner name selected from the drop down, it will also attempt to set the VLC dropdown to the correct side if the VLC window title contains the same twitch name as the runner.
 
 **Set VLC** - This will set the proper sources to the VLC processes as long as the proper source names were set in the settings
 
@@ -69,9 +71,14 @@ For the runners, just pick from the drop down, if it exists, or click the “New
 
 **Set Crop** - This will set the crop settings of the sources in OBS.  After selecting the runner in the drop down if there is crop data it will populate the text boxes and then all that is needed is hitting set crop.  Be warned that depending on how accurate the numbers are for VLC for the person who saved the crop there may be a bit of fine tuning needed but you can then save your numbers and it will prioritize those over anyone else's
 
+**Reset Database** - This will reset that local database to a blank state.  Sometimes this is needed if a field got corrupted and saving no longer works
+
 **Sync With Server** - This will send any new crops you have done to the main server while also grabbing new crops that other people have done to the local database
 
 IMPORTANT NOTE:  When you do your own crop, or are tweaking someone else's crop, it is important that the OBS window has no black bars on any side (Left, Top, Right, Bottom) because of resizing VLC.  If there are black bars it will not look right when someone else uses that crop.
+
+**1-4 Runners** - This will adjust the program to deal with the number of runners selected.  This was added to account for qualifiers which needed the ability to work with 4 runners but still be able to handle 2 runners once qualifiers was finished.  Adding 1 & 3 runners after that just was easier to do as a just in case feature.
+
 
 
 ## New Runner Window:
@@ -101,7 +108,7 @@ This is the first program I’ve released as well as working with a local databa
 
 **WARNING!  These are advanced features that may not work 100%.  Use at your own risk!**
 
-![Main Window - Expert Settings](https://i.imgur.com/MaGoQWD.png)
+![Main Window - Expert Settings](https://i.imgur.com/eeSzT2A.png)
 
 **2nd OBS** - This will change the OBS Websocket port to a different value to allow you to attempt to load a 2nd OBS to control both at the same time.  It works well enough but there are still some weird things at play so use at your own risk.
 
@@ -116,6 +123,8 @@ This is the first program I’ve released as well as working with a local databa
 **Scaling** - Some people may have windows scaling which may affect the crops.  If you do you can attempt to match your windows scaling with this value to get the crops set properly
 
 **Reset** - This will attempt to reset the crops back to what the database values are in case you made a mistake when cropping.  This one is still a work in progress at this time.
+
+**Always On Top** - This will attempt to make sure the crop program remains on top.  This has behaved unusually in the past so it remains an expert mode feature for now.
 
 ## Crop Examples:
 
