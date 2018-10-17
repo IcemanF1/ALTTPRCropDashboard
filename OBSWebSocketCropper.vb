@@ -506,7 +506,12 @@ Public Class ObsWebSocketCropper
     Function getParentControlName(sender As Object) As String
         Dim ctl As Control = CType(sender, Control)
 
-        Return ctl.Parent.Name.ToString
+        If ctl.Parent.Name.ToString.StartsWith("rControl") Then
+            Return ctl.Parent.Name.ToString
+        Else
+            Return ctl.Parent.Parent.Name.ToString
+        End If
+
     End Function
     Function getRunnerNumber(senderParent As String) As String
         Select Case senderParent
@@ -758,21 +763,37 @@ Public Class ObsWebSocketCropper
 #End Region
 #Region " Refresh / Set User Info "
     Private Sub RefreshObs()
-        Dim lObs = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs", True, Globalization.CultureInfo.InvariantCulture)).ToList()
+        Dim lObs64 = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs64", True, Globalization.CultureInfo.InvariantCulture)).ToList()
+        Dim lObs32 = Process.GetProcesses().Where(Function(pr) pr.ProcessName.StartsWith("obs64", True, Globalization.CultureInfo.InvariantCulture)).ToList()
 
-        If lObs.Count > 1 Then
+        If lObs64.Count > 1 Then
             Timer1.Stop()
             GetIniFile(False, True)
             _check2NdObs = False
-        ElseIf lObs.Count = 1 Then
+        ElseIf lObs64.Count = 1 Then
             Dim obsProcess As New ProcessStartInfo
             Dim workDirectory As String
-            workDirectory = lObs.Item(0).MainModule.FileName.Remove(lObs.Item(0).MainModule.FileName.LastIndexOf("\"), lObs.Item(0).MainModule.FileName.Length - lObs.Item(0).MainModule.FileName.LastIndexOf("\"))
+            workDirectory = lObs64.Item(0).MainModule.FileName.Remove(lObs64.Item(0).MainModule.FileName.LastIndexOf("\"), lObs64.Item(0).MainModule.FileName.Length - lObs64.Item(0).MainModule.FileName.LastIndexOf("\"))
 
-            obsProcess.FileName = lObs.Item(0).MainModule.FileName
+            obsProcess.FileName = lObs64.Item(0).MainModule.FileName
             obsProcess.WorkingDirectory = workDirectory
 
             Process.Start(obsProcess)
+        Else
+            If lObs32.Count > 1 Then
+                Timer1.Stop()
+                GetIniFile(False, True)
+                _check2NdObs = False
+            ElseIf lObs32.Count = 1 Then
+                Dim obsProcess As New ProcessStartInfo
+                Dim workDirectory As String
+                workDirectory = lObs32.Item(0).MainModule.FileName.Remove(lObs32.Item(0).MainModule.FileName.LastIndexOf("\"), lObs32.Item(0).MainModule.FileName.Length - lObs32.Item(0).MainModule.FileName.LastIndexOf("\"))
+
+                obsProcess.FileName = lObs32.Item(0).MainModule.FileName
+                obsProcess.WorkingDirectory = workDirectory
+
+                Process.Start(obsProcess)
+            End If
         End If
     End Sub
     Private Sub RefreshVlc()
