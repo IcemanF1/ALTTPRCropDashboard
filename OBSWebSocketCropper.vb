@@ -218,7 +218,16 @@ Public Class ObsWebSocketCropper
         End Using
 
         If needsRefresh Then
-            RefreshRunnerNames(False)
+            Select Case runnerNumber
+                Case 1
+                    rControl1.RefreshRunnerNames(False)
+                Case 2
+                    rControl2.RefreshRunnerNames(False)
+                Case 3
+                    rControl3.RefreshRunnerNames(False)
+                Case 4
+                    rControl4.RefreshRunnerNames(False)
+            End Select
         End If
     End Sub
     Public Sub FillCurrentCropInfoFromObs(runnerNumber As Integer)
@@ -567,6 +576,7 @@ Public Class ObsWebSocketCropper
         Dim runnerName As String = getRunnerName(senderParent)
 
         If isRunnerNumValid(runnerNumber) Then
+            RefreshCropperDefaultCrop()
             SetRunner(CInt(runnerNumber), runnerName)
             ClearTextBoxes("Both", CInt(runnerNumber))
             RefreshCropFromData("Both", CInt(runnerNumber), runnerName)
@@ -810,10 +820,25 @@ Public Class ObsWebSocketCropper
 
     End Sub
     Private Sub RefreshRunnerNames(isReset As Boolean)
-        rControl1.RefreshRunnerNames(isReset)
-        rControl2.RefreshRunnerNames(isReset)
-        rControl3.RefreshRunnerNames(isReset)
-        rControl4.RefreshRunnerNames(isReset)
+        If rb1Runner.Checked Then
+            rControl1.RefreshRunnerNames(isReset)
+        End If
+        If rb2Runner.Checked Then
+            rControl1.RefreshRunnerNames(isReset)
+            rControl2.RefreshRunnerNames(isReset)
+        End If
+        If rb3Runner.Checked Then
+            rControl1.RefreshRunnerNames(isReset)
+            rControl2.RefreshRunnerNames(isReset)
+            rControl3.RefreshRunnerNames(isReset)
+        End If
+        If rb4Runner.Checked Then
+            rControl1.RefreshRunnerNames(isReset)
+            rControl2.RefreshRunnerNames(isReset)
+            rControl3.RefreshRunnerNames(isReset)
+            rControl4.RefreshRunnerNames(isReset)
+        End If
+
     End Sub
     Public Sub RefreshCropperDefaultCrop()
         _cropperMath.DefaultCrop = Rectangle.FromLTRB(0, My.Settings.DefaultCropTop, 0, My.Settings.DefaultCropBottom)
@@ -1824,7 +1849,7 @@ Public Class ObsWebSocketCropper
             replacedPath = fsDialog.FileName
         End If
 
-        Dim streamLinkArguments As String = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close"
+        Dim streamLinkArguments As String = $"--player-args=""--file-caching 2000 --no-one-instance --network-caching 2000 --input-title-format {twitch} {{filename}}"" https://www.twitch.tv/{twitch} best --player-continuous-http --player-no-close --twitch-disable-hosting"
 
         Dim customArgs As String
 
