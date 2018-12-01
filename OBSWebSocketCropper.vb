@@ -998,11 +998,7 @@ Public Class ObsWebSocketCropper
 
             End If
 
-
-            RefreshRunnerNames(False)
         Else
-            RefreshRunnerNames(False)
-
             CheckUnusedFields()
         End If
 
@@ -1013,6 +1009,8 @@ Public Class ObsWebSocketCropper
 
 
         rb2Runner.Checked = True
+
+        RefreshRunnerNames(False)
 
         isLoaded = True
     End Sub
@@ -1580,6 +1578,10 @@ Public Class ObsWebSocketCropper
             RefreshBoundingBoxFromConfigFile(lblConfigFile.Text)
         Else
             RefreshBoundingBoxFromDefault()
+        End If
+
+        If isLoaded = True Then
+            RefreshRunnerNames(False)
         End If
 
 
