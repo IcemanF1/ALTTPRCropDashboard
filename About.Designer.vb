@@ -25,6 +25,7 @@ Partial Class About
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(About))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblVersion = New System.Windows.Forms.Label()
+        Me.lblNewVersion = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -45,11 +46,21 @@ Partial Class About
         Me.lblVersion.TabIndex = 1
         Me.lblVersion.Text = "Version: "
         '
+        'lblNewVersion
+        '
+        Me.lblNewVersion.AutoSize = True
+        Me.lblNewVersion.Location = New System.Drawing.Point(12, 157)
+        Me.lblNewVersion.Name = "lblNewVersion"
+        Me.lblNewVersion.Size = New System.Drawing.Size(73, 13)
+        Me.lblNewVersion.TabIndex = 2
+        Me.lblNewVersion.Text = "New Version: "
+        '
         'About
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(296, 179)
+        Me.Controls.Add(Me.lblNewVersion)
         Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -62,4 +73,5 @@ Partial Class About
 
     Friend WithEvents Label1 As Label
     Friend WithEvents lblVersion As Label
+    Friend WithEvents lblNewVersion As Label
 End Class

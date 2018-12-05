@@ -43,6 +43,7 @@ Partial Class ObsWebSocketCropper
         Me.btnGetProcesses = New System.Windows.Forms.Button()
         Me.btn2ndOBS = New System.Windows.Forms.Button()
         Me.btnConnectOBS2 = New System.Windows.Forms.Button()
+        Me.btnResetDatabase = New System.Windows.Forms.Button()
         Me.gbTrackerComms = New System.Windows.Forms.GroupBox()
         Me.lblGameSettings = New System.Windows.Forms.Label()
         Me.txtGameSettings = New System.Windows.Forms.TextBox()
@@ -50,7 +51,6 @@ Partial Class ObsWebSocketCropper
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblOBS2ConnectedStatus = New System.Windows.Forms.Label()
         Me.chkAlwaysOnTop = New System.Windows.Forms.CheckBox()
-        Me.btnResetDatabase = New System.Windows.Forms.Button()
         Me.ofdOpenConfig = New System.Windows.Forms.OpenFileDialog()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.rb4Runner = New System.Windows.Forms.RadioButton()
@@ -58,9 +58,11 @@ Partial Class ObsWebSocketCropper
         Me.rb2Runner = New System.Windows.Forms.RadioButton()
         Me.rb1Runner = New System.Windows.Forms.RadioButton()
         Me.lblConfigFile = New System.Windows.Forms.Label()
+        Me.pbUpdate = New System.Windows.Forms.PictureBox()
         Me.mnuMainMenu.SuspendLayout()
         Me.gbTrackerComms.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        CType(Me.pbUpdate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnConnectOBS1
@@ -209,6 +211,17 @@ Partial Class ObsWebSocketCropper
         "word")
         Me.btnConnectOBS2.UseVisualStyleBackColor = True
         '
+        'btnResetDatabase
+        '
+        Me.btnResetDatabase.Location = New System.Drawing.Point(12, 208)
+        Me.btnResetDatabase.Name = "btnResetDatabase"
+        Me.btnResetDatabase.Size = New System.Drawing.Size(112, 23)
+        Me.btnResetDatabase.TabIndex = 87
+        Me.btnResetDatabase.Text = "Reset Database"
+        Me.ttMainToolTip.SetToolTip(Me.btnResetDatabase, "Resets the local database to a blank state." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Should only be used if saving/syncin" &
+        "g is crashing.")
+        Me.btnResetDatabase.UseVisualStyleBackColor = True
+        '
         'gbTrackerComms
         '
         Me.gbTrackerComms.BackColor = System.Drawing.SystemColors.Control
@@ -271,17 +284,6 @@ Partial Class ObsWebSocketCropper
         Me.chkAlwaysOnTop.TabIndex = 75
         Me.chkAlwaysOnTop.Text = "Always On Top"
         Me.chkAlwaysOnTop.UseVisualStyleBackColor = True
-        '
-        'btnResetDatabase
-        '
-        Me.btnResetDatabase.Location = New System.Drawing.Point(12, 208)
-        Me.btnResetDatabase.Name = "btnResetDatabase"
-        Me.btnResetDatabase.Size = New System.Drawing.Size(112, 23)
-        Me.btnResetDatabase.TabIndex = 87
-        Me.btnResetDatabase.Text = "Reset Database"
-        Me.ttMainToolTip.SetToolTip(Me.btnResetDatabase, "Resets the local database to a blank state." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Should only be used if saving/syncin" &
-        "g is crashing.")
-        Me.btnResetDatabase.UseVisualStyleBackColor = True
         '
         'ofdOpenConfig
         '
@@ -350,12 +352,23 @@ Partial Class ObsWebSocketCropper
         Me.lblConfigFile.Size = New System.Drawing.Size(0, 13)
         Me.lblConfigFile.TabIndex = 123
         '
+        'pbUpdate
+        '
+        Me.pbUpdate.Image = Global.ALTTPRCropDashboard.My.Resources.Resources.Triforce_light
+        Me.pbUpdate.Location = New System.Drawing.Point(130, 19)
+        Me.pbUpdate.Name = "pbUpdate"
+        Me.pbUpdate.Size = New System.Drawing.Size(33, 31)
+        Me.pbUpdate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbUpdate.TabIndex = 124
+        Me.pbUpdate.TabStop = False
+        '
         'ObsWebSocketCropper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(602, 604)
+        Me.Controls.Add(Me.pbUpdate)
         Me.Controls.Add(Me.lblConfigFile)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnResetDatabase)
@@ -381,6 +394,7 @@ Partial Class ObsWebSocketCropper
         Me.gbTrackerComms.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.pbUpdate, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -419,4 +433,5 @@ Partial Class ObsWebSocketCropper
     Friend WithEvents rb2Runner As RadioButton
     Friend WithEvents rb1Runner As RadioButton
     Friend WithEvents lblConfigFile As Label
+    Friend WithEvents pbUpdate As PictureBox
 End Class

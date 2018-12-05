@@ -1012,6 +1012,17 @@ Public Class ObsWebSocketCropper
 
         RefreshRunnerNames(False)
 
+        If GlobalParam.UpdateVersion IsNot Nothing Then
+            If Convert.ToString(GlobalParam.UpdateVersion).ToLower.Contains("no update") Then
+                pbUpdate.Visible = False
+            Else
+                pbUpdate.Visible = True
+            End If
+        Else
+            pbUpdate.Visible = False
+        End If
+
+
         isLoaded = True
     End Sub
     Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
@@ -2019,6 +2030,7 @@ Public Class ObsWebSocketCropper
     Private Sub SetToolTips()
         ttMainToolTip.SetToolTip(txtCommentaryNames, "The names of the commentators.")
         ttMainToolTip.SetToolTip(txtGameSettings, "The game settings for the race (eg Ganon/Standard/Swordless/Normal/Enemizer)")
+        ttMainToolTip.SetToolTip(pbUpdate, "There is an update to the program.  Please close and re-open.  " & Convert.ToString(GlobalParam.UpdateVersion))
 
         rControl1.SetToolTips(1)
         rControl2.SetToolTips(2)

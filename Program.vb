@@ -94,7 +94,8 @@ Public Module Program
                      Try
                          Using updateMgr = New UpdateManager(updatePath)
                              BackupSettings()
-                             Await updateMgr.UpdateApp()
+                             Dim ReleaseEntry = Await updateMgr.UpdateApp()
+                             GlobalParam.UpdateVersion = $"Update Version: {If(ReleaseEntry?.Version.ToString(), "No update")}"
                          End Using
                      Catch ex As Exception
                          MessageBox.Show($"Error checking for update: ${ex}")

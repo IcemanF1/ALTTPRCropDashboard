@@ -3,6 +3,7 @@
 Public Class GlobalParam
     Public Shared _configList As New DataSet
     Public Shared ConfigFilePath As String = "C:\ALTTPRFiles\"
+    Public Shared UpdateVersion As String
 
     Public Shared BoundingSizeGame As Rectangle
     Public Shared BoundingSizeTimer As Rectangle
