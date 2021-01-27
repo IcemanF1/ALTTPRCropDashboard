@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This code will no longer be maintained.  It started with good intentions to help save time with cropping however due to limited time on my end to maintain the code, as well as the lack of restream opportunities on alternate channels, this code will no longer be maintained and will be used "as is".
+
 # ALTTPRCropDashboard
 
 Made with the intentions of making cropping and setup of a ALTTPR Restream easier.
